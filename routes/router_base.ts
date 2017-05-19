@@ -13,14 +13,13 @@ export class router_base{
     protected bind(){
         let router = this.router;
     }
-    
+
     public create = () => {
         this.bind(); 
         return this.router;
     }
 
     public render( res , view = "index",vars = {}){
-        
         let f = view.substring(1,1);
         let sep = this.path.sep;
         if(f !== "." && f !== "/" ){
