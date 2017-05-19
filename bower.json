@@ -1,0 +1,22 @@
+{
+  "name": "p3",
+  "description": "",
+  "main": "",
+  "authors": [
+    "kei nakoshi <shima.freebz@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "riot": "^3.3.2",
+    "kube" : "git@github.com:imperavi/kube.git"
+  }
+}
