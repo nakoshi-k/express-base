@@ -24,6 +24,7 @@ class router_base {
         let f = view.substring(1, 1);
         let sep = this.path.sep;
         if (f !== "." && f !== "/") {
+            //完全なファイルパスが指定されていない場合はname をディレクトリフォルダとする
             view = this.name + sep + view;
         }
         console.log(view);

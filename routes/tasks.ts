@@ -1,6 +1,5 @@
 import {router_base} from "./router_base";
 class tasks extends router_base {
-
     public name = "tasks";
 
     public index = (req, res, next) => {

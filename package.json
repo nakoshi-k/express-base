@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "fileCopyToDist": "cpx \"views/**/*.ejs\" dist/views/ --watch",
+    "tsc" : "tsc -w",
+    "watch" : "npm-run-all -p tsc fileCopyToDist" 
   },
   "dependencies": {
     "@types/node": "^7.0.18",
