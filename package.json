@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "fileCopyToDist": "cpx \"views/**/*.ejs\" dist/views/ --watch",
+    "distViewFile": "cpx \"views/**/*.ejs\" dist/views/ -w",
+    "distComponentsFile": "cpx \"public/components/**/*.*\" dist/public/components -w",
+    "distStylus" : "stylus public/stylus/style.styl -o dist/public/css/style.css --include-css",
+    "watchStylus" : "chokidar \"public/stylus/**/*.styl\" --command \"npm run distStylus\"",
     "tsc": "tsc -w",
-    "watch": "npm-run-all -p tsc fileCopyToDist"
+    "watch": "npm-run-all -p tsc distViewFile distComponentsFile watchStylus"
   },
   "dependencies": {
     "@types/node": "^7.0.18",

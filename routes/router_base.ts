@@ -2,7 +2,8 @@
 
 export class router_base{
     private router:express.router;
-    
+    private name :string = "router_base":
+    private path:any; 
     constructor(){
         let express = require('express');
         let router = express.Router();
@@ -10,7 +11,7 @@ export class router_base{
         this.path = path;
         this.router = router;
     }
-    protected bind(){
+    protected bind = () => {
         let router = this.router;
     }
 
@@ -18,16 +19,21 @@ export class router_base{
         this.bind(); 
         return this.router;
     }
+    
+    protected beforeRender = () => {
 
-    public render( res , view = "index",vars = {}){
+    }
+
+    public vars = {};
+    public render = ( res , view : string = "index",vars = {}) => {
+        this.beforeRender();
         let f = view.substring(1,1);
-        let sep = this.path.sep;
-        if(f !== "." && f !== "/" ){
-            //完全なファイルパスが指定されていない場合はname をディレクトリフォルダとする
-            view = this.name + sep + view;
+        let sep :string = this.path.sep;
+        if(f !== "." && f !== sep ){
+           view = ".." + sep + "views" + sep + this.name + sep + view;
         }
-        console.log(view);
-        res.render( view ,{vars});
+        this.vars = Object.assign(this.vars, vars);
+        res.render( view ,this.vars);
     } 
 
     public get = (rute : string , func) => {

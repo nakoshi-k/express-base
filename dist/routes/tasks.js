@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const router_base_1 = require("./router_base");
 class tasks extends router_base_1.router_base {
     constructor() {
