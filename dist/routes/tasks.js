@@ -5,11 +5,18 @@ class tasks extends router_base_1.router_base {
     constructor() {
         super(...arguments);
         this.name = "tasks";
-        this.index = (req, res, next) => {
+        this.search = (req, res, next) => {
             this.render(res, "index", { "title": "tanaka" });
         };
+        this.entry = (req, res, next) => {
+            this.csfr(req);
+            this.render(res, "entry");
+        };
         this.bind = () => {
-            this.get("/", this.index);
+            let router = this.router;
+            router.get("/", this.search);
+            router.get("/entry", this.entry);
+            router.post("/entry", this.entry);
         };
     }
 }

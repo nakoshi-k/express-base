@@ -12,7 +12,7 @@ class router_base {
         };
         this.beforeRender = () => {
         };
-        this.vars = {};
+        this.vars = { "title": "" };
         this.render = (res, view = "index", vars = {}) => {
             this.beforeRender();
             let f = view.substring(1, 1);
@@ -21,19 +21,17 @@ class router_base {
                 view = ".." + sep + "views" + sep + this.name + sep + view;
             }
             this.vars = Object.assign(this.vars, vars);
+            console.log(this.vars);
             res.render(view, this.vars);
-        };
-        this.get = (rute, func) => {
-            this.router.get(rute, func);
-        };
-        this.post = (rute, func) => {
-            this.router.post(rute, func);
         };
         let express = require('express');
         let router = express.Router();
         let path = require("path");
         this.path = path;
         this.router = router;
+    }
+    csfr(req) {
+        this.vars = Object.assign(this.vars, { "csfr": req.csrfToken() });
     }
 }
 exports.router_base = router_base;

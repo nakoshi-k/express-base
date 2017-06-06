@@ -1,10 +1,35 @@
+/*
+    kube css
+*/
+
  @require "../components/kube/dist/css/kube.min.css"
 
- .tanaka{
-     color : #f33
- }
- .global-nav h1,
- .global-nav ul,
- .global-nav li{
+
+/*
+    user css
+*/
+$color-base = #fefefe;
+$color-primary = #666;
+$color-secondary = #666;
+$color-grid = #efefef;
+$base-margin = 6;
+
+.global-nav{
+    margin-bottom : $base-margin px;
+    padding: $base-margin * 3 px;
+    border-bottom : 1px solid $color-grid;
+    background-color : $color-base;
+    z-index : 1000;
+}
+
+.global-nav h1,
+.global-nav ul,
+.global-nav li{
     display :inline-block
- }
+}
+.global-nav li {
+    margin-right : $base-margin * 3 px;
+}
+.main {
+    min-height : 1200px;
+}

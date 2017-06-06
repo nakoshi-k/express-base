@@ -20,6 +20,7 @@ var tasks = require('./routes/tasks');
 
 var app = express();
 
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -29,8 +30,13 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+var csrf = require('csurf');
+app.use(csrf({ cookie: true }));
 
 app.use('/', routes);
 app.use('/users', users);
