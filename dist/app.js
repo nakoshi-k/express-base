@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 /**
  * router loading
  */
@@ -14,6 +15,14 @@ var tasks = require('./routes/tasks');
  * main
  */
 var app = express();
+app.use(session({
+    secret: 'u59y7hfv8szg0e6t0rf35fr40gva7gzvdtf6',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 30 * 60 * 1000
+    }
+}));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -24,8 +33,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-var csrf = require('csurf');
-app.use(csrf({ cookie: true }));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/tasks', tasks);

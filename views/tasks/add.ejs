@@ -10,22 +10,21 @@
 
   <div class="content row">
 
-    <div class="col-3">
-        サイドナaビ
-
+    <div class="col col-3">
+        サイドナビ
     </div>
 
-    <div class="col-9">
+    <div class="col col-9">
       <div id="main">
         <form action="" method="POST" class="form">
           <input type="hidden" name="_csrf" value="<%= csrf %>">
           <div class="form-item">
             <label for="title">Title</label>
-            <input class="w50" type="text" name="title">
+            <input class="w100" type="text" name="title" value="<%= task.title %>">
           </div>
           <div class="form-item">
             <label for="title">Priod</label>
-            <input class="w50" type="text" name="priod">
+            <input class="w100 calendar" type="text" name="priod" value="<%= task.priod %>">
           </div>
           <div class="form-item">
             <button class="button primary">Submit </button>
@@ -36,7 +35,10 @@
 
 
   </div>
-   <%- include('../component/scripts') %>
+<%- include('../component/scripts') %>
+
+
+
   </body>
 </html>
 

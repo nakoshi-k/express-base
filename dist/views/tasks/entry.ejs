@@ -8,17 +8,34 @@
   <body>
 <%- include('../component/global-nav') %>
 
-  <div class="main">
-    <form action="" class="form">
-      <div class="form-item">
-        <input class="w50" type="text" name="test">
-      </div>
-      <div class="form-item">
-        <button class="button primary ">Submit</button>
-      </div>
-    </form>
-  </div>
+  <div class="content row">
 
+    <div class="col-3">
+        サイドナaビ
+
+    </div>
+
+    <div class="col-9">
+      <div id="main">
+        <form action="" method="POST" class="form">
+          <input type="hidden" name="_csrf" value="<%= csrf %>">
+          <div class="form-item">
+            <label for="title">Title</label>
+            <input class="w50" type="text" name="title">
+          </div>
+          <div class="form-item">
+            <label for="title">Priod</label>
+            <input class="w50" type="text" name="priod">
+          </div>
+          <div class="form-item">
+            <button class="button primary">Submit </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+  </div>
    <%- include('../component/scripts') %>
   </body>
 </html>

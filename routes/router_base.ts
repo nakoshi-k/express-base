@@ -1,32 +1,40 @@
-export class router_base{
+
+export abstract class router_base{
+    abstract name = "router_base";
     protected router:express.router;
-    private name :string = "router_base";
-    private path:any; 
+    protected path : any;
+    protected parseForm;
+    protected csrfProtection;
+
     constructor(){
         let express = require('express');
         let router = express.Router();
+        let bodyParser = require('body-parser');
+        let parseForm = bodyParser.urlencoded({ extended: false })
+        let csrf = require('csurf')
         let path = require("path");
+        var csrfProtection = csrf({ cookie: true });
+        this.csrfProtection = csrfProtection;
+        this.parseForm = parseForm;
         this.path = path;
         this.router = router;
     }
-    protected csfr(req){
 
-        this.vars = Object.assign(this.vars, {"csfr" : req.csrfToken()});
+    protected csrf(req){
+        this.vars = Object.assign(this.vars, {"csrf" : req.csrfToken()});
     }
-    protected bind = () => {
-        let router = this.router;
-    }
+
+    abstract bind = () => { }
    
     public create = () => {
         this.bind(); 
         return this.router;
     }
-    
     protected beforeRender = () => {
 
     }
+    public vars = { "title" : "", "csrf" : "" };
 
-    public vars = { "title" : "" };
     public render = ( res , view : string = "index",vars = {}) => {
         this.beforeRender();
         let f = view.substring(1,1);
@@ -34,10 +42,23 @@ export class router_base{
         if(f !== "." && f !== sep ){
            view = ".." + sep + "views" + sep + this.name + sep + view;
         }
-        this.vars = Object.assign(this.vars, vars);
-        console.log(this.vars);
+        this.setData(vars);
         res.render( view ,this.vars);
     } 
+    
+    public send = (res,content:string) => {
+        res.send(content);
+    }
+    
+    public setData = (vars:{}) =>{
+        this.vars = Object.assign(this.vars, vars);
+    }
 
+    public isPost(res){
+        return ( res.method === "POST") ? true : false;
+    }
+    public isXhr(res){
+        return res.xhr;
+    }
 }
 

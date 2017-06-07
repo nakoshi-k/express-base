@@ -6,16 +6,39 @@ class tasks extends router_base {
         this.render(res,"index",{"title":"tanaka"}); 
     }
     
-    private entry = (req,res,next) => {
-        this.csfr(req);
-        this.render(res,"entry");
+    private add = (req,res,next) => {
+        //dbからスキーマを取得してセットする。
+        this.setData({"task" : { "title" : "title" }})
+
+        if( ! this.isPost(req) ) {
+            this.setData({"task" : req.body } );            
+        }
+
+        this.csrf(req);
+        this.render( res , "add");
     }
 
-    protected bind = () => {
+    private edit = (req,res,next) => {
+
+    }
+    
+    private test = (req,res,next) => {
+        this.send(res,'data is being processed');
+    }
+    
+    private delete = (req,res,next) => {
+
+    }
+
+    public bind = () => {
         let router = this.router;
+        let csrfProtection = this.csrfProtection;
+        let parseForm = this.parseForm;
         router.get("/",this.search);
-        router.get("/entry",this.entry);
-        router.post("/entry",this.entry);
+        
+        router.get("/add", csrfProtection , this.add);
+        router.post("/add", parseForm , csrfProtection , this.add);
+
     }
 
 }
