@@ -20,8 +20,8 @@ export abstract class router_base{
         this.router = router;
     }
 
-    protected csrf(req){
-        this.vars["form"].bind( {"csrf" : req.csrfToken()});
+    protected csrfReady(req , formHelper = "form"){
+        this.vars[formHelper].bind( {"csrf" : req.csrfToken()});
     }
 
     abstract bind = () => { }

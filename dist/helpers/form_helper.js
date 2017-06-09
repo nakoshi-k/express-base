@@ -50,7 +50,7 @@ class form_helper extends helper_base_1.helper_base {
             }
             return this.tag.create("input", attr);
         };
-        this.textarea = (name, attr) => {
+        this.textarea = (name, attr = {}) => {
             attr["name"] = name;
             let innerContent = "";
             if ("value" in attr) {
@@ -67,6 +67,8 @@ class form_helper extends helper_base_1.helper_base {
         this.radio = (name, options, attr) => {
         };
         this.select = (name, options, attr) => {
+        };
+        this.file = (name, attr) => {
         };
         this.load("tag"); //Tagヘルパーの呼び出し。
         this.bindData = {};

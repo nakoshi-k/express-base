@@ -10,7 +10,7 @@ class tasks extends router_base_1.router_base {
             this.render(req, res, "index");
         };
         this.add = (req, res, next) => {
-            //dbからスキーマを取得してセットする。
+            //スキーマを取得してセットする。
             this.setData({ "task": { title: "title", priod: "2016-10-18" } });
             if (this.isPost(req)) {
                 this.setData({ "task": req.body });
@@ -26,7 +26,7 @@ class tasks extends router_base_1.router_base {
         };
         this.beforeRender = (req, res) => {
             this.loadHelper("form");
-            this.csrf(req);
+            this.csrfReady(req);
         };
         this.bind = () => {
             let router = this.router;

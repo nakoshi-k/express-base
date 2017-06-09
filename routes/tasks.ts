@@ -8,13 +8,13 @@ class tasks extends router_base {
     }
     
     private add = (req,res,next) => {
-        //dbからスキーマを取得してセットする。
+        //スキーマを取得してセットする。
         this.setData({"task" : { title : "title" , priod : "2016-10-18" } });
         
         if( this.isPost(req) ) {
             this.setData( {"task" : req.body} );            
         }
-
+        
         this.render( req , res , "add");
     }
 
@@ -32,7 +32,7 @@ class tasks extends router_base {
 
     protected beforeRender = (req,res) => {
        this.loadHelper("form");
-       this.csrf(req);
+       this.csrfReady(req);
     }
 
     public bind = () => {

@@ -64,7 +64,7 @@ class form_helper extends helper_base{
         return this.tag.create("input",attr);
     }
 
-    textarea = ( name:string , attr ) => {
+    textarea = ( name:string , attr = {} ) => {
         attr["name"] = name;
         let innerContent = "";
         if("value" in attr){
@@ -82,13 +82,16 @@ class form_helper extends helper_base{
     }
     
     radio = ( name : string, options:{} ,attr:{}) => {
-
+    
     }
 
     select = (name : string ,options : {} , attr : {}) => {
 
     }
+    
+    file = (name : string , attr : {}) => {
 
+    }
     
 }
 

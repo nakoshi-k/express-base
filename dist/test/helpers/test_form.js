@@ -14,5 +14,14 @@ describe('form_helper', () => {
         // startでデータバインドされている場合
         form.start("name", { test: "testvalue" });
         assert.strictEqual(form.input("test"), '<input name="test" value="testvalue">');
+        form.end();
+    });
+    it("textarea", () => {
+        assert.strictEqual(form.textarea("test"), '<textarea name="test">\n\n</textarea>');
+        assert.strictEqual(form.textarea("test", { value: "innertext" }), '<textarea name="test">\ninnertext\n</textarea>');
+        //startでバインドされた場合のテスト
+        form.start("name", { test: "testvalue" });
+        assert.strictEqual(form.textarea("test"), '<textarea name="test">\ntestvalue\n</textarea>');
+        form.end();
     });
 });

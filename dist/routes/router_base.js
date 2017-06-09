@@ -42,8 +42,8 @@ class router_base {
         this.path = path;
         this.router = router;
     }
-    csrf(req) {
-        this.vars["form"].bind({ "csrf": req.csrfToken() });
+    csrfReady(req, formHelper = "form") {
+        this.vars[formHelper].bind({ "csrf": req.csrfToken() });
     }
     /**
      * post 判定
