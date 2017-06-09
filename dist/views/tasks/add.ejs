@@ -16,21 +16,21 @@
 
     <div class="col col-9">
       <div id="main">
-        <form action="" method="POST" class="form">
-          <input type="hidden" name="_csrf" value="<%= csrf %>">
+        <%- form.start( "task" , task ); %>
           <div class="form-item">
             <label for="title">Title</label>
-            <input class="w100" type="text" name="title" value="<%= task.title %>">
+            <%- form.input( "title" , {class : "w100"} ); %>
           </div>
           <div class="form-item">
-            <label for="title">Priod</label>
-            <input class="w100 calendar" type="text" name="priod" value="<%= task.priod %>">
+            <label for="priod">priod</label>
+            <%- form.input( "priod" , {class : "w100 calendar"} ); %>
           </div>
-          <div class="form-item">
-            <button class="button primary">Submit </button>
-          </div>
-        </form>
-      </div>
+          <%- form.submit( "送信" ); %>
+
+        <%- form.end(); %>
+
+ 
+     </div>
     </div>
 
 

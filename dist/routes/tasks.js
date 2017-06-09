@@ -6,16 +6,16 @@ class tasks extends router_base_1.router_base {
         super(...arguments);
         this.name = "tasks";
         this.search = (req, res, next) => {
-            this.render(res, "index", { "title": "tanaka" });
+            this.setData({ "title": "search" });
+            this.render(req, res, "index");
         };
         this.add = (req, res, next) => {
             //dbからスキーマを取得してセットする。
-            this.setData({ "task": { "title": "title" } });
-            if (!this.isPost(req)) {
+            this.setData({ "task": { title: "title", priod: "2016-10-18" } });
+            if (this.isPost(req)) {
                 this.setData({ "task": req.body });
             }
-            this.csrf(req);
-            this.render(res, "add");
+            this.render(req, res, "add");
         };
         this.edit = (req, res, next) => {
         };
@@ -23,6 +23,10 @@ class tasks extends router_base_1.router_base {
             this.send(res, 'data is being processed');
         };
         this.delete = (req, res, next) => {
+        };
+        this.beforeRender = (req, res) => {
+            this.loadHelper("form");
+            this.csrf(req);
         };
         this.bind = () => {
             let router = this.router;

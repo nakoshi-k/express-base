@@ -21,7 +21,7 @@ export abstract class router_base{
     }
 
     protected csrf(req){
-        this.vars = Object.assign(this.vars, {"csrf" : req.csrfToken()});
+        this.vars["form"].bind( {"csrf" : req.csrfToken()});
     }
 
     abstract bind = () => { }
@@ -30,13 +30,15 @@ export abstract class router_base{
         this.bind(); 
         return this.router;
     }
-    protected beforeRender = () => {
+    
+    protected beforeRender = (req,res) => {
 
     }
+
     public vars = { "title" : "", "csrf" : "" };
 
-    public render = ( res , view : string = "index",vars = {}) => {
-        this.beforeRender();
+    public render = ( req , res , view : string = "",vars = {}) => {
+        this.beforeRender(req,res);
         let f = view.substring(1,1);
         let sep :string = this.path.sep;
         if(f !== "." && f !== sep ){
@@ -49,16 +51,39 @@ export abstract class router_base{
     public send = (res,content:string) => {
         res.send(content);
     }
-    
+
+    /**
+     * view に渡す変数に追加
+     */
+        
     public setData = (vars:{}) =>{
         this.vars = Object.assign(this.vars, vars);
     }
 
+    /**
+     * post 判定
+     */
+
     public isPost(res){
         return ( res.method === "POST") ? true : false;
     }
+
+    /*
+        ajax 判定
+    */
+
     public isXhr(res){
         return res.xhr;
     }
+
+    /*
+        view で使うヘルパーのロード
+    */
+
+    public loadHelper(name:string){
+        let sep :string = this.path.sep;
+        this.vars[name] = require(".." + sep + "helpers" + sep + name + "_helper");
+    }
+
 }
 

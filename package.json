@@ -9,7 +9,8 @@
     "distStylus": "stylus public/stylus/style.styl -o dist/public/css/style.css --include-css",
     "watchStylus": "chokidar \"public/stylus/**/*.styl\" --command \"npm run distStylus\"",
     "tsc": "tsc -w",
-    "watch": "npm-run-all -p tsc distViewFile distComponentsFile watchStylus"
+    "watch": "npm-run-all -p tsc distViewFile distComponentsFile watchStylus",
+    "test": "mocha ./dist/test/**/*.js"
   },
   "dependencies": {
     "@types/node": "^7.0.18",
