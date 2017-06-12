@@ -17,8 +17,8 @@ class tag_helper extends helper_base_1.helper_base {
         this.wrap = (tagName, content = "", attr = {}) => {
             let tag = "";
             content = (content === null) ? "" : content;
-            tag += this.create(tagName, attr) + "\n";
-            tag += content + "\n";
+            tag += this.create(tagName, attr);
+            tag += content;
             tag += this.create("/" + tagName);
             return tag;
         };

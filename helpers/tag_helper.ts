@@ -17,8 +17,8 @@ class tag_helper extends helper_base{
     wrap = ( tagName:string , content : string = "",attr : {} = {}) => {
         let tag = "";
         content = (content === null) ? "" : content;
-        tag += this.create(tagName,attr) + "\n";
-        tag += content + "\n";
+        tag += this.create(tagName,attr) ;
+        tag += content;
         tag += this.create("/" + tagName) ;
         return tag;
     }

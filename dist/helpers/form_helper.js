@@ -64,11 +64,46 @@ class form_helper extends helper_base_1.helper_base {
             delete attr["value"];
             return this.tag.wrap("textarea", innerContent, attr);
         };
-        this.radio = (name, options, attr) => {
+        this.removeValue = (attr = {}) => {
+            if (attr.hasOwnProperty("value")) {
+                delete attr["value"];
+            }
+            return attr;
         };
-        this.select = (name, options, attr) => {
+        this.radio = (name, options = {}, attr = {}) => {
+            let tag = "";
+            let childAttr = {};
+            for (let key in options) {
+                childAttr = { type: "radio" };
+                childAttr["value"] = key;
+                if (attr["value"] + "" === key) {
+                    childAttr["checked"] = "checked";
+                }
+                tag += this.input(name, childAttr);
+            }
+            attr = this.removeValue(attr["value"]);
+            return tag;
+        };
+        this.select = (name, options = {}, attr = {}) => {
+            let tag = "";
+            let childAttr = {};
+            for (let key in options) {
+                childAttr["value"] = key;
+                if (attr["value"] + "" === key) {
+                    childAttr["selected"] = "selected";
+                }
+                tag += this.tag.wrap("option", options[key], childAttr);
+            }
+            attr = this.removeValue(attr["value"]);
+            tag = this.tag.wrap("select", tag, attr);
+            return tag;
+        };
+        this.checkbox = (name, attr = {}, options = {}) => {
+            return "";
         };
         this.file = (name, attr) => {
+            attr["type"] = "file";
+            this.input(name, attr);
         };
         this.load("tag"); //Tagヘルパーの呼び出し。
         this.bindData = {};

@@ -80,17 +80,52 @@ class form_helper extends helper_base{
         delete attr["value"];
         return this.tag.wrap( "textarea" , innerContent , attr);
     }
-    
-    radio = ( name : string, options:{} ,attr:{}) => {
-    
+
+    removeValue = (attr : {} = {}) : {} => {
+        if(attr.hasOwnProperty("value")){
+            delete attr["value"];
+        }       
+        return attr;
+    } 
+
+    radio = ( name : string, options:{} = {} ,attr:{} = {}) => {
+        let tag = "";
+        
+        let childAttr = {};
+        for(let key in options){
+            childAttr = {type : "radio"}
+            childAttr["value"] = key ;
+            if(attr["value"] + "" === key){
+                childAttr["checked"] = "checked";
+            }
+            tag +=  this.input( name , childAttr);
+        }       
+        attr = this.removeValue(attr["value"]);
+        return tag;
     }
 
-    select = (name : string ,options : {} , attr : {}) => {
-
+    select = (name : string ,options : {} = {}, attr : {} = {}) : string => {
+        let tag = "";
+        let childAttr= {}; 
+        for(let key in options){
+            childAttr["value"] = key;
+            if(attr["value"] + "" === key){
+                childAttr["selected"] = "selected";
+            }
+            tag += this.tag.wrap("option" , options[key] , childAttr);
+        }
+        attr = this.removeValue(attr["value"]);
+        tag = this.tag.wrap("select",tag,attr);
+        return tag;
     }
-    
+
+    checkbox = (name : string , attr : {} = {},options : {} = {}) : string => {
+        return "";
+    }
+
     file = (name : string , attr : {}) => {
-
+        attr["type"] = "file"
+        this.input(name,attr);
     }
     
 }
