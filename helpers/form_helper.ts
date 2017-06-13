@@ -18,10 +18,23 @@ class form_helper extends helper_base{
         this.bindData = {};
     }
 
+    private initAttr = ( name : string , attr:{} = {} ) => {
+        attr["name"] = name;
+
+        if(attr["value"]){
+            return attr;
+        }
+
+        if( name in this.bindData){
+            attr["value"] = this.bindData[name];
+            return attr;        
+        }
+        return attr;
+    }
+
     csrf = (token : string) : string => {
         return this.tag.create( "input" , { name : "_csrf" , value : token , type : "hidden"});
     }
-
     start = (name:string , bindData : {},attr = {}) => {
         this.bind(bindData);
         let def = {
@@ -29,18 +42,11 @@ class form_helper extends helper_base{
             action : ""            
         }
         let csrfTag :string = "";
-
         if( "csrf" in this.bindData){
             csrfTag = this.csrf(this.bindData["csrf"]);
         }
-
         attr["name"] = name;
-        for(let key in def){
-            if( key in attr){
-                continue;
-            }
-            attr[key] = def[key];
-        }
+        attr = Object.assign(def,attr);
         return this.tag.create("form",attr) + csrfTag;
     }
     
@@ -54,76 +60,78 @@ class form_helper extends helper_base{
     }
 
     input = ( name:string , attr = {}) => {
-        attr["name"] = name;
-        if("value" in attr){
-            return this.tag.create( "input" , attr );
-        }
-        if( name in this.bindData){
-            attr["value"] = this.bindData[name];
-        }
+        attr = this.initAttr(name,attr)
         return this.tag.create("input",attr);
     }
 
     textarea = ( name:string , attr = {} ) => {
-        attr["name"] = name;
-        let innerContent = "";
-        if("value" in attr){
-            innerContent = attr["value"];
-            delete attr["value"];
-            return this.tag.wrap( "textarea" , innerContent , attr);
-        }
-
-        if( name in this.bindData){
-            innerContent = this.bindData[name];
-        }
-        
-        delete attr["value"];
+        attr = this.initAttr(name,attr);
+        let innerContent = attr["value"];
+        attr = this.removeAttr("value",attr);
         return this.tag.wrap( "textarea" , innerContent , attr);
     }
 
-    removeValue = (attr : {} = {}) : {} => {
-        if(attr.hasOwnProperty("value")){
-            delete attr["value"];
+    removeAttr = (property : string,attr : {} = {}) : {} => {
+        if(attr.hasOwnProperty(property)){
+            delete attr[property];
         }       
         return attr;
     } 
 
-    radio = ( name : string, options:{} = {} ,attr:{} = {}) => {
-        let tag = "";
-        
-        let childAttr = {};
-        for(let key in options){
-            childAttr = {type : "radio"}
-            childAttr["value"] = key ;
-            if(attr["value"] + "" === key){
-                childAttr["checked"] = "checked";
+    private selector = (name : string, options:{} = {} ,attr:{} = {}) => {
+        let build = (type:string) => {
+            let tag : string = "";
+            let childAttr = {};
+            let flg = (type === "radio") ? "checked" : "selected";
+            for(let key in options){
+                childAttr["value"] = key;
+
+                if(attr["value"] + "" === key){
+                    childAttr[flg] = flg;
+                }
+                if(type === "select"){
+                    tag += this.tag.wrap("option" , options[key] , childAttr);
+                    continue;
+                }
+                if(type === "radio"){
+                    childAttr["type"] = "radio";
+                    tag +=  this.input( name , childAttr);
+                    continue;
+                }
             }
-            tag +=  this.input( name , childAttr);
-        }       
-        attr = this.removeValue(attr["value"]);
-        return tag;
+            return tag;
+        }
+        let selector = {
+            select : () => {
+                return build("select");
+            },
+            radio : () => {
+                return build("radio");
+            }
+        }
+        return selector;
+    }
+
+    radio = ( name : string, options:{} = {} ,attr:{} = {}) => {
+        let childAttr = {};
+        return this.selector(name,options,attr).radio();
     }
 
     select = (name : string ,options : {} = {}, attr : {} = {}) : string => {
-        let tag = "";
-        let childAttr= {}; 
-        for(let key in options){
-            childAttr["value"] = key;
-            if(attr["value"] + "" === key){
-                childAttr["selected"] = "selected";
-            }
-            tag += this.tag.wrap("option" , options[key] , childAttr);
-        }
-        attr = this.removeValue(attr["value"]);
-        tag = this.tag.wrap("select",tag,attr);
-        return tag;
+        attr = this.initAttr(name,attr);
+        let tag = this.selector(name,options,attr).select();
+        attr = this.removeAttr("value",attr);
+        return this.tag.wrap("select",tag,attr);
     }
 
-    checkbox = (name : string , attr : {} = {},options : {} = {}) : string => {
-        return "";
+    checkbox = (name : string , attr : {} = {}) : string => {
+        attr = this.initAttr(name,attr);
+        attr["type"] = "checkbox";
+        return this.tag.create("input",attr);
     }
 
     file = (name : string , attr : {}) => {
+        attr = this.initAttr(name,attr);
         attr["type"] = "file"
         this.input(name,attr);
     }
