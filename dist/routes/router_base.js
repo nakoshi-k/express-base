@@ -3,7 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class router_base {
     constructor() {
         this.name = "router_base";
-        this.bind = () => { };
+        this.csrfReady = (req, formHelper = "form") => {
+            this.vars[formHelper].bind({ "csrf": req.csrfToken() });
+        };
+        this.bind = () => {
+        };
         this.create = () => {
             this.bind();
             return this.router;
@@ -21,7 +25,7 @@ class router_base {
             this.setData(vars);
             res.render(view, this.vars);
         };
-        this.send = (res, content) => {
+        this.send = (req, res, content) => {
             res.send(content);
         };
         /**
@@ -41,9 +45,6 @@ class router_base {
         this.parseForm = parseForm;
         this.path = path;
         this.router = router;
-    }
-    csrfReady(req, formHelper = "form") {
-        this.vars[formHelper].bind({ "csrf": req.csrfToken() });
     }
     /**
      * post 判定

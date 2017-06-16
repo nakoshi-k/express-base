@@ -20,12 +20,14 @@ export abstract class router_base{
         this.router = router;
     }
 
-    protected csrfReady(req , formHelper = "form"){
+    protected csrfReady = (req , formHelper = "form") => {
         this.vars[formHelper].bind( {"csrf" : req.csrfToken()});
     }
 
-    abstract bind = () => { }
-   
+    abstract bind = () => {
+
+    }
+
     public create = () => {
         this.bind(); 
         return this.router;
@@ -48,7 +50,7 @@ export abstract class router_base{
         res.render( view ,this.vars);
     } 
     
-    public send = (res,content:string) => {
+    public send = (req,res,content:string) => {
         res.send(content);
     }
 

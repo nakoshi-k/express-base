@@ -39,7 +39,7 @@ class tasks extends router_base {
         let router = this.router;
         let csrfProtection = this.csrfProtection;
         let parseForm = this.parseForm;
-        router.get("/",this.search);
+        router.get("/",csrfProtection,this.search);
         router.get("/add", csrfProtection , this.add);
         router.post("/add", parseForm , csrfProtection , this.add);
     }

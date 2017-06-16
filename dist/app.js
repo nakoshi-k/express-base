@@ -11,6 +11,8 @@ var session = require('express-session');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var tasks = require('./routes/tasks');
+var chats = require('./routes/chats');
+var emu = require('./routes/emu');
 /**
  * main
  */
@@ -36,6 +38,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/tasks', tasks);
+app.use('/chats', chats);
+app.use('/emu', emu);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
