@@ -1,23 +1,33 @@
 
+
 export abstract class router_base{
     abstract name = "router_base";
-    protected router:express.router;
+    protected router:express.Router;
     protected path : any;
     protected parseForm;
     protected csrfProtection;
-
+    protected useModel = true;
+    protected models : sequelize.Model[];
+    
     constructor(){
-        let express = require('express');
+        const express = require("express"); 
         let router = express.Router();
         let bodyParser = require('body-parser');
         let parseForm = bodyParser.urlencoded({ extended: false })
         let csrf = require('csurf')
         let path = require("path");
-        var csrfProtection = csrf({ cookie: true });
+        let csrfProtection = csrf({ cookie: true });
+        
         this.csrfProtection = csrfProtection;
         this.parseForm = parseForm;
         this.path = path;
         this.router = router;
+        
+        if ( this.useModel === true ){
+            let models = require('../models');
+            this.models = models; 
+        }
+
     }
 
     protected csrfReady = (req , formHelper = "form") => {

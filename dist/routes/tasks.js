@@ -5,6 +5,7 @@ class tasks extends router_base_1.router_base {
     constructor() {
         super(...arguments);
         this.name = "tasks";
+        this.rname = "tasks";
         this.search = (req, res, next) => {
             this.setData({ "title": "search" });
             this.render(req, res, "index");
@@ -13,6 +14,7 @@ class tasks extends router_base_1.router_base {
             //スキーマを取得してセットする。
             this.setData({ "task": { title: "title", priod: "2016-10-18" } });
             if (this.isPost(req)) {
+                this.models.tasks.build(req.body);
                 this.setData({ "task": req.body });
             }
             this.render(req, res, "add");
@@ -20,7 +22,7 @@ class tasks extends router_base_1.router_base {
         this.edit = (req, res, next) => {
         };
         this.test = (req, res, next) => {
-            this.send(res, 'data is being processed');
+            this.send(res, req, 'data is being processed');
         };
         this.delete = (req, res, next) => {
         };
@@ -38,4 +40,5 @@ class tasks extends router_base_1.router_base {
         };
     }
 }
-module.exports = new tasks().create();
+exports.tasks = tasks;
+exports.router = new tasks().create();

@@ -4,7 +4,6 @@
 </raw>
 
 <chat>
-
   <div class="form-item chat-message">
     <div each={ messages } class="{(me) ? "me" : "other"} balloon">
         <div class="person">{name}</div>
@@ -14,7 +13,7 @@
         <div class="date">{date}</div>
     </div>
   </div>
-
+  
   <div class="form-item">
     <textarea name="sendMessage" value="{sendMessage}" onkeyup="{edit}"></textarea>
   </div>
@@ -22,11 +21,13 @@
   <div class="form-item text-right">
     <button onclick="{send}" type="button">送信</button>
   </div>
-  
+
   <style>
+    
     chat .balloon {
       display: flex;
     }
+
     chat .balloon .person{
       border : 2px solid #ddd;
       border-radius: 30px;
@@ -67,12 +68,11 @@
         { me:true , message : "メッセージ4",name:"名前",date:"19:00"},
         { me:false , message : "メッセージ5",name:"名前",date:"20:00"},
         { me:true , message : "メッセージ6",name:"名前",date:"21:00"},
-        { me:true , message : "メッセージ7",name:"名前",date:"22:000"}
+        { me:true , message : "メッセージ7",name:"名前",date:"22:00"}
       ];
       this.sendMessage = "";
       edit  = (e) => {
         this[e.target.name] = e.target.value;
-        console.log(e.target.value);
       }
       send = () =>  {
         let date = new Date();
@@ -80,7 +80,6 @@
         let pushMessage = this.sendMessage
         pushMessage = pushMessage.replace(/[\n\r]+/g,"<br>");
         this.messages.push({me:"true",message : pushMessage , name : "名前" ,date:sendTime});
-        console.log(this.sendMessage)
       }
   </script>
 

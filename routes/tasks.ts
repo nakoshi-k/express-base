@@ -1,6 +1,9 @@
 import {router_base} from "./router_base";
-class tasks extends router_base {
+
+export class tasks extends router_base {
+
     public name = "tasks";
+    public rname = "tasks";
 
     private search = (req,res,next) => {
         this.setData({"title":"search"});
@@ -12,6 +15,7 @@ class tasks extends router_base {
         this.setData({"task" : { title : "title" , priod : "2016-10-18" } });
         
         if( this.isPost(req) ) {
+            this.models.tasks.build(req.body);
             this.setData( {"task" : req.body} );            
         }
         
@@ -23,7 +27,7 @@ class tasks extends router_base {
     }
     
     private test = (req,res,next) => {
-        this.send(res,'data is being processed');
+        this.send(res,req,'data is being processed');
     }
     
     private delete = (req,res,next) => {
@@ -39,10 +43,12 @@ class tasks extends router_base {
         let router = this.router;
         let csrfProtection = this.csrfProtection;
         let parseForm = this.parseForm;
+
         router.get("/",csrfProtection,this.search);
         router.get("/add", csrfProtection , this.add);
         router.post("/add", parseForm , csrfProtection , this.add);
     }
 
 }
-module.exports  = new tasks().create();
+
+export let router = new tasks().create();

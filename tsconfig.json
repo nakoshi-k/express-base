@@ -1,12 +1,11 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "target": "es6",
+        "target": "es2016",
         "noImplicitAny": false,
         "sourceMap": false,
         "outDir" : "dist",
-        "watch" : true,
-        "typeRoots": ["node_modules/@types"]
+        "watch" : true
     },
     "include": [
         "./**/*.ts"

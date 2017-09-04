@@ -1,4 +1,3 @@
-
 flatpickr(".calendar");
 
 flatpickr(".calendar-time" , {

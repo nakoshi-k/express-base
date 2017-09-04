@@ -6,15 +6,19 @@
     "start": "nodemon ./bin/www",
     "distViewFile": "cpx \"views/**/*.ejs\" dist/views/ -w",
     "distComponentsFile": "cpx \"public/components/**/*.*\" dist/public/components -w",
+    "distModelFile": "cpx \"models/**/*.*\" dist/models -w",
+    "distConfigFile": "cpx \"config/**/*.*\" dist/config -w",
     "distTagFile": "cpx \"public/tags/**/*.*\" dist/public/tags -w",
     "distStylus": "stylus public/stylus/style.styl -o dist/public/css/style.css --include-css",
     "watchStylus": "chokidar \"public/stylus/**/*.styl\" --command \"npm run distStylus\"",
     "tsc": "tsc -w",
-    "watch": "npm-run-all -p tsc distViewFile distComponentsFile distTagFile watchStylus",
+    "watch": "npm-run-all -p tsc distViewFile distComponentsFile distTagFile distConfigFile distModelFile watchStylus",
     "test": "mocha ./dist/test/**/*.js"
   },
   "dependencies": {
+    "@types/express": "^4.0.37",
     "@types/node": "^7.0.18",
+    "@types/sequelize": "^4.0.73",
     "body-parser": "^1.15.2",
     "connect-redis": "^3.3.0",
     "cookie-parser": "^1.4.3",
@@ -24,9 +28,12 @@
     "express": "^4.13.4",
     "express-session": "^1.15.3",
     "morgan": "^1.7.0",
+    "mysql": "^2.14.1",
+    "mysql2": "^1.4.2",
     "sequelize": "^3.30.4",
-    "sequelize-cli": "^2.7.0",
-    "serve-favicon": "^2.3.2"
+    "sequelize-cli": "^2.8.0",
+    "serve-favicon": "^2.3.2",
+    "tsc": "^1.20150623.0"
   },
   "devDependencies": {}
 }

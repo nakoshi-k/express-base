@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class router_base {
     constructor() {
         this.name = "router_base";
+        this.useModel = true;
         this.csrfReady = (req, formHelper = "form") => {
             this.vars[formHelper].bind({ "csrf": req.csrfToken() });
         };
@@ -34,17 +35,21 @@ class router_base {
         this.setData = (vars) => {
             this.vars = Object.assign(this.vars, vars);
         };
-        let express = require('express');
+        const express = require("express");
         let router = express.Router();
         let bodyParser = require('body-parser');
         let parseForm = bodyParser.urlencoded({ extended: false });
         let csrf = require('csurf');
         let path = require("path");
-        var csrfProtection = csrf({ cookie: true });
+        let csrfProtection = csrf({ cookie: true });
         this.csrfProtection = csrfProtection;
         this.parseForm = parseForm;
         this.path = path;
         this.router = router;
+        if (this.useModel === true) {
+            let models = require('../models');
+            this.models = models;
+        }
     }
     /**
      * post 判定
