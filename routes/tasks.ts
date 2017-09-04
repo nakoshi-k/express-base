@@ -13,7 +13,7 @@ export class tasks extends router_base {
     private add = (req,res,next) => {
         //スキーマを取得してセットする。
         this.setData({"task" : { title : "title" , priod : "2016-10-18" } });
-        
+        console.log("test");
         if( this.isPost(req) ) {
             this.models.tasks.build(req.body);
             this.setData( {"task" : req.body} );            

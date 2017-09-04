@@ -1,3 +1,5 @@
 node_modules/*
 dist/public/components/*
 public/components/*
+dist/config/*
+config/*

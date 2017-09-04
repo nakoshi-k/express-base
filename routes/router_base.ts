@@ -1,4 +1,5 @@
-
+import * as express from "express";
+import * as sequelize from "sequelize";
 
 export abstract class router_base{
     abstract name = "router_base";
@@ -7,7 +8,7 @@ export abstract class router_base{
     protected parseForm;
     protected csrfProtection;
     protected useModel = true;
-    protected models : sequelize.Model[];
+    protected models : sequelize.Model;
     
     constructor(){
         const express = require("express"); 

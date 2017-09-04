@@ -5,7 +5,8 @@ describe('route_tasks', () =>  {
         let assert = ci.assert;
     
         it("add", () => {
-
+            let m = new tasks.tasks();
+            m.add({},{},{});
         });
 
 });    
