@@ -18,6 +18,7 @@
         <%- form.start( "task" , task , {"method" :"post" , "action" : "./" }); %>
           <div class="form-item">
             <label for="title">Title</label>
+            <%- form.input( "id" , { type : "hidden" ,class : "w100"} ); %>
             <%- form.input( "title" , {class : "w100"} ); %>
           </div>
           <div class="form-item">
