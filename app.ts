@@ -10,9 +10,9 @@ var session = require('express-session');
  */
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var tasks = require('./routes/tasks');
-var chats = require('./routes/chats');
-var emu = require('./routes/emu');
+//import  * as chats from './routes/chats';
+//import * as emu from './routes/emu';
+import * as tasks from "./routes/tasks";
 
 /**
  * main
@@ -43,10 +43,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
-app.use('/tasks', tasks);
-app.use('/chats', chats);
-app.use('/emu', emu);
+//app.use('/users', users);
+app.use('/tasks',  tasks.router );
+//app.use('/chats', chats.router);
+//app.use('/emu', emu.router);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -78,6 +78,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;

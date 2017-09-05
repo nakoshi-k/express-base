@@ -1,5 +1,5 @@
 import {router_base} from "./router_base";
-class chats extends router_base {
+export class chats extends router_base {
     name = "chats";
 
     index = (req,res,next) => {
@@ -20,4 +20,4 @@ class chats extends router_base {
 
 }
 
-module.exports  = new chats().create();
+export let router  = new chats().create();

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -10,33 +9,34 @@
 
   <div class="content row">
 
-    <div class="col-3">
-        サイドナaビ
-
+    <div class="col col-3">
+        サイドナビ
     </div>
 
-    <div class="col-9">
+    <div class="col col-9">
       <div id="main">
-        <form action="" method="POST" class="form">
-          <input type="hidden" name="_csrf" value="<%= csrf %>">
+        <%- form.start( "task" , task , {"method" :"post" , "action" : "./" }); %>
           <div class="form-item">
             <label for="title">Title</label>
-            <input class="w50" type="text" name="title">
+            <%- form.input( "title" , {class : "w100"} ); %>
           </div>
           <div class="form-item">
-            <label for="title">Priod</label>
-            <input class="w50" type="text" name="priod">
+            <label for="priod">Priod</label>
+            <%- form.input( "priod" , {class : "w100 calendar"} ); %>
           </div>
-          <div class="form-item">
-            <button class="button primary">Submit </button>
-          </div>
-        </form>
-      </div>
+          <%- form.submit( "送信" ); %>
+
+        <%- form.end(); %>
+
+     </div>
     </div>
 
 
   </div>
-   <%- include('../component/scripts') %>
+<%- include('../component/scripts') %>
+
+
+
   </body>
 </html>
 

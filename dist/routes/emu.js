@@ -20,4 +20,5 @@ class emu extends router_base_1.router_base {
         };
     }
 }
-module.exports = new emu().create();
+exports.emu = emu;
+exports.router = new emu().create();

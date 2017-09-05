@@ -15,7 +15,7 @@
 
     <div class="col col-9">
       <div id="main">
-        <%- form.start( "task" , task ); %>
+        <%- form.start( "task" , task , {"method" :"post" , "action" : "./" }); %>
           <div class="form-item">
             <label for="title">Title</label>
             <%- form.input( "title" , {class : "w100"} ); %>

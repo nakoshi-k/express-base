@@ -8,8 +8,10 @@ export abstract class router_base{
     protected parseForm;
     protected csrfProtection;
     protected useModel = true;
-    protected models : sequelize.Model;
-    
+    protected service:any;
+    protected models : sequelize.ModelsHashInterface;
+    protected model : sequelize.ModelsHashInterface;
+
     constructor(){
         const express = require("express"); 
         let router = express.Router();
@@ -18,17 +20,27 @@ export abstract class router_base{
         let csrf = require('csurf')
         let path = require("path");
         let csrfProtection = csrf({ cookie: true });
-        
         this.csrfProtection = csrfProtection;
         this.parseForm = parseForm;
         this.path = path;
         this.router = router;
-        
-        if ( this.useModel === true ){
-            let models = require('../models');
-            this.models = models; 
-        }
+    }
 
+    public init = () => {
+        this.loadService(this.name);
+        this.loadModel();
+    }
+
+    public loadModel = () => {
+        if ( this.useModel === true ){
+            this.models = this.service.models;
+            this.model = this.service.model;
+        }
+    }
+
+    public loadService = (name:string) => {
+        let service = require("../services/" + name + "_service");
+        this.service = new service[ name +"_service"]();
     }
 
     protected csrfReady = (req , formHelper = "form") => {
@@ -40,6 +52,7 @@ export abstract class router_base{
     }
 
     public create = () => {
+        this.init();
         this.bind(); 
         return this.router;
     }

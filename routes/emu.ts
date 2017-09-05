@@ -1,5 +1,5 @@
 import {router_base} from "./router_base";
-class emu extends router_base {
+export class emu extends router_base {
     
     name = "emu";
 
@@ -21,4 +21,4 @@ class emu extends router_base {
 
 }
 
-module.exports  = new emu().create();
+export let router = new emu().create();

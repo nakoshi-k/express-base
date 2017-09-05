@@ -4,12 +4,27 @@ class router_base {
     constructor() {
         this.name = "router_base";
         this.useModel = true;
+        this.init = () => {
+            this.loadService(this.name);
+            this.loadModel();
+        };
+        this.loadModel = () => {
+            if (this.useModel === true) {
+                this.models = this.service.models;
+                this.model = this.service.model;
+            }
+        };
+        this.loadService = (name) => {
+            let service = require("../services/" + name + "_service");
+            this.service = new service[name + "_service"]();
+        };
         this.csrfReady = (req, formHelper = "form") => {
             this.vars[formHelper].bind({ "csrf": req.csrfToken() });
         };
         this.bind = () => {
         };
         this.create = () => {
+            this.init();
             this.bind();
             return this.router;
         };
@@ -46,10 +61,6 @@ class router_base {
         this.parseForm = parseForm;
         this.path = path;
         this.router = router;
-        if (this.useModel === true) {
-            let models = require('../models');
-            this.models = models;
-        }
     }
     /**
      * post 判定

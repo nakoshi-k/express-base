@@ -20,4 +20,5 @@ class chats extends router_base_1.router_base {
         };
     }
 }
-module.exports = new chats().create();
+exports.chats = chats;
+exports.router = new chats().create();

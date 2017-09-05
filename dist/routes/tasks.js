@@ -5,7 +5,6 @@ class tasks extends router_base_1.router_base {
     constructor() {
         super(...arguments);
         this.name = "tasks";
-        this.rname = "tasks";
         this.search = (req, res, next) => {
             this.setData({ "title": "search" });
             this.render(req, res, "index");
@@ -13,19 +12,25 @@ class tasks extends router_base_1.router_base {
         this.add = (req, res, next) => {
             //スキーマを取得してセットする。
             this.setData({ "task": { title: "title", priod: "2016-10-18" } });
-            console.log("test");
-            if (this.isPost(req)) {
-                this.models.tasks.build(req.body);
-                this.setData({ "task": req.body });
-            }
             this.render(req, res, "add");
+        };
+        this.view = (req, res, next) => {
+            this.setData({ "task": { title: "title", priod: "2016-10-18" } });
+            this.render(req, res, "view");
         };
         this.edit = (req, res, next) => {
         };
-        this.test = (req, res, next) => {
-            this.send(res, req, 'data is being processed');
+        this.delete = (req, res) => {
         };
-        this.delete = (req, res, next) => {
+        this.insert = (req, res, next) => {
+            let entity = this.models.tasks.build(req.body);
+            entity.save().then(() => {
+                res.redirect("/tasks");
+            }).catch(() => {
+                this.add(req, res, next);
+            });
+        };
+        this.update = (req, res, next) => {
         };
         this.beforeRender = (req, res) => {
             this.loadHelper("form");
@@ -37,7 +42,11 @@ class tasks extends router_base_1.router_base {
             let parseForm = this.parseForm;
             router.get("/", csrfProtection, this.search);
             router.get("/add", csrfProtection, this.add);
-            router.post("/add", parseForm, csrfProtection, this.add);
+            router.get("/:id", csrfProtection, this.view);
+            router.post("/", parseForm, csrfProtection, this.insert);
+            router.get("/:id/edit", csrfProtection, this.edit);
+            router.delete("/:id", csrfProtection, this.delete);
+            router.put("/:id", csrfProtection, this.update);
         };
     }
 }
