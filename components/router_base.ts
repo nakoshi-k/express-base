@@ -1,7 +1,7 @@
 import * as express from "express";
 import * as sequelize from "sequelize";
 import * as service from "./service_base";
-import {config} from "./common";
+import {config} from "../common";
 
 export abstract class router_base{
     abstract name = "router_base";

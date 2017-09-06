@@ -1,7 +1,7 @@
 
 import * as express from "express";
 import * as sequelize from "sequelize";
-import {config} from "./common";
+import {config} from "../common";
 export class service_base{
     public models:sequelize.ModelsHashInterface;    
     public model:sequelize.Model<any,any>;    
