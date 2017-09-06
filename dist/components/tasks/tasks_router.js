@@ -1,13 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const router_base_1 = require("./router_base");
-class tasks extends router_base_1.router_base {
+const router_base_1 = require("../router_base");
+class tasks_router extends router_base_1.router_base {
     constructor() {
         super(...arguments);
         this.name = "tasks";
         this.search = (req, res, next) => {
-            this.setData({ "title": "search" });
-            this.render(req, res, "index");
+            let tasks = this.service.pagination({
+                limit: 10
+            });
+            tasks.then((result) => {
+                this.setData({ tasks: result.rows });
+                this.setData({ pagination: result.page });
+                this.render(req, res, "index");
+            }).catch((error) => {
+                this.render(req, res, "index");
+            });
         };
         this.add = (req, res, next) => {
             //スキーマを取得してセットする。
@@ -23,10 +31,11 @@ class tasks extends router_base_1.router_base {
         this.delete = (req, res) => {
         };
         this.insert = (req, res, next) => {
-            let entity = this.models.tasks.build(req.body);
+            let entity = this.model.build(req.body);
             entity.save().then(() => {
                 res.redirect("/tasks");
-            }).catch(() => {
+            }).catch((e) => {
+                console.log(e);
                 this.add(req, res, next);
             });
         };
@@ -36,8 +45,7 @@ class tasks extends router_base_1.router_base {
             this.loadHelper("form");
             this.csrfReady(req);
         };
-        this.bind = () => {
-            let router = this.router;
+        this.bind = (router) => {
             let csrfProtection = this.csrfProtection;
             let parseForm = this.parseForm;
             router.get("/", csrfProtection, this.search);
@@ -47,8 +55,8 @@ class tasks extends router_base_1.router_base {
             router.get("/:id/edit", csrfProtection, this.edit);
             router.delete("/:id", csrfProtection, this.delete);
             router.put("/:id", csrfProtection, this.update);
+            return router;
         };
     }
 }
-exports.tasks = tasks;
-exports.router = new tasks().create();
+exports.tasks_router = tasks_router;

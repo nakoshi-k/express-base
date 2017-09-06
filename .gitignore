@@ -3,3 +3,4 @@ dist/public/components/*
 public/components/*
 dist/config/*
 config/*
+ignore/*

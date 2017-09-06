@@ -1,14 +1,26 @@
+import * as express from "express";
 import {router_base} from "../router_base";
 
-export class tasks extends router_base {
+export class tasks_router extends router_base {
     public name = "tasks";
 
-    
     private search = (req,res,next) => {
-        this.setData({"title":"search"});
-        this.render(req, res,"index"); 
+
+        let tasks = this.service.pagination({
+            limit : 10
+        });
+
+        tasks.then( (result : {rows : any, count :number,page:number}) => {
+            this.setData({tasks:result.rows});
+            this.setData({pagination:result.page});
+            this.render(req,res,"index");
+        }).catch((error) => {               
+            this.render(req,res,"index");
+        })
+
     }
     
+
     private add = (req,res,next) => {
         //スキーマを取得してセットする。
         this.setData({"task" : { title : "title" , priod : "2016-10-18" } });
@@ -29,10 +41,12 @@ export class tasks extends router_base {
     }
 
     private insert = (req,res,next) => {
-        let entity = this.models.tasks.build(req.body);
+
+        let entity = this.model.build(req.body);
         entity.save().then( () => {
             res.redirect("/tasks");
-        }).catch(() => {
+        }).catch((e) => {
+            console.log(e);
             this.add(req,res,next);
         })
     }
@@ -46,8 +60,7 @@ export class tasks extends router_base {
        this.csrfReady(req);
     }
 
-    public bind = () => {
-        let router = this.router;
+    public bind  = (router : express.Router) : express.Router => {
         let csrfProtection = this.csrfProtection;
         let parseForm = this.parseForm;
         router.get("/", csrfProtection , this.search);
@@ -57,8 +70,7 @@ export class tasks extends router_base {
         router.get("/:id/edit", csrfProtection , this.edit);
         router.delete("/:id", csrfProtection , this.delete);
         router.put("/:id",csrfProtection,this.update);
+        return router;
     }
 
 }
-
-export let router = new tasks().create();

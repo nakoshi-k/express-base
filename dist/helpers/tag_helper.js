@@ -24,4 +24,5 @@ class tag_helper extends helper_base_1.helper_base {
         };
     }
 }
+exports.tag_helper = tag_helper;
 module.exports = new tag_helper();

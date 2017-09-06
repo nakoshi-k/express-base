@@ -2,10 +2,33 @@
 <html>
   <head>
     <title><%= title %></title>
-    <%- include('../component/head-base') %>
+    <%- include('../components/head-base') %>
   </head>
   <body>
- <%- include('../component/global-nav') %>
- <%- include('../component/scripts') %>
+ <%- include('../components/global-nav') %>
+
+
+
+  <div class="content row">
+    
+        <div class="col col-3">
+            サイドナビ
+        </div>
+    
+        <div class="col col-9">
+          <div id="main">
+            <% tasks.forEach(function (value, key) { %>
+            <div><a href="/tasks/<%-value.id%>/edit"><%= value.title %></a></div>
+            <% }); %>
+          </div>
+        </div>
+    
+    
+  </div>
+  
+
+
+
+ <%- include('../components/scripts') %>
   </body>
 </html>

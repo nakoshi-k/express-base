@@ -1,6 +1,6 @@
 import {helper_base} from "./helper_base";
 
-class tag_helper extends helper_base{
+export class tag_helper extends helper_base{
 
     private buildAttr  = (attr:{}) : string => {
         let attribute =  "";

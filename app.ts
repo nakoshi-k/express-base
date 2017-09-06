@@ -8,11 +8,7 @@ var session = require('express-session');
 /**
  * router loading
  */
-var routes = require('./routes/index');
-var users = require('./routes/users');
-//import  * as chats from './routes/chats';
-//import * as emu from './routes/emu';
-import * as tasks from "./routes/tasks";
+import {tasks_router} from "./components/tasks/tasks_router";
 
 /**
  * main
@@ -42,11 +38,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-//app.use('/users', users);
-app.use('/tasks',  tasks.router );
-//app.use('/chats', chats.router);
-//app.use('/emu', emu.router);
+//app.use('/', routes);
+
+let tasks = new tasks_router().create();
+app.use('/tasks',tasks);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
