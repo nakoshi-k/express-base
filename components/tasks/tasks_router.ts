@@ -10,13 +10,15 @@ export class tasks_router extends router_base {
             where : this.service.whereBuild(req.query),
             limit : 10
         });
+        
         tasks.then( (result : {rows : any, count :number,page:number}) => {
             this.setData({tasks:result.rows});
             this.setData({pagination:result.page});
             this.render(req,res,"index");
         }).catch((error) => {               
             this.render(req,res,"index");
-        })
+        });
+
     }
 
     private add = (req:express.Request, res:express.Response, next:express.NextFunction) => {
