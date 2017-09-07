@@ -7,6 +7,7 @@ class tasks_router extends router_base_1.router_base {
         this.name = "tasks";
         this.search = (req, res, next) => {
             let tasks = this.service.pagination({
+                where: this.service.whereBuild(req.query),
                 limit: 10
             });
             tasks.then((result) => {

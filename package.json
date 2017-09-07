@@ -27,6 +27,7 @@
     "cookie-parser": "^1.4.3",
     "csurf": "^1.9.0",
     "debug": "~2.2.0",
+    "deep-assign": "^2.0.0",
     "ejs": "~2.4.1",
     "express": "^4.13.4",
     "express-session": "^1.15.3",

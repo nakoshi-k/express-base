@@ -1,4 +1,4 @@
-import * as tasks from "../../routes/tasks";
+import * as tasks from "../../components/tasks/tasks_router";
 describe('route_tasks', () =>  {
     
         let ci = require('chai');

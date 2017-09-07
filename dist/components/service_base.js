@@ -1,15 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const search_1 = require("./search");
 class service_base {
     constructor(name) {
-        this.pagination = (query) => {
+        this.search = (query) => {
+            return new search_1.search(query);
+        };
+        this.whereBuild = (query) => {
+            let where = this.search(query);
+            return where.build;
+        };
+        /*
+         *
+         * $param query
+         * $return recodeset and pagination
+         */
+        this.pagination = (findOptions, queryPrams = {}) => {
             let pagination = new Promise((resolve, reject) => {
-                this.model.findAndCountAll(query)
+                this.model.findAndCountAll(findOptions)
                     .then((res) => {
                     let pagination = { pagination: { totalPage: 0, currentPage: 1 } };
-                    pagination.pagination.query = query;
-                    let offset = (query.offset) ? query.offset : 0;
-                    let limit = (query.limit) ? query.limit : 0;
+                    pagination.pagination.queryPrams = queryPrams;
+                    let offset = (findOptions.offset) ? findOptions.offset : 0;
+                    let limit = (findOptions.limit) ? findOptions.limit : 0;
                     if (limit > 0) {
                         pagination.pagination.total = Math.ceil(res.count / limit);
                         pagination.pagination.currentPage = offset + 1;

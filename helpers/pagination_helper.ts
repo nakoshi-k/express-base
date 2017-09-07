@@ -8,16 +8,16 @@ interface pagenationInterface {
 }
 class pagination_helper extends helper_base{
     private page :any = {};
-    private path : string = "example/$";
+    private path : string = "example/#";
     private tag : tag; //tagHelperが入る
 
     constructor(){
         super();
         this.load("tag"); //Tagヘルパーの呼び出し。
     }
-
+    
     public build =  ( path :string , num : number) => {
-        return path.replace( "$" , String(num) );
+        return path.replace( "#" , String(num) );
     }
     
     public start = ( pagenationInterface , path) : string => {
@@ -28,7 +28,7 @@ class pagination_helper extends helper_base{
     
     public first = () :string => {
         let sep = config.sep
-        let router = this.attr.router;
+        let router = this.path;
         let link = this.tag.wrap( "a" , "first" , { href : router + sep + 1 } );
         return this.tag.wrap("li" , link ,{ class : "" });
     }

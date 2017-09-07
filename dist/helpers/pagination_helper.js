@@ -6,9 +6,9 @@ class pagination_helper extends helper_base_1.helper_base {
     constructor() {
         super();
         this.page = {};
-        this.path = "example/$";
+        this.path = "example/#";
         this.build = (path, num) => {
-            return path.replace("$", String(num));
+            return path.replace("#", String(num));
         };
         this.start = (pagenationInterface, path) => {
             this.page = pagenationInterface;
@@ -17,7 +17,7 @@ class pagination_helper extends helper_base_1.helper_base {
         };
         this.first = () => {
             let sep = common_1.config.sep;
-            let router = this.attr.router;
+            let router = this.path;
             let link = this.tag.wrap("a", "first", { href: router + sep + 1 });
             return this.tag.wrap("li", link, { class: "" });
         };
