@@ -4,9 +4,10 @@ const service_base_1 = require("../service_base");
 class tasks_service extends service_base_1.service_base {
     constructor(name) {
         super(name);
-        this.whereBuild = (query) => {
-            let where = this.search(query);
-            return where.build;
+        this.conditionsBuild = (query) => {
+            let conditions = this.search(query);
+            conditions.append("title", conditions.like("%{word}%"));
+            return conditions.build();
         };
     }
 }

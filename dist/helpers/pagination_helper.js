@@ -8,7 +8,8 @@ class pagination_helper extends helper_base_1.helper_base {
         this.page = {};
         this.path = "example/#";
         this.build = (path, num) => {
-            return path.replace("#", String(num));
+            this.appendQuery();
+            return path.replace("#", String(num)) + this.appendQuery();
         };
         this.start = (pagenationInterface, path) => {
             this.page = pagenationInterface;
@@ -17,19 +18,20 @@ class pagination_helper extends helper_base_1.helper_base {
         };
         this.first = () => {
             let sep = common_1.config.sep;
-            let router = this.path;
-            let link = this.tag.wrap("a", "first", { href: router + sep + 1 });
+            let path = this.path;
+            let link = this.tag.wrap("a", "first", { href: this.build(path, 1) });
             return this.tag.wrap("li", link, { class: "" });
         };
         this.prev = () => {
-            let link = this.tag.wrap("a", "first", { href: "" });
+            let path = this.path;
+            let link = this.tag.wrap("a", "prev", { href: this.build(path, 1) });
             return this.tag.wrap("li", link, { class: "" });
         };
         this.numbers = () => {
             return "";
         };
         this.next = () => {
-            let link = this.tag.wrap("a", "first", { href: "" });
+            let link = this.tag.wrap("a", "next", { href: "" });
             return this.tag.wrap("li", link, { "class": "" });
         };
         this.last = () => {
@@ -38,11 +40,10 @@ class pagination_helper extends helper_base_1.helper_base {
         };
         this.end = () => {
             this.page = {};
-            this.attr = {};
             return this.tag.create("/ul");
         };
-        this.render = (pagenationInterface, option) => {
-            let html = this.start(pagenationInterface, option);
+        this.render = (pagenationInterface, option = { path: "aaa/#" }) => {
+            let html = this.start(pagenationInterface, option.path);
             html += this.first();
             html += this.prev();
             html += this.numbers();
@@ -52,6 +53,18 @@ class pagination_helper extends helper_base_1.helper_base {
             return html;
         };
         this.load("tag"); //Tagヘルパーの呼び出し。
+    }
+    appendQuery() {
+        //encodeURIComponent(JSON.stringify(object_to_be_serialised))
+        let prts = this.page.queryPrams;
+        if (prts.length === 0) {
+            return "";
+        }
+        let q = "";
+        Object.keys(prts).forEach(function (key) {
+            q += "&" + encodeURIComponent(key) + "=" + encodeURIComponent(prts[key]);
+        });
+        return q.replace("&", "?");
     }
 }
 module.exports = new pagination_helper();

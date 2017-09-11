@@ -7,12 +7,15 @@ class tasks_router extends router_base_1.router_base {
         this.name = "tasks";
         this.search = (req, res, next) => {
             let tasks = this.service.pagination({
-                where: this.service.whereBuild(req.query),
+                where: this.service.conditionsBuild(req.query),
                 limit: 10
-            });
+            }, req.query);
             tasks.then((result) => {
+                // fir riw
                 this.setData({ tasks: result.rows });
-                this.setData({ pagination: result.page });
+                // for pagination
+                console.log(result.pagination);
+                this.setData({ pagination: result.pagination });
                 this.render(req, res, "index");
             }).catch((error) => {
                 this.render(req, res, "index");

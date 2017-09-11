@@ -17,9 +17,9 @@ export abstract class service_base{
         return new search(query);
     }  
     
-    abstract whereBuild = (query):sequelize.WhereLogic => {
-        let where = this.search(query);
-        return where.build;
+    abstract conditionsBuild = (query):sequelize.WhereLogic => {
+        let condition = this.search(query);
+        return condition.build();
     }
     /*
      * 
@@ -39,7 +39,7 @@ export abstract class service_base{
                 let limit = ( findOptions.limit ) ? findOptions.limit: 0;
                 
                 if(limit > 0){
-                    pagination.pagination.total = Math.ceil(res.count / limit);
+                    pagination.pagination.totalPage = Math.ceil(res.count / limit);
                     pagination.pagination.currentPage = offset + 1;
                 }
                 

@@ -6,9 +6,10 @@ export class tasks_service extends service_base{
         super(name);
     }
 
-    public whereBuild = (query) :sequelize.WhereLogic=>{
-        let where = this.search(query);
-        return where.build;
+    public conditionsBuild = (query) :sequelize.WhereLogic=>{
+        let conditions = this.search(query);
+        conditions.append("title",conditions.like("%{word}%"));
+        return conditions.build();
     }
 
 }

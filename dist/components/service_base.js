@@ -6,9 +6,9 @@ class service_base {
         this.search = (query) => {
             return new search_1.search(query);
         };
-        this.whereBuild = (query) => {
-            let where = this.search(query);
-            return where.build;
+        this.conditionsBuild = (query) => {
+            let condition = this.search(query);
+            return condition.build();
         };
         /*
          *
@@ -24,7 +24,7 @@ class service_base {
                     let offset = (findOptions.offset) ? findOptions.offset : 0;
                     let limit = (findOptions.limit) ? findOptions.limit : 0;
                     if (limit > 0) {
-                        pagination.pagination.total = Math.ceil(res.count / limit);
+                        pagination.pagination.totalPage = Math.ceil(res.count / limit);
                         pagination.pagination.currentPage = offset + 1;
                     }
                     pagination = Object.assign(res, pagination);
