@@ -6,51 +6,74 @@ class search {
         this._where = {};
         this._query = {};
         this.like = (template, alias = "") => {
-            return (name, self) => {
-                alias = (alias !== "") ? alias : name;
-                let s = template.replace("{word}", this.query[name]);
+            return (names, self) => {
+                alias = (alias !== "") ? alias : names;
+                let s = template.replace("{word}", this.query[names]);
                 self.add(alias, { $like: s });
             };
         };
-        this.numericComparison = (name, self, alias, type) => {
-            alias = (alias !== "") ? alias : name;
+        this.numericComparison = (names, self, alias, type) => {
+            alias = (alias !== "") ? alias : names;
             let rule = {};
-            rule[type] = this.query[name];
+            rule[type] = self.query[names];
             self.add(alias, rule);
         };
         this.eq = (alias = "") => {
-            return (name, self) => {
-                this.numericComparison(name, self, alias, "$eq");
+            return (names, self) => {
+                self.numericComparison(names, self, alias, "$eq");
             };
         };
-        this.gt = (alias) => {
-            return this.numericComparison(name, self, alias, "$gt");
+        this.gt = (alias = "") => {
+            return (names, self) => {
+                self.numericComparison(names, self, alias, "$gt");
+            };
         };
-        this.gte = (alias) => {
-            return this.numericComparison(name, self, alias, "$gte");
+        this.gte = (alias = "") => {
+            return (names, self) => {
+                self.numericComparison(names, self, alias, "$gte");
+            };
         };
-        this.lt = (alias) => {
-            return this.numericComparison(name, self, alias, "$lt");
+        this.lt = (alias = "") => {
+            return (names, self) => {
+                self.numericComparison(names, self, alias, "$lt");
+            };
         };
-        this.lte = (alias) => {
-            return this.numericComparison(name, self, alias, "$lte");
+        this.lte = (alias = "") => {
+            return (names, self) => {
+                self.numericComparison(names, self, alias, "$lte");
+            };
         };
-        this.add = (name, value) => {
+        this.add = (names, value) => {
             let rule = {};
-            rule[name] = value;
+            rule[names] = value;
             this._where = deepAssign(this._where, rule);
         };
-        this.append = (name, callback = (name, self) => { }) => {
-            if (typeof this.query[name] === undefined) {
-                return this;
+        this.between = (alias = "") => {
+            return (names, self) => {
+                alias = (alias !== "") ? alias : names;
+                self.add(alias, { $between: [self.query[names[0]], self.query[names[1]]] });
+            };
+        };
+        this.append = (names, callback = (name, self) => { }) => {
+            if (names === "custom") {
+                callback(names, this);
+                return;
             }
-            callback(name, this);
+            if (!Array.isArray(names)) {
+                names = [names];
+            }
+            for (let i = 0; i < names.length; i++) {
+                if (typeof this.query[names[i]] === "undefined") {
+                    return this;
+                }
+            }
+            callback(names, this);
             return this;
         };
         this.query = query;
         return this;
     }
-    get build() {
+    build() {
         return this._where;
     }
     set query(query) {
