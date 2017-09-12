@@ -7,6 +7,9 @@ class tag_helper extends helper_base_1.helper_base {
         this.buildAttr = (attr) => {
             let attribute = "";
             for (let key in attr) {
+                if (attr[key] === "") {
+                    continue;
+                }
                 attribute += " " + key + '="' + attr[key] + '"';
             }
             return attribute;

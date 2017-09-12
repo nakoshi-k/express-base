@@ -1,40 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const search_1 = require("./search");
+const pagination_1 = require("./pagination");
 class service_base {
     constructor(name) {
-        this.search = (query) => {
+        this.search = (query = {}) => {
             return new search_1.search(query);
         };
-        this.conditionsBuild = (query) => {
-            let condition = this.search(query);
-            return condition.build();
-        };
-        /*
-         *
-         * $param query
-         * $return recodeset and pagination
-         */
-        this.pagination = (findOptions, queryPrams = {}) => {
-            let pagination = new Promise((resolve, reject) => {
-                this.model.findAndCountAll(findOptions)
-                    .then((res) => {
-                    let pagination = { pagination: { totalPage: 0, currentPage: 1 } };
-                    pagination.pagination.queryPrams = queryPrams;
-                    let offset = (findOptions.offset) ? findOptions.offset : 0;
-                    let limit = (findOptions.limit) ? findOptions.limit : 0;
-                    if (limit > 0) {
-                        pagination.pagination.totalPage = Math.ceil(res.count / limit);
-                        pagination.pagination.currentPage = offset + 1;
-                    }
-                    pagination = Object.assign(res, pagination);
-                    resolve(pagination);
-                }).catch((e) => {
-                    console.log(e);
-                    reject(e);
-                });
-            });
-            return pagination;
+        this.pagination = (model = this.model) => {
+            return new pagination_1.pagination(model);
         };
         let models = require('../models');
         this.models = models;

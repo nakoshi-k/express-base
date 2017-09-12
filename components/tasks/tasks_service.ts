@@ -6,10 +6,13 @@ export class tasks_service extends service_base{
         super(name);
     }
 
-    public conditionsBuild = (query) :sequelize.WhereLogic=>{
-        let conditions = this.search(query);
-        conditions.append("title",conditions.like("%{word}%"));
-        return conditions.build();
+    public conditions = (req) : { where : sequelize.WhereLogic,limit:number,offset:number } =>{
+        let search = this.search();
+        search.query = req.query;
+        search.page = req.params.page;
+        search.limit = 10;
+        search.append("title",search.like("%{word}%"));
+        return search.build();
     }
 
 }

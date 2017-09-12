@@ -7,8 +7,8 @@
   <body>
  <%- include('../components/global-nav') %>
 
-<%- tasks.length %>
 
+ <%- pagination.render(page , {path: "/tasks/page/#"}); %>
 
 
 

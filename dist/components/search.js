@@ -5,6 +5,8 @@ class search {
     constructor(query = {}) {
         this._where = {};
         this._query = {};
+        this._limit = 10;
+        this._offset = 0;
         this.like = (template, alias = "") => {
             return (names, self) => {
                 alias = (alias !== "") ? alias : names;
@@ -73,8 +75,27 @@ class search {
         this.query = query;
         return this;
     }
+    get offset() {
+        return this._offset;
+    }
+    set offset(offset) {
+        this._offset = offset;
+    }
+    get limit() {
+        return this._limit;
+    }
+    set limit(limit) {
+        this._limit = limit;
+    }
+    set page(page) {
+        this.offset = this.limit * (page - 1);
+    }
     build() {
-        return this._where;
+        return {
+            offset: this.offset,
+            limit: this.limit,
+            where: this._where
+        };
     }
     set query(query) {
         this._query = query;

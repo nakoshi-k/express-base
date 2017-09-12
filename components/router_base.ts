@@ -57,7 +57,6 @@ export abstract class router_base{
 
     }
 
-
     public render = ( req , res , view : string = "",vars = {}) => {
         this.beforeRender(req,res);
         let f = view.substring(1,1);

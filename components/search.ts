@@ -1,15 +1,37 @@
 let deepAssign = require('deep-assign');
 export class search{
-    public _where = {};
-    public _query = {};
+    private _where = {};
+    private  _query = {};
+    private _limit = 10; 
+    private _offset = 0; 
     
-    constructor(query = {}){
+    constructor(query  = {}){
         this.query = query;
         return this;
     }
+    get offset () {
+        return this._offset;
+    }    
+    set offset ( offset : number ) {
+        this._offset = offset;
+    }
+    get limit () {
+        return this._limit;
+    }    
+    set limit ( limit: number ) {
+        this._limit = limit;
+    }
+    
+    set page (page){
+        this.offset = this.limit * (page - 1);
+    }
 
     public build() {
-        return this._where;
+        return {
+            offset : this.offset,
+            limit : this.limit,
+            where :this._where
+        };
     }
 
     set query (query){

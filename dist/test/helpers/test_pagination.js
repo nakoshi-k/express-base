@@ -4,9 +4,9 @@ describe('pagination_helper', () => {
     let pagination = require("../../helpers/pagination_helper");
     it("test", () => {
         let page = { totalPage: 6,
-            currentPage: 1,
+            currentPage: 3,
             queryPrams: { a: '123', aaa: '12' }
         };
-        console.log(pagination.render(page, { path: "search/#" }));
+        console.log(pagination.render(page, { path: "page/#/" }));
     });
 });

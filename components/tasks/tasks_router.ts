@@ -6,18 +6,18 @@ export class tasks_router extends router_base {
     public service:tasks_service;
 
     private search = (req : express.Request,res: express.Response, next : express.NextFunction) => {
+        
 
-        let tasks = this.service.pagination({
-            where : this.service.conditionsBuild(req.query),
-            limit : 10
-        },req.query);
+        let pagination = this.service.pagination();
+        let conditions = this.service.conditions( req );
+        let tasks = pagination.find(conditions);
         
         tasks.then( (result : {rows : any, count :number,pagination:any}) => {
             // fir riw
             this.setData({tasks:result.rows});
             // for pagination
-            console.log(result.pagination);
-            this.setData({pagination:result.pagination});
+            this.setData({page:result.pagination});
+
             this.render(req,res,"index");
         }).catch((error) => {               
             this.render(req,res,"index");
@@ -59,6 +59,7 @@ export class tasks_router extends router_base {
 
     protected beforeRender = (req:express.Request,res:express.Response) => {
        this.loadHelper("form");
+       this.loadHelper("pagination");
        this.csrfReady(req);
     }
 
@@ -66,6 +67,9 @@ export class tasks_router extends router_base {
         let csrfProtection = this.csrfProtection;
         let parseForm = this.parseForm;
         router.get("/", csrfProtection , this.search);
+        router.get("/page", csrfProtection , this.search);
+        router.get("/page/:page", csrfProtection , this.search);
+
         router.get("/add", csrfProtection , this.add);
         router.get("/:id", csrfProtection , this.view);
         router.post("/", parseForm , csrfProtection , this.insert);

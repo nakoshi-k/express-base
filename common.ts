@@ -6,6 +6,7 @@ class common_config{
         this._sep = path.sep;
     }
     private _sep = "";
+    
     get sep () {
         return this._sep;
     }

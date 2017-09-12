@@ -6,16 +6,14 @@ class tasks_router extends router_base_1.router_base {
         super(...arguments);
         this.name = "tasks";
         this.search = (req, res, next) => {
-            let tasks = this.service.pagination({
-                where: this.service.conditionsBuild(req.query),
-                limit: 10
-            }, req.query);
+            let pagination = this.service.pagination();
+            let conditions = this.service.conditions(req);
+            let tasks = pagination.find(conditions);
             tasks.then((result) => {
                 // fir riw
                 this.setData({ tasks: result.rows });
                 // for pagination
-                console.log(result.pagination);
-                this.setData({ pagination: result.pagination });
+                this.setData({ page: result.pagination });
                 this.render(req, res, "index");
             }).catch((error) => {
                 this.render(req, res, "index");
@@ -47,12 +45,15 @@ class tasks_router extends router_base_1.router_base {
         };
         this.beforeRender = (req, res) => {
             this.loadHelper("form");
+            this.loadHelper("pagination");
             this.csrfReady(req);
         };
         this.bind = (router) => {
             let csrfProtection = this.csrfProtection;
             let parseForm = this.parseForm;
             router.get("/", csrfProtection, this.search);
+            router.get("/page", csrfProtection, this.search);
+            router.get("/page/:page", csrfProtection, this.search);
             router.get("/add", csrfProtection, this.add);
             router.get("/:id", csrfProtection, this.view);
             router.post("/", parseForm, csrfProtection, this.insert);

@@ -5,6 +5,9 @@ export class tag_helper extends helper_base{
     private buildAttr  = (attr:{}) : string => {
         let attribute =  "";
         for(let key in attr){
+            if(attr[key] === ""){
+                continue;
+            }
             attribute += " " + key + '="' + attr[key] + '"';            
         }
         return attribute; 
