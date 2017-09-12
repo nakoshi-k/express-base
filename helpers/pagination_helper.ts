@@ -58,7 +58,7 @@ class pagination_helper extends helper_base{
         }
         let q :string = "";
         Object.keys(prts).forEach(function(key) {
-            q+= "&" + encodeURIComponent(key) + "=" + encodeURIComponent(prts[key]);
+            q += "&" + encodeURIComponent(key) + "=" + encodeURIComponent(prts[key]);
           });
         return q.replace("&","?");
     }

@@ -1,13 +1,13 @@
 import {helper_base} from "./helper_base";
 class form_helper extends helper_base{
-    private bindData = {};
+    private bindData : any = {};
     
     private tag; //tagHelperが入る
 
     constructor(){
         super();
         this.load("tag"); //Tagヘルパーの呼び出し。
-        this.bindData = {};
+        this.bindData = {csrf:""};
     }
 
     private bind = (bindData : {} = {}) =>{
@@ -33,21 +33,32 @@ class form_helper extends helper_base{
     }
 
     csrf = (token : string) : string => {
+        if(token === ""){
+            return "";
+        }
         return this.tag.create( "input" , { name : "_csrf" , value : token , type : "hidden"});
     }
-    start = (name:string , bindData : {},attr = {}) => {
+    
+    action = (action:string) => {
+        action = action.replace(":id" , this.bindData.id);
+        return action;
+    }
+
+    start = (name:string , bindData : {},attr = {method : "post" , action : ""}) => {
         this.bind(bindData);
-        let def = {
-            method : "post",
-            action : ""            
-        }
-        let csrfTag :string = "";
-        if( "csrf" in this.bindData){
-            csrfTag = this.csrf(this.bindData["csrf"]);
-        }
         attr["name"] = name;
-        attr = Object.assign(def,attr);
-        return this.tag.create("form",attr) + csrfTag;
+        
+        let method = "";
+        if(attr.method !== "post" && attr.method !== "get"){
+            method = this.method(attr.method);
+            attr.method = "post";
+        }
+        attr.action = this.action(attr.action);
+
+        let form = this.tag.create("form",attr);
+        form += method;
+        form += this.csrf(this.bindData.csrf) ;
+        return form;
     }
     
     end = () => {
@@ -134,6 +145,14 @@ class form_helper extends helper_base{
         attr = this.initAttr(name,attr);
         attr["type"] = "file"
         this.input(name,attr);
+    }
+    
+    method = ( name ) => {
+        return this.input("_method" , { type : "hidden" , value : name});
+    }
+
+    deleteLink = ( path ) => {
+        let script = "";
     }
     
 }

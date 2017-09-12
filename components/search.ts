@@ -3,7 +3,7 @@ export class search{
     private _where = {};
     private  _query = {};
     private _limit = 10; 
-    private _offset = 0; 
+    private _offset = 1; 
     
     constructor(query  = {}){
         this.query = query;
@@ -23,6 +23,9 @@ export class search{
     }
     
     set page (page){
+        if(!page){
+            page = 1;
+        }
         this.offset = this.limit * (page - 1);
     }
 

@@ -6,7 +6,7 @@ class search {
         this._where = {};
         this._query = {};
         this._limit = 10;
-        this._offset = 0;
+        this._offset = 1;
         this.like = (template, alias = "") => {
             return (names, self) => {
                 alias = (alias !== "") ? alias : names;
@@ -88,6 +88,9 @@ class search {
         this._limit = limit;
     }
     set page(page) {
+        if (!page) {
+            page = 1;
+        }
         this.offset = this.limit * (page - 1);
     }
     build() {

@@ -23,21 +23,28 @@ class form_helper extends helper_base_1.helper_base {
             return attr;
         };
         this.csrf = (token) => {
+            if (token === "") {
+                return "";
+            }
             return this.tag.create("input", { name: "_csrf", value: token, type: "hidden" });
         };
-        this.start = (name, bindData, attr = {}) => {
+        this.action = (action) => {
+            action = action.replace(":id", this.bindData.id);
+            return action;
+        };
+        this.start = (name, bindData, attr = { method: "post", action: "" }) => {
             this.bind(bindData);
-            let def = {
-                method: "post",
-                action: ""
-            };
-            let csrfTag = "";
-            if ("csrf" in this.bindData) {
-                csrfTag = this.csrf(this.bindData["csrf"]);
-            }
             attr["name"] = name;
-            attr = Object.assign(def, attr);
-            return this.tag.create("form", attr) + csrfTag;
+            let method = "";
+            if (attr.method !== "post" && attr.method !== "get") {
+                method = this.method(attr.method);
+                attr.method = "post";
+            }
+            attr.action = this.action(attr.action);
+            let form = this.tag.create("form", attr);
+            form += method;
+            form += this.csrf(this.bindData.csrf);
+            return form;
         };
         this.end = () => {
             this.unBind();
@@ -114,8 +121,14 @@ class form_helper extends helper_base_1.helper_base {
             attr["type"] = "file";
             this.input(name, attr);
         };
+        this.method = (name) => {
+            return this.input("_method", { type: "hidden", value: name });
+        };
+        this.deleteLink = (path) => {
+            let script = "";
+        };
         this.load("tag"); //Tagヘルパーの呼び出し。
-        this.bindData = {};
+        this.bindData = { csrf: "" };
     }
 }
 module.exports = new form_helper();
