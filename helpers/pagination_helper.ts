@@ -27,7 +27,7 @@ class paginationConfig{
     active : {tagClass : string , innerTag : string , innerClass : "" }
            = {tagClass:"active", innerTag : "a" , innerClass:""};
     text : { first : string , last : string, prev : string, next : string }  
-         = { first : "first", last : "last", prev : "prev", next : "next" }
+         = { first : "|&larr; first", last : "last &rarr;|", prev : "&larr; Prev", next : "Next &rarr;" }
     
 }
 
@@ -52,7 +52,6 @@ class pagination_helper extends helper_base{
     }
     
     private appendQuery(){
-        //encodeURIComponent(JSON.stringify(object_to_be_serialised))
         let prts = this.page.queryPrams;
         if(prts.length === 0){
             return "";
@@ -111,6 +110,9 @@ class pagination_helper extends helper_base{
     }        
 
     public special = ( name , disableCondition = false, pageNum : number) => {
+        if(this.page.totalPage === 0){
+            return "";
+        }
         let innerText = this.config.text[name];
         let tag : string = this.buildLinkTag(innerText,pageNum);
         let addClass = this.config[name].tagClass;
@@ -179,10 +181,8 @@ class pagination_helper extends helper_base{
         html += this.numbers();
         html += this.next();
         html += this.last();
-
         let parent = this._config.parent;
         html = this.tag.wrap( parent.tag , html , {class : parent.tagClass});
-
         return this.wrap(html);
     }   
 }

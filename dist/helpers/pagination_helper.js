@@ -12,7 +12,7 @@ class paginationConfig {
         this.first = { tagClass: "first", innerTag: "span", innerClass: "" };
         this.last = { tagClass: "last", innerTag: "span", innerClass: "" };
         this.active = { tagClass: "active", innerTag: "a", innerClass: "" };
-        this.text = { first: "first", last: "last", prev: "prev", next: "next" };
+        this.text = { first: "|&larr; first", last: "last &rarr;|", prev: "&larr; Prev", next: "Next &rarr;" };
     }
 }
 class pagination_helper extends helper_base_1.helper_base {
@@ -54,6 +54,9 @@ class pagination_helper extends helper_base_1.helper_base {
             return false;
         };
         this.special = (name, disableCondition = false, pageNum) => {
+            if (this.page.totalPage === 0) {
+                return "";
+            }
             let innerText = this.config.text[name];
             let tag = this.buildLinkTag(innerText, pageNum);
             let addClass = this.config[name].tagClass;
@@ -127,7 +130,6 @@ class pagination_helper extends helper_base_1.helper_base {
         this._config = config;
     }
     appendQuery() {
-        //encodeURIComponent(JSON.stringify(object_to_be_serialised))
         let prts = this.page.queryPrams;
         if (prts.length === 0) {
             return "";

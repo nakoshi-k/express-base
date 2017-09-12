@@ -10,7 +10,7 @@ export class tasks_router extends router_base {
 
         let pagination = this.service.pagination();
         let conditions = this.service.conditions( req );
-        let tasks = pagination.find(conditions);
+        let tasks = pagination.find( conditions , req.query);
         
         tasks.then( (result : {rows : any, count :number,pagination:any}) => {
             // fir riw

@@ -8,7 +8,7 @@ class tasks_router extends router_base_1.router_base {
         this.search = (req, res, next) => {
             let pagination = this.service.pagination();
             let conditions = this.service.conditions(req);
-            let tasks = pagination.find(conditions);
+            let tasks = pagination.find(conditions, req.query);
             tasks.then((result) => {
                 // fir riw
                 this.setData({ tasks: result.rows });

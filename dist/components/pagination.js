@@ -6,7 +6,6 @@ class pagination {
             let pagination = new Promise((resolve, reject) => {
                 this.model.findAndCountAll(findOptions)
                     .then((res) => {
-                    console.log(findOptions);
                     let pagination = { pagination: { totalPage: 0, currentPage: 1 } };
                     pagination.pagination.queryPrams = queryPrams;
                     let offset = (findOptions.offset) ? findOptions.offset : 0;
