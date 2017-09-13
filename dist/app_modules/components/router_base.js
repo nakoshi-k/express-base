@@ -42,7 +42,6 @@ class router_base {
                 view = view;
             }
             this.setData(vars);
-            console.log(this.vars);
             res.render(view, this.vars, (err, html) => {
                 if (!err) {
                     res.send(html);

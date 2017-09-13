@@ -42,8 +42,11 @@ class tasks_router extends router_base_1.router_base {
         this.delete = (req, res) => {
             let model = this.model;
             model.findById(req.params.id).then((result) => {
-                result.destroy();
+                if (result) {
+                    result.destroy();
+                }
             });
+            res.send(100);
         };
         this.insert = (req, res, next) => {
             let entity = this.model.build(req.body);

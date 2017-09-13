@@ -46,8 +46,11 @@ export class tasks_router extends router_base {
     private delete = (req:express.Request,res:express.Response) => {
         let model = this.model;
         model.findById( req.params.id ).then((result) => {
-            result.destroy();
+            if(result){
+                result.destroy();
+            }
         })
+        res.send(100);
     }
 
     private insert = (req: express.Request,res:express.Response,next:express.NextFunction) => {
