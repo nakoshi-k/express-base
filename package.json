@@ -39,6 +39,7 @@
     "morgan": "^1.7.0",
     "mysql": "^2.14.1",
     "mysql2": "^1.4.2",
+    "node-uuid": "^1.4.8",
     "reflect-metadata": "^0.1.10",
     "riot": "^3.7.0",
     "sequelize": "^3.30.4",

@@ -74,6 +74,7 @@ export class tasks_router extends router_base {
     protected beforeRender = (req:express.Request,res:express.Response) => {
        this.loadHelper("form");
        this.loadHelper("pagination");
+       this.loadHelper("crud_support");
        this.csrfReady(req);
     }
 

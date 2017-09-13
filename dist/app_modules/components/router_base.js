@@ -15,8 +15,9 @@ class router_base {
             this.service = new service[name + "_service"](this.name);
         };
         this.csrfReady = (req, formHelper = "form") => {
-            console.log(41);
-            this.vars[formHelper].bind({ "csrf": req.csrfToken() });
+            let csrf = req.csrfToken();
+            this.vars["csrf"] = csrf;
+            this.vars[formHelper].bind({ "csrf": csrf });
         };
         this.bind = (router) => {
             return router;
@@ -43,11 +44,12 @@ class router_base {
             this.setData(vars);
             console.log(this.vars);
             res.render(view, this.vars, (err, html) => {
-                if (html) {
+                if (!err) {
                     res.send(html);
                     return;
                 }
                 let viewDir = __dirname + sep + ".." + sep + ".." + sep;
+                console.log(viewDir);
                 req.app.set('views', viewDir + "apps" + sep + "common" + sep + "views");
                 res.status = err.status;
                 res.render("error", { "message": err.message, "error": err });
@@ -92,7 +94,8 @@ class router_base {
     */
     loadHelper(name) {
         let sep = common_1.config.sep;
-        this.vars[name] = require(".." + sep + "helpers" + sep + name + "_helper");
+        let path = ".." + sep + "helpers" + sep + name + "_helper";
+        this.vars[name] = require(path);
     }
 }
 exports.router_base = router_base;
