@@ -3,10 +3,9 @@ module.exports = {
   up: function(queryInterface, Sequelize) {
     return queryInterface.createTable('tasks', {
       id: {
+        type: Sequelize.UUID,
         allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
+        unique: true
       },
       title: {
         type: Sequelize.STRING
