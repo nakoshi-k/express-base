@@ -11,7 +11,7 @@ const methodOverride = require('method-override');
 /**
  * router loading
  */
-const tasks_router_1 = require("./components/tasks/tasks_router");
+const tasks_router_1 = require("./apps/tasks/tasks_router");
 /**
  * main
  */
@@ -33,7 +33,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'apps', "public")));
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(methodOverride(function (req, res) {
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {

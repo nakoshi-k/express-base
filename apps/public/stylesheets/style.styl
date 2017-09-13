@@ -1,0 +1,77 @@
+/*
+    kube css
+*/
+
+@require "../../../node_modules/kube/dist/css/kube.min.css"
+
+/*
+    flat-picker css
+*/
+
+@require "../../../node_modules/flatpickr/dist/flatpickr.min.css"
+
+@require "../../../node_modules/flatpickr/dist/themes/light.css"
+
+@require "../../../node_modules/flatpickr/dist/plugins/confirmDate/confirmDate.css"
+
+
+/*
+    user css
+*/
+
+$dark = #333;
+$dark-sec = $dark + #333;
+$dark-trd = $dark + #666;
+
+$light = #fefefe
+$light-sec = $light - #222222;
+$light-trd = $light - #222222;
+
+$color-primary = #666;
+$color-secondary = #666;
+$color-base = #eee;
+
+$margin = 8;
+$content-width = 1120;
+
+.body{
+    color : $dark;
+    background-color : $light;
+}
+
+.global-nav{
+    margin-bottom : $margin px;
+    padding: $margin * 3 px;
+    border-bottom : 1px solid $light-trd;
+    background-color : $light;
+    z-index : 1000;
+}
+.global-nav a{
+    color : $dark-sec;
+    text-decoration : none;
+    padding : $margin;
+    display : block;
+}
+.global-nav a:hover{
+    color : $dark-trd;
+    text-decoration : underline;
+}
+
+.global-nav h1,
+.global-nav ul,
+.global-nav li{
+    display :inline-block
+}
+
+.global-nav li {
+    margin-right : $margin * 3 px;
+}
+
+#main {
+    min-height : 1200px;
+}
+.content{
+    max-width : $content-width px;
+    margin : 0 auto;
+    padding : $margin * 2 px;
+}

@@ -4,15 +4,17 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "distViewFile": "cpx \"views/**/*.ejs\" dist/views/ -w",
+    "distViewFile": "cpx \"apps/**/views/**/*.ejs\" dist/apps -w",
     "distComponentsFile": "cpx \"public/components/**/*.*\" dist/public/components -w",
     "distModelFile": "cpx \"models/**/*.*\" dist/models -w",
     "distConfigFile": "cpx \"config/**/*.*\" dist/config -w",
-    "distTagFile": "cpx \"public/tags/**/*.*\" dist/public/tags -w",
-    "distStylus": "stylus public/stylus/style.styl -o dist/public/css/style.css --include-css",
-    "watchStylus": "chokidar \"public/stylus/**/*.styl\" --command \"npm run distStylus\"",
+    "distTagFile": "cpx \"apps/public/tags/**/*.*\" dist/apps/public/tags -w",
+    "distStylus": "stylus apps/public/stylesheets/style.styl -o dist/apps/public/stylesheets/style.css --include-css",
+    "watchStylus": "chokidar \"apps/public/stylesheets/**/*.styl\" --command \"npm run distStylus\"",
+    "distComponetsScripts": "browserify apps/public/scripts/components.ts -p [tsify] > dist/apps/public/scripts/components.js",
+    "watchComponents": "chokidar \"apps/public/scripts/**/*.ts\" --command \"npm run distComponetsScripts\"",
     "tsc": "tsc -w",
-    "watch": "npm-run-all -p tsc distViewFile distComponentsFile distTagFile distConfigFile distModelFile watchStylus",
+    "watch": "npm-run-all -p tsc distViewFile distComponentsFile distTagFile distConfigFile distModelFile watchStylus watchComponents",
     "test": "mocha ./dist/test/**/*.js"
   },
   "dependencies": {
@@ -31,15 +33,30 @@
     "ejs": "~2.4.1",
     "express": "^4.13.4",
     "express-session": "^1.15.3",
+    "flatpickr": "^3.0.7",
+    "jquery": "^3.2.1",
+    "kube": "git+https://github.com/imperavi/kube.git",
     "method-override": "^2.3.9",
     "morgan": "^1.7.0",
     "mysql": "^2.14.1",
     "mysql2": "^1.4.2",
     "reflect-metadata": "^0.1.10",
+    "riot": "^3.7.0",
     "sequelize": "^3.30.4",
     "sequelize-cli": "^2.8.0",
     "serve-favicon": "^2.3.2",
     "tsc": "^1.20150623.0"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browser": {
+    "confirmDatePlugin": "node_modules/flatpickr/dist/plugins/confirmDate/confirmDate.js"
+  },
+  "browserify-shim": {
+    "jquery": "$"
+  }
 }
