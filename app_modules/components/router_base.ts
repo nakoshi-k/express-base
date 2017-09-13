@@ -66,8 +66,8 @@ export abstract class router_base{
 
 
         if(f !== "." && f !== sep ){
-           let p = __dirname + sep + ".." + sep + ".." + sep;
-           let dir =  p + "apps" + sep + this.name + sep  +"views";
+           let viewDir = __dirname + sep + ".." + sep + ".." + sep;
+           let dir =  viewDir + "apps" + sep + this.name + sep  +"views";
            req.app.set('views', dir);
            view = view;
         }
@@ -79,9 +79,10 @@ export abstract class router_base{
                 res.send(html);
                 return;
             }
-            let p = __dirname + sep + ".." + sep + ".." + sep;
-            req.app.set('views', p + "apps" + sep + "common" + sep + "views" );
-            res.render("error", {"message" : err , "error" :err });
+            let viewDir = __dirname + sep + ".." + sep + ".." + sep;
+            req.app.set('views', viewDir + "apps" + sep + "common" + sep + "views" );
+            res.status = err.status;
+            res.render("error", {"message" : err.message , "error" :err });
         });
         
     } 

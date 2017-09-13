@@ -11,10 +11,9 @@
     "distTagFile": "cpx \"apps/public/tags/**/*.*\" dist/apps/public/tags -w",
     "distStylus": "stylus apps/public/stylesheets/style.styl -o dist/apps/public/stylesheets/style.css --include-css",
     "watchStylus": "chokidar \"apps/public/stylesheets/**/*.styl\" --command \"npm run distStylus\"",
-    "distComponetsScripts": "browserify apps/public/scripts/components.ts -p [tsify] > dist/apps/public/scripts/components.js",
-    "watchComponents": "chokidar \"apps/public/scripts/**/*.ts\" --command \"npm run distComponetsScripts\"",
+    "distComponetsScripts": "watchify apps/public/scripts/components.ts -p [tsify] -o dist/apps/public/scripts/components.js -v",
     "tsc": "tsc -w",
-    "watch": "npm-run-all -p tsc distViewFile distComponentsFile distTagFile distConfigFile distModelFile watchStylus watchComponents",
+    "watch": "npm-run-all -p tsc distViewFile distComponentsFile distTagFile distConfigFile distModelFile watchStylus distComponetsScripts",
     "test": "mocha ./dist/test/**/*.js"
   },
   "dependencies": {
@@ -54,7 +53,9 @@
     ]
   },
   "browser": {
-    "confirmDatePlugin": "node_modules/flatpickr/dist/plugins/confirmDate/confirmDate.js"
+    "jquery": "./node_modules/jquery/dist/jquery.min.js",
+    "confirmDatePlugin": "./node_modules/flatpickr/dist/plugins/confirmDate/confirmDate.js",
+    "flatpickr": "./node_modules/flatpickr/dist/flatpickr.min.js"
   },
   "browserify-shim": {
     "jquery": "$"
