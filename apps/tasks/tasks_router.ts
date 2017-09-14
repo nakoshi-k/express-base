@@ -1,9 +1,27 @@
 import * as express from "express";
-import {router_base} from "../../app_modules/components/router_base";
+import { router } from "../../base/core";
 import {tasks_service} from "./tasks_service";
-export class tasks_router extends router_base {
+import * as helpers  from "../../base/helper";
+
+export class tasks_router extends router {
     public name = "tasks";
     public service:tasks_service;
+    
+    protected beforeRender = async(req:express.Request,res:express.Response) => {
+        this.helper("form" ,new helpers.form_helper());
+        this.helper("pagination" , new helpers.pagination_helper() );
+        let crud = new helpers.crud_support_helper();
+        this.helper("crud_support" ,crud );
+        
+        await crud.load();
+
+        this.csrfReady(req);
+        return [req,res];
+    }
+
+    protected init = () => {
+        this.service = new tasks_service(this.name);
+    }
 
     private search = (req : express.Request,res: express.Response, next : express.NextFunction) => {
         let pagination = this.service.pagination();
@@ -67,7 +85,6 @@ export class tasks_router extends router_base {
     }
 
     private update = (req:express.Request,res:express.Response,next:express.NextFunction) => {
-        console.log(req.params.id); 
         let model = this.model;
         model.findById( req.params.id ).then((task) => {
             task.update(req.body).then( (result) => {
@@ -78,15 +95,7 @@ export class tasks_router extends router_base {
         })
     }
 
-    protected beforeRender = (req:express.Request,res:express.Response) => {
-       this.loadHelper("form");
-       this.loadHelper("pagination");
-       this.loadHelper("crud_support");
-       this.csrfReady(req);
-       return new Promise((resolve,reject) => {
-            resolve(true);
-       })
-   }
+
 
     public bind  = (router : express.Router) : express.Router => {
         let csrfProtection = this.csrfProtection;

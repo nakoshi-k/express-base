@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <%- include('../../common/views/head-base') %>
+  </head>
+  <body>
+  <%- include('../../common/views/global-nav') %>
+
+  <div class="wrap">
+
+    <div class="col col-3">
+        サイドナビ
+    </div>
+
+    <div class="col col-9">
+      <div id="main">
+        <%- form.start( "task" , task , {"method" :"post" , "action" : "./" }); %>
+          <div class="form-item">
+            <label for="title">Title</label>
+            <%- form.input( "title" , {type : "text"} ); %>
+            
+          </div>
+          <div class="form-item">
+            <label for="priod">Priod</label>
+            <%- form.input( "priod" , {class : "w100 calendar"} ); %>
+          </div>
+          <%- form.submit( "送信" ); %>
+
+        <%- form.end(); %>
+
+     </div>
+    </div>
+
+
+  </div>
+  <%- include('../../common/views/scripts') %>
+
+  </body>
+</html>
+

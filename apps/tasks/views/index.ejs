@@ -21,11 +21,11 @@
               <div>
                 <div><h4><a href="/tasks/<%= task.id %>"><%= task.title %></a></h4></div>
                 <a href="/tasks/<%= task.id %>/edit" class="button"> Edit</a>
-                <%- crud_support.delete( "delete" , { path : "/tasks/#" , id : task.id , csrf : csrf , redirect : "/tasks" } ) %>
+                <%- hlp.crud_support.delete( "delete" , { path : "/tasks/#" , id : task.id , csrf : csrf , redirect : "/tasks" } ) %>
               </div>
             <% }); %>
   
-            <%- pagination.render(page , {path: "/tasks/page/#"}); %>
+            <%- hlp.pagination.render(page , {path: "/tasks/page/#"}); %>
            </main>
           </div>
       </div>

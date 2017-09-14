@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const service_base_1 = require("../../app_modules/components/service_base");
-class tasks_service extends service_base_1.service_base {
+const core_1 = require("../../base/core");
+class tasks_service extends core_1.service {
     constructor(name) {
         super(name);
         this.conditions = (req) => {

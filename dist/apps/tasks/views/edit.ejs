@@ -16,21 +16,21 @@
     <div class="col col-9">
       <div id="main">
         <%- console.log(task) %>
-        <%- crud_support.delete( "delete" , { path : "/tasks/#" , id : task.id , csrf : csrf , redirect : "/tasks" } ) %>
+        <%- hlp.crud_support.delete( "delete" , { path : "/tasks/#" , id : task.id , csrf : csrf , redirect : "/tasks" } ) %>
 
-        <%- form.start( "task" , task , { "method" :"put" , "action" : "/tasks/:id" }); %>
+        <%- hlp.form.start( "task" , task , { "method" :"put" , "action" : "/tasks/:id" }); %>
           <div class="form-item">
             <label for="title">Title</label>
-            <%- form.input( "id" , { type : "hidden"}); %>
-            <%- form.input( "title" , { type : "text" } ); %>
+            <%- hlp.form.input( "id" , { type : "hidden"}); %>
+            <%- hlp.form.input( "title" , { type : "text" } ); %>
           </div>
           <div class="form-item">
             <label for="priod">Priod</label>
-            <%- form.input( "priod" , {class : "w100 calendar"} ); %>
+            <%- hlp.form.input( "priod" , {class : "w100 calendar"} ); %>
           </div>
-          <%- form.submit( "送信" ); %>
+          <%- hlp.form.submit( "送信" ); %>
 
-        <%- form.end(); %>
+        <%- hlp.form.end(); %>
 
      </div>
     </div>

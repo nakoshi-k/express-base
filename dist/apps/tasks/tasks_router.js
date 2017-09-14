@@ -1,10 +1,32 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const router_base_1 = require("../../app_modules/components/router_base");
-class tasks_router extends router_base_1.router_base {
+const core_1 = require("../../base/core");
+const tasks_service_1 = require("./tasks_service");
+const helpers = require("../../base/helper");
+class tasks_router extends core_1.router {
     constructor() {
         super(...arguments);
         this.name = "tasks";
+        this.beforeRender = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            this.helper("form", new helpers.form_helper());
+            this.helper("pagination", new helpers.pagination_helper());
+            let crud = new helpers.crud_support_helper();
+            this.helper("crud_support", crud);
+            yield crud.load();
+            this.csrfReady(req);
+            return [req, res];
+        });
+        this.init = () => {
+            this.service = new tasks_service_1.tasks_service(this.name);
+        };
         this.search = (req, res, next) => {
             let pagination = this.service.pagination();
             let conditions = this.service.conditions(req);
@@ -61,7 +83,6 @@ class tasks_router extends router_base_1.router_base {
             });
         };
         this.update = (req, res, next) => {
-            console.log(req.params.id);
             let model = this.model;
             model.findById(req.params.id).then((task) => {
                 task.update(req.body).then((result) => {
@@ -69,15 +90,6 @@ class tasks_router extends router_base_1.router_base {
                 }).catch((err) => {
                     this.edit(req, res, next);
                 });
-            });
-        };
-        this.beforeRender = (req, res) => {
-            this.loadHelper("form");
-            this.loadHelper("pagination");
-            this.loadHelper("crud_support");
-            this.csrfReady(req);
-            return new Promise((resolve, reject) => {
-                resolve(true);
             });
         };
         this.bind = (router) => {

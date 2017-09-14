@@ -1,6 +1,6 @@
-import {service_base} from "../../app_modules/components/service_base";
+import {service} from "../../base/core";
 import * as sequelize from "sequelize";
-export class tasks_service extends service_base{
+export class tasks_service extends service{
    
     constructor(name:string){
         super(name);
