@@ -8,25 +8,28 @@
  <%- include('../../common/views/global-nav') %>
 
 
- <div class="content row">
-    
-        <div class="col col-3">
-            サイドナビ
-        </div>
-    
-        <div class="col col-9">
-         <main id="main">
-          <% tasks.forEach(function (task) { %>
-            <div>
-              <div><h4><a href="/tasks/<%= task.id %>"><%= task.title %></a></h4></div>
-              <a href="/tasks/<%= task.id %>/edit"> Edit</a>
-            </div>
-          <% }); %>
-
-          <%- pagination.render(page , {path: "/tasks/page/#"}); %>
-         </main>
-        </div>
-    
+ <div class="wrap">
+    <div class="container">
+      <div class="row">
+          <div class="column column-25">
+              サイドナビ
+          </div>
+      
+          <div class="column column-75">
+           <main id="main">
+            <% tasks.forEach(function (task) { %>
+              <div>
+                <div><h4><a href="/tasks/<%= task.id %>"><%= task.title %></a></h4></div>
+                <a href="/tasks/<%= task.id %>/edit" class="button"> Edit</a>
+                <%- crud_support.delete( "delete" , { path : "/tasks/#" , id : task.id , csrf : csrf , redirect : "/tasks" } ) %>
+              </div>
+            <% }); %>
+  
+            <%- pagination.render(page , {path: "/tasks/page/#"}); %>
+           </main>
+          </div>
+      </div>
+    </div>
 </div>
 
 

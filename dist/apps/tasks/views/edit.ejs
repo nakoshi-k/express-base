@@ -7,7 +7,7 @@
   <body>
 <%- include('../../common/views/global-nav') %>
 
-  <div class="content row">
+  <div class="wrap">
 
     <div class="col col-3">
         サイドナビ
@@ -22,7 +22,7 @@
           <div class="form-item">
             <label for="title">Title</label>
             <%- form.input( "id" , { type : "hidden"}); %>
-            <%- form.input( "title" , {class : "w100"} ); %>
+            <%- form.input( "title" , { type : "text" } ); %>
           </div>
           <div class="form-item">
             <label for="priod">Priod</label>

@@ -4,15 +4,15 @@ const helper_base_1 = require("./helper_base");
 class paginationConfig {
     constructor() {
         this.wrap = { tag: "nav", tagClass: "pagination" };
-        this.parent = { tag: "ul", tagClass: "" };
+        this.parent = { tag: "ul", tagClass: "pagination-list" };
         this.child = { tag: "li", tagClass: "", linkClass: "" };
-        this.disable = { tagClass: "", innerTag: "a", innerClass: "" };
+        this.disable = { tagClass: "disable", innerTag: "a", innerClass: "disable" };
         this.prev = { tagClass: "prev", innerTag: "span", innerClass: "" };
         this.next = { tagClass: "next", innerTag: "span", innerClass: "" };
         this.first = { tagClass: "first", innerTag: "span", innerClass: "" };
         this.last = { tagClass: "last", innerTag: "span", innerClass: "" };
         this.active = { tagClass: "active", innerTag: "a", innerClass: "" };
-        this.text = { first: "|&larr; first", last: "last &rarr;|", prev: "&larr; Prev", next: "Next &rarr;" };
+        this.text = { first: "&laquo; First", last: "Last &raquo;", prev: "&lsaquo; Prev", next: "Next &rsaquo;" };
     }
 }
 class pagination_helper extends helper_base_1.helper_base {
@@ -62,6 +62,7 @@ class pagination_helper extends helper_base_1.helper_base {
             let addClass = this.config[name].tagClass;
             if (disableCondition) {
                 tag = this.buildDisableTag(innerText, pageNum);
+                addClass += " " + this.config.disable.tagClass;
             }
             return "\n" + this.buildChild(tag, addClass);
         };

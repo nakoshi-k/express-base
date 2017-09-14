@@ -1,8 +1,4 @@
-/*
-    kube css
-*/
 
-@require "../../../node_modules/kube/dist/css/kube.min.css"
 
 /*
     flat-picker css
@@ -14,64 +10,88 @@
 
 @require "../../../node_modules/flatpickr/dist/plugins/confirmDate/confirmDate.css"
 
+@import "../../../node_modules/milligram-stylus/dist/milligram.styl"
 
-/*
-    user css
-*/
 
-$dark = #333;
-$dark-sec = $dark + #333;
-$dark-trd = $dark + #666;
-
-$light = #fefefe
-$light-sec = $light - #222222;
-$light-trd = $light - #222222;
-
-$color-primary = #666;
-$color-secondary = #666;
-$color-base = #eee;
-
-$margin = 8;
-$content-width = 1120;
-
-.body{
-    color : $dark;
-    background-color : $light;
+@import "../../../node_modules/milligram-stylus/dist/_Color"
+@import "../../../node_modules/milligram-stylus/dist/_Base"
+@import "../../../node_modules/milligram-stylus/dist/_Blockquote"
+@import "../../../node_modules/milligram-stylus/dist/_Button"
+@import "../../../node_modules/milligram-stylus/dist/_Code"
+@import "../../../node_modules/milligram-stylus/dist/_Divider"
+@import "../../../node_modules/milligram-stylus/dist/_Form"
+@import "../../../node_modules/milligram-stylus/dist/_Grid"
+@import "../../../node_modules/milligram-stylus/dist/_Link"
+@import "../../../node_modules/milligram-stylus/dist/_List"
+@import "../../../node_modules/milligram-stylus/dist/_Spacing"
+@import "../../../node_modules/milligram-stylus/dist/_Table"
+@import "../../../node_modules/milligram-stylus/dist/_Typography"
+@import "../../../node_modules/milligram-stylus/dist/_Image"
+@import "../../../node_modules/milligram-stylus/dist/_Utility"
+.wrap{
+    padding-top 7.5rem
 }
 
-.global-nav{
-    margin-bottom : $margin px;
-    padding: $margin * 3 px;
-    border-bottom : 1px solid $light-trd;
-    background-color : $light;
-    z-index : 1000;
-}
-.global-nav a{
-    color : $dark-sec;
-    text-decoration : none;
-    padding : $margin;
-    display : block;
-}
-.global-nav a:hover{
-    color : $dark-trd;
-    text-decoration : underline;
-}
+.navigation {
 
-.global-nav h1,
-.global-nav ul,
-.global-nav li{
-    display :inline-block
+    background #f4f5f6;
+    border-bottom .1rem solid #d1d1d1;
+    display block;
+    height 5.2rem;
+    lef: 0;
+    max-width 100%;
+    position fixed;
+    right 0;
+    top 0;
+    width 100%;
+    z-index: 1;
+    
+    .navigation-list{
+        list-style none;
+    }
+    .navigation-list li{
+        float left;
+        margin-bottom 0;
+        margin-left 2.5rem;
+        position relative;
+    }
+    .navigation-list li > a{
+        display inline;
+        font-size 1.6rem;
+        line-height 5.2rem;
+        padding 0;
+        text-decoration none;
+    }
 }
+.pagination {
+    ul.pagination-list{
+        list-style none;
+        font-size 1.0rem
+    }
 
-.global-nav li {
-    margin-right : $margin * 3 px;
-}
-
-#main {
-    min-height : 1200px;
-}
-.content{
-    max-width : $content-width px;
-    margin : 0 auto;
-    padding : $margin * 2 px;
+    .pagination-list li {
+        float : left;
+    }
+    .pagination-list li a {
+        border-radius  0.3rem;
+        border color-secondary solid 0;
+        background-color color-tertiary 
+        display block;
+        padding 0.3rem 0.9rem;
+        margin 0.3rem;
+        color color-secondary;
+    }    
+    .pagination-list li a:not(.disable):hover {
+        border-radius  0.3rem;
+        color color-initial
+        background-color color-primary
+    }
+    .pagination-list li a.disable:hover {
+        cursor: not-allowed
+    }
+    .pagination-list li.active a{
+        border-radius  0.3rem;
+        color color-initial;
+        background-color color-primary
+    }   
 }

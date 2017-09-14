@@ -51,7 +51,6 @@ class router_base {
                         return;
                     }
                     let viewDir = __dirname + sep + ".." + sep + ".." + sep;
-                    console.log(viewDir);
                     req.app.set('views', viewDir + "apps" + sep + "common" + sep + "views");
                     res.status = err.status;
                     res.render("error", { "message": err.message, "error": err });

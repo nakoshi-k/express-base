@@ -11,23 +11,23 @@ class paginationConfig{
     wrap : {tag:string,tagClass:string }
          = {tag:"nav",tagClass:"pagination"};
     parent :{tag:string,tagClass:string}
-           = {tag:"ul",tagClass:""};
+           = {tag:"ul",tagClass:"pagination-list"};
     child : {tag:string , tagClass:string,linkClass:string}
           = {tag:"li",tagClass:"",linkClass:""};
-    disable : {tagClass : string , innerTag : string , innerClass : "" }
-            = {tagClass:"", innerTag : "a" , innerClass:""};
-    prev : {tagClass : string , innerTag : string , innerClass : "" }
+    disable : {tagClass : string , innerTag : string , innerClass : string }
+            = {tagClass:"disable", innerTag : "a" ,innerClass : "disable"  };
+    prev : {tagClass : string , innerTag : string , innerClass : string }
             = {tagClass:"prev", innerTag : "span" , innerClass:""};
-    next : {tagClass : string , innerTag : string , innerClass : "" }
+    next : {tagClass : string , innerTag : string , innerClass : string }
             = {tagClass:"next", innerTag : "span" , innerClass:""};
-    first : {tagClass : string , innerTag : string , innerClass : "" }
+    first : {tagClass : string , innerTag : string , innerClass : string }
             = {tagClass:"first", innerTag : "span" , innerClass:""};
-    last : {tagClass : string , innerTag : string , innerClass : "" }
+    last : {tagClass : string , innerTag : string , innerClass : string }
             = {tagClass:"last", innerTag : "span" , innerClass:""};
-    active : {tagClass : string , innerTag : string , innerClass : "" }
+    active : {tagClass : string , innerTag : string , innerClass : string }
            = {tagClass:"active", innerTag : "a" , innerClass:""};
     text : { first : string , last : string, prev : string, next : string }  
-         = { first : "|&larr; first", last : "last &rarr;|", prev : "&larr; Prev", next : "Next &rarr;" }
+         = { first : "&laquo; First", last : "Last &raquo;", prev : "&lsaquo; Prev", next : "Next &rsaquo;" }
     
 }
 
@@ -118,6 +118,7 @@ class pagination_helper extends helper_base{
         let addClass = this.config[name].tagClass;
         if( disableCondition ){
             tag = this.buildDisableTag(innerText,pageNum);
+            addClass += " " + this.config.disable.tagClass;
         }
         return "\n" + this.buildChild( tag , addClass );
     }
