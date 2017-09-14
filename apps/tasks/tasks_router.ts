@@ -12,9 +12,7 @@ export class tasks_router extends router {
         this.helper("pagination" , new helpers.pagination_helper() );
         let crud = new helpers.crud_support_helper();
         this.helper("crud_support" ,crud );
-        
         await crud.load();
-
         this.csrfReady(req);
         return [req,res];
     }

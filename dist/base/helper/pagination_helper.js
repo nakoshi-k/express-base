@@ -83,7 +83,7 @@ class pagination_helper extends core_1.helper {
         };
         this.next = () => {
             let nextPage = this.page.currentPage + 1;
-            let disableCondition = (nextPage >= this.page.totalPage);
+            let disableCondition = (nextPage > this.page.totalPage);
             return this.special("next", disableCondition, nextPage);
         };
         this.numbers = () => {

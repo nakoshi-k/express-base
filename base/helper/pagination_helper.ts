@@ -1,5 +1,4 @@
-import {helper} from "../core";
-import {config} from "../core";
+import {helper,config} from "../core";
 import {tag_helper} from "../helper";
 interface pagenationInterface {
     query :any,
@@ -142,7 +141,7 @@ export class pagination_helper extends helper{
 
     public next = () : string => {
         let nextPage = this.page.currentPage + 1;
-        let disableCondition = (nextPage >= this.page.totalPage);
+        let disableCondition = (nextPage > this.page.totalPage);
         return this.special("next",disableCondition ,nextPage);
     }
 
