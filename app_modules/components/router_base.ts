@@ -55,36 +55,38 @@ export abstract class router_base{
     }
     
     protected beforeRender = (req,res) => {
+        return new Promise((resolve,reject) => {
 
+        })
     }
 
     public render = ( req , res , view : string = "",vars = {}) => {
         
-        this.beforeRender(req,res);
-
-        let f = view.substring(1,1);
-        let sep :string = config.sep;
-
-
-        if(f !== "." && f !== sep ){
-           let viewDir = __dirname + sep + ".." + sep + ".." + sep;
-           let dir =  viewDir + "apps" + sep + this.name + sep  +"views";
-           req.app.set('views', dir);
-           view = view;
-        }
-
-        this.setData(vars);
-        res.render( view ,this.vars , (err,html) => {
-            if(!err){
-                res.send(html);
-                return;
+        let before = this.beforeRender(req,res);
+        before.then( (result) => {
+            let f = view.substring(1,1);
+            let sep :string = config.sep;
+    
+            if(f !== "." && f !== sep ){
+               let viewDir = __dirname + sep + ".." + sep + ".." + sep;
+               let dir =  viewDir + "apps" + sep + this.name + sep  +"views";
+               req.app.set('views', dir);
+               view = view;
             }
-            let viewDir = __dirname + sep + ".." + sep + ".." + sep;
-            console.log(viewDir);
-            req.app.set('views', viewDir + "apps" + sep + "common" + sep + "views" );
-            res.status = err.status;
-            res.render("error", {"message" : err.message , "error" :err });
-        });
+    
+            this.setData(vars);
+            res.render( view ,this.vars , (err,html) => {
+                if(!err){
+                    res.send(html);
+                    return;
+                }
+                let viewDir = __dirname + sep + ".." + sep + ".." + sep;
+                console.log(viewDir);
+                req.app.set('views', viewDir + "apps" + sep + "common" + sep + "views" );
+                res.status = err.status;
+                res.render("error", {"message" : err.message , "error" :err });
+            });
+        })
         
     } 
     

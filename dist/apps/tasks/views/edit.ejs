@@ -16,7 +16,7 @@
     <div class="col col-9">
       <div id="main">
         <%- console.log(task) %>
-        <%- crud_support.delete( "delete" , { path : "/tasks" , id : task.id , csrf : csrf , redirect : "redirect" } )%>
+        <%- crud_support.delete( "delete" , { path : "/tasks/#" , id : task.id , csrf : csrf , redirect : "/tasks" } ) %>
 
         <%- form.start( "task" , task , { "method" :"put" , "action" : "/tasks/:id" }); %>
           <div class="form-item">

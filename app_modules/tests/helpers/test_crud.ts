@@ -7,7 +7,10 @@ describe('crud_support_helper', () =>  {
     let crud = require("../../helpers/crud_support");
 
     it("test" , () => {
-        console.log(crud.delete( "delete" , { path: "test",id : "21321" , csrf : "afdsa989hf9shah9d8h9fh" , redirect : "aaaaaa"} ));
+      crud.delete( "delete" , { path: "test",id : "21321" , csrf : "afdsa989hf9shah9d8h9fh" , redirect : "aaaaaa"} )
+      .then( (res) => {
+          console.log(res);
+      });
     })
 
 

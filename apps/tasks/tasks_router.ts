@@ -46,11 +46,15 @@ export class tasks_router extends router_base {
     private delete = (req:express.Request,res:express.Response) => {
         let model = this.model;
         model.findById( req.params.id ).then((result) => {
+            console.log(result);
             if(result){
-                result.destroy();
+                result.destroy().then( () => {
+                    res.send(200);
+                });
+                return;
             }
+            res.send(500);
         })
-        res.send(100);
     }
 
     private insert = (req: express.Request,res:express.Response,next:express.NextFunction) => {
@@ -79,7 +83,10 @@ export class tasks_router extends router_base {
        this.loadHelper("pagination");
        this.loadHelper("crud_support");
        this.csrfReady(req);
-    }
+       return new Promise((resolve,reject) => {
+            resolve(true);
+       })
+   }
 
     public bind  = (router : express.Router) : express.Router => {
         let csrfProtection = this.csrfProtection;

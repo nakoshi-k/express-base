@@ -42,11 +42,15 @@ class tasks_router extends router_base_1.router_base {
         this.delete = (req, res) => {
             let model = this.model;
             model.findById(req.params.id).then((result) => {
+                console.log(result);
                 if (result) {
-                    result.destroy();
+                    result.destroy().then(() => {
+                        res.send(200);
+                    });
+                    return;
                 }
+                res.send(500);
             });
-            res.send(100);
         };
         this.insert = (req, res, next) => {
             let entity = this.model.build(req.body);
@@ -72,6 +76,9 @@ class tasks_router extends router_base_1.router_base {
             this.loadHelper("pagination");
             this.loadHelper("crud_support");
             this.csrfReady(req);
+            return new Promise((resolve, reject) => {
+                resolve(true);
+            });
         };
         this.bind = (router) => {
             let csrfProtection = this.csrfProtection;
