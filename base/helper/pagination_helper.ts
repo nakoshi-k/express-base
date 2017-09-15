@@ -1,5 +1,5 @@
 import {helper,config} from "../core";
-import {tag_helper} from "../helper";
+import {tag} from "../helper";
 interface pagenationInterface {
     query :any,
     totalPage : number,
@@ -33,12 +33,12 @@ class paginationConfig{
 export class pagination_helper extends helper{
     private page :any = {};
     private path : string = "/page/#";
-    private tag : tag_helper; //tagHelperが入る
+    private tag : tag; //tagHelperが入る
     private _config :paginationConfig;
 
     constructor(){
         super();
-        this.tag = new tag_helper();
+        this.tag = new tag();
         this.config = new paginationConfig();
     }
     

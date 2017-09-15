@@ -2143,9 +2143,6 @@ img {
 .float-right {
   float: right;
 }
-.wrap {
-  padding-top: 7.5rem;
-}
 .navigation {
   background: #f4f5f6;
   border-bottom: 0.1rem solid #d1d1d1;
@@ -2203,4 +2200,7 @@ img {
   border-radius: 0.3rem;
   color: #fff;
   background-color: #9b4dca;
+}
+.wrap {
+  padding-top: 7.5rem;
 }

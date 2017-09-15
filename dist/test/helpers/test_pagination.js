@@ -4,7 +4,7 @@ const helper_1 = require("../../base/helper");
 describe('pagination_helper', () => {
     let ci = require('chai');
     let assert = ci.assert;
-    let pagination = new helper_1.pagination_helper();
+    let pagination = new helper_1.pagination();
     it("test", () => {
         let page = { totalPage: 6,
             currentPage: 3,

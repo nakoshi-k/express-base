@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const helper_1 = require("../../base/helper");
 describe('tag_helper', () => {
-    let tag = new helper_1.tag_helper();
+    let tag = new helper_1.tag();
     let ci = require('chai');
     let assert = ci.assert;
     it("create", () => {

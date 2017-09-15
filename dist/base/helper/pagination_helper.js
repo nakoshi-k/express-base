@@ -122,7 +122,7 @@ class pagination_helper extends core_1.helper {
             html = this.tag.wrap(parent.tag, html, { class: parent.tagClass });
             return this.wrap(html);
         };
-        this.tag = new helper_1.tag_helper();
+        this.tag = new helper_1.tag();
         this.config = new paginationConfig();
     }
     get config() {

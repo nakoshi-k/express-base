@@ -1,5 +1,5 @@
 
-import {form_helper} from "../../base/helper"
+import {form as form_helper} from "../../base/helper"
 describe('form_helper', () =>  {
 
     let ci = require('chai');

@@ -1,13 +1,12 @@
 import {helper} from "../core";
-import {tag_helper} from "../helper";
+import {tag} from "../helper";
 export class form_helper extends helper{
     private bindData : any = {};
-    
-    private tag:tag_helper; //tagHelperが入る
+    private tag:tag; //tagHelperが入る
 
     constructor(){
         super();
-        this.tag = new tag_helper();
+        this.tag = new tag();
         this.bindData = {csrf:""};
     }
 

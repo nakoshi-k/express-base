@@ -8,27 +8,31 @@
   <%- include('../../common/views/global-nav') %>
 
   <div class="wrap">
+    <div class="container">
+      <div class="row">
+        <div class="column column-25">
+            <%- include('./sidebar') %>
+        </div>
+        <div class="column column-75">
+          <%- hlp.form.start( "task" , task , {"method" :"post" , "action" : "./" }); %>
+            <div class="form-item">
+              <label for="title">Title</label>
+              <%- hlp.form.input( "title" , {type : "text"} ); %>
+              
+            </div>
+            <div class="form-item">
+              <label for="priod">Priod</label>
+              <%- hlp.form.input( "priod" , {class : "w100 calendar"} ); %>
+            </div>
+            <%- hlp.form.submit( "送信" ); %>
 
-    <div class="col col-3">
-        サイドナビ
+          <%- hlp.form.end(); %>
+        </div>
+      </div>
     </div>
 
     <div class="col col-9">
       <div id="main">
-        <%- hlp.form.start( "task" , task , {"method" :"post" , "action" : "./" }); %>
-          <div class="form-item">
-            <label for="title">Title</label>
-            <%- hlp.form.input( "title" , {type : "text"} ); %>
-            
-          </div>
-          <div class="form-item">
-            <label for="priod">Priod</label>
-            <%- hlp.form.input( "priod" , {class : "w100 calendar"} ); %>
-          </div>
-          <%- hlp.form.submit( "送信" ); %>
-
-        <%- hlp.form.end(); %>
-
      </div>
     </div>
 

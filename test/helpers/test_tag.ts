@@ -1,4 +1,4 @@
-import {tag_helper} from "../../base/helper"
+import {tag as tag_helper} from "../../base/helper"
 describe('tag_helper', () =>  {
 let tag = new tag_helper();
 let ci = require('chai');

@@ -4,8 +4,8 @@ import * as service from "./service";
 import * as bodyParser from "body-parser";
 import * as csurf from "csurf";
 
-import {config} from "../core";
-import {helper} from "../core";
+import {config,helper} from "../core";
+
 export abstract class router{
     abstract name = "router";
     protected parseForm;
@@ -29,14 +29,10 @@ export abstract class router{
         this.parseForm = parseForm;
     }
 
-    protected init  = ()  => {
-
-    }
-
     protected csrfReady = (req , form = "form") => {
         let csrf = req.csrfToken();
         this.vars["csrf"] = csrf;
-        this.vars.hlp["form"].bind = {"csrf" : csrf};
+        this.vars.hlp[form].bind = {"csrf" : csrf};
     }
 
     abstract bind = (router:express.Router) : express.Router => {
@@ -46,21 +42,31 @@ export abstract class router{
     public create = () => {
         const express = require("express");
         let router = express.Router();
-        this.init();
         this.bind(router); 
         return router;
     }
     
-    protected beforeRender = async (req,res) => {
-        return [req,res];
+    protected beforeRender = (req,res) => {
+    
+    }
+
+    public loading = async () =>  {
+        // helper loading
+        let helpers = this.vars.hlp;
+        for(var key in helpers){
+            await helpers[key].load();
+        }
+        return true;
     }
 
     public render = ( req , res , view : string = "",vars = {}) => {
         
         this.setData(vars);
         
-        let before = this.beforeRender(req,res);
-        before.then( (result) => {
+        this.beforeRender(req,res);
+        
+        let loading = this.loading();
+        loading.then( (result) => {
             let f = view.substring(1,1);
             let sep :string = config.sep;
             
@@ -82,7 +88,8 @@ export abstract class router{
                 res.render("error", {"message" : err.message , "error" :err });
             });
         }).catch((err) => {
-            res.render("error", {"message" : err.message , "error" :err });
+            res.status(500);
+            res.send("error" ,{error : err});
         })
         
     } 

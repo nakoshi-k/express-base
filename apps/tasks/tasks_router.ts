@@ -7,19 +7,21 @@ export class tasks_router extends router {
     public name = "tasks";
     public service:tasks_service;
     
-    protected beforeRender = async(req:express.Request,res:express.Response) => {
-        this.helper("form" ,new helpers.form_helper());
-        this.helper("pagination" , new helpers.pagination_helper() );
-        let crud = new helpers.crud_support_helper();
-        this.helper("crud_support" ,crud );
-        await crud.load();
-        this.csrfReady(req);
-        return [req,res];
-    }
-
-    protected init = () => {
+    constructor(){
+        super();
         this.service = new tasks_service(this.name);
     }
+    
+    protected beforeRender = (req,res) => {
+        this.helper("form" ,new helpers.form());
+        this.helper("pagination" , new helpers.pagination() );
+
+        let crud = new helpers.crud();
+        this.helper("crud" ,crud );
+
+        this.csrfReady(req);
+    }
+
 
     private search = (req : express.Request,res: express.Response, next : express.NextFunction) => {
         let pagination = this.service.pagination();

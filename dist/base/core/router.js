@@ -16,12 +16,10 @@ class router {
         this.name = "router";
         this.useModel = true;
         this.vars = { "title": "", "csrf": "", "hlp": {} };
-        this.init = () => {
-        };
         this.csrfReady = (req, form = "form") => {
             let csrf = req.csrfToken();
             this.vars["csrf"] = csrf;
-            this.vars.hlp["form"].bind = { "csrf": csrf };
+            this.vars.hlp[form].bind = { "csrf": csrf };
         };
         this.bind = (router) => {
             return router;
@@ -29,17 +27,24 @@ class router {
         this.create = () => {
             const express = require("express");
             let router = express.Router();
-            this.init();
             this.bind(router);
             return router;
         };
-        this.beforeRender = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            return [req, res];
+        this.beforeRender = (req, res) => {
+        };
+        this.loading = () => __awaiter(this, void 0, void 0, function* () {
+            // helper loading
+            let helpers = this.vars.hlp;
+            for (var key in helpers) {
+                yield helpers[key].load();
+            }
+            return true;
         });
         this.render = (req, res, view = "", vars = {}) => {
             this.setData(vars);
-            let before = this.beforeRender(req, res);
-            before.then((result) => {
+            this.beforeRender(req, res);
+            let loading = this.loading();
+            loading.then((result) => {
                 let f = view.substring(1, 1);
                 let sep = core_1.config.sep;
                 if (f !== "." && f !== sep) {
@@ -59,7 +64,8 @@ class router {
                     res.render("error", { "message": err.message, "error": err });
                 });
             }).catch((err) => {
-                res.render("error", { "message": err.message, "error": err });
+                res.status(500);
+                res.send("error", { error: err });
             });
         };
         this.send = (req, res, content) => {

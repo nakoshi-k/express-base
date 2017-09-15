@@ -12,7 +12,7 @@
     <div class="container">
       <div class="row">
           <div class="column column-25">
-              サイドナビ
+              <%- include('./sidebar') %>
           </div>
       
           <div class="column column-75">
@@ -21,9 +21,11 @@
               <div>
                 <div><h4><a href="/tasks/<%= task.id %>"><%= task.title %></a></h4></div>
                 <a href="/tasks/<%= task.id %>/edit" class="button"> Edit</a>
-                <%- hlp.crud_support.delete( "delete" , { path : "/tasks/#" , id : task.id , csrf : csrf , redirect : "/tasks" } ) %>
+                <%- hlp.crud.delete( "delete" , { path : "/tasks/#" , id : task.id , csrf : csrf , redirect : "/tasks" } ) %>
               </div>
             <% }); %>
+
+            
   
             <%- hlp.pagination.render(page , {path: "/tasks/page/#"}); %>
            </main>

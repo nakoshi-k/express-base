@@ -125,7 +125,7 @@ class form_helper extends core_1.helper {
         this.deleteLink = (path) => {
             let script = "";
         };
-        this.tag = new helper_1.tag_helper();
+        this.tag = new helper_1.tag();
         this.bindData = { csrf: "" };
     }
     set bind(bindData) {

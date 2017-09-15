@@ -1,5 +1,5 @@
 
-import {pagination_helper} from "../../base/helper"
+import { pagination as pagination_helper} from "../../base/helper"
 describe('pagination_helper', () =>  {
 
     let ci = require('chai');
