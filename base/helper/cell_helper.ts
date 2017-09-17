@@ -1,4 +1,4 @@
-import {helper,config} from "../core";
+import {helper,system} from "../core";
 import  * as ejs from "ejs";
 import  * as fs from "fs";
 
@@ -26,8 +26,10 @@ export class cell_helper extends helper{
     private read : (name :string, path : string) => Promise<{path:string,status:boolean}> = (name:string , path:string)  => {
         return new Promise((resolve,reject) => {
             let filePath =  path;
-            if(path.charAt(0) !== "/"){
-                filePath =  __dirname + "/../templates/" + path + ".ejs";
+            if( path.charAt(0) !== "/" && path.charAt(0) !== "\\" ){
+                let ds = system.ds;
+                filePath =  __dirname + ds + ".." + ds +"views" + ds + "tile" + ds + path + ".ejs";
+                console.log(filePath);
             }
             fs.readFile( filePath , 'utf8',  (err, data) => {
                 if(err){

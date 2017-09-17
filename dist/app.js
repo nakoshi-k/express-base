@@ -62,7 +62,7 @@ class main {
         return path.join(__dirname, 'apps', "public");
     }
     get views() {
-        return path.join(__dirname, "apps", "common", 'views');
+        return path.join(__dirname, "apps", 'views');
     }
     get view_engine() {
         return "ejs";
@@ -78,7 +78,7 @@ class main {
         };
     }
     get baseViews() {
-        return path.join(__dirname, "apps", "common", 'views');
+        return path.join(__dirname, "apps", "views");
     }
     status404(app) {
         app.use((req, res, next) => {
@@ -112,4 +112,4 @@ class main {
         });
     }
 }
-module.exports = new main().ready();
+exports.main = main;

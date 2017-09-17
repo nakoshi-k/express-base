@@ -1,7 +1,7 @@
 
 import * as express from "express";
 import * as sequelize from "sequelize";
-import {config} from "../core";
+import {system} from "../core";
 import {search} from "./search";
 import {pagination} from "./pagination";
 import  * as models from "../../models";

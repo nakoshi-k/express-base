@@ -1,4 +1,4 @@
-import {helper,config} from "../core";
+import {helper,system} from "../core";
 import {tag} from "../helper";
 interface pagenationInterface {
     query :any,

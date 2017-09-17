@@ -1,5 +1,5 @@
 import * as express from "express";
-import { router } from "../../base/core";
+import {router} from "../router";
 import {tasks_service} from "./tasks_service";
 import * as helpers  from "../../base/helper";
 
@@ -48,6 +48,9 @@ export class tasks_router extends router {
     private view = (req:express.Request,res:express.Response,next:express.NextFunction) => {
         let model = this.model;
         model.findById( req.params.id ).then((result) => {
+            if(!result){
+                res.redirect("/tasks");
+            }
             this.setData({"task" : result.dataValues});
             this.render( req , res , "view");
         })
@@ -56,6 +59,9 @@ export class tasks_router extends router {
     private edit = (req:express.Request,res:express.Response,next:express.NextFunction) => {
         let model = this.model;
         model.findById( req.params.id ).then((result) => {
+            if(!result){
+                res.redirect("/tasks");
+            }
             this.setData({"task" : result.dataValues});
             this.render( req , res , "edit");
         })
@@ -64,7 +70,6 @@ export class tasks_router extends router {
     private delete = (req:express.Request,res:express.Response) => {
         let model = this.model;
         model.findById( req.params.id ).then((result) => {
-            console.log(result);
             if(result){
                 result.destroy().then( () => {
                     res.send(200);
@@ -78,8 +83,16 @@ export class tasks_router extends router {
     private insert = (req: express.Request,res:express.Response,next:express.NextFunction) => {
         let entity = this.model.build(req.body);
         entity.save().then( () => {
+            if(this.isXhr(req)){
+                res.redirect("/tasks");
+                return;
+            }
             res.redirect("/tasks");
         }).catch((err) => {
+            if(this.isXhr(req)){
+                this.add(req,res,next);
+                return;
+            }
             this.add(req,res,next);
         })
     }
@@ -88,9 +101,19 @@ export class tasks_router extends router {
         let model = this.model;
         model.findById( req.params.id ).then((task) => {
             task.update(req.body).then( (result) => {
+              if(this.isXhr(req)){
                 res.redirect("/tasks");
+                return;
+              }
+              res.redirect("/tasks");
             }).catch((err) => {
+
+              if(this.isXhr(req)){
                 this.edit(req,res,next);
+                return;
+              }
+              this.edit(req,res,next);
+                
             });
         })
     }
@@ -108,7 +131,6 @@ export class tasks_router extends router {
         router.get("/:id/edit", csrfProtection , this.edit);
         router.put("/:id",csrfProtection,this.update);
         router.delete("/:id", csrfProtection , this.delete);
-        router.post("/:id/delete", csrfProtection , this.delete);
         return router;
     }
 

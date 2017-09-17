@@ -1,4 +1,4 @@
-let $ = require("jquery");
+let u = require("umbrellajs");
 let flatpickr = require("flatpickr");
 let confirmDatePlugin = require("confirmDatePlugin");
 

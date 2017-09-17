@@ -1,4 +1,4 @@
-import {service} from "../../base/core";
+import {service} from "../service";
 import * as sequelize from "sequelize";
 export class tasks_service extends service{
    

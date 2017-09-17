@@ -4,14 +4,14 @@ import * as service from "./service";
 import * as bodyParser from "body-parser";
 import * as csurf from "csurf";
 
-import {config,helper} from "../core";
+import {system,helper} from "../core";
 
 export abstract class router{
     abstract name = "router";
     protected parseForm;
     protected csrfProtection;
     protected useModel = true;
-    public vars = { "title" : "", "csrf" : "" , "hlp" : {} };
+    public vars = { "title" : "express Application", "csrf" : "" , "hlp" : {} };
     protected service:service.service;
 
     get models(){
@@ -35,7 +35,7 @@ export abstract class router{
         this.vars.hlp[form].bind = {"csrf" : csrf};
     }
 
-    abstract bind = (router:express.Router) : express.Router => {
+    protected bind = (router:express.Router) : express.Router => {
         return router;
     }
 
@@ -49,43 +49,64 @@ export abstract class router{
     protected beforeRender = (req,res) => {
     
     }
+    
+    public loaders  = [Promise.resolve];
 
     public loading = async () =>  {
         // helper loading
         let helpers = this.vars.hlp;
         for(var key in helpers){
-            await helpers[key].load();
+            await helpers[key].loading();
+        }
+        
+        //loaders loading;
+        let loaders = this.loaders;
+        for(var key in loaders){
+            await loaders[key];
         }
         return true;
+    }
+    
+    protected _views = {
+        common : "",
+        typical : ""   
+    }
+    
+    get views() {
+        return this._views;
+    }
+    
+    set views(paths:{common:string,typical:string}){
+        this._views.common = paths.common;
+        this._views.typical = paths.typical;
     }
 
     public render = ( req , res , view : string = "",vars = {}) => {
         
         this.setData(vars);
-        
         this.beforeRender(req,res);
-        
         let loading = this.loading();
         loading.then( (result) => {
             let f = view.substring(1,1);
-            let sep :string = config.sep;
+            let ds :string = system.ds;
             
-            if(f !== "." && f !== sep ){
-               let viewDir = __dirname + sep + ".." + sep + ".." + sep;
-               let dir =  viewDir + "apps" + sep + this.name + sep  +"views";
+            if(f !== "." && f !== ds ){
+               let dir =  this.views.typical + ds + this.name + ds  +"views";
                req.app.set('views', dir);
                view = view;
             }
-    
             res.render( view ,this.vars , (err,html) => {
                 if(!err){
                     res.send(html);
                     return;
                 }
-                let viewDir = __dirname + sep + ".." + sep + ".." + sep;
-                req.app.set('views', viewDir + "apps" + sep + "common" + sep + "views" );
+                req.app.set('views', this.views.common );
                 res.status = err.status;
-                res.render("error", {"message" : err.message , "error" :err });
+                if(res.app.get('env') === 'development') {
+                    res.render("error", {"message" : err.message , "error" :err });
+                    return;
+                }
+                res.render("error", {"message" : err.message , "error" : {} });
             });
         }).catch((err) => {
             res.status(500);
@@ -104,14 +125,6 @@ export abstract class router{
         
     public setData = (vars:{}) =>{
         this.vars = Object.assign(this.vars, vars);
-    }
-
-    /**
-     * post 判定
-     */
-
-    public isPost(res){
-        return ( res.method === "POST") ? true : false;
     }
 
     /*

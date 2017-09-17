@@ -16,10 +16,12 @@
         margin 0.3rem
         color color-secondary
         
-    .pagination-list li a:not(.disable):hover 
-        border-radius 0.3rem
-        color color-initial
-        background-color color-primary
+    .pagination-list li a
+        &:not(.disable)
+        &:hover 
+            border-radius 0.3rem
+            color color-initial
+            background-color color-primary
     
     .pagination-list li a.disable:hover 
         cursor not-allowed

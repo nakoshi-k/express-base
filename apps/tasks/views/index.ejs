@@ -2,10 +2,10 @@
 <html>
   <head>
     <title><%= title %></title>
-    <%- include('../../common/views/head-base') %>
+    <%- include('../../views/tile/head') %>
   </head>
   <body>
- <%- include('../../common/views/global-nav') %>
+ <%- include('../../views/tile/navigation') %>
 
 
  <div class="wrap">
@@ -20,11 +20,12 @@
             <% tasks.forEach(function (task) { %>
               <div>
                 <div><h4><a href="/tasks/<%= task.id %>"><%= task.title %></a></h4></div>
-                <a href="/tasks/<%= task.id %>/edit" class="button"> Edit</a>
-                <%- hlp.crud.delete( "delete" , { path : "/tasks/#" , id : task.id , csrf : csrf , redirect : "/tasks" } ) %>
+                <a href="/tasks/<%= task.id %>/edit" class="button small"> Edit</a>
+                <%- hlp.crud.delete( "delete" , 
+                { path : "/tasks/#" , id : task.id , csrf : csrf , redirect : "/tasks" } , 
+                {class : "button small"} ) %>
               </div>
             <% }); %>
-
             
   
             <%- hlp.pagination.render(page , {path: "/tasks/page/#"}); %>
@@ -36,8 +37,7 @@
 
 
 
-
-
- <%- include('../../common/views/scripts') %>
+ <%- include('../../views/tile/footer') %>
+ <%- include('../../views/tile/scripts') %>
   </body>
 </html>

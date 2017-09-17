@@ -10,10 +10,18 @@ export class crud_helper extends helper{
         this.tag = new tag();
         this.cell = new cell();
     }
-    private _delete = "";
+    private _deleteTemplate = "delete";
     
-    public load = () => {
-        this.cell.add("delete");
+    set deleteTemplate(path : string){
+        this._deleteTemplate = path;
+    }
+    
+    get deleteTemplate(){
+        return this._deleteTemplate;
+    }
+
+    public loading = () => {
+        this.cell.add("delete" ,this.deleteTemplate);
         return this.cell.ready();
     }
 

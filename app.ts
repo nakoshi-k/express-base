@@ -15,7 +15,7 @@ import {tasks_router} from "./apps/tasks/tasks_router";
 /**
  * main
  */
-class main{
+export class main{
   
   private app:express.Application;
     
@@ -24,7 +24,7 @@ class main{
   }
 
   get views() {
-    return  path.join(__dirname , "apps" , "common" , 'views');
+    return  path.join(__dirname , "apps" ,  'views');
   }
 
   get view_engine () {
@@ -43,7 +43,7 @@ class main{
   }
  
   get baseViews(){
-    return path.join(__dirname , "apps" , "common" , 'views');
+    return path.join(__dirname , "apps" , "views");
   }
   
   ready = async () => {
@@ -121,5 +121,3 @@ class main{
   }
 }
 
-
-module.exports = new main().ready();
