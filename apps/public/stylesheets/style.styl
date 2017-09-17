@@ -1,39 +1,12 @@
-
-
 /*
     flat-picker css
 */
 
 @require "../../../node_modules/flatpickr/dist/flatpickr.min.css"
-
 @require "../../../node_modules/flatpickr/dist/themes/light.css"
-
 @require "../../../node_modules/flatpickr/dist/plugins/confirmDate/confirmDate.css"
 
-
-/*
-@import "../../../node_modules/milligram-stylus/dist/milligram.styl"
-@import "../../../node_modules/milligram-stylus/dist/_Color"
- color */
-
-color-initial ?= #FFFFFF
-color-primary ?= #C7243A 
-
-color-secondary ?= #D75969
-color-tertiary ?= #f4f5f6
-color-quaternary ?= #d1d1d1
-color-quinary ?= #e1e1e1
-
-color-warning ?= #EDAD0B
-color-warning-light ?= #F2C44E
-color-succues ?= #A4C520
-color-succues-light ?= #BCD655
-color-info ?= #009F8C
-color-info-light ?= #35BAAB
-
-color-gen ?= #007FB1
-color-gen-light ?= #399FC7
-
+@import "./color"
 
 @import "../../../node_modules/milligram-stylus/dist/_Base"
 @import "../../../node_modules/milligram-stylus/dist/_Blockquote"
@@ -51,18 +24,10 @@ color-gen-light ?= #399FC7
 @import "../../../node_modules/milligram-stylus/dist/_Utility"
 
 
+
 @import "./navigation"
 @import "./pagination"
-
-/*button extends*/
-
-.button.small
-    height 2.8rem
-    line-height 2.8rem
-    padding 0 1.0rem
-
-.button.war\\
-
+@import "./button"
 
 .wrap
      padding-top 7.5rem

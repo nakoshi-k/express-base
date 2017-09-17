@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "browsersync": "browser-sync start --proxy localhost:4000 --files ./dist/*",
+    "browsersync": "browser-sync start --proxy localhost:4000 --files=\"dis/apps/public/**/*.*\" ",
     "start": "nodemon ./dist/bin/www.js",
     "buildView": "cpx \"{apps,base,models,config,public}/**/*.{ejs,js,json,tag,ico,gif,jpg,jpeg}\" dist",
     "buildStylus": "stylus apps/public/stylesheets/style.styl -o dist/apps/public/stylesheets/style.css --include-css",
@@ -16,7 +16,7 @@
     "prebuild": "mkdir -p dist/apps/public/scripts dist/apps/public/stylesheets",
     "build": "npm-run-all buildView buildStylus buildTsc buildScripts",
     "watch": "npm-run-all -p watchMove watchStylus",
-    "develop": " npm run build && npm-run-all -p watch start browsersync"
+    "develop": "npm-run-all -p watch start browsersync"
   },
   "dependencies": {
     "body-parser": "^1.15.2",

@@ -7,6 +7,7 @@ export class router extends core_router{
         this.views = {
             common : __dirname + system.ds + "views",
             typical: __dirname + system.ds 
+
         }
     } 
 }

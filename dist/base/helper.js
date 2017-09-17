@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var tag_helper_1 = require("./helper/tag_helper");
 exports.tag = tag_helper_1.tag_helper;
 var cell_helper_1 = require("./helper/cell_helper");

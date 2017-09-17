@@ -903,10 +903,6 @@ span.flatpickr-day.selected {
 }
 
 /*
-@import "../../../node_modules/milligram-stylus/dist/milligram.styl"
-@import "../../../node_modules/milligram-stylus/dist/_Color"
- color */
-/*
  * Milligram-stylus v1.3.0
  * https://milligram.github.io
  *
@@ -1575,11 +1571,145 @@ img {
   color: #fff;
   background-color: #c7243a;
 }
-/*button extends*/
 .button.small {
   height: 2.8rem;
   line-height: 2.8rem;
   padding: 0 1rem;
+}
+.button.warning {
+  border-color: #edad0b;
+  background-color: #edad0b;
+}
+.button.warning:focus,
+.button.warning:hover {
+  background-color: #edad0b;
+  border-color: #edad0b;
+}
+.button.warning[disabled]:focus,
+.button.warning[disabled]:hover {
+  background-color: #f2c44e;
+  border-color: #f2c44e;
+}
+.button.warning.button-outline {
+  background-color: transparent;
+  color: #edad0b;
+}
+.button.warning.button-outline:focus,
+.button.warning.button-outline:hover {
+  border-color: #f2c44e;
+  color: #f2c44e;
+}
+.button.warning.button-outline[disabled]:focus,
+.button.warning.button-outline[disabled]:hover {
+  color: #edad0b;
+}
+.button.success {
+  border-color: #a4c520;
+  background-color: #a4c520;
+}
+.button.success:focus,
+.button.success:hover {
+  background-color: #a4c520;
+  border-color: #a4c520;
+}
+.button.success[disabled]:focus,
+.button.success[disabled]:hover {
+  background-color: #bcd655;
+  border-color: #bcd655;
+}
+.button.success.button-outline {
+  background-color: transparent;
+  color: #a4c520;
+}
+.button.success.button-outline:focus,
+.button.success.button-outline:hover {
+  border-color: #bcd655;
+  color: #bcd655;
+}
+.button.success.button-outline[disabled]:focus,
+.button.success.button-outline[disabled]:hover {
+  color: #a4c520;
+}
+.button.info {
+  border-color: #009f8c;
+  background-color: #009f8c;
+}
+.button.info:focus,
+.button.info:hover {
+  background-color: #009f8c;
+  border-color: #009f8c;
+}
+.button.info[disabled]:focus,
+.button.info[disabled]:hover {
+  background-color: #35baab;
+  border-color: #35baab;
+}
+.button.info.button-outline {
+  background-color: transparent;
+  color: #009f8c;
+}
+.button.info.button-outline:focus,
+.button.info.button-outline:hover {
+  border-color: #35baab;
+  color: #35baab;
+}
+.button.info.button-outline[disabled]:focus,
+.button.info.button-outline[disabled]:hover {
+  color: #009f8c;
+}
+.button.success {
+  border-color: #a4c520;
+  background-color: #a4c520;
+}
+.button.success:focus,
+.button.success:hover {
+  background-color: #a4c520;
+  border-color: #a4c520;
+}
+.button.success[disabled]:focus,
+.button.success[disabled]:hover {
+  background-color: #bcd655;
+  border-color: #bcd655;
+}
+.button.success.button-outline {
+  background-color: transparent;
+  color: #a4c520;
+}
+.button.success.button-outline:focus,
+.button.success.button-outline:hover {
+  border-color: #bcd655;
+  color: #bcd655;
+}
+.button.success.button-outline[disabled]:focus,
+.button.success.button-outline[disabled]:hover {
+  color: #a4c520;
+}
+.button.special {
+  border-color: #007fb1;
+  background-color: #007fb1;
+}
+.button.special:focus,
+.button.special:hover {
+  background-color: #007fb1;
+  border-color: #007fb1;
+}
+.button.special[disabled]:focus,
+.button.special[disabled]:hover {
+  background-color: #399fc7;
+  border-color: #399fc7;
+}
+.button.special.button-outline {
+  background-color: transparent;
+  color: #007fb1;
+}
+.button.special.button-outline:focus,
+.button.special.button-outline:hover {
+  border-color: #399fc7;
+  color: #399fc7;
+}
+.button.special.button-outline[disabled]:focus,
+.button.special.button-outline[disabled]:hover {
+  color: #007fb1;
 }
 .wrap {
   padding-top: 7.5rem;

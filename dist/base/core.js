@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var system_1 = require("./core/system");
 exports.system = system_1.system;
 var helper_1 = require("./core/helper");

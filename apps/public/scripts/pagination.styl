@@ -1,0 +1,33 @@
+.pagination 
+    ul.pagination-list
+        list-style none
+        font-size 1.0rem
+    
+
+    .pagination-list li 
+        float left
+    
+    .pagination-list li a 
+        border-radius  0.3rem
+        border color-secondary solid 0
+        background-color color-tertiary 
+        display block
+        padding 0.3rem 0.9rem
+        margin 0.3rem
+        color color-secondary
+        
+    .pagination-list li a
+        &:not(.disable)
+        &:hover 
+            border-radius 0.3rem
+            color color-initial
+            background-color color-primary
+    
+    .pagination-list li a.disable:hover 
+        cursor not-allowed
+    
+    .pagination-list li.active a
+        border-radius 0.3rem
+        color color-initial
+        background-color color-primary
+       
