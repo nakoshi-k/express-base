@@ -1,19 +1,9 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-exports.__esModule = true;
-var core_1 = require("../core");
-var helper_1 = require("../helper");
-var paginationConfig = /** @class */ (function () {
-    function paginationConfig() {
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = require("../core");
+const helper_1 = require("../helper");
+class paginationConfig {
+    constructor() {
         this.wrap = { tag: "nav", tagClass: "pagination" };
         this.parent = { tag: "ul", tagClass: "pagination-list" };
         this.child = { tag: "li", tagClass: "", linkClass: "" };
@@ -25,149 +15,138 @@ var paginationConfig = /** @class */ (function () {
         this.active = { tagClass: "active", innerTag: "a", innerClass: "" };
         this.text = { first: "&laquo; First", last: "Last &raquo;", prev: "&lsaquo; Prev", next: "Next &rsaquo;" };
     }
-    return paginationConfig;
-}());
-var pagination_helper = /** @class */ (function (_super) {
-    __extends(pagination_helper, _super);
-    function pagination_helper() {
-        var _this = _super.call(this) || this;
-        _this.page = {};
-        _this.path = "/page/#";
-        _this.start = function (pagenationInterface, path) {
-            _this.page = pagenationInterface;
-            _this.path = path;
+}
+class pagination_helper extends core_1.helper {
+    constructor() {
+        super();
+        this.page = {};
+        this.path = "/page/#";
+        this.start = (pagenationInterface, path) => {
+            this.page = pagenationInterface;
+            this.path = path;
         };
-        _this.buildPath = function (path, innerText) {
-            _this.appendQuery();
-            return path.replace("#", innerText) + _this.appendQuery();
+        this.buildPath = (path, innerText) => {
+            this.appendQuery();
+            return path.replace("#", innerText) + this.appendQuery();
         };
-        _this.buildLinkTag = function (innerText, pageNum) {
-            var path = _this.path;
-            var child = _this.config.child;
-            var linkOpt = { href: _this.buildPath(path, String(pageNum)), "class": child.linkClass };
-            var link = _this.tag.wrap("a", innerText, linkOpt);
+        this.buildLinkTag = (innerText, pageNum) => {
+            let path = this.path;
+            let child = this.config.child;
+            let linkOpt = { href: this.buildPath(path, String(pageNum)), class: child.linkClass };
+            let link = this.tag.wrap("a", innerText, linkOpt);
             return link;
         };
-        _this.buildDisableTag = function (innerText, pageNum) {
-            var disable = _this.config.disable;
-            var Opt = { "class": disable.innerClass };
-            var link = _this.tag.wrap(disable.innerTag, innerText, Opt);
+        this.buildDisableTag = (innerText, pageNum) => {
+            let disable = this.config.disable;
+            let Opt = { class: disable.innerClass };
+            let link = this.tag.wrap(disable.innerTag, innerText, Opt);
             return link;
         };
-        _this.buildAvtiveTag = function (innerText, pageNum) {
-            var active = _this.config.active;
-            var Opt = { href: "#", "class": active.innerClass };
-            var link = _this.tag.wrap(active.innerTag, innerText, Opt);
+        this.buildAvtiveTag = (innerText, pageNum) => {
+            let active = this.config.active;
+            let Opt = { href: "#", class: active.innerClass };
+            let link = this.tag.wrap(active.innerTag, innerText, Opt);
             return link;
         };
-        _this.isActive = function (pageNum) {
-            if (_this.page.currentPage === pageNum) {
+        this.isActive = (pageNum) => {
+            if (this.page.currentPage === pageNum) {
                 return true;
             }
             return false;
         };
-        _this.special = function (name, disableCondition, pageNum) {
-            if (disableCondition === void 0) { disableCondition = false; }
-            if (_this.page.totalPage === 0) {
+        this.special = (name, disableCondition = false, pageNum) => {
+            if (this.page.totalPage === 0) {
                 return "";
             }
-            var innerText = _this.config.text[name];
-            var tag = _this.buildLinkTag(innerText, pageNum);
-            var addClass = _this.config[name].tagClass;
+            let innerText = this.config.text[name];
+            let tag = this.buildLinkTag(innerText, pageNum);
+            let addClass = this.config[name].tagClass;
             if (disableCondition) {
-                tag = _this.buildDisableTag(innerText, pageNum);
-                addClass += " " + _this.config.disable.tagClass;
+                tag = this.buildDisableTag(innerText, pageNum);
+                addClass += " " + this.config.disable.tagClass;
             }
-            return "\n" + _this.buildChild(tag, addClass);
+            return "\n" + this.buildChild(tag, addClass);
         };
-        _this.first = function () {
-            var disableCondition = (_this.page.currentPage === 1);
-            return _this.special("first", disableCondition, 1);
+        this.first = () => {
+            let disableCondition = (this.page.currentPage === 1);
+            return this.special("first", disableCondition, 1);
         };
-        _this.last = function () {
-            var lastPage = _this.page.totalPage;
-            var disableCondition = (_this.page.currentPage === lastPage);
-            return _this.special("last", disableCondition, lastPage);
+        this.last = () => {
+            let lastPage = this.page.totalPage;
+            let disableCondition = (this.page.currentPage === lastPage);
+            return this.special("last", disableCondition, lastPage);
         };
-        _this.prev = function () {
-            var prevPage = _this.page.currentPage - 1;
-            var disableCondition = (prevPage < 1);
-            return _this.special("prev", disableCondition, prevPage);
+        this.prev = () => {
+            let prevPage = this.page.currentPage - 1;
+            let disableCondition = (prevPage < 1);
+            return this.special("prev", disableCondition, prevPage);
         };
-        _this.next = function () {
-            var nextPage = _this.page.currentPage + 1;
-            var disableCondition = (nextPage > _this.page.totalPage);
-            return _this.special("next", disableCondition, nextPage);
+        this.next = () => {
+            let nextPage = this.page.currentPage + 1;
+            let disableCondition = (nextPage > this.page.totalPage);
+            return this.special("next", disableCondition, nextPage);
         };
-        _this.numbers = function () {
-            var source = "";
-            var c = _this.page.totalPage;
-            for (var i = 1; i <= c; i++) {
-                var link = _this.buildLinkTag(String(i), i);
-                var addClass = "";
-                if (_this.isActive(i)) {
-                    link = _this.buildAvtiveTag(String(i), i);
-                    addClass = _this.config.active.tagClass;
+        this.numbers = () => {
+            let source = "";
+            let c = this.page.totalPage;
+            for (let i = 1; i <= c; i++) {
+                let link = this.buildLinkTag(String(i), i);
+                let addClass = "";
+                if (this.isActive(i)) {
+                    link = this.buildAvtiveTag(String(i), i);
+                    addClass = this.config.active.tagClass;
                 }
-                source += "\n" + _this.buildChild(link, addClass);
+                source += "\n" + this.buildChild(link, addClass);
             }
             return source;
         };
-        _this.end = function () {
-            _this.page = {};
+        this.end = () => {
+            this.page = {};
         };
-        _this.wrap = function (source) {
-            if (_this._config.wrap) {
-                var conf = _this._config.wrap;
-                source = _this.tag.wrap(conf.tag, source, { "class": conf.tagClass });
+        this.wrap = (source) => {
+            if (this._config.wrap) {
+                let conf = this._config.wrap;
+                source = this.tag.wrap(conf.tag, source, { class: conf.tagClass });
             }
             return source;
         };
-        _this.render = function (pagenationInterface, option) {
-            if (option === void 0) { option = { path: "/page/#" }; }
-            _this.start(pagenationInterface, option.path);
-            var html = "";
-            html += _this.first();
-            html += _this.prev();
-            html += _this.numbers();
-            html += _this.next();
-            html += _this.last();
-            var parent = _this._config.parent;
-            html = _this.tag.wrap(parent.tag, html, { "class": parent.tagClass });
-            return _this.wrap(html);
+        this.render = (pagenationInterface, option = { path: "/page/#" }) => {
+            this.start(pagenationInterface, option.path);
+            let html = "";
+            html += this.first();
+            html += this.prev();
+            html += this.numbers();
+            html += this.next();
+            html += this.last();
+            let parent = this._config.parent;
+            html = this.tag.wrap(parent.tag, html, { class: parent.tagClass });
+            return this.wrap(html);
         };
-        _this.tag = new helper_1.tag();
-        _this.config = new paginationConfig();
-        return _this;
+        this.tag = new helper_1.tag();
+        this.config = new paginationConfig();
     }
-    Object.defineProperty(pagination_helper.prototype, "config", {
-        get: function () {
-            return this._config;
-        },
-        set: function (config) {
-            this._config = config;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    pagination_helper.prototype.appendQuery = function () {
-        var prts = this.page.queryPrams;
+    get config() {
+        return this._config;
+    }
+    set config(config) {
+        this._config = config;
+    }
+    appendQuery() {
+        let prts = this.page.queryPrams;
         if (prts.length === 0) {
             return "";
         }
-        var q = "";
+        let q = "";
         Object.keys(prts).forEach(function (key) {
             q += "&" + encodeURIComponent(key) + "=" + encodeURIComponent(prts[key]);
         });
         return q.replace("&", "?");
-    };
-    pagination_helper.prototype.buildChild = function (innerText, addClass) {
-        if (addClass === void 0) { addClass = ""; }
-        var child = this.config.child;
+    }
+    buildChild(innerText, addClass = "") {
+        let child = this.config.child;
         addClass = (addClass === "") ? "" : " " + addClass;
-        var cssClass = child.linkClass + addClass;
-        return this.tag.wrap(child.tag, innerText, { "class": cssClass.trim() });
-    };
-    return pagination_helper;
-}(core_1.helper));
+        let cssClass = child.linkClass + addClass;
+        return this.tag.wrap(child.tag, innerText, { class: cssClass.trim() });
+    }
+}
 exports.pagination_helper = pagination_helper;

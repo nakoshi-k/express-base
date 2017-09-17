@@ -1,11 +1,10 @@
 "use strict";
-exports.__esModule = true;
-var helper = /** @class */ (function () {
-    function helper() {
-        this.loading = function () {
+Object.defineProperty(exports, "__esModule", { value: true });
+class helper {
+    constructor() {
+        this.loading = () => {
             return Promise.resolve();
         };
     }
-    return helper;
-}());
+}
 exports.helper = helper;

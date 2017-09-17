@@ -7,127 +7,67 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-exports.__esModule = true;
-var bodyParser = require("body-parser");
-var csurf = require("csurf");
-var core_1 = require("../core");
-var router = /** @class */ (function () {
-    function router() {
-        var _this = this;
+Object.defineProperty(exports, "__esModule", { value: true });
+const bodyParser = require("body-parser");
+const csurf = require("csurf");
+const core_1 = require("../core");
+class router {
+    constructor() {
         this.name = "router";
         this.useModel = true;
         this.vars = { "title": "express Application", "csrf": "", "hlp": {} };
-        this.csrfReady = function (req, form) {
-            if (form === void 0) { form = "form"; }
-            var csrf = req.csrfToken();
-            _this.vars["csrf"] = csrf;
-            _this.vars.hlp[form].bind = { "csrf": csrf };
+        this.csrfReady = (req, form = "form") => {
+            let csrf = req.csrfToken();
+            this.vars["csrf"] = csrf;
+            this.vars.hlp[form].bind = { "csrf": csrf };
         };
-        this.bind = function (router) {
+        this.bind = (router) => {
             return router;
         };
-        this.create = function () {
-            var express = require("express");
-            var router = express.Router();
-            _this.bind(router);
+        this.create = () => {
+            const express = require("express");
+            let router = express.Router();
+            this.bind(router);
             return router;
         };
-        this.beforeRender = function (req, res) {
+        this.beforeRender = (req, res) => {
         };
         this.loaders = [Promise.resolve];
-        this.loading = function () { return __awaiter(_this, void 0, void 0, function () {
-            var helpers, _a, _b, _i, key, loaders, _c, _d, _e, key;
-            return __generator(this, function (_f) {
-                switch (_f.label) {
-                    case 0:
-                        helpers = this.vars.hlp;
-                        _a = [];
-                        for (_b in helpers)
-                            _a.push(_b);
-                        _i = 0;
-                        _f.label = 1;
-                    case 1:
-                        if (!(_i < _a.length)) return [3 /*break*/, 4];
-                        key = _a[_i];
-                        return [4 /*yield*/, helpers[key].loading()];
-                    case 2:
-                        _f.sent();
-                        _f.label = 3;
-                    case 3:
-                        _i++;
-                        return [3 /*break*/, 1];
-                    case 4:
-                        loaders = this.loaders;
-                        _c = [];
-                        for (_d in loaders)
-                            _c.push(_d);
-                        _e = 0;
-                        _f.label = 5;
-                    case 5:
-                        if (!(_e < _c.length)) return [3 /*break*/, 8];
-                        key = _c[_e];
-                        return [4 /*yield*/, loaders[key]];
-                    case 6:
-                        _f.sent();
-                        _f.label = 7;
-                    case 7:
-                        _e++;
-                        return [3 /*break*/, 5];
-                    case 8: return [2 /*return*/, true];
-                }
-            });
-        }); };
+        this.loading = () => __awaiter(this, void 0, void 0, function* () {
+            // helper loading
+            let helpers = this.vars.hlp;
+            for (var key in helpers) {
+                yield helpers[key].loading();
+            }
+            //loaders loading;
+            let loaders = this.loaders;
+            for (var key in loaders) {
+                yield loaders[key];
+            }
+            return true;
+        });
         this._views = {
             common: "",
             typical: ""
         };
-        this.render = function (req, res, view, vars) {
-            if (view === void 0) { view = ""; }
-            if (vars === void 0) { vars = {}; }
-            _this.setData(vars);
-            _this.beforeRender(req, res);
-            var loading = _this.loading();
-            loading.then(function (result) {
-                var f = view.substring(1, 1);
-                var ds = core_1.system.ds;
+        this.render = (req, res, view = "", vars = {}) => {
+            this.setData(vars);
+            this.beforeRender(req, res);
+            let loading = this.loading();
+            loading.then((result) => {
+                let f = view.substring(1, 1);
+                let ds = core_1.system.ds;
                 if (f !== "." && f !== ds) {
-                    var dir = _this.views.typical + ds + _this.name + ds + "views";
+                    let dir = this.views.typical + ds + this.name + ds + "views";
                     req.app.set('views', dir);
                     view = view;
                 }
-                res.render(view, _this.vars, function (err, html) {
+                res.render(view, this.vars, (err, html) => {
                     if (!err) {
                         res.send(html);
                         return;
                     }
-                    req.app.set('views', _this.views.common);
+                    req.app.set('views', this.views.common);
                     res.status = err.status;
                     if (res.app.get('env') === 'development') {
                         res.render("error", { "message": err.message, "error": err });
@@ -135,60 +75,47 @@ var router = /** @class */ (function () {
                     }
                     res.render("error", { "message": err.message, "error": {} });
                 });
-            })["catch"](function (err) {
+            }).catch((err) => {
                 res.status(500);
                 res.send("error", { error: err });
             });
         };
-        this.send = function (req, res, content) {
+        this.send = (req, res, content) => {
             res.send(content);
         };
         /**
          * view に渡す変数に追加
          */
-        this.setData = function (vars) {
-            _this.vars = Object.assign(_this.vars, vars);
+        this.setData = (vars) => {
+            this.vars = Object.assign(this.vars, vars);
         };
-        var parseForm = bodyParser.urlencoded({ extended: false });
-        var csrf = csurf;
-        var csrfProtection = csrf({ cookie: true });
+        let parseForm = bodyParser.urlencoded({ extended: false });
+        let csrf = csurf;
+        let csrfProtection = csrf({ cookie: true });
         this.csrfProtection = csrfProtection;
         this.parseForm = parseForm;
     }
-    Object.defineProperty(router.prototype, "models", {
-        get: function () {
-            return this.service.models;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(router.prototype, "model", {
-        get: function () {
-            return this.service.model;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(router.prototype, "views", {
-        get: function () {
-            return this._views;
-        },
-        set: function (paths) {
-            this._views.common = paths.common;
-            this._views.typical = paths.typical;
-        },
-        enumerable: true,
-        configurable: true
-    });
+    get models() {
+        return this.service.models;
+    }
+    get model() {
+        return this.service.model;
+    }
+    get views() {
+        return this._views;
+    }
+    set views(paths) {
+        this._views.common = paths.common;
+        this._views.typical = paths.typical;
+    }
     /*
         ajax 判定
     */
-    router.prototype.isXhr = function (res) {
+    isXhr(res) {
         return res.xhr;
-    };
-    router.prototype.helper = function (name, helper) {
+    }
+    helper(name, helper) {
         this.vars.hlp[name] = helper;
-    };
-    return router;
-}());
+    }
+}
 exports.router = router;

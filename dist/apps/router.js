@@ -10,9 +10,6 @@ class router extends core_1.router {
             common: __dirname + core_2.system.ds + "views",
             typical: __dirname + core_2.system.ds
         };
-
-        
     }
 }
 exports.router = router;
-

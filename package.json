@@ -5,18 +5,16 @@
   "scripts": {
     "browsersync": "browser-sync start --proxy localhost:4000 --files=\"dis/apps/public/**/*.*\" ",
     "start": "nodemon ./dist/bin/www.js",
-    "buildView": "cpx \"{apps,base,models,config,public}/**/*.{ejs,js,json,tag,ico,gif,jpg,jpeg}\" dist",
-    "buildStylus": "stylus apps/public/stylesheets/style.styl -o dist/apps/public/stylesheets/style.css --include-css",
-    "buildScripts": "browserify apps/public/scripts/components.ts -p [tsify] -o dist/apps/public/scripts/components.js -v",
-    "watchMove": "cpx \"{apps,base,models,config,public}/**/*.{ejs,js,json,tag,ico,gif,jpg,jpeg}\" dist -w",
-    "watchStylus": "chokidar \"apps/public/stylesheets/**/*.styl\" --command \"npm run buildStylus\"",
-    "watchbrowserify": "watchify apps/public/scripts/components.ts -p [tsify] -o dist/apps/public/scripts/components.js -v",
-    "buildTsc": "tsc",
-    "watchTsc": "tsc -w",
+    "build:view": "cpx \"{apps,base,models,config,public}/**/*.{ejs,js,json,tag,ico,gif,jpg,jpeg}\" dist",
+    "build:stylus": "stylus apps/public/stylesheets/style.styl -o dist/apps/public/stylesheets/style.css --include-css",
+    "build:scripts": "browserify apps/public/scripts/components.ts -p [tsify --target ES6] -o dist/apps/public/scripts/components.js -v",
+    "build:tsc" : "tsc",
+    "watch:stylus": "chokidar \"apps/public/stylesheets/**/*.styl\" --command \"npm run build:stylus\"",
+    "watch:scripts": "watchify apps/public/scripts/components.ts -p [tsify --target ES6] -o dist/apps/public/scripts/components.js -v",
     "prebuild": "mkdir -p dist/apps/public/scripts dist/apps/public/stylesheets",
-    "build": "npm-run-all buildView buildStylus buildTsc buildScripts",
-    "watch": "npm-run-all -p watchMove watchStylus",
-    "develop": "npm-run-all -p watch start browsersync"
+    "build": "npm-run-all build:tsc build:view build:stylus build:scripts",
+    "watch": "npm-run-all -p \"build:tsc -- -w\" \"build:view -- -w -u\" watch:stylus watch:scripts",
+    "dev": "npm-run-all -p watch start browsersync"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -67,7 +65,6 @@
     ]
   },
   "browser": {
-    "jquery": "./node_modules/jquery/dist/jquery.min.js",
     "confirmDatePlugin": "./node_modules/flatpickr/dist/plugins/confirmDate/confirmDate.js",
     "flatpickr": "./node_modules/flatpickr/dist/flatpickr.min.js"
   },
