@@ -43,7 +43,8 @@
     "ts-loader": "^2.3.7",
     "typescript": "^2.5.2",
     "typescript-simple": "^8.0.4",
-    "umbrellajs": "^2.9.0"
+    "umbrellajs": "^2.9.0",
+    "webpack": "^3.6.0"
   },
   "devDependencies": {
     "@types/chai": "^4.0.4",

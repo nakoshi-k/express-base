@@ -67,14 +67,11 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const umbrellajs = __webpack_require__(1);
-const flatpickr_1 = __webpack_require__(2);
-let confirmDatePlugin = __webpack_require__(3);
+let umbrellajs = __webpack_require__(1);
 let u = umbrellajs.u;
-flatpickr_1.default(".calendar", {
+let flatpickr = __webpack_require__(2);
+let confirmDatePlugin = __webpack_require__(3);
+flatpickr(".calendar", {
     "enableTime": true,
     "plugins": [new confirmDatePlugin({})]
 });
@@ -82,9 +79,9 @@ let remodal = __webpack_require__(4);
 class xhrPost {
     constructor(selector) {
         this.send = () => {
-            fetch(this.action, {
+            fetch('<%= endPoint %>', {
                 credentials: 'same-origin',
-                method: 'POST',
+                method: 'DELETE',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
                     'X-XSRF-Token': '<%= token %>'
@@ -99,11 +96,9 @@ class xhrPost {
                 alert('failed delete #<%= id %> !');
             });
         };
-        this.form = u(selector);
-        let form = this.form;
+        let form = u(selector);
         this.fd = new FormData(form);
         this.action = form.attr("action");
-        this.token = form.children("_csrf").attr("value");
     }
 }
 

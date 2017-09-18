@@ -18,8 +18,9 @@
         
     .pagination-list li a
         &:not(.disable)
-        &:hover 
-            border-radius 0.3rem
+            color color-primary
+            background-color color-tertiary
+        &:hover:not(.disable)
             color color-initial
             background-color color-primary
     
@@ -27,7 +28,6 @@
         cursor not-allowed
     
     .pagination-list li.active a
-        border-radius 0.3rem
         color color-initial
         background-color color-primary
        

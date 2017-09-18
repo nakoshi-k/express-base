@@ -1982,9 +1982,11 @@ img {
   margin: 0.3rem;
   color: #d75969;
 }
-.pagination .pagination-list li a:not(.disable),
-.pagination .pagination-list li a:hover {
-  border-radius: 0.3rem;
+.pagination .pagination-list li a:not(.disable) {
+  color: #c7243a;
+  background-color: #f4f5f6;
+}
+.pagination .pagination-list li a:hover:not(.disable) {
   color: #fff;
   background-color: #c7243a;
 }
@@ -1992,7 +1994,6 @@ img {
   cursor: not-allowed;
 }
 .pagination .pagination-list li.active a {
-  border-radius: 0.3rem;
   color: #fff;
   background-color: #c7243a;
 }
