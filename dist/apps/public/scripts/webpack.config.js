@@ -10,7 +10,6 @@ glob.sync( __dirname + "/*.ts").map(function(file){
 });
 
 let outdir = __dirname.replace("/apps/" , "/dist/apps/");
-console.log(outdir);
 module.exports  = {
             entry: entries,
             output: {
