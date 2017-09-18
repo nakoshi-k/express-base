@@ -29,12 +29,28 @@ class xhrPost {
             method: 'POST',
             headers: {
             'X-Requested-With': 'XMLHttpRequest' ,
-            'X-XSRF-Token': '<%= token %>'
+            'X-XSRF-Token': this.token
             }
         })
         .then((response) => {
-            if(response.status === 200){ location.href = '<%= redirect %>'; return true; };
-            alert('failed delete #<%= id %> !');
+            if(response.status === 200){ 
+                this.success(response);
+            };
+            this.faild(response);
+        }).catch((err) => {
+            this.error(err);
         });
+    }
+    
+    private success = (response) => {
+
+    }
+
+    private faild = (response) => {
+
+    }
+
+    private error = (error) => {
+
     }
 }
