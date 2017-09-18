@@ -3,7 +3,6 @@ import  * as ejs from "ejs";
 import  * as fs from "fs";
 
 export class cell_helper extends helper{
-    private ejs:ejs;
     private _templates : {} = {};
     private _views: string;
     private _vars : {} = {};

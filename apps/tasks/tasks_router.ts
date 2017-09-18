@@ -2,6 +2,7 @@ import * as express from "express";
 import {router} from "../router";
 import {tasks_service} from "./tasks_service";
 import * as helpers  from "../../base/helper";
+import {input_error} from "../../base/core"
 
 export class tasks_router extends router {
     public name = "tasks";
@@ -15,10 +16,6 @@ export class tasks_router extends router {
     protected beforeRender = (req,res) => {
         this.helper("form" ,new helpers.form());
         this.helper("pagination" , new helpers.pagination() );
-
-        let crud = new helpers.crud();
-        this.helper("crud" ,crud );
-
         this.csrfReady(req);
     }
 
@@ -72,11 +69,11 @@ export class tasks_router extends router {
         model.findById( req.params.id ).then((result) => {
             if(result){
                 result.destroy().then( () => {
-                    res.send(200);
+                    res.sendStatus(200);
                 });
                 return;
             }
-            res.send(500);
+            res.sendStatus(500);
         })
     }
 

@@ -3,17 +3,18 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "browsersync": "browser-sync start --proxy localhost:4000 --files=\"dis/apps/public/**/*.*\" ",
-    "start": "nodemon ./dist/bin/www.js",
+    "browsersync": "browser-sync start --proxy localhost:4000 --files=\"dis/apps/**/*.*\" ",
+    "start": "nodemon ./dist/bin/www.js -d 1",
     "build:view": "cpx \"{apps,base,models,config,public}/**/*.{ejs,js,json,tag,ico,gif,jpg,jpeg}\" dist",
     "build:stylus": "stylus apps/public/stylesheets/style.styl -o dist/apps/public/stylesheets/style.css --include-css",
-    "build:scripts": "browserify apps/public/scripts/components.ts -p [tsify --target ES6] -o dist/apps/public/scripts/components.js -v",
-    "build:tsc" : "tsc",
+    "build:scripts": "webpack --config apps/public/scripts/webpack.config.js",
+    "build:tsc": "tsc",
     "watch:stylus": "chokidar \"apps/public/stylesheets/**/*.styl\" --command \"npm run build:stylus\"",
-    "watch:scripts": "watchify apps/public/scripts/components.ts -p [tsify --target ES6] -o dist/apps/public/scripts/components.js -v",
+    "watch:scripts": "npm run build:scripts -- -w",
     "prebuild": "mkdir -p dist/apps/public/scripts dist/apps/public/stylesheets",
     "build": "npm-run-all build:tsc build:view build:stylus build:scripts",
-    "watch": "npm-run-all -p \"build:tsc -- -w\" \"build:view -- -w -u\" watch:stylus watch:scripts",
+    "prewatch": "",
+    "watch": "npm-run-all -p \"build:tsc -- -w\" \"build:view -- -w -u --no-initial\" watch:stylus watch:scripts",
     "dev": "npm-run-all -p watch start browsersync"
   },
   "dependencies": {
@@ -39,11 +40,14 @@
     "sequelize": "^3.30.4",
     "sequelize-cli": "^2.8.0",
     "serve-favicon": "^2.3.2",
+    "ts-loader": "^2.3.7",
     "typescript": "^2.5.2",
+    "typescript-simple": "^8.0.4",
     "umbrellajs": "^2.9.0"
   },
   "devDependencies": {
     "@types/chai": "^4.0.4",
+    "@types/ejs": "^2.3.33",
     "@types/express": "^4.0.37",
     "@types/mocha": "^2.2.43",
     "@types/node": "^7.0.43",
@@ -69,6 +73,6 @@
     "flatpickr": "./node_modules/flatpickr/dist/flatpickr.min.js"
   },
   "browserify-shim": {
-    "umbrella": "u"
+    "umbrellajs": "u"
   }
 }

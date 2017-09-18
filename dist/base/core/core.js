@@ -10,3 +10,7 @@ var search_1 = require("./search");
 exports.search = search_1.search;
 var service_1 = require("./service");
 exports.service = service_1.service;
+var app_error_1 = require("./app_error");
+exports.input_error = app_error_1.input_error;
+var app_error_2 = require("./app_error");
+exports.app_error = app_error_2.app_error;

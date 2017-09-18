@@ -10,8 +10,6 @@ class tasks_router extends router_1.router {
         this.beforeRender = (req, res) => {
             this.helper("form", new helpers.form());
             this.helper("pagination", new helpers.pagination());
-            let crud = new helpers.crud();
-            this.helper("crud", crud);
             this.csrfReady(req);
         };
         this.search = (req, res, next) => {
@@ -59,11 +57,11 @@ class tasks_router extends router_1.router {
             model.findById(req.params.id).then((result) => {
                 if (result) {
                     result.destroy().then(() => {
-                        res.send(200);
+                        res.sendStatus(200);
                     });
                     return;
                 }
-                res.send(500);
+                res.sendStatus(500);
             });
         };
         this.insert = (req, res, next) => {

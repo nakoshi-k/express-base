@@ -41,8 +41,7 @@ export class crud_helper extends helper{
                 token : options.csrf ,
                 redirect : options.redirect
             };
-        let s = this.tag.wrap("a","delete" ,{ href : "#" , "onClick" : delFunc , class : linkOptions.class})
-        return  s + this.cell.render( "delete" , vars );
+        return  this.cell.render( "delete" , vars );
     }
       
 }

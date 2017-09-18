@@ -1,3 +1,4 @@
+export * from "./core/app_error";
 export { system } from "./core/system";
 export { helper } from "./core/helper";
 export { pagination } from "./core/pagination";

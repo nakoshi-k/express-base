@@ -11,7 +11,7 @@ export abstract class router{
     protected parseForm;
     protected csrfProtection;
     protected useModel = true;
-    public vars = { "title" : "express Application", "csrf" : "" , "hlp" : {} };
+    public vars = { "title" : "Application", "csrf" : "" , "hlp" : {} };
     protected service:service.service;
 
     get models(){
