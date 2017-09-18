@@ -1,5 +1,5 @@
 import * as umbrellajs from "umbrellajs";
-import flatpickr from "flatpickr";
+import * as flatpickr from "flatpickr";
 
 let confirmDatePlugin = require("confirmDatePlugin");
 
