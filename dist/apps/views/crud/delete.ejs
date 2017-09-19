@@ -18,7 +18,7 @@
             }
         })
         .then((response) => {
-            if(response.status === 200){ location.href = '<%= redirect %>'; return true; };
+            if(response.status === 204){ location.href = '<%= redirect %>'; return true; };
             alert('failed delete #<%= id %> !');
         });
         return false;

@@ -61,7 +61,7 @@ class tasks_router extends router_1.router {
             model.findById(req.params.id).then((result) => {
                 if (result) {
                     result.destroy().then(() => {
-                        res.sendStatus(200);
+                        res.sendStatus(204);
                     });
                     return;
                 }
