@@ -23,7 +23,6 @@ export class pagination{
                 pagination = Object.assign(res,pagination);
                 resolve(pagination);
             }).catch((e) => {
-                console.log(e);
                 reject(e);
             })
         });

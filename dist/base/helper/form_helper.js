@@ -48,6 +48,23 @@ class form_helper extends core_1.helper {
             this.unBind();
             return this.tag.create("/form");
         };
+        this.validationError = (name, element) => {
+            if (!this.bind["errors"]) {
+                return this.tag.wrap("div", element, { class: "input" });
+            }
+            if (!this.bind["errors"][name]) {
+                return this.tag.wrap("div", element, { class: "input" });
+            }
+            let vdt = this.bind["errors"][name];
+            for (let i = 0; i < vdt.length; i++) {
+                element += this.tag.wrap("div", vdt[i]["message"], { "class": "error", "data-validation": vdt[i]["type"] });
+            }
+            return this.tag.wrap("div", element, { class: "input error" });
+        };
+        this.postProcess = (name, element) => {
+            element = this.validationError(name, element);
+            return element;
+        };
         this.submit = (title, attr = { class: "button primary" }) => {
             return this.tag.wrap("button", title, attr);
         };
@@ -56,13 +73,16 @@ class form_helper extends core_1.helper {
                 attr["type"] = "text";
             }
             attr = this.initAttr(name, attr);
-            return this.tag.create("input", attr);
+            if (attr["type"] === "hidden") {
+                return this.tag.create("input", attr);
+            }
+            return this.postProcess(name, this.tag.create("input", attr));
         };
         this.textarea = (name, attr = {}) => {
             attr = this.initAttr(name, attr);
             let innerContent = attr["value"];
             attr = this.removeAttr("value", attr);
-            return this.tag.wrap("textarea", innerContent, attr);
+            return this.postProcess(name, this.tag.wrap("textarea", innerContent, attr));
         };
         this.removeAttr = (property, attr = {}) => {
             if (attr.hasOwnProperty(property)) {
@@ -104,29 +124,26 @@ class form_helper extends core_1.helper {
         };
         this.radio = (name, options = {}, attr = {}) => {
             let childAttr = {};
-            return this.selector(name, options, attr).radio();
+            return this.postProcess(name, this.selector(name, options, attr).radio());
         };
         this.select = (name, options = {}, attr = {}) => {
             attr = this.initAttr(name, attr);
             let tag = this.selector(name, options, attr).select();
             attr = this.removeAttr("value", attr);
-            return this.tag.wrap("select", tag, attr);
+            return this.postProcess(name, this.tag.wrap("select", tag, attr));
         };
         this.checkbox = (name, attr = {}) => {
             attr = this.initAttr(name, attr);
             attr["type"] = "checkbox";
-            return this.tag.create("input", attr);
+            return this.postProcess(name, this.tag.create("input", attr));
         };
         this.file = (name, attr) => {
             attr = this.initAttr(name, attr);
             attr["type"] = "file";
-            this.input(name, attr);
+            return this.postProcess(name, this.input(name, attr));
         };
         this.method = (name) => {
             return this.input("_method", { type: "hidden", value: name });
-        };
-        this.deleteLink = (path) => {
-            let script = "";
         };
         this.tag = new helper_1.tag();
         this.bindData = { csrf: "" };

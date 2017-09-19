@@ -28,8 +28,12 @@ class tasks_router extends router_1.router {
             });
         };
         this.add = (req, res, next) => {
+            console.log(req.body);
             //スキーマを取得してセットする。
-            this.setData({ "task": {} });
+            this.setData({ "task": this.model.schema });
+            if (req.body) {
+                this.setData({ "task": req.body });
+            }
             this.render(req, res, "add");
         };
         this.view = (req, res, next) => {
@@ -73,6 +77,7 @@ class tasks_router extends router_1.router {
                 }
                 res.redirect("/tasks");
             }).catch((err) => {
+                req.body.errors = this.service.validationError(err);
                 if (this.isXhr(req)) {
                     this.add(req, res, next);
                     return;
@@ -99,6 +104,11 @@ class tasks_router extends router_1.router {
                     this.edit(req, res, next);
                 });
             }).catch((err) => {
+                if (this.isXhr(req)) {
+                    res.status(400);
+                    res.json(err);
+                    return;
+                }
             });
         };
         this.bind = (router) => {

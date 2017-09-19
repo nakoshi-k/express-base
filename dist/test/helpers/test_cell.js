@@ -19,7 +19,6 @@ describe('cell_helper', () => {
         };
         cell.ready().then((res) => {
             let ren = cell.render("delete", test);
-            console.log(ren + "aaa");
             done();
         });
     });

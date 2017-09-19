@@ -10,6 +10,5 @@ describe('pagination_helper', () => {
             currentPage: 3,
             queryPrams: { a: '123', aaa: '12' }
         };
-        console.log(pagination.render(page, { path: "page/#/" }));
     });
 });

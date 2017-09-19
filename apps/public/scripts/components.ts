@@ -34,7 +34,6 @@ class xhrPost {
         this.token = form.children('[name="_csrf"]').attr("value");
     }
     public send = () => {
-        console.log(this.token);
         fetch( this.action , {
             credentials: 'same-origin' ,
             method: this.method,
@@ -79,14 +78,16 @@ class xhrPost {
 u(".xhr-post").on( "click" , function(){
     let selector = u(this).attr("data-target");
     let xhr = new xhrPost( selector ); 
-    xhr.success = (json) => {
-        console.log(json);
-        return;
-    }
-    xhr.faild = (res) => {
+    xhr.success = (res:JSON) => {
         console.log(res);
         return;
     }
+    
+    xhr.faild = (res:JSON) => {
+        console.log(res);
+        return;
+    }
+
     xhr.error = (res) => {
         console.log(res);
         return;

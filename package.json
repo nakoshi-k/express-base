@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "browsersync": "browser-sync start --proxy localhost:4000 --files=\"dist/{apps,base}/**/*.*\" ",
+    "browsersync": "browser-sync start --proxy localhost:4000 --files=\"dist/**/*.*\" ",
     "start": "nodemon ./dist/bin/www.js -d 1",
     "build:view": "cpx \"{apps,base,models,config,public}/**/*.{ejs,js,json,tag,ico,gif,jpg,jpeg}\" dist",
     "build:stylus": "stylus apps/public/stylesheets/style.styl -o dist/apps/public/stylesheets/style.css --include-css",

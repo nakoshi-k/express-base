@@ -4,6 +4,7 @@ import * as sequelize from "sequelize";
 import {system} from "../core";
 import {search} from "./search";
 import {pagination} from "./pagination";
+import {validation_error} from "./validation";
 import  * as models from "../../models";
 
 export abstract class service{
@@ -21,6 +22,10 @@ export abstract class service{
     
     public pagination = (model:sequelize.Model<any,any> = this.model) =>{
         return new pagination(model);
+    }
+
+    public validationError = (error:sequelize.ValidationError) =>{
+        return new validation_error(error);
     }
 
 }

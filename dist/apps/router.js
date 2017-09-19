@@ -14,7 +14,6 @@ class router extends core_1.router {
         };
         let crud = new helpers.crud();
         let path = [__dirname, "views", "crud", "delete.ejs"].join(core_2.system.ds);
-        console.log(path);
         crud.deleteTemplate = path;
         this.helper("crud", crud);
     }

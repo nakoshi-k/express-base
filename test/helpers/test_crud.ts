@@ -9,7 +9,6 @@ describe('crud_support_helper', () =>  {
     it("test" , () => {
       crud.delete( "delete" , { path: "test",id : "21321" , csrf : "afdsa989hf9shah9d8h9fh" , redirect : "aaaaaa"} )
       .then( (res) => {
-          console.log(res);
       });
     })
 

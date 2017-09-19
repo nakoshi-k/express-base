@@ -4,10 +4,26 @@ module.exports = function(sequelize, DataTypes) {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
-      primaryKey: true
+      primaryKey: true,
     },
-    title: DataTypes.STRING,
-    priod: DataTypes.DATE
+    title: {
+      type : DataTypes.STRING,
+      validate : {
+        len : {
+          args : [3,10],
+          msg : "nagai"
+        }
+      }
+    },
+     priod: {
+      type : DataTypes.DATE,
+      validate : {
+        len : {
+          args : [3,10],
+          msg : "nagai"
+        }
+      }
+    }
   }, {
     underscored: true,
     classMethods: {

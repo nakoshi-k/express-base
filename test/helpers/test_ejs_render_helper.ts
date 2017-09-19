@@ -15,11 +15,8 @@ describe('render_helper', () =>  {
 
             ejs_render.render( "delete" , { url : "example" , uuid : "pjpiuhpigsa" , token : "77bsdfd9sghf9ds8h" ,id: "333" } )
             .then((res) => {
-                console.log(res);
                 done();
             }).catch((err) => {
-                console.log("13");
-                console.log(err);
                 done();
             })
         })

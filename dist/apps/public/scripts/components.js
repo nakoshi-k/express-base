@@ -90,7 +90,6 @@ var xhrPost = /** @class */ (function () {
             return method;
         };
         this.send = function () {
-            console.log(_this.token);
             fetch(_this.action, {
                 credentials: 'same-origin',
                 method: _this.method,
@@ -148,8 +147,8 @@ var xhrPost = /** @class */ (function () {
 umbrellajs_1.u(".xhr-post").on("click", function () {
     var selector = umbrellajs_1.u(this).attr("data-target");
     var xhr = new xhrPost(selector);
-    xhr.success = function (json) {
-        console.log(json);
+    xhr.success = function (res) {
+        console.log(res);
         return;
     };
     xhr.faild = function (res) {

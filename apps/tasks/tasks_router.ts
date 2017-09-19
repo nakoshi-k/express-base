@@ -37,8 +37,12 @@ export class tasks_router extends router {
     }
 
     private add = (req:express.Request, res:express.Response, next:express.NextFunction) => {
+        console.log(req.body);
         //スキーマを取得してセットする。
-        this.setData({"task" : {} } );
+        this.setData({"task" : this.model.schema } );
+        if(req.body){
+            this.setData({"task" : req.body });
+        }
         this.render( req , res , "add");
     }
     
@@ -86,6 +90,7 @@ export class tasks_router extends router {
             }
             res.redirect("/tasks");
         }).catch((err) => {
+            req.body.errors = this.service.validationError(err);
             if(this.isXhr(req)){
                 this.add(req,res,next);
                 return;
