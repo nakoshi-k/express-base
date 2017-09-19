@@ -16,8 +16,9 @@
       </div>
       <div class="column column-75">
         <%- console.log(task) %>
+
         <%- hlp.crud.delete( "delete" , { path : "/tasks/#" , id : task.id , csrf : csrf , redirect : "/tasks" } ) %>
-        <%- hlp.form.start( "task" , task , { "method" :"put" , "action" : "/tasks/:id" }); %>
+        <%- hlp.form.start( "task" , task , { "id" : "edit" ,"method" :"put" , "action" : "/tasks/:id" }); %>
           <div class="form-item">
             <label for="title">Title</label>
             <%- hlp.form.input( "id" , { type : "hidden"}); %>
@@ -27,7 +28,7 @@
             <label for="priod">Priod</label>
             <%- hlp.form.input( "priod" , {class : "w100 calendar"} ); %>
           </div>
-          <%- hlp.form.submit( "送信" ); %>
+          <%- hlp.form.submit( "送信" , { "class" : "xhr-post" , "data-target" : "#edit" } ); %>
         <%- hlp.form.end(); %>
       </div>
     </div>

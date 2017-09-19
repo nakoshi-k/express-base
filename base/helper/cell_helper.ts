@@ -28,7 +28,6 @@ export class cell_helper extends helper{
             if( path.charAt(0) !== "/" && path.charAt(0) !== "\\" ){
                 let ds = system.ds;
                 filePath =  __dirname + ds + ".." + ds +"views" + ds + "tile" + ds + path + ".ejs";
-                console.log(filePath);
             }
             fs.readFile( filePath , 'utf8',  (err, data) => {
                 if(err){

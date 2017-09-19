@@ -14,7 +14,6 @@ class cell_helper extends core_1.helper {
                 if (path.charAt(0) !== "/" && path.charAt(0) !== "\\") {
                     let ds = core_1.system.ds;
                     filePath = __dirname + ds + ".." + ds + "views" + ds + "tile" + ds + path + ".ejs";
-                    console.log(filePath);
                 }
                 fs.readFile(filePath, 'utf8', (err, data) => {
                     if (err) {

@@ -138,7 +138,7 @@ class pagination_helper extends core_1.helper {
         }
         let q = "";
         Object.keys(prts).forEach(function (key) {
-            q += "&" + encodeURIComponent(key) + "=" + encodeURIComponent(prts[key]);
+            q += "&${encodeURIComponent(key)}=${encodeURIComponent(prts[key])}";
         });
         return q.replace("&", "?");
     }

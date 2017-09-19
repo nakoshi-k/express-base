@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "browsersync": "browser-sync start --proxy localhost:4000 --files=\"dis/apps/**/*.*\" ",
+    "browsersync": "browser-sync start --proxy localhost:4000 --files=\"dist/{apps,base}/**/*.*\" ",
     "start": "nodemon ./dist/bin/www.js -d 1",
     "build:view": "cpx \"{apps,base,models,config,public}/**/*.{ejs,js,json,tag,ico,gif,jpg,jpeg}\" dist",
     "build:stylus": "stylus apps/public/stylesheets/style.styl -o dist/apps/public/stylesheets/style.css --include-css",
@@ -13,11 +13,11 @@
     "watch:scripts": "npm run build:scripts -- -w",
     "prebuild": "mkdir -p dist/apps/public/scripts dist/apps/public/stylesheets",
     "build": "npm-run-all build:tsc build:view build:stylus build:scripts",
-    "prewatch": "",
     "watch": "npm-run-all -p \"build:tsc -- -w\" \"build:view -- -w -u --no-initial\" watch:stylus watch:scripts",
     "dev": "npm-run-all -p watch start browsersync"
   },
   "dependencies": {
+    "@types/deep-assign": "^0.1.0",
     "body-parser": "^1.15.2",
     "chai-http": "^3.0.0",
     "connect-redis": "^3.3.0",

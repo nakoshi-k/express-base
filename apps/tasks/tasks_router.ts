@@ -99,23 +99,27 @@ export class tasks_router extends router {
         model.findById( req.params.id ).then((task) => {
             task.update(req.body).then( (result) => {
               if(this.isXhr(req)){
-                res.redirect("/tasks");
+                res.status(201);
+                res.json(result);
                 return;
               }
-              res.redirect("/tasks");
+              //res.redirect("/tasks");
             }).catch((err) => {
-
               if(this.isXhr(req)){
-                this.edit(req,res,next);
+                res.status(400);
+                res.json(err);
                 return;
               }
               this.edit(req,res,next);
-                
             });
+        }).catch((err) => {
+            if(this.isXhr(req)){
+                res.status(400);
+                res.json(err);
+                return;
+              }
         })
     }
-
-
 
     public bind  = (router : express.Router) : express.Router => {
         let csrfProtection = this.csrfProtection;

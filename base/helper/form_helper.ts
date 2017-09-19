@@ -75,6 +75,9 @@ export class form_helper extends helper{
     }
 
     input = ( name:string , attr = {}) => {
+        if(!attr["type"]){
+            attr["type"] = "text";
+        }
         attr = this.initAttr(name,attr)
         return this.tag.create("input",attr);
     }

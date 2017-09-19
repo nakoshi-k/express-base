@@ -52,6 +52,9 @@ class form_helper extends core_1.helper {
             return this.tag.wrap("button", title, attr);
         };
         this.input = (name, attr = {}) => {
+            if (!attr["type"]) {
+                attr["type"] = "text";
+            }
             attr = this.initAttr(name, attr);
             return this.tag.create("input", attr);
         };

@@ -1,7 +1,7 @@
 const path = require("path");
 const glob = require("glob");
 var entries = {}
-glob.sync( __dirname + "/**/*.{ts,tag}").map(function(file){
+glob.sync( __dirname + "/**/*.ts").map(function(file){
     let pathArray = file.split(path.sep);
     let nameArray = pathArray.pop().split(".");
     nameArray.pop();
@@ -18,7 +18,14 @@ module.exports  = {
             },
             module: {
                 loaders: [
-                    { test: /\.ts$/, loader: 'ts-loader' }
+                    { 
+                    test: /\.ts$/,
+                    loader: 'ts-loader',
+                    options : {
+                        compilerOptions : {target : "es5"}
+                    }
+                    
+                    }
                 ]
             }
         };
