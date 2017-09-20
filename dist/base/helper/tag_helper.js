@@ -10,19 +10,20 @@ class tag_helper extends core_1.helper {
                 if (attr[key] === "") {
                     continue;
                 }
-                attribute += " " + key + '="' + attr[key] + '"';
+                attribute += ` ${key}="${attr[key]}"`;
             }
             return attribute;
         };
         this.create = (tagName, attr = {}) => {
-            return "<" + tagName + this.buildAttr(attr) + ">";
+            return `<${tagName}${this.buildAttr(attr)}>`;
         };
         this.wrap = (tagName, content = "", attr = {}) => {
-            let tag = "";
             content = (content === null) ? "" : content;
-            tag += this.create(tagName, attr);
-            tag += content;
-            tag += this.create("/" + tagName);
+            let tag = `
+                ${this.create(tagName, attr)}
+                    ${content}
+                ${this.create("/" + tagName)}  
+            `;
             return tag;
         };
     }

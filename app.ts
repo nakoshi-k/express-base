@@ -11,6 +11,7 @@ import * as methodOverride from 'method-override';
  * router loading
  */
 import {tasks_router} from "./apps/tasks/tasks_router";
+import {users_router} from "./apps/users/users_router";
 
 /**
  * main
@@ -75,6 +76,7 @@ export class main{
   
   private router = (app) => {
     app.use("/tasks" , new tasks_router().create() );
+    app.use("/users" , new users_router().create() );
   }
   
   private status404(app:express.Application){
