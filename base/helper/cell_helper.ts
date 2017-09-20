@@ -27,7 +27,7 @@ export class cell_helper extends helper{
             let filePath =  path;
             if( path.charAt(0) !== "/" && path.charAt(0) !== "\\" ){
                 let ds = system.ds;
-                filePath =  __dirname + ds + ".." + ds +"views" + ds + "tile" + ds + path + ".ejs";
+                filePath = [ __dirname , ".." , "views" , "tile" , path , ".ejs"].join(ds);
             }
             fs.readFile( filePath , 'utf8',  (err, data) => {
                 if(err){

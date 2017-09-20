@@ -8,21 +8,23 @@ export class tag_helper extends helper{
             if(attr[key] === ""){
                 continue;
             }
-            attribute += " " + key + '="' + attr[key] + '"';            
+            attribute += ` ${key}="${attr[key]}"`;            
         }
         return attribute; 
     }
 
     create = (tagName:string,attr : {} = {}) : string => {
-        return "<" + tagName + this.buildAttr(attr) + ">";
+
+        return `<${tagName}${this.buildAttr(attr)}>`;
     }
 
     wrap = ( tagName:string , content : string = "",attr : {} = {}) => {
-        let tag = "";
         content = (content === null) ? "" : content;
-        tag += this.create(tagName,attr) ;
-        tag += content;
-        tag += this.create("/" + tagName) ;
+        let tag = `
+                ${this.create(tagName,attr) }
+                    ${content}
+                ${ this.create("/" + tagName) }  
+            `;
         return tag;
     }
 
