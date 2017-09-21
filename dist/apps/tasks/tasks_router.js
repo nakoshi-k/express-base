@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const router_1 = require("../router");
 const tasks_service_1 = require("./tasks_service");
 const helpers = require("../../base/helper");
+const bodyParser = require("body-parser");
 class tasks_router extends router_1.router {
     constructor() {
         super();
@@ -69,6 +70,7 @@ class tasks_router extends router_1.router {
             });
         };
         this.insert = (req, res, next) => {
+            console.log(req.body);
             let entity = this.model.build(req.body);
             entity.save().then(() => {
                 if (this.isXhr(req)) {
@@ -86,6 +88,7 @@ class tasks_router extends router_1.router {
             });
         };
         this.update = (req, res, next) => {
+            console.log(req.body);
             let model = this.model;
             model.findById(req.params.id).then((task) => {
                 task.update(req.body).then((result) => {
@@ -94,11 +97,13 @@ class tasks_router extends router_1.router {
                         res.json(result);
                         return;
                     }
-                    //res.redirect("/tasks");
+                    res.redirect("/tasks");
                 }).catch((err) => {
+                    console.log("ww");
                     if (this.isXhr(req)) {
+                        req.body.errors = this.service.validationError(err);
                         res.status(400);
-                        res.json(err);
+                        res.json(req.body);
                         return;
                     }
                     this.edit(req, res, next);
@@ -113,12 +118,12 @@ class tasks_router extends router_1.router {
         };
         this.bind = (router) => {
             let csrfProtection = this.csrfProtection;
-            let parseForm = this.parseForm;
+            router.use(bodyParser.urlencoded({ extended: false }));
             router.get("/", csrfProtection, this.search);
             router.get("/page/:page", csrfProtection, this.search);
             router.get("/add", csrfProtection, this.add);
             router.get("/:id", csrfProtection, this.view);
-            router.post("/", parseForm, csrfProtection, this.insert);
+            router.post("/", csrfProtection, this.insert);
             router.get("/:id/edit", csrfProtection, this.edit);
             router.put("/:id", csrfProtection, this.update);
             router.delete("/:id", csrfProtection, this.delete);

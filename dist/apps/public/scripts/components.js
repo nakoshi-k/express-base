@@ -68,11 +68,12 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(global) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var flatpickr = __webpack_require__(1);
 var confirmDatePlugin = __webpack_require__(2);
 var umbrellajs_1 = __webpack_require__(3);
+global["u"] = umbrellajs_1.u;
 flatpickr(".calendar", {
     "enableTime": true,
     "plugins": [new confirmDatePlugin({})]
@@ -89,13 +90,51 @@ var xhrPost = /** @class */ (function () {
             ;
             return method;
         };
+        this.formToJson = function (form) {
+            var json = {};
+            var inputs = form.find("input,select,textarea");
+            inputs.each(function (node, i) {
+                var c = umbrellajs_1.u(node).first();
+                var name = c.name;
+                if (c.type === "text") {
+                    json[name] = c.value;
+                    return;
+                }
+                if (c.type === "radio") {
+                    if (c.checked) {
+                        json[name] = c.value;
+                    }
+                    return;
+                }
+                if (c.type === "checkbox") {
+                    json[name] = null;
+                    if (c.checked) {
+                        json[name] = c.value;
+                    }
+                    return;
+                }
+                if (umbrellajs_1.u(node).is("select")) {
+                    json[name] = [];
+                    umbrellajs_1.u.children('option:selected').each(function (node, i) {
+                        json[name].push(node.first().value);
+                    });
+                    if (json[name].length === 0) {
+                        json[name] = json[name][0];
+                    }
+                    return;
+                }
+            });
+            return json;
+        };
         this.send = function () {
             fetch(_this.action, {
                 credentials: 'same-origin',
                 method: _this.method,
+                body: JSON.stringify(_this.formToJson(_this.form)),
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
-                    'X-XSRF-Token': _this.token
+                    'X-XSRF-Token': _this.token,
+                    'Content-Type': 'application/json'
                 }
             })
                 .then(function (response) {
@@ -107,17 +146,16 @@ var xhrPost = /** @class */ (function () {
             }).then(function (json) {
                 _this._success(json);
             }).catch(function (err) {
-                console.log();
                 _this._error(err);
             });
         };
         this._success = function (response) { };
         this._faild = function (response) { };
         this._error = function (response) { };
-        this.form = umbrellajs_1.u(selector);
-        var form = this.form;
+        var form = umbrellajs_1.u(selector);
+        this.form = form;
         this.method = this.getMethod(form);
-        this.fd = new FormData(form);
+        var t = document.getElementById("add");
         this.action = form.attr("action");
         this.token = form.children('[name="_csrf"]').attr("value");
     }
@@ -144,7 +182,8 @@ var xhrPost = /** @class */ (function () {
     });
     return xhrPost;
 }());
-umbrellajs_1.u(".xhr-post").on("click", function () {
+umbrellajs_1.u(".xhr-post").on("click", function (event) {
+    event.preventDefault();
     var selector = umbrellajs_1.u(this).attr("data-target");
     var xhr = new xhrPost(selector);
     xhr.success = function (res) {
@@ -156,13 +195,13 @@ umbrellajs_1.u(".xhr-post").on("click", function () {
         return;
     };
     xhr.error = function (res) {
-        console.log(res);
         return;
     };
     xhr.send();
     return false;
 });
 
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ }),
 /* 1 */
@@ -11280,6 +11319,33 @@ if ( !noGlobal ) {
 
 return jQuery;
 } );
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
 
 
 /***/ })

@@ -4,6 +4,7 @@ const confirmDatePlugin = require("confirmDatePlugin");
 
 import {u,ajax} from "umbrellajs";
 
+global["u"] = u;
 
 flatpickr(".calendar", {
     "enableTime": true,
@@ -13,7 +14,7 @@ flatpickr(".calendar", {
 const remodal = require("remodal");
 
 class xhrPost {
-    private fd:FormData;
+    private fd:any;
     private form:any;
     private action:string;
     private token:string;
@@ -25,21 +26,62 @@ class xhrPost {
         };
         return method;
     }
+
+    private formToJson = (form) => {
+        let json = {};
+        let inputs = form.find("input,select,textarea");
+        inputs.each(function(node,i){
+            let c = u(node).first();
+            let name = c.name;
+            if(c.type === "text"){
+                json[name] =  c.value;
+                return;
+            }            
+            if(c.type === "radio"){
+                if(c.checked){
+                    json[name] =  c.value;
+                }
+                return;
+            }
+            if(c.type === "checkbox"){
+                json[name] = null;
+                if(c.checked){
+                    json[name] = c.value;
+                }
+                return;
+            }
+            if(u(node).is("select")){
+                json[name] = [];
+                u.children('option:selected').each(function(node , i) {
+                    json[name].push( node.first().value )
+                });
+                if(json[name].length === 0){
+                    json[name] = json[name][0];
+                }
+                return;
+            }            
+        });
+        return json;
+    }
+    
     constructor(selector:string){
-        this.form = u(selector);
-        let form = this.form;
+        let form = u(selector);
+        this.form = form;
         this.method = this.getMethod(form);
-        this.fd = new FormData(form);
+        let t = document.getElementById("add");
         this.action = form.attr("action");
         this.token = form.children('[name="_csrf"]').attr("value");
     }
+
     public send = () => {
         fetch( this.action , {
             credentials: 'same-origin' ,
             method: this.method,
+            body :JSON.stringify ( this.formToJson(this.form) ),
             headers: {
             'X-Requested-With': 'XMLHttpRequest' ,
-            'X-XSRF-Token': this.token
+            'X-XSRF-Token': this.token,
+            'Content-Type': 'application/json'
             }
         })
         .then((response) => {
@@ -50,7 +92,6 @@ class xhrPost {
         }).then((json) => {
              this._success(json);
         }).catch((err) => {
-            console.log()
             this._error(err);
         });
     }
@@ -74,8 +115,8 @@ class xhrPost {
 }
 
 
-
-u(".xhr-post").on( "click" , function(){
+u(".xhr-post").on( "click" , function(event){
+    event.preventDefault();
     let selector = u(this).attr("data-target");
     let xhr = new xhrPost( selector ); 
     xhr.success = (res:JSON) => {
@@ -89,9 +130,9 @@ u(".xhr-post").on( "click" , function(){
     }
 
     xhr.error = (res) => {
-        console.log(res);
         return;
     }
+
     xhr.send();
     return false;
 })

@@ -22,11 +22,9 @@ export abstract class router{
     }
 
     constructor(){
-        let parseForm = bodyParser.urlencoded({ extended: false })
         let csrf = csurf;
         let csrfProtection = csrf({ cookie: true });
         this.csrfProtection = csrfProtection;
-        this.parseForm = parseForm;
     }
 
     protected csrfReady = (req , form = "form") => {
@@ -91,7 +89,7 @@ export abstract class router{
             let ds :string = system.ds;
             
             if(f !== "." && f !== ds ){
-               let dir =  this.views.typical + ds + this.name + ds  +"views";
+               let dir =  [this.views.typical , this.name , "views"].join(ds);
                req.app.set('views', dir);
                view = view;
             }

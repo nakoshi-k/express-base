@@ -16,17 +16,17 @@
           <%- include('./sidebar') %>
       </div>
       <div class="column column-75">
-        <%- hlp.form.start( "task" , task , {"method" :"post" , "action" : "./" }); %>
+        <%- hlp.form.start( "task" , task , { "id" : "add" , "method" :"post" , "action" : "./" }); %>
           <div class="form-item">
             <label for="title">Title</label>
-            <%- hlp.form.input( "title" , {type : "text"} ); %>
+            <%- hlp.form.input( "title" , { "value" : "aaa" , type : "text"} ); %>
             
           </div>
           <div class="form-item">
             <label for="priod">Priod</label>
             <%- hlp.form.input( "priod" , {class : "w100 calendar"} ); %>
           </div>
-          <%- hlp.form.submit( "送信" ); %>
+          <%- hlp.form.submit( "送信" , {class : "xhr-post","data-target" : "#add"}); %>
 
         <%- hlp.form.end(); %>
       </div>
@@ -34,13 +34,19 @@
   </div>
 </div>
 
+
+
 <%- include('../../views/tile/footer') %>
 <%- include('../../views/tile/scripts') %>
 <%- include('../../views/tile/body-final') %>
-
 <script> 
+
+
+
 </script>
 
   </body>
 </html>
+
+
 

@@ -9,19 +9,11 @@ module.exports = function(sequelize, DataTypes) {
     title: {
       type : DataTypes.STRING,
       validate : {
-        len : {
-          args : [3,10],
-          msg : "nagai"
-        }
       }
     },
      priod: {
       type : DataTypes.DATE,
       validate : {
-        len : {
-          args : [3,10],
-          msg : "nagai"
-        }
       }
     }
   }, {

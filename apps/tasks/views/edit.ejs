@@ -28,7 +28,8 @@
             <label for="priod">Priod</label>
             <%- hlp.form.input( "priod" , {class : "w100 calendar"} ); %>
           </div>
-          <%- hlp.form.submit( "送信" , { "class" : "xhr-post" , "data-target" : "#edit" } ); %>
+          
+          <%- hlp.form.submit( "送信" , { "class" : "xhr-post", "type" : "submit" , "data-target" : "#edit" } ); %>
         <%- hlp.form.end(); %>
       </div>
     </div>

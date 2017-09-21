@@ -8,7 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const bodyParser = require("body-parser");
 const csurf = require("csurf");
 const core_1 = require("../core");
 class router {
@@ -58,7 +57,7 @@ class router {
                 let f = view.substring(1, 1);
                 let ds = core_1.system.ds;
                 if (f !== "." && f !== ds) {
-                    let dir = this.views.typical + ds + this.name + ds + "views";
+                    let dir = [this.views.typical, this.name, "views"].join(ds);
                     req.app.set('views', dir);
                     view = view;
                 }
@@ -89,11 +88,9 @@ class router {
         this.setData = (vars) => {
             this.vars = Object.assign(this.vars, vars);
         };
-        let parseForm = bodyParser.urlencoded({ extended: false });
         let csrf = csurf;
         let csrfProtection = csrf({ cookie: true });
         this.csrfProtection = csrfProtection;
-        this.parseForm = parseForm;
     }
     get models() {
         return this.service.models;
