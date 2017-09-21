@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const csurf = require("csurf");
+const inflection = require("inflection");
 const core_1 = require("../core");
 class router {
     constructor() {
@@ -97,6 +98,12 @@ class router {
     }
     get model() {
         return this.service.model;
+    }
+    get entity_name() {
+        return inflection.singularize(this.name);
+    }
+    get entities_name() {
+        return inflection.pluralize(this.name);
     }
     get views() {
         return this._views;

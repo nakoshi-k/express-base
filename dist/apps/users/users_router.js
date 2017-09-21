@@ -1,13 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const router_1 = require("../router");
-const tasks_service_1 = require("./tasks_service");
+const users_service_1 = require("./users_service");
 const helpers = require("../../base/helper");
-const bodyParser = require("body-parser");
-class tasks_router extends router_1.router {
+class users_router extends router_1.router {
     constructor() {
         super();
-        this.name = "tasks";
+        this.name = "users";
         this.beforeRender = (req, res) => {
             this.helper("form", new helpers.form());
             this.helper("pagination", new helpers.pagination());
@@ -16,35 +15,40 @@ class tasks_router extends router_1.router {
         this.search = (req, res, next) => {
             let pagination = this.service.pagination();
             let conditions = this.service.conditions(req);
-            let tasks = pagination.find(conditions, req.query);
-            tasks.then((result) => {
+            let entities = pagination.find(conditions, req.query);
+            let data = {};
+            entities.then((result) => {
                 // for rows
-                this.setData({
-                    tasks: result.rows,
-                    page: result.pagination
-                });
+                data[this.entities_name] = result.rows;
+                data["page"] = result.pagination;
+                this.setData(data);
                 this.render(req, res, "index");
             }).catch((error) => {
-                this.setData({ tasks: {} });
+                data[this.entities_name] = {};
+                this.setData(data);
                 this.render(req, res, "index");
             });
         };
         this.add = (req, res, next) => {
             console.log(req.body);
             //スキーマを取得してセットする。
-            this.setData({ "task": this.model.schema });
+            let data = {};
+            data[this.entity_name] = {};
             if (req.body) {
-                this.setData({ "task": req.body });
+                data[this.entity_name] = req.body;
             }
+            this.setData(data);
             this.render(req, res, "add");
         };
         this.view = (req, res, next) => {
             let model = this.model;
             model.findById(req.params.id).then((result) => {
                 if (!result) {
-                    res.redirect("/tasks");
+                    res.redirect(`/${this.entities_name}`);
                 }
-                this.setData({ "task": result.dataValues });
+                let data = {};
+                data[this.entity_name] = result.dataValues;
+                this.setData(data);
                 this.render(req, res, "view");
             });
         };
@@ -52,9 +56,11 @@ class tasks_router extends router_1.router {
             let model = this.model;
             model.findById(req.params.id).then((result) => {
                 if (!result) {
-                    res.redirect("/tasks");
+                    res.redirect(`/${this.entities_name}`);
                 }
-                this.setData({ "task": result.dataValues });
+                let data = {};
+                data[this.entity_name] = result.dataValues;
+                this.setData(data);
                 this.render(req, res, "edit");
             });
         };
@@ -71,7 +77,6 @@ class tasks_router extends router_1.router {
             });
         };
         this.insert = (req, res, next) => {
-            console.log(req.body);
             let entity = this.model.build(req.body);
             entity.save().then((res) => {
                 if (this.isXhr(req)) {
@@ -79,7 +84,7 @@ class tasks_router extends router_1.router {
                     res.json(entity.dataValues);
                     return;
                 }
-                res.redirect("/tasks");
+                res.redirect(`/${this.entities_name}`);
             }).catch((err) => {
                 req.body.errors = this.service.validationError(err);
                 if (this.isXhr(req)) {
@@ -91,22 +96,19 @@ class tasks_router extends router_1.router {
             });
         };
         this.update = (req, res, next) => {
-            console.log(req.body);
             let model = this.model;
-            model.findById(req.params.id).then((task) => {
-                task.update(req.body).then((result) => {
+            model.findById(req.params.id).then((entity) => {
+                entity.update(req.body).then((result) => {
                     if (this.isXhr(req)) {
                         res.status(201);
                         res.json(result);
                         return;
                     }
-                    res.redirect("/tasks");
+                    res.redirect(`/${this.entities_name}`);
                 }).catch((err) => {
-                    console.log("ww");
                     if (this.isXhr(req)) {
-                        req.body.errors = this.service.validationError(err);
                         res.status(400);
-                        res.json(req.body);
+                        res.json(err);
                         return;
                     }
                     this.edit(req, res, next);
@@ -121,7 +123,6 @@ class tasks_router extends router_1.router {
         };
         this.bind = (router) => {
             let csrfProtection = this.csrfProtection;
-            router.use(bodyParser.urlencoded({ extended: false }));
             router.get("/", csrfProtection, this.search);
             router.get("/page/:page", csrfProtection, this.search);
             router.get("/add", csrfProtection, this.add);
@@ -132,7 +133,7 @@ class tasks_router extends router_1.router {
             router.delete("/:id", csrfProtection, this.delete);
             return router;
         };
-        this.service = new tasks_service_1.tasks_service(this.name);
+        this.service = new users_service_1.users_service(this.name);
     }
 }
-exports.tasks_router = tasks_router;
+exports.users_router = users_router;
