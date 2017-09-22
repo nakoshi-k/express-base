@@ -13,23 +13,37 @@
     <div class="row">
       <div class="column column-25">
           <%- include('./sidebar') %>
+          edit
       </div>
       <div class="column column-75">
-        <%- console.log(task) %>
 
         <%- hlp.crud.delete( "delete" , { path : "/tasks/#" , id : task.id , csrf : csrf , redirect : "/tasks" } ) %>
         <%- hlp.form.start( "task" , task , { "id" : "edit" ,"method" :"put" , "action" : "/tasks/:id" }); %>
-          <div class="form-item">
-            <label for="title">Title</label>
-            <%- hlp.form.input( "id" , { type : "hidden"}); %>
-            <%- hlp.form.input( "title" , { type : "text" } ); %>
-          </div>
-          <div class="form-item">
-            <label for="priod">Priod</label>
-            <%- hlp.form.input( "priod" , {class : "w100 calendar"} ); %>
-          </div>
+
+        <fieldset>
           
-          <%- hlp.form.submit( "送信" , { "class" : "xhr-post", "type" : "submit" , "data-target" : "#edit" } ); %>
+            
+            
+            <%- hlp.form.input("id" , { "type" : "hidden" }); %>
+              
+          
+            
+            
+            <label for="title">title</label>
+            <%- hlp.form.input("title" , { "type" : "text" }); %>
+              
+          
+            
+            
+            <label for="title">priod</label>
+            <%- hlp.form.input("priod" , { "class" : "calendar","type" : "text" }); %>
+              
+          
+            
+            
+        </fieldset>
+
+        <%- hlp.form.submit( "submit" , { "class" : "xhr-post" , "data-target" : "#edit" } ); %>
         <%- hlp.form.end(); %>
       </div>
     </div>

@@ -10,7 +10,7 @@ import * as methodOverride from 'method-override';
 /**
  * router loading
  */
-import {tasks_router} from "./apps/tasks/tasks_router";
+import { router as tasks_router} from "./apps/tasks/router";
 import {users_router} from "./apps/users/users_router";
 
 /**
@@ -75,7 +75,7 @@ export class main{
   }
   
   private router = (app) => {
-    app.use("/tasks" , new tasks_router().create() );
+    app.use("/tasks" , new tasks_router() );
     app.use("/users" , new users_router().create() );
   }
   

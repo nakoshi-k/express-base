@@ -1,17 +1,18 @@
 import * as express from "express";
-import {router} from "../router";
-import {tasks_service} from "./tasks_service";
+import {router as app_router} from "../router";
+import {service} from "./service";
 import * as helpers  from "../../base/helper";
-import {input_error} from "../../base/core"
-import * as bodyParser from "body-parser";
+import {input_error} from "../../base/core";
 
-export class tasks_router extends router {
+
+export class router extends app_router {
     public name = "tasks";
-    public service:tasks_service;
+    public service:service;
     
     constructor(){
         super();
-        this.service = new tasks_service(this.name);
+        this.service = new service(this.name);
+        return this.create();
     }
     
     protected beforeRender = (req,res) => {
@@ -24,16 +25,17 @@ export class tasks_router extends router {
     private search = (req : express.Request,res: express.Response, next : express.NextFunction) => {
         let pagination = this.service.pagination();
         let conditions = this.service.conditions( req );
-        let tasks = pagination.find( conditions , req.query);
-        tasks.then( (result : {rows : any, count :number,pagination:any}) => {
+        let entities = pagination.find( conditions , req.query);
+        let data = {};
+        entities.then( (result : {rows : any, count :number,pagination:any}) => {
             // for rows
-            this.setData({
-                tasks:result.rows,
-                page:result.pagination
-            });
+            data[this.entities_name] = result.rows;
+            data["page"] = result.pagination;
+            this.setData(data);
             this.render(req,res,"index");
         }).catch((error) => {               
-            this.setData({tasks: {} });
+            data[this.entities_name] = {};
+            this.setData(data);
             this.render(req,res,"index");
         })
     }
@@ -41,10 +43,12 @@ export class tasks_router extends router {
     private add = (req:express.Request, res:express.Response, next:express.NextFunction) => {
         console.log(req.body);
         //スキーマを取得してセットする。
-        this.setData({"task" : this.model.schema } );
+        let data = {};
+        data[ this.entity_name  ] = {};
         if(req.body){
-            this.setData({"task" : req.body });
+            data[ this.entity_name  ] = req.body;
         }
+        this.setData(data);
         this.render( req , res , "add");
     }
     
@@ -52,9 +56,11 @@ export class tasks_router extends router {
         let model = this.model;
         model.findById( req.params.id ).then((result) => {
             if(!result){
-                res.redirect("/tasks");
+                res.redirect(`/${this.entities_name}`);
             }
-            this.setData({"task" : result.dataValues});
+            let data = {};
+            data[this.entity_name] = result.dataValues; 
+            this.setData(data);
             this.render( req , res , "view");
         })
     }
@@ -63,9 +69,11 @@ export class tasks_router extends router {
         let model = this.model;
         model.findById( req.params.id ).then((result) => {
             if(!result){
-                res.redirect("/tasks");
+                res.redirect( `/${this.entities_name}` );
             }
-            this.setData({"task" : result.dataValues});
+            let data = {};
+            data[this.entity_name] = result.dataValues;
+            this.setData(data);
             this.render( req , res , "edit");
         })
     }
@@ -84,15 +92,14 @@ export class tasks_router extends router {
     }
 
     private insert = (req: express.Request,res:express.Response,next:express.NextFunction) => {
-        console.log(req.body);
         let entity = this.model.build(req.body);
-        entity.save().then( (res) => {
+        entity.save().then( (result) => {
             if(this.isXhr(req)){
                 res.status(201);
                 res.json(entity.dataValues);
                 return;
             }
-            res.redirect("/tasks");
+            res.redirect(`/${this.entities_name}`);
         }).catch((err) => {
             req.body.errors = this.service.validationError(err);
             if(this.isXhr(req)){
@@ -105,22 +112,19 @@ export class tasks_router extends router {
     }
 
     private update = (req:express.Request,res:express.Response,next:express.NextFunction) => {
-        console.log(req.body)
         let model = this.model;
-        model.findById( req.params.id ).then((task) => {
-            task.update(req.body).then( (result) => {
+        model.findById( req.params.id ).then((entity) => {
+            entity.update(req.body).then( (result) => {
               if(this.isXhr(req)){
                 res.status(201);
                 res.json(result);
                 return;
               }
-              res.redirect("/tasks");
+              res.redirect(`/${this.entities_name}`);
             }).catch((err) => {
-                console.log("ww")
               if(this.isXhr(req)){
-                req.body.errors = this.service.validationError(err);
                 res.status(400);
-                res.json(req.body);
+                res.json(err);
                 return;
               }
               this.edit(req,res,next);
@@ -135,14 +139,12 @@ export class tasks_router extends router {
     }
 
     public bind  = (router : express.Router) : express.Router => {
-        
         let csrfProtection = this.csrfProtection;
-        router.use(bodyParser.urlencoded({extended : false}))
         router.get("/", csrfProtection , this.search);
         router.get("/page/:page", csrfProtection , this.search);
         router.get("/add", csrfProtection , this.add);
         router.get("/:id", csrfProtection , this.view);
-        router.post("/", csrfProtection , this.insert);
+        router.post("/",  csrfProtection , this.insert);
         router.get("/:id/edit", csrfProtection , this.edit);
         router.put("/:id",csrfProtection,this.update);
         router.delete("/:id", csrfProtection , this.delete);

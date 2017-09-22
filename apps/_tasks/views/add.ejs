@@ -16,28 +16,17 @@
           <%- include('./sidebar') %>
       </div>
       <div class="column column-75">
-
         <%- hlp.form.start( "task" , task , { "id" : "add" , "method" :"post" , "action" : "./" }); %>
-        <fieldset>
-        
-          
-          
           <div class="form-item">
-            <label for="title">title</label>
-            <%- hlp.form.input("title" , { "type" : "text" }); %>
+            <label for="title">Title</label>
+            <%- hlp.form.input( "title" , { "value" : "aaa" , type : "text"} ); %>
+            
           </div>
-        
-          
           <div class="form-item">
-            <label for="title">priod</label>
-            <%- hlp.form.input("priod" , { "class" : "calendar","type" : "text" }); %>
+            <label for="priod">Priod</label>
+            <%- hlp.form.input( "priod" , {class : "w100 calendar"} ); %>
           </div>
-        
-          
-          
-
-        <%- hlp.form.submit( "submit" , { "class" : "xhr-post" , "data-target" : "#add" } ); %>
-        </fieldset>
+          <%- hlp.form.submit( "送信" , {class : "xhr-post","data-target" : "#add"}); %>
 
         <%- hlp.form.end(); %>
       </div>
@@ -45,13 +34,19 @@
   </div>
 </div>
 
+
+
 <%- include('../../views/tile/footer') %>
 <%- include('../../views/tile/scripts') %>
 <%- include('../../views/tile/body-final') %>
-
 <script> 
+
+
+
 </script>
 
   </body>
 </html>
+
+
 
