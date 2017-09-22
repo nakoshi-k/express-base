@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title><%%= title %%></title>
     <%%- include('../../views/tile/head') %%>
   </head>
   <body>
@@ -17,19 +17,20 @@
       </div>
       <div class="column column-75">
 
-        <%%- hlp.form.start( "<%= name %>" , <%= name %> , {"method" :"post" , "action" : "./" }); %%>
+        <%%- hlp.form.start( "<%= name %>" , <%= name %> , { "id" : "<%= action %>" , "method" :"post" , "action" : "./" }); %%>
+        <fieldset>
+        <% fields.forEach(function (field) { %>
+          <% if(field.name  === "updated_at" || field.name  === "created_at" || field.name  === "id" ) {
+            return;
+          } %>
           <div class="form-item">
-            <label for="title">Name</label>
-            <%- hlp.form.input("name"); %>
+            <label for="title"><%= field.name %></label>
+            <%%- hlp.form.<%- field.tag %>("<%= field.name %>" , <%- field.attr %>); %%>
+          </div>
+        <% }); %>
 
-          </div>
-          <div class="form-item">
-            <label for="password">Password</label>
-            <%%- hlp.form.input("password"); %%>
-            <label for="confirm_password">Confirm Password</label>
-            <%%- hlp.form.input("confirm_password"); %%>
-          </div>
-          <%%- hlp.form.submit( "送信" ); %%>
+        <%%- hlp.form.submit( "submit" , { "class" : "xhr-post" , "data-target" : "#<%= action %>" } ); %%>
+        </fieldset>
 
         <%%- hlp.form.end(); %%>
       </div>

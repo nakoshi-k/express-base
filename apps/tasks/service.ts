@@ -1,6 +1,6 @@
-import {service} from "../service";
+import {service as app_service} from "../service";
 import * as sequelize from "sequelize";
-export class <% names %>_service extends service{
+export class service extends app_service{
    
     constructor(name:string){
         super(name);

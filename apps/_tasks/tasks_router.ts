@@ -1,17 +1,17 @@
 import * as express from "express";
 import {router} from "../router";
-import {users_service as service} from "./users_service";
+import {tasks_service} from "./tasks_service";
 import * as helpers  from "../../base/helper";
-import {input_error} from "../../base/core";
+import {input_error} from "../../base/core"
+import * as bodyParser from "body-parser";
 
-
-export class <% names %>_router extends router {
-    public name = <% names %>;
-    public service:service;
+export class tasks_router extends router {
+    public name = "tasks";
+    public service:tasks_service;
     
     constructor(){
         super();
-        this.service = new service(this.name);
+        this.service = new tasks_service(this.name);
     }
     
     protected beforeRender = (req,res) => {
@@ -24,17 +24,16 @@ export class <% names %>_router extends router {
     private search = (req : express.Request,res: express.Response, next : express.NextFunction) => {
         let pagination = this.service.pagination();
         let conditions = this.service.conditions( req );
-        let entities = pagination.find( conditions , req.query);
-        let data = {};
-        entities.then( (result : {rows : any, count :number,pagination:any}) => {
+        let tasks = pagination.find( conditions , req.query);
+        tasks.then( (result : {rows : any, count :number,pagination:any}) => {
             // for rows
-            data[this.entities_name] = result.rows;
-            data["page"] = result.pagination;
-            this.setData(data);
+            this.setData({
+                tasks:result.rows,
+                page:result.pagination
+            });
             this.render(req,res,"index");
         }).catch((error) => {               
-            data[this.entities_name] = {};
-            this.setData(data);
+            this.setData({tasks: {} });
             this.render(req,res,"index");
         })
     }
@@ -42,12 +41,10 @@ export class <% names %>_router extends router {
     private add = (req:express.Request, res:express.Response, next:express.NextFunction) => {
         console.log(req.body);
         //スキーマを取得してセットする。
-        let data = {};
-        data[ this.entity_name  ] = {};
+        this.setData({"task" : this.model.schema } );
         if(req.body){
-            data[ this.entity_name  ] = req.body;
+            this.setData({"task" : req.body });
         }
-        this.setData(data);
         this.render( req , res , "add");
     }
     
@@ -55,11 +52,9 @@ export class <% names %>_router extends router {
         let model = this.model;
         model.findById( req.params.id ).then((result) => {
             if(!result){
-                res.redirect(`/${this.entities_name}`);
+                res.redirect("/tasks");
             }
-            let data = {};
-            data[this.entity_name] = result.dataValues; 
-            this.setData(data);
+            this.setData({"task" : result.dataValues});
             this.render( req , res , "view");
         })
     }
@@ -68,11 +63,9 @@ export class <% names %>_router extends router {
         let model = this.model;
         model.findById( req.params.id ).then((result) => {
             if(!result){
-                res.redirect( `/${this.entities_name}` );
+                res.redirect("/tasks");
             }
-            let data = {};
-            data[this.entity_name] = result.dataValues;
-            this.setData(data);
+            this.setData({"task" : result.dataValues});
             this.render( req , res , "edit");
         })
     }
@@ -91,15 +84,18 @@ export class <% names %>_router extends router {
     }
 
     private insert = (req: express.Request,res:express.Response,next:express.NextFunction) => {
+        console.log(req.body);
         let entity = this.model.build(req.body);
         entity.save().then( (res) => {
+            console.log(res);
             if(this.isXhr(req)){
                 res.status(201);
-                res.json(entity.dataValues);
+                res.json(res.dataValues);
                 return;
             }
-            res.redirect(`/${this.entities_name}`);
+            res.redirect("/tasks");
         }).catch((err) => {
+            console.log(err);
             req.body.errors = this.service.validationError(err);
             if(this.isXhr(req)){
                 res.status(400);
@@ -111,19 +107,22 @@ export class <% names %>_router extends router {
     }
 
     private update = (req:express.Request,res:express.Response,next:express.NextFunction) => {
+        console.log(req.body)
         let model = this.model;
-        model.findById( req.params.id ).then((entity) => {
-            entity.update(req.body).then( (result) => {
+        model.findById( req.params.id ).then((task) => {
+            task.update(req.body).then( (result) => {
               if(this.isXhr(req)){
                 res.status(201);
                 res.json(result);
                 return;
               }
-              res.redirect(`/${this.entities_name}`);
+              res.redirect("/tasks");
             }).catch((err) => {
+                console.log("ww")
               if(this.isXhr(req)){
+                req.body.errors = this.service.validationError(err);
                 res.status(400);
-                res.json(err);
+                res.json(req.body);
                 return;
               }
               this.edit(req,res,next);
@@ -138,12 +137,14 @@ export class <% names %>_router extends router {
     }
 
     public bind  = (router : express.Router) : express.Router => {
+        
         let csrfProtection = this.csrfProtection;
+        router.use(bodyParser.urlencoded({extended : false}))
         router.get("/", csrfProtection , this.search);
         router.get("/page/:page", csrfProtection , this.search);
         router.get("/add", csrfProtection , this.add);
         router.get("/:id", csrfProtection , this.view);
-        router.post("/",  csrfProtection , this.insert);
+        router.post("/", csrfProtection , this.insert);
         router.get("/:id/edit", csrfProtection , this.edit);
         router.put("/:id",csrfProtection,this.update);
         router.delete("/:id", csrfProtection , this.delete);

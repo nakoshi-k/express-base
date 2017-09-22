@@ -14,7 +14,8 @@
     "prebuild": "mkdir -p dist/apps/public/scripts dist/apps/public/stylesheets",
     "build": "npm-run-all build:tsc build:view build:stylus build:scripts",
     "watch": "npm-run-all -p \"build:tsc -- -w\" \"build:view -- -w -u --no-initial\" watch:stylus watch:scripts",
-    "dev": "npm-run-all -p watch start browsersync"
+    "dev": "npm-run-all -p watch start browsersync",
+    "bake" : "node ../ts-crud-generator/dist/cli.js"
   },
   "dependencies": {
     "@types/deep-assign": "^0.1.0",
@@ -57,6 +58,7 @@
     "@types/mocha": "^2.2.43",
     "@types/node": "^7.0.43",
     "@types/sequelize": "^4.0.73",
+    "te-crud-generator": "git@github.com:shima-freebz/te-crud-generator.git",
     "browser-sync": "^2.18.13",
     "browserify": "^14.4.0",
     "browserify-shim": "^3.8.14",
