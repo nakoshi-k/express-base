@@ -5,7 +5,8 @@
   "scripts": {
     "browsersync": "browser-sync start --proxy localhost:4000 --files=\"dist/**/*.*\" ",
     "start": "nodemon ./dist/bin/www.js -d 1",
-    "build:view": "cpx \"{apps,base,models,config,public}/**/*.{ejs,js,json,tag,ico,gif,jpg,jpeg}\" dist",
+    "build:view": "cpx \"{apps,base,models,config,public}/**/*.{ejs,js,json,jpg,jpeg,png,gif,ico}\" dist",
+    "build:view2": "cpx \"apps/**/tags/*.vue\" dist/apps/public",
     "build:stylus": "stylus apps/public/stylesheets/style.styl -o dist/apps/public/stylesheets/style.css --include-css",
     "build:scripts": "webpack --config apps/public/scripts/webpack.config.js",
     "build:tsc": "tsc",
@@ -15,7 +16,7 @@
     "build": "npm-run-all build:tsc build:view build:stylus build:scripts",
     "watch": "npm-run-all -p \"build:tsc -- -w\" \"build:view -- -w -u --no-initial\" watch:stylus watch:scripts",
     "dev": "npm-run-all -p watch start browsersync",
-    "bake" : "node ../ts-crud-generator/dist/cli.js"
+    "bake": "node ../ts-curd-generator/dist/cli.js"
   },
   "dependencies": {
     "@types/deep-assign": "^0.1.0",
@@ -49,6 +50,8 @@
     "typescript": "^2.5.2",
     "typescript-simple": "^8.0.4",
     "umbrellajs": "^2.9.0",
+    "vue": "^2.4.4",
+    "vue-style-loader": "^3.0.3",
     "webpack": "^3.6.0"
   },
   "devDependencies": {
@@ -58,28 +61,31 @@
     "@types/mocha": "^2.2.43",
     "@types/node": "^7.0.43",
     "@types/sequelize": "^4.0.73",
-    "te-crud-generator": "git@github.com:shima-freebz/te-crud-generator.git",
     "browser-sync": "^2.18.13",
     "browserify": "^14.4.0",
     "browserify-shim": "^3.8.14",
     "chai": "^4.1.2",
+    "css-loader": "^0.28.7",
     "debug": "^2.2.0",
     "ejs": "^2.4.2",
+    "ejs-loader": "^0.3.0",
     "mocha": "^3.5.3",
     "morgan": "^1.8.2",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
+    "te-crud-generator": "git@github.com:shima-freebz/te-crud-generator.git",
+    "ts-loader": "^2.3.7",
     "tsify": "^3.0.3",
-    "typescript": "^2.5.2"
-  },
-  "browserify": {
-    "transform": [
-      "browserify-shim"
-    ]
+    "typescript": "^2.5.3",
+    "vue-class-component": "^5.0.2",
+    "vue-loader": "^13.0.5",
+    "vue-style-loader": "^3.0.3",
+    "vue-template-compiler": "^2.4.4",
+    "vue-ts-loader": "0.0.3",
+    "webpack": "^3.6.0"
   },
   "browser": {
     "confirmDatePlugin": "./node_modules/flatpickr/dist/plugins/confirmDate/confirmDate.js",
     "flatpickr": "./node_modules/flatpickr/dist/flatpickr.min.js"
-  },
-  "browserify-shim": {
-    "umbrellajs": "u"
   }
 }

@@ -18,13 +18,23 @@ class router extends router_1.router {
             let entities = pagination.find(conditions, req.query);
             let data = {};
             entities.then((result) => {
-                // for rows
                 data[this.entities_name] = result.rows;
                 data["page"] = result.pagination;
+                if (this.isXhr(req)) {
+                    res.status(201);
+                    res.json(data);
+                    return;
+                }
+                // for rows
                 this.setData(data);
                 this.render(req, res, "index");
             }).catch((error) => {
                 data[this.entities_name] = {};
+                if (this.isXhr(req)) {
+                    res.status(400);
+                    res.json(data);
+                    return;
+                }
                 this.setData(data);
                 this.render(req, res, "index");
             });

@@ -5,41 +5,52 @@
     <%- include('../../views/tile/head') %>
   </head>
   <body>
- <%- include('../../views/tile/body-initial') %>
- <%- include('../../views/tile/navigation') %>
 
 
- <div class="wrap">
-    <div class="container">
-      <div class="row">
-          <div class="column column-25">
-              <%- include('./sidebar') %>
-          </div>
-      
-          <div class="column column-75">
-           <main id="main">
-            <% tasks.forEach(function (task) { %>
-              <div>
-                <div><h4><a href="/tasks/<%= task.id %>"><%= task.title %></a></h4></div>
-                <a href="/tasks/<%= task.id %>/edit" class="button small"> Edit</a>
-                <%- hlp.crud.delete( "delete" , 
-                { path : "/tasks/#" , id : task.id , csrf : csrf , redirect : "/tasks" } , 
-                {class : "warning small info"} ) %>
-              </div>
-            <% }); %>
-            
-  
-            <%- hlp.pagination.render(page , {path: "/tasks/page/#"}); %>
-           </main>
-          </div>
-      </div>
+    <div id="search">
+        <div v-for="task in tasks">
+          <div>{{task.title}}</div>
+          <div>{{task.priod}}</div>
+        </div>
     </div>
-</div>
 
 
+    <script src="https://unpkg.com/vue@2.4.4/dist/vue.js"></script>
+    <script>
+    
+    let data = {
+      tasks : [
+      ]
+    }
 
- <%- include('../../views/tile/footer') %>
- <%- include('../../views/tile/scripts') %>
- <%- include('../../views/tile/body-final') %>
+    fetch( "./" , {
+            credentials: 'same-origin' ,
+            method: "get",
+            headers: {
+            'X-Requested-With': 'XMLHttpRequest' ,
+            'X-XSRF-Token': "<%= csrf %>",
+            'Content-Type': 'application/json'
+            }
+
+        })
+        .then((response) => {
+            if(response.status === 201){ 
+                return response.json();
+            };
+            return response.json();
+        }).then((json) => {
+
+          data = Object.assign(data, json);
+        }).catch((err) => {
+
+        });
+
+
+    var vm = new Vue({
+    el: '#search',
+    data: data 
+    })
+
+    </script>
   </body>
 </html>
