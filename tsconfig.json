@@ -1,16 +1,15 @@
 {
     "compilerOptions": {
-        "module": "es2015",
-        "moduleResolution" : "node",
-        "allowSyntheticDefaultImports": true,	
-        "lib" : ["dom", "es2017",  "es5"],
-        "target": "es5",
+        "module": "commonjs",
+        "lib" : ["dom", "es2015",  "es5"],
+        "target": "es2015",
         "noImplicitAny": false,
         "sourceMap": false,
         "outDir" : "dist",
         "watch" : false,
         "allowJs" : true,
-        "pretty" : true
+        "pretty" : true,
+        "allowSyntheticDefaultImports": true
     },
     "include": [
         "./**/*.ts",
@@ -19,7 +18,12 @@
     "exclude": [
         "./node_modules",
         "./ignore",
-        "./apps/public/scripts/"
- 
-    ]
+        "./apps/public/scripts/*",
+        "./apps/*/public/*"
+    ],
+    "paths": {
+        "*": [
+          "types/*"
+        ]
+    }
 }

@@ -17,25 +17,24 @@
       </div>
       <div class="column column-75">
 
-        <%- hlp.form.start( "task" , task , { "id" : "add" , "method" :"post" , "action" : "./" }); %>
-        <fieldset>
-        
-          
-          
-          <div class="form-item">
-            <label for="title">title</label>
-            <%- hlp.form.input("title" , { "type" : "text" }); %>
-          </div>
-        
-          
-          <div class="form-item">
-            <label for="title">priod</label>
-            <%- hlp.form.input("priod" , { "class" : "calendar","type" : "text" }); %>
-          </div>
-        
-          
-          
+        <%- hlp.form.start( "task" , task , { "id" : "add" ,"method" :"post" , "action" : "/tasks/" }); %>
 
+        <fieldset>
+          
+            
+            
+            
+            
+            
+            
+            <label for="title">updated_at</label>
+            <%- hlp.form.input("updated_at" , { "class" : "calendar","type" : "text" }); %>
+              
+          
+<<<<<<< HEAD
+
+=======
+>>>>>>> a3572dcd2385416e23c59e67205cf5784279aead
         </fieldset>
 
         <%- hlp.form.submit( "submit" , { "class" : "xhr-post" , "data-target" : "#add" } ); %>

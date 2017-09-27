@@ -17,18 +17,26 @@
       </div>
       <div class="column column-75">
 
-        <%%- hlp.form.start( "<%= name %>" , <%= name %> , { "id" : "<%= action %>" , "method" :"post" , "action" : "./" }); %%>
+        <%%- hlp.form.start( "<%= name %>" , <%= name %> , { "id" : "<%= action %>" ,"method" :"post" , "action" : "/<%= names %>/" }); %%>
+
         <fieldset>
-        <% fields.forEach(function (field) { %>
-          <% if(field.name  === "updated_at" || field.name  === "created_at" || field.name  === "id" ) {
-            return;
-          } %>
-          <div class="form-item">
+          <% fields.forEach(function (field) { %>
+            <% if( ["updated_at", "created_at" ,"id" ].indexOf(field.name) ) {
+              return;
+            } %>
+            <% if( /"type" : "hidden"/.test(field.attr) ) { %>
+            <%%- hlp.form.<%- field.tag %>("<%= field.name %>" , <%- field.attr %>); %%>
+            <% }else{%>
             <label for="title"><%= field.name %></label>
             <%%- hlp.form.<%- field.tag %>("<%= field.name %>" , <%- field.attr %>); %%>
+<<<<<<< HEAD
           </div>
         <% }); %>
 
+=======
+            <% } %>  
+          <% }); %>
+>>>>>>> a3572dcd2385416e23c59e67205cf5784279aead
         </fieldset>
 
         <%%- hlp.form.submit( "submit" , { "class" : "xhr-post" , "data-target" : "#<%= action %>" } ); %%>

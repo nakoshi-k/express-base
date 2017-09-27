@@ -1,4 +1,12 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const path = require("path");
@@ -17,9 +25,9 @@ const users_router_1 = require("./apps/users/users_router");
  */
 class main {
     constructor() {
-        this.ready = async () => {
+        this.ready = () => __awaiter(this, void 0, void 0, function* () {
             return this.app;
-        };
+        });
         this.create = () => {
             return this.app;
         };
@@ -87,7 +95,7 @@ class main {
         if (app.get('env') === 'development') {
             app.use((err, req, res, next) => {
                 res.app.set('views', this.baseViews);
-                res.status(err.status || 500);
+                res.status = err.status || 500;
                 res.render('error', {
                     message: err.message,
                     error: err
@@ -98,7 +106,7 @@ class main {
         // no stacktraces leaked to user
         app.use((err, req, res, next) => {
             res.app.set('views', this.baseViews);
-            res.status(err.status || 500);
+            res.status = err.status || 500;
             res.render('error', {
                 message: err.message,
                 error: {}

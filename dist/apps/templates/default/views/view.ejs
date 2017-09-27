@@ -15,7 +15,12 @@
           <%%- include('./sidebar') %%>
       </div>
       <div class="column column-75">
-
+        <% fields.forEach(function (field) { %>
+          <% if( ! /"type" : "hidden"/.test(field.attr) ) { %>
+          <h3><%= field.name %></hd>
+          <div><%%= <%= name %>.<%= field.name %> %%></div>
+          <% } %>  
+        <% }); %>
       </div>
     </div>
   </div>

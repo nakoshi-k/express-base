@@ -23,23 +23,14 @@
           
             
             
-            <%- hlp.form.input("id" , { "type" : "hidden" }); %>
+            
+            
+            
+            
+            <label for="title">updated_at</label>
+            <%- hlp.form.input("updated_at" , { "class" : "calendar","type" : "text" }); %>
               
           
-            
-            
-            <label for="title">title</label>
-            <%- hlp.form.input("title" , { "type" : "text" }); %>
-              
-          
-            
-            
-            <label for="title">priod</label>
-            <%- hlp.form.input("priod" , { "class" : "calendar","type" : "text" }); %>
-              
-          
-            
-            
         </fieldset>
 
         <%- hlp.form.submit( "submit" , { "class" : "xhr-post" , "data-target" : "#edit" } ); %>

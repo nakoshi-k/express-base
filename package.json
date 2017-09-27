@@ -5,17 +5,19 @@
   "scripts": {
     "browsersync": "browser-sync start --proxy localhost:4000 --files=\"dist/**/*.*\" ",
     "start": "nodemon ./dist/bin/www.js -d 1",
-    "build:view": "cpx \"{apps,base,models,config,public}/**/*.{ejs,js,json,tag,ico,gif,jpg,jpeg}\" dist",
+    "build:view": "cpx \"{apps,base,models,config,public}/**/*.{ejs,js,json,jpg,jpeg,png,gif,ico}\" dist",
     "build:stylus": "stylus apps/public/stylesheets/style.styl -o dist/apps/public/stylesheets/style.css --include-css",
     "build:scripts": "webpack --config apps/public/scripts/webpack.config.js",
+    "build:scripts:vue": "webpack --config apps/webpack.vue.config.js",
     "build:tsc": "tsc",
     "watch:stylus": "chokidar \"apps/public/stylesheets/**/*.styl\" --command \"npm run build:stylus\"",
     "watch:scripts": "npm run build:scripts -- -w",
+    "watch:scripts:vue": "npm run build:scripts:vue -- -w",
     "prebuild": "mkdir -p dist/apps/public/scripts dist/apps/public/stylesheets",
-    "build": "npm-run-all build:tsc build:view build:stylus build:scripts",
-    "watch": "npm-run-all -p \"build:tsc -- -w\" \"build:view -- -w -u --no-initial\" watch:stylus watch:scripts",
+    "build": "npm-run-all build:tsc build:view build:stylus build:scripts build:scripts:vue",
+    "watch": "npm-run-all -p \"build:tsc -- -w\" \"build:view -- -w -u --no-initial\" watch:stylus watch:scripts watch:scripts:vue",
     "dev": "npm-run-all -p watch start browsersync",
-    "bake": "node ./node_modules/.bin/tengenerator"
+    "bake": "node ../ts-curd-generator/dist/cli.js"
   },
   "dependencies": {
     "@types/deep-assign": "^0.1.0",
@@ -51,6 +53,7 @@
     "umbrellajs": "^2.9.0",
     "vue": "^2.4.4",
     "vue-class-component": "^5.0.2",
+    "vue-style-loader": "^3.0.3",
     "webpack": "^3.6.0"
   },
   "devDependencies": {
@@ -83,18 +86,11 @@
     "vue-template-compiler": "^2.4.4",
     "vue-ts": "^1.0.11",
     "vue-ts-loader": "0.0.3",
-    "webpack": "^3.6.0"
-  },
-  "browserify": {
-    "transform": [
-      "browserify-shim"
-    ]
+    "webpack": "^3.6.0",
+    "vue-style-loader": "^3.0.3"
   },
   "browser": {
     "confirmDatePlugin": "./node_modules/flatpickr/dist/plugins/confirmDate/confirmDate.js",
     "flatpickr": "./node_modules/flatpickr/dist/flatpickr.min.js"
-  },
-  "browserify-shim": {
-    "umbrellajs": "u"
   }
 }

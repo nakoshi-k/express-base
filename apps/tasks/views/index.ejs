@@ -5,41 +5,14 @@
     <%- include('../../views/tile/head') %>
   </head>
   <body>
- <%- include('../../views/tile/body-initial') %>
- <%- include('../../views/tile/navigation') %>
-
-
- <div class="wrap">
-    <div class="container">
-      <div class="row">
-          <div class="column column-25">
-              <%- include('./sidebar') %>
-          </div>
-      
-          <div class="column column-75">
-           <main id="main">
-            <% tasks.forEach(function (task) { %>
-              <div>
-                <div><h4><a href="/tasks/<%= task.id %>"><%= task.title %></a></h4></div>
-                <a href="/tasks/<%= task.id %>/edit" class="button small"> Edit</a>
-                <%- hlp.crud.delete( "delete" , 
-                { path : "/tasks/#" , id : task.id , csrf : csrf , redirect : "/tasks" } , 
-                {class : "button button-outline small info"} ) %>
-              </div>
-            <% }); %>
-            
-  
-            <%- hlp.pagination.render(page , {path: "/tasks/page/#"}); %>
-           </main>
-          </div>
-      </div>
+    
+    <div id="application">
+        <tasks-sub></tasks-sub>
+        <tasks-index csrf="<%= csrf %>"></tasks-index>
     </div>
-</div>
 
+    <script src="https://unpkg.com/vue@2.4.4/dist/vue.js"></script>
+    <script src="/tasks/main.js"></script>
 
-
- <%- include('../../views/tile/footer') %>
- <%- include('../../views/tile/scripts') %>
- <%- include('../../views/tile/body-final') %>
   </body>
 </html>
