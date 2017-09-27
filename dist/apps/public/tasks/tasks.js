@@ -67,7 +67,7 @@
 /* 0 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: Error: Typescript emitted no output for /var/www/node/express-base/apps/tasks/public/sfc.d.ts.\n    at successLoader (/var/www/node/express-base/node_modules/ts-loader/dist/index.js:47:15)\n    at Object.loader (/var/www/node/express-base/node_modules/ts-loader/dist/index.js:29:12)");
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/var/www/node/express-base/apps/tasks/public/tasks.ts'");
 
 /***/ })
 /******/ ]);

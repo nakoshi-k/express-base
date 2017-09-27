@@ -15,7 +15,7 @@ glob.sync( input ).map(function(file){
         entities[extLessName] = file;
     }
 });
-let outdir = path.resolve( __dirname + "/../dist/public/");
+let outdir = path.resolve( __dirname + "/../dist/apps/public/");
 
 module.exports  = {
             entry: entities,
