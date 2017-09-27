@@ -15,7 +15,7 @@
     "build": "npm-run-all build:tsc build:view build:stylus build:scripts",
     "watch": "npm-run-all -p \"build:tsc -- -w\" \"build:view -- -w -u --no-initial\" watch:stylus watch:scripts",
     "dev": "npm-run-all -p watch start browsersync",
-    "bake" : "node ../ts-crud-generator/dist/cli.js"
+    "bake": "node ./node_modules/.bin/tengenerator"
   },
   "dependencies": {
     "@types/deep-assign": "^0.1.0",
@@ -49,6 +49,8 @@
     "typescript": "^2.5.2",
     "typescript-simple": "^8.0.4",
     "umbrellajs": "^2.9.0",
+    "vue": "^2.4.4",
+    "vue-class-component": "^5.0.2",
     "webpack": "^3.6.0"
   },
   "devDependencies": {
@@ -58,17 +60,30 @@
     "@types/mocha": "^2.2.43",
     "@types/node": "^7.0.43",
     "@types/sequelize": "^4.0.73",
-    "te-crud-generator": "git@github.com:shima-freebz/te-crud-generator.git",
+    "awesome-typescript-loader": "^3.2.3",
     "browser-sync": "^2.18.13",
     "browserify": "^14.4.0",
     "browserify-shim": "^3.8.14",
     "chai": "^4.1.2",
+    "css-loader": "^0.28.7",
     "debug": "^2.2.0",
     "ejs": "^2.4.2",
+    "ejs-loader": "^0.3.0",
     "mocha": "^3.5.3",
     "morgan": "^1.8.2",
+    "source-map-loader": "^0.2.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
+    "te-crud-generator": "git@github.com:shima-freebz/te-crud-generator.git",
+    "ts-loader": "^2.3.7",
     "tsify": "^3.0.3",
-    "typescript": "^2.5.2"
+    "typescript": "^2.5.2",
+    "vue": "^2.4.4",
+    "vue-loader": "^13.0.5",
+    "vue-template-compiler": "^2.4.4",
+    "vue-ts": "^1.0.11",
+    "vue-ts-loader": "0.0.3",
+    "webpack": "^3.6.0"
   },
   "browserify": {
     "transform": [
