@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <%- include('../../views/tile/head') %>
+  </head>
+  <body>
+
+
+    <div id="search">
+        <div v-for="task in tasks">
+          <div>{{task.title}}</div>
+          <div>{{task.priod}}</div>
+        </div>
+    </div>
+
+
+    <script src="https://unpkg.com/vue@2.4.4/dist/vue.js"></script>
+    <script>
+    
+    let data = {
+      tasks : [
+      ]
+    }
+
+    fetch( "./" , {
+            credentials: 'same-origin' ,
+            method: "get",
+            headers: {
+            'X-Requested-With': 'XMLHttpRequest' ,
+            'X-XSRF-Token': "<%= csrf %>",
+            'Content-Type': 'application/json'
+            }
+
+        })
+        .then((response) => {
+            if(response.status === 201){ 
+                return response.json();
+            };
+            return response.json();
+        }).then((json) => {
+
+          data = Object.assign(data, json);
+        }).catch((err) => {
+
+        });
+
+
+    var vm = new Vue({
+    el: '#search',
+    data: data 
+    })
+
+    </script>
+  </body>
+</html>

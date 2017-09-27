@@ -10,7 +10,7 @@ class router extends core_1.router {
         this.parent = {};
         this.views = {
             common: __dirname + core_2.system.ds + "views",
-            typical: __dirname + core_2.system.ds
+            typical: __dirname
         };
         let crud = new helpers.crud();
         let path = [__dirname, "views", "crud", "delete.ejs"].join(core_2.system.ds);

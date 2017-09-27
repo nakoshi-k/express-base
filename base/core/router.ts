@@ -99,6 +99,7 @@ export abstract class router{
             
             if(f !== "." && f !== ds ){
                let dir =  [this.views.typical , this.name , "views"].join(ds);
+               console.log(dir);
                req.app.set('views', dir);
                view = view;
             }

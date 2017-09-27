@@ -8,7 +8,7 @@ export class router extends core_router{
         super();
         this.views = {
             common : __dirname + system.ds + "views",
-            typical: __dirname + system.ds 
+            typical: __dirname 
         }
         let crud = new helpers.crud();
         let path = [__dirname,"views","crud","delete.ejs"].join(system.ds);
