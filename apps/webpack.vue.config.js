@@ -27,8 +27,10 @@ module.exports  = {
                 // extensionsに'.ts'を追加
                 extensions: ['.js', '.vue', '.json', '.ts'],
                 alias: {
-                  'vue$': 'vue/dist/vue.esm.js',
-                }
+                  'vue': '/var/www/node/express-base/node_modules/vue/dist/vue.esm.js',
+                  'vue-router': '/var/www/node/express-base/node_modules/vue-router/dist/vue-router.esm.js',
+                },
+                
             },
             module: {
                 loaders:[
@@ -50,6 +52,8 @@ module.exports  = {
                             "pretty" : true,
                             "experimentalDecorators": true,
                             "allowSyntheticDefaultImports": true,
+                            "moduleResolution": "node"
+                            
                           }
                         },
                         

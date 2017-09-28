@@ -1,6 +1,6 @@
 <template>
-<div class="index">
-    <div v-for="row in rows">{{row.title}}</div>
+<div class="index" :class="size">
+    <div v-for="row in rows"><a :href="view(row.id)">{{row.title}}</a></div>
     <pagination :pagination="page"></pagination>
 </div>
 </template>
@@ -20,7 +20,18 @@ import pagination from './pagination.vue';
 
 
 export default class index extends Vue {
-    csrf:string;
+    
+    view (id){
+        return `/tasks/${id}`;
+    }
+
+    size = {
+      "column" : true,
+      "column-75" : true,
+    }
+
+    csrf:string
+
     rows = [{}];
     page = {};
     mounted(){
@@ -50,7 +61,6 @@ export default class index extends Vue {
         });
     }
     pagination = "pagintaion";
-
 
 }
 

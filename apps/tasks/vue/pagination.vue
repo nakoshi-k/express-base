@@ -11,17 +11,14 @@ import {pagination_helper} from "../../../base/sideless/pagination_helper";
   props: {
     pagination: {}
   }
-
 })
-
 export default class pagintaion extends Vue {
-
     p = new pagination_helper();
+    pagination:any;
     mounted(){
         this.load();
         
     }
-
     load(){
        //p.render({});
     }
@@ -31,6 +28,6 @@ export default class pagintaion extends Vue {
       }
       return this.p.render(this.pagination,{"path" : "/tasks/"});
     }
-}
 
+}
 </script>

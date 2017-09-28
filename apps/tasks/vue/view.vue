@@ -1,6 +1,8 @@
 <template>
 <div class="sub" :class="size">
     <router-link to="/foo">Go to Foo</router-link>
+    <router-link to="/foo">Go to Foo</router-link>
+
 </div>
 </template>
 
@@ -9,13 +11,13 @@
 import Vue from 'vue'
 import Component from 'vue-class-component';
 @Component({
-  name: 'navigation',
+  name: 'view',
   props: {
   }
 })
 
 
-export default class sub extends Vue {
+export default class view extends Vue {
     isActive = true;
 
     size = {

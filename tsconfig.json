@@ -22,7 +22,7 @@
         "./apps/*/public/*"
     ],
     "paths": {
-        "*": [
+        "Vue": [
           "types/*"
         ]
     }

@@ -83,11 +83,12 @@
     "typescript": "^2.5.2",
     "vue": "^2.4.4",
     "vue-loader": "^13.0.5",
+    "vue-router": "^2.7.0",
+    "vue-style-loader": "^3.0.3",
     "vue-template-compiler": "^2.4.4",
     "vue-ts": "^1.0.11",
     "vue-ts-loader": "0.0.3",
-    "webpack": "^3.6.0",
-    "vue-style-loader": "^3.0.3"
+    "webpack": "^3.6.0"
   },
   "browser": {
     "confirmDatePlugin": "./node_modules/flatpickr/dist/plugins/confirmDate/confirmDate.js",

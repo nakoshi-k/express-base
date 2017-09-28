@@ -4,15 +4,13 @@
     <title><%= title %></title>
     <%- include('../../views/tile/head') %>
   </head>
-  <body>
-    
+  <body data-csrf-token="<%= csrf %>">
     <div id="application">
-        <tasks-sub></tasks-sub>
-        <tasks-index csrf="<%= csrf %>"></tasks-index>
+
     </div>
+  
 
-    <script src="https://unpkg.com/vue@2.4.4/dist/vue.js"></script>
+
     <script src="/tasks/main.js"></script>
-
   </body>
 </html>
