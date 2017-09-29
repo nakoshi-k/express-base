@@ -2,7 +2,6 @@
 import Vue from 'vue';
 import VueRouter , {RouterOptions} from 'vue-router';
 Vue.use(VueRouter);
-
 import main from '../vue/main.vue';
 import index from '../vue/index.vue';
 import add from '../vue/add.vue';
@@ -27,9 +26,10 @@ const routes = [
   { path: '/tasks/:id/edit', 
     components: { default : edit }
   }
-]
-
-const router  = new VueRouter({
+];
+export let template_main = main ;
+export let template = "<tasks-main></tasks-main>";
+export let router  = new VueRouter({
   mode: 'history',
   routes: routes
 })
@@ -37,11 +37,7 @@ const router  = new VueRouter({
 
 const app = new Vue({
   router,
-  template:"<tasks-main></tasks-main>",
+  template:template,
   components : {"tasks-main":main}
 }).$mount('#application');
-
-export let render = app;
-
-
 

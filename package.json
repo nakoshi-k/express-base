@@ -64,6 +64,7 @@
     "@types/mocha": "^2.2.43",
     "@types/node": "^7.0.43",
     "@types/sequelize": "^4.0.73",
+    "@types/vue": "^2.0.0",
     "awesome-typescript-loader": "^3.2.3",
     "browser-sync": "^2.18.13",
     "browserify": "^14.4.0",

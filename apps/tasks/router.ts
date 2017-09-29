@@ -5,7 +5,7 @@ import * as helpers  from "../../base/helper";
 import {input_error} from "../../base/core";
 import * as Vue from "vue";
 import * as VueRender from "vue-server-renderer";
-import {render}  from "./public/main"
+
 export class router extends app_router {
     public name = "tasks";
     public service:service;
@@ -25,14 +25,18 @@ export class router extends app_router {
 
     private search = (req : express.Request,res: express.Response, next : express.NextFunction) => {
 
-        const app = render;
-
-        const vr =  VueRender.createRenderer();
-        vr.renderToString( app , (err, html) => {
-            if (err) throw err
-            console.log(html)
-            // => <div data-server-rendered="true">hello world</div>
-          })
+        const Vue = require('vue')
+        const app = new Vue({
+          template: `<div>Hello World</div>`
+        })
+        // ステップ 2: レンダラを作成
+        const renderer = require('vue-server-renderer').createRenderer()
+        // ステップ 3: Vue インスタンスを HTML に描画
+        renderer.renderToString(app, (err, html) => {
+          if (err) throw err
+          console.log(html)
+          // => <div data-server-rendered="true">hello world</div>
+        })
 
         let pagination = this.service.pagination();
         let conditions = this.service.conditions( req );

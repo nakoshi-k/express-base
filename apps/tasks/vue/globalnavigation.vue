@@ -14,3 +14,27 @@
       </div>
   </nav>
 </template>
+
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component';
+
+@Component({
+  name: 'navigation',
+  props: {
+    csrf: String
+  }
+})
+
+
+export default class main extends Vue {
+    isActive = true;
+
+    size = {
+      "column" : true,
+      "column-25" : true,
+    }
+
+}
+
+</script>

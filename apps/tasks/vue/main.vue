@@ -15,7 +15,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component';
 import navigation from './navigation.vue';
-import globalNavigation from './global_navigation.vue';
+import globalNavigation from './globalnavigation.vue';
 
 @Component({
   name: 'index',

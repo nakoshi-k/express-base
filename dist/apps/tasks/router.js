@@ -3,8 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const router_1 = require("../router");
 const service_1 = require("./service");
 const helpers = require("../../base/helper");
-const VueRender = require("vue-server-renderer");
-const main_1 = require("./public/main");
 class router extends router_1.router {
     constructor() {
         super();
@@ -15,9 +13,14 @@ class router extends router_1.router {
             this.csrfReady(req);
         };
         this.search = (req, res, next) => {
-            const app = main_1.render;
-            const vr = VueRender.createRenderer();
-            vr.renderToString(app, (err, html) => {
+            const Vue = require('vue');
+            const app = new Vue({
+                template: `<div>Hello World</div>`
+            });
+            // ステップ 2: レンダラを作成
+            const renderer = require('vue-server-renderer').createRenderer();
+            // ステップ 3: Vue インスタンスを HTML に描画
+            renderer.renderToString(app, (err, html) => {
                 if (err)
                     throw err;
                 console.log(html);
