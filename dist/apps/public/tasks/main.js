@@ -10718,7 +10718,7 @@ var add_vue_1 = __webpack_require__(22);
 var view_vue_1 = __webpack_require__(25);
 var edit_vue_1 = __webpack_require__(28);
 var name = "tasks";
-var routes = [
+exports.routes = [
     { path: '/tasks/',
         components: { default: index_vue_1.default }
     },
@@ -10735,14 +10735,13 @@ var routes = [
         components: { default: edit_vue_1.default }
     }
 ];
-exports.template_main = main_vue_1.default;
 exports.template = "<tasks-main></tasks-main>";
-exports.router = new vue_router_1.default({
+var router = new vue_router_1.default({
     mode: 'history',
-    routes: routes
+    routes: exports.routes
 });
 var app = new vue_1.default({
-    router: exports.router,
+    router: router,
     template: exports.template,
     components: { "tasks-main": main_vue_1.default }
 }).$mount('#application');

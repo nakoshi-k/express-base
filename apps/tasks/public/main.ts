@@ -10,7 +10,7 @@ import edit from '../vue/edit.vue';
 
 let name = "tasks";
 
-const routes = [
+export const routes = [
   { path: '/tasks/', 
     components: { default : index }
   },
@@ -27,9 +27,10 @@ const routes = [
     components: { default : edit }
   }
 ];
-export let template_main = main ;
+
 export let template = "<tasks-main></tasks-main>";
-export let router  = new VueRouter({
+
+let router  = new VueRouter({
   mode: 'history',
   routes: routes
 })

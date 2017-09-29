@@ -5,7 +5,6 @@ import * as helpers  from "../../base/helper";
 import {input_error} from "../../base/core";
 import * as Vue from "vue";
 import * as VueRender from "vue-server-renderer";
-
 export class router extends app_router {
     public name = "tasks";
     public service:service;
