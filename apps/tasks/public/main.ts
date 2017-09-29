@@ -3,35 +3,43 @@ import Vue from 'vue';
 import VueRouter , {RouterOptions} from 'vue-router';
 Vue.use(VueRouter);
 
+import main from '../vue/main.vue';
 import index from '../vue/index.vue';
-import sub from '../vue/sub.vue';
-//import view from '../vue/view.vue';
-//import {pagination} from "../../../base/helper";
+import add from '../vue/add.vue';
+import view from '../vue/view.vue';
+import edit from '../vue/edit.vue';
+
 let name = "tasks";
-let body = document.getElementsByTagName("body")[0];
-let csrfToken = body.attributes["data-csrf-token"].value;
-
-const Foo = { template: sub }
-const Bar = { template: '<div>bar</div>' }
-
 
 const routes = [
-  { path: '/tasks/', component: index},
-  { path: '/tasks/add', component: add},
-  { path: '/tasks/:id', component: view},
-  { path: '/tasks/:id/edit', component: edit}
+  { path: '/tasks/', 
+    components: { default : index }
+  },
+  { path: '/tasks/page/:page/', 
+    components: { default : index }
+  },
+  { path: '/tasks/add', 
+    components: { default : add }
+  },
+  { path: '/tasks/:id', 
+    components: { default : view }
+  },
+  { path: '/tasks/:id/edit', 
+    components: { default : edit }
+  }
 ]
 
 const router  = new VueRouter({
   mode: 'history',
-  routes: routes,
-})
+  routes: routes
 
-//console.log(router);
+})
 
 
 const app = new Vue({
-  router
+  router,
+  template:"<tasks-main></tasks-main>",
+  components : {"tasks-main":main}
 }).$mount('#application');
 
 
