@@ -53,6 +53,7 @@
     "umbrellajs": "^2.9.0",
     "vue": "^2.4.4",
     "vue-class-component": "^5.0.2",
+    "vue-server-renderer": "^2.4.4",
     "vue-style-loader": "^3.0.3",
     "webpack": "^3.6.0"
   },

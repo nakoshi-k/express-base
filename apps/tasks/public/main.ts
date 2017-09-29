@@ -32,7 +32,6 @@ const routes = [
 const router  = new VueRouter({
   mode: 'history',
   routes: routes
-
 })
 
 
@@ -42,6 +41,7 @@ const app = new Vue({
   components : {"tasks-main":main}
 }).$mount('#application');
 
+export let render = app;
 
 
 

@@ -10738,6 +10738,7 @@ var app = new vue_1.default({
     template: "<tasks-main></tasks-main>",
     components: { "tasks-main": main_vue_1.default }
 }).$mount('#application');
+exports.render = app;
 
 
 /***/ }),

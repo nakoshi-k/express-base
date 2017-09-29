@@ -3,8 +3,9 @@ import {router as app_router} from "../router";
 import {service} from "./service";
 import * as helpers  from "../../base/helper";
 import {input_error} from "../../base/core";
-
-
+import * as Vue from "vue";
+import * as VueRender from "vue-server-renderer";
+import {render}  from "./public/main"
 export class router extends app_router {
     public name = "tasks";
     public service:service;
@@ -23,12 +24,21 @@ export class router extends app_router {
 
 
     private search = (req : express.Request,res: express.Response, next : express.NextFunction) => {
+
+        const app = render;
+
+        const vr =  VueRender.createRenderer();
+        vr.renderToString( app , (err, html) => {
+            if (err) throw err
+            console.log(html)
+            // => <div data-server-rendered="true">hello world</div>
+          })
+
         let pagination = this.service.pagination();
         let conditions = this.service.conditions( req );
         let entities = pagination.find( conditions , req.query);
         let data = {};
         entities.then( (result : {rows : any, count :number,pagination:any}) => {
-
             data[this.entities_name] = result.rows;
             data["page"] = result.pagination;
             if(this.isXhr(req)){
