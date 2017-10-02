@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 30);
+/******/ 	return __webpack_require__(__webpack_require__.s = 31);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -16509,7 +16509,8 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
 
 /***/ }),
-/* 30 */
+/* 30 */,
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16541,16 +16542,7 @@ exports.routes = [
         components: { default: edit_vue_1.default }
     }
 ];
-exports.template = "<tasks-main></tasks-main>";
-var router = new vue_router_1.default({
-    mode: 'history',
-    routes: exports.routes
-});
-var app = new vue_1.default({
-    router: router,
-    template: exports.template,
-    components: { "tasks-main": main_vue_1.default }
-}).$mount('#application');
+exports.tasks = main_vue_1.default;
 
 
 /***/ })

@@ -20,10 +20,5 @@
         "./ignore",
         "./apps/public/scripts/*",
         "./apps/*/public/*"
-    ],
-    "paths": {
-        "Vue": [
-          "types/*"
-        ]
-    }
+    ]
 }

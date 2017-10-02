@@ -19,6 +19,7 @@ let outdir = path.resolve( __dirname + "/../dist/apps/public/");
 
 module.exports  = {
             entry: entities,
+            target : "node",
             output: {
                 path: outdir ,
                 filename: '[name].js',
@@ -30,7 +31,6 @@ module.exports  = {
                   'vue': '/var/www/node/express-base/node_modules/vue/dist/vue.esm.js',
                   'vue-router': '/var/www/node/express-base/node_modules/vue-router/dist/vue-router.esm.js',
                 },
-                
             },
             module: {
                 loaders:[

@@ -15,22 +15,24 @@ glob.sync( input ).map(function(file){
         entities[extLessName] = file;
     }
 });
-let outdir = path.resolve( __dirname + "/../dist/apps/public/");
+
+let outdir = path.resolve( __dirname + "/../../dist/apps/public/");
 
 module.exports  = {
-            entry: entities,
+            entry: __dirname + "/spa/client.ts",
             target : "node",
             output: {
                 path: outdir ,
-                filename: '[name].js',
+                filename: 'tasks/client.js',
             },
             resolve: {
                 // extensionsに'.ts'を追加
                 extensions: ['.js', '.vue', '.json', '.ts'],
                 alias: {
-                  'vue': '/var/www/node/express-base/node_modules/vue/dist/vue.esm.js',
-                  'vue-router': '/var/www/node/express-base/node_modules/vue-router/dist/vue-router.esm.js',
+                  'vue$': 'vue/dist/vue.esm.js',
+                  'vue-router$': 'vue-router/dist/vue-router.esm.js',
                 },
+                
             },
             module: {
                 loaders:[
@@ -56,10 +58,7 @@ module.exports  = {
                             
                           }
                         },
-                        
-
                       }
-                   
                 ]
                   
             }

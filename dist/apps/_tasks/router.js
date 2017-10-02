@@ -4,10 +4,8 @@ const router_1 = require("../router");
 const service_1 = require("./service");
 const helpers = require("../../base/helper");
 const Vue = require("vue");
-const Router = require("vue-router");
-Vue.use(Router);
-const VueRender = require("vue-server-renderer");
-const server_1 = require("./spa/server");
+const VueRouter = require("vue-router");
+Vue.use(VueRouter);
 class router extends router_1.router {
     constructor() {
         super();
@@ -18,10 +16,18 @@ class router extends router_1.router {
             this.csrfReady(req);
         };
         this.search = (req, res, next) => {
-            const renderer = VueRender.createRenderer();
-            renderer.renderToString(server_1.apps(), (err, html) => {
-                console.log(html);
+            const vueserver = require("../public/tasks/server.js");
+            console.log(vueserver);
+            let router = new VueRouter({
+                mode: "history",
+                routes: vueserver.routes
             });
+            const app = new Vue({
+                router,
+                template: "<tasks-main></tasks-main>",
+                components: { "tasks-main": vueserver.tasks }
+            });
+            const renderer = require('vue-server-renderer').createRenderer();
             let pagination = this.service.pagination();
             let conditions = this.service.conditions(req);
             let entities = pagination.find(conditions, req.query);
@@ -29,14 +35,19 @@ class router extends router_1.router {
             entities.then((result) => {
                 data[this.entities_name] = result.rows;
                 data["page"] = result.pagination;
-                if (this.isXhr(req)) {
-                    res.status(201);
-                    res.json(data);
-                    return;
-                }
-                // for rows
-                this.setData(data);
-                this.render(req, res, "vue");
+                renderer.renderToString(app, (err, html) => {
+                    if (err)
+                        throw err;
+                    if (this.isXhr(req)) {
+                        res.status(201);
+                        res.json(data);
+                        return;
+                    }
+                    data["html"] = html;
+                    // for rows
+                    this.setData(data);
+                    this.render(req, res, "vue");
+                });
             }).catch((error) => {
                 data[this.entities_name] = {};
                 if (this.isXhr(req)) {

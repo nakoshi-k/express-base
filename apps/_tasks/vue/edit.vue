@@ -48,9 +48,11 @@ export default class add extends Vue {
     }
 
     token(){
+      /*
       let body = document.getElementsByTagName("body")[0];
       let csrfToken = body.attributes["data-csrf-token"].value;
       return csrfToken;
+      */
     }
 
     mounted(){

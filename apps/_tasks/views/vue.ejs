@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <%- include('../../views/tile/head') %>
+  </head>
+  <body data-csrf-token="<%= csrf %>">
+    <div id="application"><%- html %></div>
+    <script src="/tasks/main.js"></script>
+  </body>
+</html>

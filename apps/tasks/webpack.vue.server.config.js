@@ -3,6 +3,7 @@ const glob = require("glob");
 const ds = path.sep;
 var entities = {};
 
+
 let input = path.resolve( __dirname + "/**/public/*.ts" ) ;
 
 glob.sync( input ).map(function(file){
@@ -15,14 +16,17 @@ glob.sync( input ).map(function(file){
         entities[extLessName] = file;
     }
 });
-let outdir = path.resolve( __dirname + "/../dist/apps/public/");
+
+let outdir = path.resolve( __dirname + "/../../dist/apps/tasks/" );
 
 module.exports  = {
-            entry: entities,
+            entry: __dirname + "/spa/server.ts",
             target : "node",
+            externals: [ /^(vue|vue\-router)$/],
             output: {
+                libraryTarget : "commonjs",
                 path: outdir ,
-                filename: '[name].js',
+                filename: 'spa/server.js',
             },
             resolve: {
                 // extensionsに'.ts'を追加
@@ -31,6 +35,7 @@ module.exports  = {
                   'vue': '/var/www/node/express-base/node_modules/vue/dist/vue.esm.js',
                   'vue-router': '/var/www/node/express-base/node_modules/vue-router/dist/vue-router.esm.js',
                 },
+                
             },
             module: {
                 loaders:[
@@ -41,19 +46,17 @@ module.exports  = {
                         options: {
                           appendTsSuffixTo: [/\.vue$/],
                           compilerOptions : {
-                            "module": "commonjs",
+                            "module": "es2015",
                             "lib" : ["dom", "es2015",  "es5"],
-                            "target": "es5",
+                            "target": "es2015",
                             "noImplicitAny": false,
                             "sourceMap": false,
-                            "outDir" : "dist",
                             "watch" : false,
                             "allowJs" : true,
                             "pretty" : true,
                             "experimentalDecorators": true,
                             "allowSyntheticDefaultImports": true,
                             "moduleResolution": "node"
-                            
                           }
                         },
                         
