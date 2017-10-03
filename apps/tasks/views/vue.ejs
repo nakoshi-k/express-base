@@ -5,7 +5,8 @@
     <%- include('../../views/tile/head') %>
   </head>
   <body data-csrf-token="<%= csrf %>">
-    <div id="application"></div>
-    <script src="/tasks/main.js"></script>
+    <div id="application"><%- ssr %></div>
+
+    <script src="/tasks/client.js"></script>
   </body>
 </html>

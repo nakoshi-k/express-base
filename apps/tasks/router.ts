@@ -24,22 +24,37 @@ export class router extends app_router {
         this.csrfReady(req);
     }
 
-    private vue = (req : express.Request,res: express.Response, next : express.NextFunction) => {
-        const context = { url: req.url };
+    private ssr(context){
         const renderer = VueRender.createRenderer();
         let server : any = BundleServer;
-        server( context ).then( (app : Vue) => {
-            renderer.renderToString( app , (err:any,html)  => {
-                console.log(err);
-                if (err) {
-                    if (err.code === 404) {
-                      res.status(404).end('Page not found')
-                    } else {
-                      res.status(500).end('Internal Server Error')
+        let ssr = (resolve,reject) => {
+            server( context ).then( (app : Vue) => {
+                renderer.renderToString( app , (err:any,html)  => {
+                    console.log(err);
+                    if (err) {
+                        if (err.code === 404) {
+                          reject(404);
+                        } else {
+                          reject(500);
+                        }
                     }
-                } 
-                res.end(html);
-          });
+                    resolve(html);
+              });
+            })
+        }
+        return new Promise(ssr);
+    }
+
+    private vue = (req : express.Request,res: express.Response, next : express.NextFunction) => {
+        const context = { url: req.url };
+        this.ssr(context).then(result => {
+            this.setData( {ssr : result} );
+            this.render(req,res ,"vue");
+        }).catch(err => {
+            if( err === 404 ){
+                res.send(404);
+            }
+            res.send(500);
         })
     }
 
@@ -107,6 +122,8 @@ export class router extends app_router {
     public bind  = (router : express.Router) : express.Router => {
         let csrfProtection = this.csrfProtection;
         router.get("/*", csrfProtection , this.vue);
+        router.search("/*", csrfProtection , this.vue);
+        router.get("/page/:page", csrfProtection , this.search);
         router.post("/",  csrfProtection , this.insert);
         router.put("/:id",csrfProtection,this.update);
         router.delete("/:id", csrfProtection , this.delete);

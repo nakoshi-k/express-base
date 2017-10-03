@@ -1,11 +1,9 @@
-import Vue, { ComponentOptions } from 'vue';
-import app from './vue/app.vue';
-import router from './router';
-
-//Vue.config.productionTip = false
-
-new Vue({
-  el: '#application',
-  template: '<App/>',
-  components: { app }
-}as ComponentOptions<Vue>)
+import Vue ,{ComponentOptions} from 'vue';
+import App from './vue/App.vue';
+import { createRouter } from './router';
+const router = createRouter();
+const app = new Vue({
+    router,
+    components : {App}
+  }) 
+app.$mount("#application");

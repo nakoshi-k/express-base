@@ -20,7 +20,7 @@ let outdir = path.resolve( __dirname + "/../../dist/apps/public/");
 
 module.exports  = {
             entry: __dirname + "/spa/client.ts",
-            target : "node",
+            target : "web",
             output: {
                 path: outdir ,
                 filename: 'tasks/client.js',
