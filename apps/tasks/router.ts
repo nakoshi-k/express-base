@@ -3,13 +3,11 @@ import {router as app_router} from "../router";
 import {service} from "./service";
 import * as helpers  from "../../base/helper";
 import {input_error} from "../../base/core";
-
 import * as Vue from "vue";
 import * as Router from "vue-router";
 Vue.use(Router);
 import * as VueRender from "vue-server-renderer";
-import {apps} from "./spa/server"
-
+import {default as BundleServer}  from "./bundle-server";
 export class router extends app_router {
     public name = "tasks";
     public service:service;
@@ -26,92 +24,45 @@ export class router extends app_router {
         this.csrfReady(req);
     }
 
+    private vue = (req : express.Request,res: express.Response, next : express.NextFunction) => {
+        const context = { url: req.url };
+        const renderer = VueRender.createRenderer();
+        let server : any = BundleServer;
+        server( context ).then( (app : Vue) => {
+            renderer.renderToString( app , (err:any,html)  => {
+                console.log(err);
+                if (err) {
+                    if (err.code === 404) {
+                      res.status(404).end('Page not found')
+                    } else {
+                      res.status(500).end('Internal Server Error')
+                    }
+                } 
+                res.end(html);
+          });
+        })
+    }
 
     private search = (req : express.Request,res: express.Response, next : express.NextFunction) => {
 
-        const renderer = VueRender.createRenderer();
-        renderer.renderToString(apps(),(err,html) => {
-            console.log(html);
-        })
         let pagination = this.service.pagination();
         let conditions = this.service.conditions( req );
         let entities = pagination.find( conditions , req.query);
         let data = {};
-
+        
         entities.then( (result : {rows : any, count :number,pagination:any}) => {
             data[this.entities_name] = result.rows;
             data["page"] = result.pagination;
-
-            if(this.isXhr(req)){
-                res.status(201);
-                res.json(data);
-                return;
-            }
-
-            // for rows
-            this.setData(data);
-            this.render(req,res,"vue");
-  
+            res.status(201);
+            res.json(data);
         }).catch((error) => { 
             data[this.entities_name] = {};
-            if(this.isXhr(req)){
-                res.status(400);
-                res.json(data);
-                return;
-            }
-            this.setData(data);
-            this.render(req,res,"vue");
+            res.status(400);
+            res.json(data);
         })
+        
     }
 
-    private add = (req:express.Request, res:express.Response, next:express.NextFunction) => {
-        console.log(req.body);
-        //スキーマを取得してセットする。
-        let data = {};
-        data[ this.entity_name  ] = {};
-        if(req.body){
-            data[ this.entity_name  ] = req.body;
-        }
-        this.setData(data);
-        this.render( req , res , "vue");
-    }
-    
-    private view = (req:express.Request,res:express.Response,next:express.NextFunction) => {
-        let model = this.model;
-        model.findById( req.params.id ).then((result) => {
-            if(!result){
-                throw Error;
-            }
-            if(this.isXhr(req)){
-                res.status(201);
-                res.json(result);
-                return;
-            }
-            let data = {};
-            data[this.entity_name] = result.dataValues; 
-            this.setData(data);
-            this.render( req , res , "vue");
-        }).catch((res) => {
-            if(this.isXhr(req)){
-                res.status(401);
-                return;
-            }
-            res.redirect(`/${this.entities_name}`);
-        })
-    }
-
-    private edit = (req:express.Request,res:express.Response,next:express.NextFunction) => {
-        let model = this.model;
-        model.findById( req.params.id ).then((result) => {
-            if(!result){
-                res.redirect( `/${this.entities_name}` );
-            }
-            let data = {};
-            data[this.entity_name] = result.dataValues;
-            this.setData(data);
-            this.render( req , res , "vue");
-        })
-    }
     
     private delete = (req:express.Request,res:express.Response) => {
         let model = this.model;
@@ -120,7 +71,6 @@ export class router extends app_router {
                 result.destroy().then( () => {
                     res.sendStatus(204);
                 });
-                return;
             }
             res.sendStatus(500);
         })
@@ -129,20 +79,12 @@ export class router extends app_router {
     private insert = (req: express.Request,res:express.Response,next:express.NextFunction) => {
         let entity = this.model.build(req.body);
         entity.save().then( (result) => {
-            if(this.isXhr(req)){
-                res.status(201);
-                res.json(entity.dataValues);
-                return;
-            }
-            res.redirect(`/${this.entities_name}`);
+            res.status(201);
+            res.json(entity.dataValues);
         }).catch((err) => {
             req.body.errors = this.service.validationError(err);
-            if(this.isXhr(req)){
-                res.status(400);
-                res.json(req.body.errors);
-                return;
-            }
-            this.add(req,res,next);
+            res.status(400);
+            res.json(req.body.errors);
         })
     }
 
@@ -150,37 +92,22 @@ export class router extends app_router {
         let model = this.model;
         model.findById( req.params.id ).then((entity) => {
             entity.update(req.body).then( (result) => {
-              if(this.isXhr(req)){
                 res.status(201);
                 res.json(result);
-                return;
-              }
-              res.redirect(`/${this.entities_name}`);
             }).catch((err) => {
-              if(this.isXhr(req)){
                 res.status(400);
                 res.json(err);
-                return;
-              }
-              this.edit(req,res,next);
             });
         }).catch((err) => {
-            if(this.isXhr(req)){
-                res.status(400);
-                res.json(err);
-                return;
-              }
+            res.status(400);
+            res.json(err);
         })
     }
 
     public bind  = (router : express.Router) : express.Router => {
         let csrfProtection = this.csrfProtection;
-        router.get("/", csrfProtection , this.search);
-        router.get("/page/:page", csrfProtection , this.search);
-        router.get("/add", csrfProtection , this.add);
-        router.get("/:id", csrfProtection , this.view);
+        router.get("/*", csrfProtection , this.vue);
         router.post("/",  csrfProtection , this.insert);
-        router.get("/:id/edit", csrfProtection , this.edit);
         router.put("/:id",csrfProtection,this.update);
         router.delete("/:id", csrfProtection , this.delete);
         return router;

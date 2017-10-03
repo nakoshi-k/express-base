@@ -7,7 +7,7 @@ const Vue = require("vue");
 const Router = require("vue-router");
 Vue.use(Router);
 const VueRender = require("vue-server-renderer");
-const server_1 = require("./spa/server");
+const bundle_server_1 = require("./bundle-server");
 class router extends router_1.router {
     constructor() {
         super();
@@ -17,11 +17,26 @@ class router extends router_1.router {
             this.helper("pagination", new helpers.pagination());
             this.csrfReady(req);
         };
-        this.search = (req, res, next) => {
+        this.vue = (req, res, next) => {
+            const context = { url: req.url };
             const renderer = VueRender.createRenderer();
-            renderer.renderToString(server_1.apps(), (err, html) => {
-                console.log(html);
+            let server = bundle_server_1.default;
+            server(context).then((app) => {
+                renderer.renderToString(app, (err, html) => {
+                    console.log(err);
+                    if (err) {
+                        if (err.code === 404) {
+                            res.status(404).end('Page not found');
+                        }
+                        else {
+                            res.status(500).end('Internal Server Error');
+                        }
+                    }
+                    res.end(html);
+                });
             });
+        };
+        this.search = (req, res, next) => {
             let pagination = this.service.pagination();
             let conditions = this.service.conditions(req);
             let entities = pagination.find(conditions, req.query);
@@ -29,69 +44,12 @@ class router extends router_1.router {
             entities.then((result) => {
                 data[this.entities_name] = result.rows;
                 data["page"] = result.pagination;
-                if (this.isXhr(req)) {
-                    res.status(201);
-                    res.json(data);
-                    return;
-                }
-                // for rows
-                this.setData(data);
-                this.render(req, res, "vue");
+                res.status(201);
+                res.json(data);
             }).catch((error) => {
                 data[this.entities_name] = {};
-                if (this.isXhr(req)) {
-                    res.status(400);
-                    res.json(data);
-                    return;
-                }
-                this.setData(data);
-                this.render(req, res, "vue");
-            });
-        };
-        this.add = (req, res, next) => {
-            console.log(req.body);
-            //スキーマを取得してセットする。
-            let data = {};
-            data[this.entity_name] = {};
-            if (req.body) {
-                data[this.entity_name] = req.body;
-            }
-            this.setData(data);
-            this.render(req, res, "vue");
-        };
-        this.view = (req, res, next) => {
-            let model = this.model;
-            model.findById(req.params.id).then((result) => {
-                if (!result) {
-                    throw Error;
-                }
-                if (this.isXhr(req)) {
-                    res.status(201);
-                    res.json(result);
-                    return;
-                }
-                let data = {};
-                data[this.entity_name] = result.dataValues;
-                this.setData(data);
-                this.render(req, res, "vue");
-            }).catch((res) => {
-                if (this.isXhr(req)) {
-                    res.status(401);
-                    return;
-                }
-                res.redirect(`/${this.entities_name}`);
-            });
-        };
-        this.edit = (req, res, next) => {
-            let model = this.model;
-            model.findById(req.params.id).then((result) => {
-                if (!result) {
-                    res.redirect(`/${this.entities_name}`);
-                }
-                let data = {};
-                data[this.entity_name] = result.dataValues;
-                this.setData(data);
-                this.render(req, res, "vue");
+                res.status(400);
+                res.json(data);
             });
         };
         this.delete = (req, res) => {
@@ -101,7 +59,6 @@ class router extends router_1.router {
                     result.destroy().then(() => {
                         res.sendStatus(204);
                     });
-                    return;
                 }
                 res.sendStatus(500);
             });
@@ -109,56 +66,33 @@ class router extends router_1.router {
         this.insert = (req, res, next) => {
             let entity = this.model.build(req.body);
             entity.save().then((result) => {
-                if (this.isXhr(req)) {
-                    res.status(201);
-                    res.json(entity.dataValues);
-                    return;
-                }
-                res.redirect(`/${this.entities_name}`);
+                res.status(201);
+                res.json(entity.dataValues);
             }).catch((err) => {
                 req.body.errors = this.service.validationError(err);
-                if (this.isXhr(req)) {
-                    res.status(400);
-                    res.json(req.body.errors);
-                    return;
-                }
-                this.add(req, res, next);
+                res.status(400);
+                res.json(req.body.errors);
             });
         };
         this.update = (req, res, next) => {
             let model = this.model;
             model.findById(req.params.id).then((entity) => {
                 entity.update(req.body).then((result) => {
-                    if (this.isXhr(req)) {
-                        res.status(201);
-                        res.json(result);
-                        return;
-                    }
-                    res.redirect(`/${this.entities_name}`);
+                    res.status(201);
+                    res.json(result);
                 }).catch((err) => {
-                    if (this.isXhr(req)) {
-                        res.status(400);
-                        res.json(err);
-                        return;
-                    }
-                    this.edit(req, res, next);
-                });
-            }).catch((err) => {
-                if (this.isXhr(req)) {
                     res.status(400);
                     res.json(err);
-                    return;
-                }
+                });
+            }).catch((err) => {
+                res.status(400);
+                res.json(err);
             });
         };
         this.bind = (router) => {
             let csrfProtection = this.csrfProtection;
-            router.get("/", csrfProtection, this.search);
-            router.get("/page/:page", csrfProtection, this.search);
-            router.get("/add", csrfProtection, this.add);
-            router.get("/:id", csrfProtection, this.view);
+            router.get("/*", csrfProtection, this.vue);
             router.post("/", csrfProtection, this.insert);
-            router.get("/:id/edit", csrfProtection, this.edit);
             router.put("/:id", csrfProtection, this.update);
             router.delete("/:id", csrfProtection, this.delete);
             return router;

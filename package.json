@@ -14,8 +14,8 @@
     "watch:scripts": "npm run build:scripts -- -w",
     "watch:scripts:vue": "npm run build:scripts:vue -- -w",
     "prebuild": "mkdir -p dist/apps/public/scripts dist/apps/public/stylesheets",
-    "build": "npm-run-all build:tsc build:view build:stylus build:scripts build:scripts:vue",
-    "watch": "npm-run-all -p \"build:tsc -- -w\" \"build:view -- -w -u --no-initial\" watch:stylus watch:scripts watch:scripts:vue",
+    "build": "npm-run-all build:tsc build:view build:stylus build:scripts",
+    "watch": "npm-run-all -p \"build:tsc -- -w\" \"build:view -- -w -u --no-initial\" watch:stylus watch:scripts",
     "dev": "npm-run-all -p watch start browsersync",
     "bake": "node ../ts-curd-generator/dist/cli.js"
   },

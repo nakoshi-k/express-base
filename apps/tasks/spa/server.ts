@@ -1,10 +1,15 @@
-import Vue from 'vue'
-import app from './vue/app.vue'
-import router from './router'
-
-const createApp = () => {
-  return new Vue({
-    render: h => h(app)
-  })
+import {createApp} from './app';
+export default context => {
+  let server = (resolve,reject) => {
+    const {app, router} = createApp();
+    router.push(context.url);
+    router.onReady(() => {
+      const matchedComponents = router.getMatchedComponents();
+      if(!matchedComponents.length){
+        reject({ code : 404 })
+      }
+      resolve(app)
+    },reject)
+  } 
+  return new Promise(server);
 }
-export let apps = createApp;

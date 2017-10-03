@@ -1,10 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const vue_1 = require("vue");
-const app_vue_1 = require("./vue/app.vue");
-const createApp = () => {
-    return new vue_1.default({
-        render: h => h(app_vue_1.default)
-    });
+const app_1 = require("./app");
+exports.default = context => {
+    let server = (resolve, reject) => {
+        const { app, router } = app_1.createApp();
+        router.push(context.url);
+        router.onReady(() => {
+            const matchedComponents = router.getMatchedComponents();
+            if (!matchedComponents.length) {
+                reject({ code: 404 });
+            }
+            resolve(app);
+        }, reject);
+    };
+    return new Promise(server);
 };
-exports.apps = createApp;

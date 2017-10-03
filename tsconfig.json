@@ -12,13 +12,10 @@
         "allowSyntheticDefaultImports": true
     },
     "include": [
-        "./**/*.ts",
-        "./**/*.vue"
+        "**/*.ts"
     ],
     "exclude": [
-        "./node_modules",
-        "./ignore",
-        "./apps/public/scripts/*",
-        "./apps/*/public/*"
+        "node_modules",
+        "ignore"
     ]
 }

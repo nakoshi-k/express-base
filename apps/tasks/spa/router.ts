@@ -1,14 +1,12 @@
 import Vue from 'vue';
 import Router, { RouteConfig } from 'vue-router';
-import Hello from './vue/hello.vue';
+import Hello from './vue/Hello.vue';
 Vue.use(Router)
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'hello',
-      component: Hello
-    } as RouteConfig
-  ]
-})
+export function createRouter(){
+    return new Router({
+        routes: [
+            { path: '/', name: 'hello', component: Hello } as RouteConfig
+        ]
+    })
+}

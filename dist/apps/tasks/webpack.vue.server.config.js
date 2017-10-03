@@ -25,8 +25,8 @@ module.exports  = {
             externals: [ /^(vue|vue\-router)$/],
             output: {
                 libraryTarget : "commonjs",
-                path: outdir ,
-                filename: 'spa/server.js',
+                path: __dirname  ,
+                filename: 'bundle-server.js',
             },
             resolve: {
                 // extensionsに'.ts'を追加
