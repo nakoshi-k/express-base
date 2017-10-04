@@ -18,11 +18,13 @@ class router extends router_1.router {
             this.csrfReady(req);
         };
         this.vue = (req, res, next) => {
-            const context = { url: req.url };
+            const context = { url: `/${this.name}${req.url}` };
+            console.log(req.url);
             this.ssr(context).then(ssr => {
                 this.setData({ ssr: ssr });
                 this.render(req, res, "vue");
             }).catch(err => {
+                console.log(err);
                 if (err === 404) {
                     res.send(404);
                 }
@@ -30,6 +32,7 @@ class router extends router_1.router {
             });
         };
         this.search = (req, res, next) => {
+            console.log(123);
             let pagination = this.service.pagination();
             let conditions = this.service.conditions(req);
             let entities = pagination.find(conditions, req.query);
@@ -84,9 +87,8 @@ class router extends router_1.router {
         };
         this.bind = (router) => {
             let csrfProtection = this.csrfProtection;
-            router.get("/*", csrfProtection, this.vue);
-            router.search("/*", csrfProtection, this.vue);
             router.get("/page/:page", csrfProtection, this.search);
+            router.get("/*", csrfProtection, this.vue);
             router.post("/", csrfProtection, this.insert);
             router.put("/:id", csrfProtection, this.update);
             router.delete("/:id", csrfProtection, this.delete);
@@ -97,11 +99,10 @@ class router extends router_1.router {
     }
     ssr(context) {
         const renderer = VueRender.createRenderer();
-        let server = bundle_server_1.default; // そのまま使うとTSコンパイルエラーが出るため
+        let server = bundle_server_1.default;
         let ssr = (resolve, reject) => {
             server(context).then((app) => {
                 renderer.renderToString(app, (err, html) => {
-                    console.log(err);
                     if (err) {
                         if (err.code === 404) {
                             reject(404);
@@ -113,6 +114,7 @@ class router extends router_1.router {
                     resolve(html);
                 });
             });
+            //resolve(1);
         };
         return new Promise(ssr);
     }

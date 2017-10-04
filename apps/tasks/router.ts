@@ -26,11 +26,11 @@ export class router extends app_router {
 
     private ssr(context){
         const renderer = VueRender.createRenderer();
-        let server : any = BundleServer; // そのまま使うとTSコンパイルエラーが出るため
+        let server : any = BundleServer;
         let ssr = (resolve,reject) => {
+
             server( context ).then( (app : Vue) => {
                 renderer.renderToString( app , (err:any,html)  => {
-                    console.log(err);
                     if (err) {
                         if (err.code === 404) {
                           reject(404);
@@ -41,16 +41,19 @@ export class router extends app_router {
                     resolve(html);
               });
             })
+            //resolve(1);
         }
         return new Promise(ssr);
     }
 
     private vue = (req : express.Request,res: express.Response, next : express.NextFunction) => {
-        const context = { url: req.url };
+        const context = { url: `/${this.name}${req.url}` };
+        console.log(req.url);
         this.ssr(context).then(ssr => {
             this.setData( {ssr : ssr} );
-            this.render(req,res ,"vue");
+            this.render( req , res ,"vue");
         }).catch(err => {
+            console.log(err);
             if( err === 404 ){
                 res.send(404);
             }
@@ -59,7 +62,7 @@ export class router extends app_router {
     }
 
     private search = (req : express.Request,res: express.Response, next : express.NextFunction) => {
-
+        console.log(123);
         let pagination = this.service.pagination();
         let conditions = this.service.conditions( req );
         let entities = pagination.find( conditions , req.query);
@@ -121,9 +124,8 @@ export class router extends app_router {
 
     public bind  = (router : express.Router) : express.Router => {
         let csrfProtection = this.csrfProtection;
-        router.get("/*", csrfProtection , this.vue);
-        router.search("/*", csrfProtection , this.vue);
         router.get("/page/:page", csrfProtection , this.search);
+        router.get("/*", csrfProtection , this.vue);
         router.post("/",  csrfProtection , this.insert);
         router.put("/:id",csrfProtection,this.update);
         router.delete("/:id", csrfProtection , this.delete);
