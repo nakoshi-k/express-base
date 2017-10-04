@@ -19,8 +19,8 @@ class router extends router_1.router {
         };
         this.vue = (req, res, next) => {
             const context = { url: req.url };
-            this.ssr(context).then(result => {
-                this.setData({ ssr: "ssr" });
+            this.ssr(context).then(ssr => {
+                this.setData({ ssr: ssr });
                 this.render(req, res, "vue");
             }).catch(err => {
                 if (err === 404) {
@@ -97,7 +97,7 @@ class router extends router_1.router {
     }
     ssr(context) {
         const renderer = VueRender.createRenderer();
-        let server = bundle_server_1.default;
+        let server = bundle_server_1.default; // そのまま使うとTSコンパイルエラーが出るため
         let ssr = (resolve, reject) => {
             server(context).then((app) => {
                 renderer.renderToString(app, (err, html) => {

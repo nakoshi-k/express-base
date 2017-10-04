@@ -10558,7 +10558,7 @@ module.exports = function normalizeComponent (
 Object.defineProperty(exports, "__esModule", { value: true });
 var app_1 = __webpack_require__(4);
 var _a = app_1.createApp(), app = _a.app, router = _a.router;
-app.$mount("#application");
+app.$mount("#app");
 
 
 /***/ }),
@@ -13288,7 +13288,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("hello")])])
+    return _c("div", [_c("span", [_vm._v("Hello")])])
   }
 ]
 render._withStripped = true

@@ -1,3 +1,3 @@
 import {createApp} from './app';
 const {app, router} = createApp();
-app.$mount("#application");
+app.$mount("#app");
