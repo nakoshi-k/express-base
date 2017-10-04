@@ -32,8 +32,8 @@ module.exports  = {
                 // extensionsに'.ts'を追加
                 extensions: ['.js', '.vue', '.json', '.ts'],
                 alias: {
-                  'vue': '/var/www/node/express-base/node_modules/vue/dist/vue.esm.js',
-                  'vue-router': '/var/www/node/express-base/node_modules/vue-router/dist/vue-router.esm.js',
+                  'vue$': 'vue/dist/vue.esm.js',
+                  'vue-router$': 'vue-router/dist/vue-router.esm.js',
                 },
                 
             },

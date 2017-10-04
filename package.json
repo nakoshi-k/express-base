@@ -8,14 +8,16 @@
     "build:view": "cpx \"{apps,base,models,config,public}/**/*.{ejs,js,json,jpg,jpeg,png,gif,ico}\" dist",
     "build:stylus": "stylus apps/public/stylesheets/style.styl -o dist/apps/public/stylesheets/style.css --include-css",
     "build:scripts": "webpack --config apps/public/scripts/webpack.config.js",
-    "build:scripts:vue": "webpack --config apps/webpack.vue.config.js",
+    "build:vue:client": "webpack --config apps/tasks/webpack.vue.client.config.js",
+    "build:vue:server": "webpack --config apps/tasks/webpack.vue.server.config.js",
     "build:tsc": "tsc",
+    "watch:vue": "npm-run-all -p \"build:vue:client -- -w\" \"build:vue:server -- -w\" " ,
     "watch:stylus": "chokidar \"apps/public/stylesheets/**/*.styl\" --command \"npm run build:stylus\"",
     "watch:scripts": "npm run build:scripts -- -w",
     "watch:scripts:vue": "npm run build:scripts:vue -- -w",
     "prebuild": "mkdir -p dist/apps/public/scripts dist/apps/public/stylesheets",
-    "build": "npm-run-all build:tsc build:view build:stylus build:scripts",
-    "watch": "npm-run-all -p \"build:tsc -- -w\" \"build:view -- -w -u --no-initial\" watch:stylus watch:scripts",
+    "build": "npm-run-all build:tsc build:view build:stylus build:scripts build:vue:client build:scripts:vue:server",
+    "watch": "npm-run-all -p \"build:tsc -- -w\" \"build:view -- -w -u --no-initial\" watch:stylus watch:scripts watch:vue",
     "dev": "npm-run-all -p watch start browsersync",
     "bake": "node ../ts-curd-generator/dist/cli.js"
   },
@@ -55,6 +57,7 @@
     "vue-class-component": "^5.0.2",
     "vue-server-renderer": "^2.4.4",
     "vue-style-loader": "^3.0.3",
+    "vuex": "^2.4.1",
     "webpack": "^3.6.0"
   },
   "devDependencies": {

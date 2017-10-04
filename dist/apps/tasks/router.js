@@ -20,7 +20,7 @@ class router extends router_1.router {
         this.vue = (req, res, next) => {
             const context = { url: req.url };
             this.ssr(context).then(result => {
-                this.setData({ ssr: result });
+                this.setData({ ssr: "ssr" });
                 this.render(req, res, "vue");
             }).catch(err => {
                 if (err === 404) {

@@ -48,7 +48,7 @@ export class router extends app_router {
     private vue = (req : express.Request,res: express.Response, next : express.NextFunction) => {
         const context = { url: req.url };
         this.ssr(context).then(result => {
-            this.setData( {ssr : result} );
+            this.setData( {ssr : "ssr"} );
             this.render(req,res ,"vue");
         }).catch(err => {
             if( err === 404 ){
