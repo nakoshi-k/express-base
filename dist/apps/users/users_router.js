@@ -30,7 +30,6 @@ class users_router extends router_1.router {
             });
         };
         this.add = (req, res, next) => {
-            console.log(req.body);
             //スキーマを取得してセットする。
             let data = {};
             data[this.entity_name] = {};

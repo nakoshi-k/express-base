@@ -31,6 +31,7 @@ module.exports  = {
                   'vue': '/var/www/node/express-base/node_modules/vue/dist/vue.esm.js',
                   'vue-router': '/var/www/node/express-base/node_modules/vue-router/dist/vue-router.esm.js',
                 },
+                
             },
             module: {
                 loaders:[

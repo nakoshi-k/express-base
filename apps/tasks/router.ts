@@ -4,7 +4,14 @@ import {service} from "./service";
 import * as helpers  from "../../base/helper";
 import {input_error} from "../../base/core";
 import * as Vue from "vue";
+import * as Router from "vue-router";
+import * as Request from "request";
+
+Vue.use(Router);
+
 import * as VueRender from "vue-server-renderer";
+import {default as BundleServer}  from "./bundle-server";
+
 export class router extends app_router {
     public name = "tasks";
     public service:service;
@@ -21,6 +28,49 @@ export class router extends app_router {
         this.csrfReady(req);
     }
 
+    private ssr(context){
+        const renderer = VueRender.createRenderer();
+        let server : any = BundleServer;
+        let ssr = (resolve,reject) => {
+            server( context ).then( (app : Vue) => {
+                renderer.renderToString( app , (err:any,html)  => {
+                    if (err) {
+                        if (err.code === 404) {
+                          reject(404);
+                        } else {
+                          reject(500);
+                        }
+                    }
+                    resolve(html);
+              });
+            })
+        }
+        return new Promise(ssr);
+    }
+
+    private vue = (req : express.Request,res: express.Response, next : express.NextFunction) => {
+
+        const context = {
+            url: `/${this.name}${req.url}`,
+            serverOptions : {
+                host : req.protocol + '://' + req.headers.host ,
+                entities : "tasks",
+                entity : "task",
+                request : Request
+            }
+        };
+
+        this.ssr(context).then(ssr => {
+            this.setData( {ssr : ssr} );
+            this.render( req , res ,"vue");
+        }).catch(err => {
+            console.log(err);
+            if( err === 404 ){
+                res.send(404);
+            }
+            res.send(500);
+        })
+    }
 
     private search = (req : express.Request,res: express.Response, next : express.NextFunction) => {
 
@@ -41,9 +91,11 @@ export class router extends app_router {
         let conditions = this.service.conditions( req );
         let entities = pagination.find( conditions , req.query);
         let data = {};
+        
         entities.then( (result : {rows : any, count :number,pagination:any}) => {
             data[this.entities_name] = result.rows;
             data["page"] = result.pagination;
+<<<<<<< HEAD
             if(this.isXhr(req)){
                 res.status(201);
                 res.json(data);
@@ -97,9 +149,19 @@ export class router extends app_router {
                 return;
             }
             res.redirect(`/${this.entities_name}`);
+=======
+            res.status(201);
+            res.json(data);
+        }).catch((error) => { 
+            data[this.entities_name] = {};
+            res.status(400);
+            res.json(data);
+>>>>>>> c81a062cfb8d0dd5e167759476a7610e0dddcd2c
         })
+        
     }
 
+<<<<<<< HEAD
     private edit = (req:express.Request,res:express.Response,next:express.NextFunction) => {
         let model = this.model;
         model.findById( req.params.id ).then((result) => {
@@ -112,6 +174,8 @@ export class router extends app_router {
             this.render( req , res , "vue");
         })
     }
+=======
+>>>>>>> c81a062cfb8d0dd5e167759476a7610e0dddcd2c
     
     private delete = (req:express.Request,res:express.Response) => {
         let model = this.model;
@@ -120,7 +184,6 @@ export class router extends app_router {
                 result.destroy().then( () => {
                     res.sendStatus(204);
                 });
-                return;
             }
             res.sendStatus(500);
         })
@@ -129,20 +192,12 @@ export class router extends app_router {
     private insert = (req: express.Request,res:express.Response,next:express.NextFunction) => {
         let entity = this.model.build(req.body);
         entity.save().then( (result) => {
-            if(this.isXhr(req)){
-                res.status(201);
-                res.json(entity.dataValues);
-                return;
-            }
-            res.redirect(`/${this.entities_name}`);
+            res.status(201);
+            res.json(entity.dataValues);
         }).catch((err) => {
             req.body.errors = this.service.validationError(err);
-            if(this.isXhr(req)){
-                res.status(400);
-                res.json(req.body.errors);
-                return;
-            }
-            this.add(req,res,next);
+            res.status(400);
+            res.json(req.body.errors);
         })
     }
 
@@ -150,37 +205,23 @@ export class router extends app_router {
         let model = this.model;
         model.findById( req.params.id ).then((entity) => {
             entity.update(req.body).then( (result) => {
-              if(this.isXhr(req)){
                 res.status(201);
                 res.json(result);
-                return;
-              }
-              res.redirect(`/${this.entities_name}`);
             }).catch((err) => {
-              if(this.isXhr(req)){
                 res.status(400);
                 res.json(err);
-                return;
-              }
-              this.edit(req,res,next);
             });
         }).catch((err) => {
-            if(this.isXhr(req)){
-                res.status(400);
-                res.json(err);
-                return;
-              }
+            res.status(400);
+            res.json(err);
         })
     }
 
     public bind  = (router : express.Router) : express.Router => {
         let csrfProtection = this.csrfProtection;
-        router.get("/", csrfProtection , this.search);
         router.get("/page/:page", csrfProtection , this.search);
-        router.get("/add", csrfProtection , this.add);
-        router.get("/:id", csrfProtection , this.view);
+        router.get("/*", csrfProtection , this.vue);
         router.post("/",  csrfProtection , this.insert);
-        router.get("/:id/edit", csrfProtection , this.edit);
         router.put("/:id",csrfProtection,this.update);
         router.delete("/:id", csrfProtection , this.delete);
         return router;
