@@ -625,7 +625,6 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 let increment = (state) => {
     state.count++;
 };
-let b;
 function createStore(options = __WEBPACK_IMPORTED_MODULE_3__Interface__["a" /* createOptions */]) {
     let api = new __WEBPACK_IMPORTED_MODULE_2__api__["a" /* Internal */]({
         host: options.host,
@@ -633,8 +632,7 @@ function createStore(options = __WEBPACK_IMPORTED_MODULE_3__Interface__["a" /* c
         entity: options.entity,
         request: options.request
     });
-    return new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
-        state: {},
+    let vuex = {
         actions: {
             fetchEntities({ commit }, query = { page: 1, search: "" }) {
                 return api.entities(query).then((entities) => {
@@ -645,11 +643,12 @@ function createStore(options = __WEBPACK_IMPORTED_MODULE_3__Interface__["a" /* c
         mutations: {
             setEntities: (state, entities) => {
                 let tasks = entities.tasks;
-                state["tasks"] = entities.tasks;
-                state["page"] = entities.page;
+                state.tasks = entities.tasks;
+                state.page = entities.page;
             },
         }
-    });
+    };
+    return new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store(vuex);
 }
 
 

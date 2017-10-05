@@ -13209,7 +13209,6 @@ vue_1.default.use(vuex_1.default);
 var increment = function (state) {
     state.count++;
 };
-var b;
 function createStore(options) {
     if (options === void 0) { options = Interface_1.createOptions; }
     var api = new api_1.Internal({
@@ -13218,8 +13217,7 @@ function createStore(options) {
         entity: options.entity,
         request: options.request
     });
-    return new vuex_1.default.Store({
-        state: {},
+    var vuex = {
         actions: {
             fetchEntities: function (_a, query) {
                 var commit = _a.commit;
@@ -13232,11 +13230,12 @@ function createStore(options) {
         mutations: {
             setEntities: function (state, entities) {
                 var tasks = entities.tasks;
-                state["tasks"] = entities.tasks;
-                state["page"] = entities.page;
+                state.tasks = entities.tasks;
+                state.page = entities.page;
             },
         }
-    });
+    };
+    return new vuex_1.default.Store(vuex);
 }
 exports.createStore = createStore;
 
