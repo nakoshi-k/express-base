@@ -19,6 +19,9 @@ export function createStore(options : createOptionsInterFace = createOptions){
   );
   
   let vuex : Vuex.StoreOptions<any> =  {
+    state : {
+      domain : options.entities
+    },
     actions:{
       fetchEntities ( {commit},query = {page : 1, search : ""}){
         return  api.entities(query).then((entities) => {

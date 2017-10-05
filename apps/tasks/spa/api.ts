@@ -41,11 +41,12 @@ export class Internal{
     
     private server = (url : string ,options = {}) =>{
         let req : any = this.request;
+        let srvOptions = Object.assign(this.options,options);
         let server = (resolve,reject) => {
             let options = {
                 url : `${this.host}${url}`,
-                method:this.options.method,
-                headers:this.options.headers
+                method: srvOptions.method,
+                headers: srvOptions.headers
             }
             req(options, (error, response, body) => {
                 if(error){
@@ -64,5 +65,13 @@ export class Internal{
         }
         return this.client(url ,{});
     }
-    
+
+    public entity = (query = {page : 1, search : ""}) => {
+        let url = `/${this.names}/page/${query.page}${query.search}`;
+        if(typeof window === "undefined"){
+            return this.server(url,{});
+        }
+        return this.client(url ,{});
+    }
 }
+

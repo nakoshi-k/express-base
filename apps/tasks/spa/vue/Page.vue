@@ -1,6 +1,10 @@
 <template>
-<div class="resource">
-<div v-for="task in tasks">{{ task.title }}</div>
+<div class="resource column column-75">
+<h2>Page</h2>
+<div v-for="task in tasks">
+<h3><router-link :to="view(task.id)">{{ task.title }}</router-link></h3>
+<router-link :to="edit(task.id)" class="button small">edit</router-link>
+</div>
 </div>
 </template>
 
@@ -31,7 +35,10 @@ export default class Page extends Vue {
     return `/tasks/${id}`;
   }
 
-  
+  edit(id){
+    return `/tasks/${id}/edit`;
+  }
+
   get tasks (){
     return this.$store.state.tasks;
   }   

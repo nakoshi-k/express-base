@@ -121,7 +121,6 @@ class router extends router_1.router {
                     resolve(html);
                 });
             });
-            //resolve(1);
         };
         return new Promise(ssr);
     }

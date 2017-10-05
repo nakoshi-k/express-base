@@ -20,6 +20,7 @@ import {createOptionsInterFace,createOptions} from "./Interface";
       }
     },
     beforeRouteUpdate (to, from, next) {
+      console.log(23);
       const { asyncData } = this.$options
       if (asyncData) {
         asyncData({

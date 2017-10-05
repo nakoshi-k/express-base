@@ -10466,6 +10466,8 @@ var vue_1 = __webpack_require__(0);
 var vue_router_1 = __webpack_require__(11);
 var Navi_vue_1 = __webpack_require__(12);
 var Page_vue_1 = __webpack_require__(20);
+var Sub_vue_1 = __webpack_require__(411);
+var Add_vue_1 = __webpack_require__(414);
 var Interface_1 = __webpack_require__(115);
 vue_1.default.use(vue_router_1.default);
 function createRouter(options) {
@@ -10474,8 +10476,10 @@ function createRouter(options) {
     return new vue_router_1.default({
         mode: 'history',
         routes: [
-            { path: "/" + opt.entities + "/", components: { main: Page_vue_1.default, navi: Navi_vue_1.default } },
-            { path: "/" + opt.entities + "/:id", components: { main: Page_vue_1.default, navi: Navi_vue_1.default } },
+            { path: "/" + opt.entities + "/", components: { main: Page_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
+            { path: "/" + opt.entities + "/add", components: { main: Add_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
+            { path: "/" + opt.entities + "/:id", components: { main: Page_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
+            { path: "/" + opt.entities + "/:id/edit", components: { main: Page_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
         ]
     });
 }
@@ -13042,11 +13046,12 @@ var Internal = /** @class */ (function () {
         this.server = function (url, options) {
             if (options === void 0) { options = {}; }
             var req = _this.request;
+            var srvOptions = Object.assign(_this.options, options);
             var server = function (resolve, reject) {
                 var options = {
                     url: "" + _this.host + url,
-                    method: _this.options.method,
-                    headers: _this.options.headers
+                    method: srvOptions.method,
+                    headers: srvOptions.headers
                 };
                 req(options, function (error, response, body) {
                     if (error) {
@@ -13058,6 +13063,14 @@ var Internal = /** @class */ (function () {
             return new Promise(server);
         };
         this.entities = function (query) {
+            if (query === void 0) { query = { page: 1, search: "" }; }
+            var url = "/" + _this.names + "/page/" + query.page + query.search;
+            if (typeof window === "undefined") {
+                return _this.server(url, {});
+            }
+            return _this.client(url, {});
+        };
+        this.entity = function (query) {
             if (query === void 0) { query = { page: 1, search: "" }; }
             var url = "/" + _this.names + "/page/" + query.page + query.search;
             if (typeof window === "undefined") {
@@ -13218,6 +13231,9 @@ function createStore(options) {
         request: options.request
     });
     var vuex = {
+        state: {
+            domain: options.entities
+        },
         actions: {
             fetchEntities: function (_a, query) {
                 var commit = _a.commit;
@@ -14433,6 +14449,9 @@ var Page = /** @class */ (function (_super) {
     Page.prototype.view = function (id) {
         return "/tasks/" + id;
     };
+    Page.prototype.edit = function (id) {
+        return "/tasks/" + id + "/edit";
+    };
     Object.defineProperty(Page.prototype, "tasks", {
         get: function () {
             return this.$store.state.tasks;
@@ -14460,10 +14479,35 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "resource" },
-    _vm._l(_vm.tasks, function(task) {
-      return _c("div", [_vm._v(_vm._s(task.title))])
-    })
+    { staticClass: "resource column column-75" },
+    [
+      _c("h2", [_vm._v("Page")]),
+      _vm._v(" "),
+      _vm._l(_vm.tasks, function(task) {
+        return _c(
+          "div",
+          [
+            _c(
+              "h3",
+              [
+                _c("router-link", { attrs: { to: _vm.view(task.id) } }, [
+                  _vm._v(_vm._s(task.title))
+                ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              { staticClass: "button small", attrs: { to: _vm.edit(task.id) } },
+              [_vm._v("edit")]
+            )
+          ],
+          1
+        )
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -14645,6 +14689,292 @@ app.$mount("#application");
 
 /***/ }),
 
+/***/ 411:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Sub_vue__ = __webpack_require__(413);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Sub_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Sub_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_72fadbd1_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_Sub_vue__ = __webpack_require__(412);
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+
+/* template */
+
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Sub_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_72fadbd1_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_Sub_vue__["a" /* default */],
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "apps/tasks/spa/vue/Sub.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Sub.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-72fadbd1", Component.options)
+  } else {
+    hotAPI.reload("data-v-72fadbd1", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+
+/***/ 412:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "column column-25" }, [
+    _c("ul", [
+      _c(
+        "li",
+        [
+          _c("router-link", { attrs: { to: "/" + _vm.domain + "/" } }, [
+            _vm._v("Index")
+          ])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "li",
+        [
+          _c("router-link", { attrs: { to: "/" + _vm.domain + "/add" } }, [
+            _vm._v("Add")
+          ])
+        ],
+        1
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-72fadbd1", esExports)
+  }
+}
+
+/***/ }),
+
+/***/ 413:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var vue_1 = __webpack_require__(0);
+var vue_class_component_1 = __webpack_require__(3);
+vue_class_component_1.default.registerHooks([
+    'beforeRouteEnter',
+    'beforeRouteLeave',
+    'asyncData',
+    'fetch',
+    'middleware',
+    'layout',
+    'transition',
+    'scrollToTop'
+]);
+var Sub = /** @class */ (function (_super) {
+    __extends(Sub, _super);
+    function Sub() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Object.defineProperty(Sub.prototype, "domain", {
+        get: function () {
+            return this.$store.state.domain;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Sub = __decorate([
+        vue_class_component_1.default({
+            name: 'Add'
+        })
+    ], Sub);
+    return Sub;
+}(vue_1.default));
+exports.default = Sub;
+
+
+/***/ }),
+
+/***/ 414:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Add_vue__ = __webpack_require__(415);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Add_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Add_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_c437049c_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_Add_vue__ = __webpack_require__(416);
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+
+/* template */
+
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Add_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_c437049c_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_Add_vue__["a" /* default */],
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "apps/tasks/spa/vue/Add.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Add.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-c437049c", Component.options)
+  } else {
+    hotAPI.reload("data-v-c437049c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+
+/***/ 415:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var vue_1 = __webpack_require__(0);
+var vue_class_component_1 = __webpack_require__(3);
+vue_class_component_1.default.registerHooks([
+    'beforeRouteEnter',
+    'beforeRouteLeave',
+    'asyncData',
+    'fetch',
+    'middleware',
+    'layout',
+    'transition',
+    'scrollToTop'
+]);
+var Add = /** @class */ (function (_super) {
+    __extends(Add, _super);
+    function Add() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Object.defineProperty(Add.prototype, "domain", {
+        get: function () {
+            return this.$store.state.domain;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Add = __decorate([
+        vue_class_component_1.default({})
+    ], Add);
+    return Add;
+}(vue_1.default));
+exports.default = Add;
+
+
+/***/ }),
+
+/***/ 416:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "resource column column-75" })
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-c437049c", esExports)
+  }
+}
+
+/***/ }),
+
 /***/ 5:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14669,6 +14999,7 @@ vue_1.default.mixin({
         }
     },
     beforeRouteUpdate: function (to, from, next) {
+        console.log(23);
         var asyncData = this.$options.asyncData;
         if (asyncData) {
             asyncData({

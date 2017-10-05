@@ -1,11 +1,9 @@
 <template>
-<div class="column column-25">
-    <ul>
-        <li><router-link :to="`/${domain}/`">Index</router-link></li>
-        <li><router-link :to="`/${domain}/add`">Add</router-link></li>
-    </ul>
+<div class="resource column column-75">
+
 </div>
 </template>
+
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
@@ -21,12 +19,12 @@ Component.registerHooks([
   'scrollToTop'
 ])
 
-@Component({
-  name: 'Add'
-})
-export default class Sub extends Vue {
+@Component({})
+
+export default class Add extends Vue {
   get domain (){
     return this.$store.state.domain;
-  }  
+  }   
+
 }
 </script>

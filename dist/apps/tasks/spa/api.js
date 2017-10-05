@@ -34,11 +34,12 @@ class Internal {
         };
         this.server = (url, options = {}) => {
             let req = this.request;
+            let srvOptions = Object.assign(this.options, options);
             let server = (resolve, reject) => {
                 let options = {
                     url: `${this.host}${url}`,
-                    method: this.options.method,
-                    headers: this.options.headers
+                    method: srvOptions.method,
+                    headers: srvOptions.headers
                 };
                 req(options, (error, response, body) => {
                     if (error) {
@@ -50,6 +51,13 @@ class Internal {
             return new Promise(server);
         };
         this.entities = (query = { page: 1, search: "" }) => {
+            let url = `/${this.names}/page/${query.page}${query.search}`;
+            if (typeof window === "undefined") {
+                return this.server(url, {});
+            }
+            return this.client(url, {});
+        };
+        this.entity = (query = { page: 1, search: "" }) => {
             let url = `/${this.names}/page/${query.page}${query.search}`;
             if (typeof window === "undefined") {
                 return this.server(url, {});

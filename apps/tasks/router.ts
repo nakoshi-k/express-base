@@ -32,7 +32,6 @@ export class router extends app_router {
         const renderer = VueRender.createRenderer();
         let server : any = BundleServer;
         let ssr = (resolve,reject) => {
-
             server( context ).then( (app : Vue) => {
                 renderer.renderToString( app , (err:any,html)  => {
                     if (err) {
@@ -45,7 +44,6 @@ export class router extends app_router {
                     resolve(html);
               });
             })
-            //resolve(1);
         }
         return new Promise(ssr);
     }
