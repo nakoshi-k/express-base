@@ -117,7 +117,7 @@ class router {
         ajax 判定
     */
     isXhr(res) {
-        return res.xhr;
+        return res.xhr === true;
     }
     helper(name, helper) {
         this.vars.hlp[name] = helper;

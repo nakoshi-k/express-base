@@ -140,7 +140,7 @@ export abstract class router{
     */
 
     public isXhr(res){
-        return res.xhr;
+        return res.xhr === true;
     }
     
     public helper( name :string , helper:helper ){

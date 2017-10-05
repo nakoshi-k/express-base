@@ -3,8 +3,8 @@ import {router as app_router} from "../router";
 import {service} from "./service";
 import * as helpers  from "../../base/helper";
 import {input_error} from "../../base/core";
-
-
+import * as Vue from "vue";
+import * as VueRender from "vue-server-renderer";
 export class router extends app_router {
     public name = "tasks";
     public service:service;
@@ -23,12 +23,25 @@ export class router extends app_router {
 
 
     private search = (req : express.Request,res: express.Response, next : express.NextFunction) => {
+
+        const Vue = require('vue')
+        const app = new Vue({
+          template: `<div>Hello World</div>`
+        })
+        // ステップ 2: レンダラを作成
+        const renderer = require('vue-server-renderer').createRenderer()
+        // ステップ 3: Vue インスタンスを HTML に描画
+        renderer.renderToString(app, (err, html) => {
+          if (err) throw err
+          console.log(html)
+          // => <div data-server-rendered="true">hello world</div>
+        })
+
         let pagination = this.service.pagination();
         let conditions = this.service.conditions( req );
         let entities = pagination.find( conditions , req.query);
         let data = {};
         entities.then( (result : {rows : any, count :number,pagination:any}) => {
-
             data[this.entities_name] = result.rows;
             data["page"] = result.pagination;
             if(this.isXhr(req)){
@@ -38,7 +51,7 @@ export class router extends app_router {
             }
             // for rows
             this.setData(data);
-            this.render(req,res,"index");
+            this.render(req,res,"vue");
         }).catch((error) => { 
             data[this.entities_name] = {};
             if(this.isXhr(req)){
@@ -47,7 +60,7 @@ export class router extends app_router {
                 return;
             }
             this.setData(data);
-            this.render(req,res,"index");
+            this.render(req,res,"vue");
         })
     }
 
@@ -60,19 +73,30 @@ export class router extends app_router {
             data[ this.entity_name  ] = req.body;
         }
         this.setData(data);
-        this.render( req , res , "add");
+        this.render( req , res , "vue");
     }
     
     private view = (req:express.Request,res:express.Response,next:express.NextFunction) => {
         let model = this.model;
         model.findById( req.params.id ).then((result) => {
             if(!result){
-                res.redirect(`/${this.entities_name}`);
+                throw Error;
+            }
+            if(this.isXhr(req)){
+                res.status(201);
+                res.json(result);
+                return;
             }
             let data = {};
             data[this.entity_name] = result.dataValues; 
             this.setData(data);
-            this.render( req , res , "view");
+            this.render( req , res , "vue");
+        }).catch((res) => {
+            if(this.isXhr(req)){
+                res.status(401);
+                return;
+            }
+            res.redirect(`/${this.entities_name}`);
         })
     }
 
@@ -85,7 +109,7 @@ export class router extends app_router {
             let data = {};
             data[this.entity_name] = result.dataValues;
             this.setData(data);
-            this.render( req , res , "edit");
+            this.render( req , res , "vue");
         })
     }
     

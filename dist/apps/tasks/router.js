@@ -13,6 +13,19 @@ class router extends router_1.router {
             this.csrfReady(req);
         };
         this.search = (req, res, next) => {
+            const Vue = require('vue');
+            const app = new Vue({
+                template: `<div>Hello World</div>`
+            });
+            // ステップ 2: レンダラを作成
+            const renderer = require('vue-server-renderer').createRenderer();
+            // ステップ 3: Vue インスタンスを HTML に描画
+            renderer.renderToString(app, (err, html) => {
+                if (err)
+                    throw err;
+                console.log(html);
+                // => <div data-server-rendered="true">hello world</div>
+            });
             let pagination = this.service.pagination();
             let conditions = this.service.conditions(req);
             let entities = pagination.find(conditions, req.query);
@@ -27,7 +40,7 @@ class router extends router_1.router {
                 }
                 // for rows
                 this.setData(data);
-                this.render(req, res, "index");
+                this.render(req, res, "vue");
             }).catch((error) => {
                 data[this.entities_name] = {};
                 if (this.isXhr(req)) {
@@ -36,7 +49,7 @@ class router extends router_1.router {
                     return;
                 }
                 this.setData(data);
-                this.render(req, res, "index");
+                this.render(req, res, "vue");
             });
         };
         this.add = (req, res, next) => {
@@ -48,18 +61,29 @@ class router extends router_1.router {
                 data[this.entity_name] = req.body;
             }
             this.setData(data);
-            this.render(req, res, "add");
+            this.render(req, res, "vue");
         };
         this.view = (req, res, next) => {
             let model = this.model;
             model.findById(req.params.id).then((result) => {
                 if (!result) {
-                    res.redirect(`/${this.entities_name}`);
+                    throw Error;
+                }
+                if (this.isXhr(req)) {
+                    res.status(201);
+                    res.json(result);
+                    return;
                 }
                 let data = {};
                 data[this.entity_name] = result.dataValues;
                 this.setData(data);
-                this.render(req, res, "view");
+                this.render(req, res, "vue");
+            }).catch((res) => {
+                if (this.isXhr(req)) {
+                    res.status(401);
+                    return;
+                }
+                res.redirect(`/${this.entities_name}`);
             });
         };
         this.edit = (req, res, next) => {
@@ -71,7 +95,7 @@ class router extends router_1.router {
                 let data = {};
                 data[this.entity_name] = result.dataValues;
                 this.setData(data);
-                this.render(req, res, "edit");
+                this.render(req, res, "vue");
             });
         };
         this.delete = (req, res) => {
