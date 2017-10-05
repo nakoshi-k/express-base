@@ -40,7 +40,6 @@ export class users_router extends router {
     }
 
     private add = (req:express.Request, res:express.Response, next:express.NextFunction) => {
-        console.log(req.body);
         //スキーマを取得してセットする。
         let data = {};
         data[ this.entity_name  ] = {};

@@ -4,7 +4,7 @@
   <div class="wrap container">
     <div class="row">
       <router-view name="sub"></router-view>
-      <router-view></router-view>
+      <router-view name="main"></router-view>
     </div>
   </div>
 </div>
@@ -12,6 +12,17 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
+
+Component.registerHooks([
+  'beforeRouteEnter',
+  'beforeRouteLeave',
+  'asyncData',
+  'fetch',
+  'middleware',
+  'layout',
+  'transition',
+  'scrollToTop'
+])
 
 @Component({
   name: 'app'

@@ -103,11 +103,9 @@ umbrellajs_1.u(".xhr-post").on("click", function (event) {
     let selector = umbrellajs_1.u(this).attr("data-target");
     let xhr = new xhrPost(selector);
     xhr.success = (res) => {
-        console.log(res);
         return;
     };
     xhr.faild = (res) => {
-        console.log(res);
         return;
     };
     xhr.error = (res) => {

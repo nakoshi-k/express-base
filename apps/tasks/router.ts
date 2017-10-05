@@ -5,9 +5,13 @@ import * as helpers  from "../../base/helper";
 import {input_error} from "../../base/core";
 import * as Vue from "vue";
 import * as Router from "vue-router";
+import * as Request from "request";
+
 Vue.use(Router);
+
 import * as VueRender from "vue-server-renderer";
 import {default as BundleServer}  from "./bundle-server";
+
 export class router extends app_router {
     public name = "tasks";
     public service:service;
@@ -47,8 +51,17 @@ export class router extends app_router {
     }
 
     private vue = (req : express.Request,res: express.Response, next : express.NextFunction) => {
-        const context = { url: `/${this.name}${req.url}` };
-        console.log(req.url);
+
+        const context = {
+            url: `/${this.name}${req.url}`,
+            serverOptions : {
+                host : req.protocol + '://' + req.headers.host ,
+                entities : "tasks",
+                entity : "task",
+                request : Request
+            }
+        };
+
         this.ssr(context).then(ssr => {
             this.setData( {ssr : ssr} );
             this.render( req , res ,"vue");
@@ -62,7 +75,6 @@ export class router extends app_router {
     }
 
     private search = (req : express.Request,res: express.Response, next : express.NextFunction) => {
-        console.log(123);
         let pagination = this.service.pagination();
         let conditions = this.service.conditions( req );
         let entities = pagination.find( conditions , req.query);

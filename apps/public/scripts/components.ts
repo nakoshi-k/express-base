@@ -120,12 +120,10 @@ u(".xhr-post").on( "click" , function(event){
     let selector = u(this).attr("data-target");
     let xhr = new xhrPost( selector ); 
     xhr.success = (res:JSON) => {
-        console.log(res);
         return;
     }
     
     xhr.faild = (res:JSON) => {
-        console.log(res);
         return;
     }
 

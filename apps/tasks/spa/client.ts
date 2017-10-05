@@ -1,3 +1,10 @@
 import {createApp} from './app';
-const {app, router} = createApp();
+let domain = {
+    host:"",
+    entities:"tasks",
+    entity : "task",
+    request : {}
+}
+const {app, router,store} = createApp(domain);
+
 app.$mount("#application");

@@ -5,6 +5,7 @@ const service_1 = require("./service");
 const helpers = require("../../base/helper");
 const Vue = require("vue");
 const Router = require("vue-router");
+const Request = require("request");
 Vue.use(Router);
 const VueRender = require("vue-server-renderer");
 const bundle_server_1 = require("./bundle-server");
@@ -18,8 +19,15 @@ class router extends router_1.router {
             this.csrfReady(req);
         };
         this.vue = (req, res, next) => {
-            const context = { url: `/${this.name}${req.url}` };
-            console.log(req.url);
+            const context = {
+                url: `/${this.name}${req.url}`,
+                serverOptions: {
+                    host: req.protocol + '://' + req.headers.host,
+                    entities: "tasks",
+                    entity: "task",
+                    request: Request
+                }
+            };
             this.ssr(context).then(ssr => {
                 this.setData({ ssr: ssr });
                 this.render(req, res, "vue");
@@ -32,7 +40,6 @@ class router extends router_1.router {
             });
         };
         this.search = (req, res, next) => {
-            console.log(123);
             let pagination = this.service.pagination();
             let conditions = this.service.conditions(req);
             let entities = pagination.find(conditions, req.query);

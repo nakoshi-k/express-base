@@ -11,7 +11,7 @@
     "build:vue:client": "webpack --config apps/tasks/webpack.vue.client.config.js",
     "build:vue:server": "webpack --config apps/tasks/webpack.vue.server.config.js",
     "build:tsc": "tsc",
-    "watch:vue": "npm-run-all -p \"build:vue:client -- -w\" \"build:vue:server -- -w\" " ,
+    "watch:vue": "npm-run-all -p \"build:vue:client -- -w\" \"build:vue:server -- -w\" ",
     "watch:stylus": "chokidar \"apps/public/stylesheets/**/*.styl\" --command \"npm run build:stylus\"",
     "watch:scripts": "npm run build:scripts -- -w",
     "watch:scripts:vue": "npm run build:scripts:vue -- -w",
@@ -41,6 +41,7 @@
     "morgan": "^1.7.0",
     "mysql": "^2.14.1",
     "mysql2": "^1.4.2",
+    "node-fetch": "^1.7.3",
     "node-uuid": "^1.4.8",
     "passport": "^0.4.0",
     "reflect-metadata": "^0.1.10",
@@ -55,9 +56,11 @@
     "umbrellajs": "^2.9.0",
     "vue": "^2.4.4",
     "vue-class-component": "^5.0.2",
+    "vue-router": "^2.7.0",
     "vue-server-renderer": "^2.4.4",
     "vue-style-loader": "^3.0.3",
     "vuex": "^2.4.1",
+    "vuex-router-sync": "^4.3.2",
     "webpack": "^3.6.0"
   },
   "devDependencies": {
