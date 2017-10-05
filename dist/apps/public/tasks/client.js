@@ -10478,8 +10478,6 @@ function createRouter(options) {
         routes: [
             { path: "/" + opt.entities + "/", components: { main: Page_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
             { path: "/" + opt.entities + "/add", components: { main: Add_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
-            { path: "/" + opt.entities + "/:id", components: { main: Page_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
-            { path: "/" + opt.entities + "/:id/edit", components: { main: Page_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
         ]
     });
 }
@@ -14460,7 +14458,9 @@ var Page = /** @class */ (function (_super) {
         configurable: true
     });
     Page = __decorate([
-        vue_class_component_1.default({})
+        vue_class_component_1.default({
+            name: "Page"
+        })
     ], Page);
     return Page;
 }(vue_1.default));
@@ -14477,12 +14477,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "resource column column-75" },
-    [
-      _c("h2", [_vm._v("Page")]),
-      _vm._v(" "),
+  return _c("div", { staticClass: "resource column column-75" }, [
+    _c("h2", [_vm._v("aaa")]),
+    _vm._v(" "),
+    _c(
+      "div",
       _vm._l(_vm.tasks, function(task) {
         return _c(
           "div",
@@ -14506,9 +14505,8 @@ var render = function() {
           1
         )
       })
-    ],
-    2
-  )
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -14834,7 +14832,7 @@ var Sub = /** @class */ (function (_super) {
     });
     Sub = __decorate([
         vue_class_component_1.default({
-            name: 'Add'
+            name: 'Sub'
         })
     ], Sub);
     return Sub;
@@ -14997,9 +14995,10 @@ vue_1.default.mixin({
                 route: this.$route
             });
         }
-    },
+    }
+});
+vue_1.default.mixin({
     beforeRouteUpdate: function (to, from, next) {
-        console.log(23);
         var asyncData = this.$options.asyncData;
         if (asyncData) {
             asyncData({
@@ -15150,7 +15149,7 @@ var App = /** @class */ (function (_super) {
     }
     App = __decorate([
         vue_class_component_1.default({
-            name: 'app'
+            name: 'App'
         })
     ], App);
     return App;

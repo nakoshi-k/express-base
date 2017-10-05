@@ -1,10 +1,12 @@
 <template>
 <div class="resource column column-75">
-<h2>Page</h2>
-<div v-for="task in tasks">
-<h3><router-link :to="view(task.id)">{{ task.title }}</router-link></h3>
-<router-link :to="edit(task.id)" class="button small">edit</router-link>
-</div>
+  <h2>aaa</h2>
+  <div>
+    <div v-for="task in tasks">
+    <h3><router-link :to="view(task.id)">{{ task.title }}</router-link></h3>
+    <router-link :to="edit(task.id)" class="button small">edit</router-link>
+    </div>
+  </div>
 </div>
 </template>
 
@@ -23,13 +25,17 @@ Component.registerHooks([
   'scrollToTop'
 ])
 
-@Component({})
+@Component({
+  name : "Page"
+})
 
 export default class Page extends Vue {
 
   asyncData ({ store, route }) {
     return store.dispatch('fetchEntities');
   }
+
+
 
   view(id){
     return `/tasks/${id}`;
@@ -38,7 +44,6 @@ export default class Page extends Vue {
   edit(id){
     return `/tasks/${id}/edit`;
   }
-
   get tasks (){
     return this.$store.state.tasks;
   }   

@@ -15,8 +15,6 @@ function createRouter(options = Interface_1.createOptions) {
         routes: [
             { path: `/${opt.entities}/`, components: { main: Page_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
             { path: `/${opt.entities}/add`, components: { main: Add_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
-            { path: `/${opt.entities}/:id`, components: { main: Page_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
-            { path: `/${opt.entities}/:id/edit`, components: { main: Page_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
         ]
     });
 }

@@ -1161,7 +1161,9 @@
             }
         };
         Page = __decorate([
-            __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({})
+            __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
+                name: "Page"
+            })
         ], Page);
         /* harmony default export */ __webpack_exports__["a"] = (Page);
         /***/ 
@@ -1310,8 +1312,8 @@
             var _h = _vm.$createElement;
             var _c = _vm._self._c || _h;
             return _c("div", { staticClass: "resource column column-75" }, [
-                _vm._ssrNode("<h2>Page</h2> "),
-                _vm._l(_vm.tasks, function (task) {
+                _vm._ssrNode("<h2>aaa</h2> "),
+                _vm._ssrNode("<div>", "</div>", _vm._l(_vm.tasks, function (task) {
                     return _vm._ssrNode("<div>", "</div>", [
                         _vm._ssrNode("<h3>", "</h3>", [
                             _c("router-link", { attrs: { to: _vm.view(task.id) } }, [
@@ -1319,9 +1321,12 @@
                             ])
                         ], 1),
                         _vm._ssrNode(" "),
-                        _c("router-link", { staticClass: "button small", attrs: { to: _vm.edit(task.id) } }, [_vm._v("edit")])
+                        _c("router-link", {
+                            staticClass: "button small",
+                            attrs: { to: _vm.edit(task.id) }
+                        }, [_vm._v("edit")])
                     ], 2);
-                })
+                }))
             ], 2);
         };
         var staticRenderFns = [];
@@ -1418,7 +1423,7 @@
         };
         Sub = __decorate([
             __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
-                name: 'Add'
+                name: 'Sub'
             })
         ], Sub);
         /* harmony default export */ __webpack_exports__["a"] = (Sub);
@@ -1563,9 +1568,10 @@
                         route: this.$route
                     });
                 }
-            },
+            }
+        });
+        __WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin({
             beforeRouteUpdate(to, from, next) {
-                console.log(23);
                 const { asyncData } = this.$options;
                 if (asyncData) {
                     asyncData({
@@ -1647,7 +1653,7 @@
         };
         App = __decorate([
             __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
-                name: 'app'
+                name: 'App'
             })
         ], App);
         /* harmony default export */ __webpack_exports__["a"] = (App);
@@ -1787,8 +1793,6 @@
                 routes: [
                     { path: `/${opt.entities}/`, components: { main: __WEBPACK_IMPORTED_MODULE_3__vue_Page_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_2__vue_Navi_vue__["a" /* default */], sub: __WEBPACK_IMPORTED_MODULE_4__vue_Sub_vue__["a" /* default */] } },
                     { path: `/${opt.entities}/add`, components: { main: __WEBPACK_IMPORTED_MODULE_5__vue_Add_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_2__vue_Navi_vue__["a" /* default */], sub: __WEBPACK_IMPORTED_MODULE_4__vue_Sub_vue__["a" /* default */] } },
-                    { path: `/${opt.entities}/:id`, components: { main: __WEBPACK_IMPORTED_MODULE_3__vue_Page_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_2__vue_Navi_vue__["a" /* default */], sub: __WEBPACK_IMPORTED_MODULE_4__vue_Sub_vue__["a" /* default */] } },
-                    { path: `/${opt.entities}/:id/edit`, components: { main: __WEBPACK_IMPORTED_MODULE_3__vue_Page_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_2__vue_Navi_vue__["a" /* default */], sub: __WEBPACK_IMPORTED_MODULE_4__vue_Sub_vue__["a" /* default */] } },
                 ]
             });
         }

@@ -22,7 +22,7 @@ Component.registerHooks([
 ])
 
 @Component({
-  name: 'Add'
+  name: 'Sub'
 })
 export default class Sub extends Vue {
   get domain (){

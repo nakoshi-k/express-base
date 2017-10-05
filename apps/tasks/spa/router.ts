@@ -15,8 +15,8 @@ export function createRouter(options : createOptionsInterFace = createOptions){
         routes: [
             { path: `/${opt.entities}/`, components: { main : Page , navi : Navi ,sub : Sub } } as RouteConfig,
             { path: `/${opt.entities}/add`, components: { main : Add , navi : Navi ,sub : Sub } } as RouteConfig,
-            { path: `/${opt.entities}/:id`, components: { main : Page , navi : Navi ,sub : Sub } } as RouteConfig,
-            { path: `/${opt.entities}/:id/edit`, components: { main : Page , navi : Navi ,sub : Sub } } as RouteConfig,
+            //{ path: `/${opt.entities}/:id`, components: { main : Page , navi : Navi ,sub : Sub } } as RouteConfig,
+            //{ path: `/${opt.entities}/:id/edit`, components: { main : Page , navi : Navi ,sub : Sub } } as RouteConfig,
         ]
     })
 }

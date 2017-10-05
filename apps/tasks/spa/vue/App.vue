@@ -25,7 +25,7 @@ Component.registerHooks([
 ])
 
 @Component({
-  name: 'app'
+  name: 'App'
 })
 export default class App extends Vue {
 
