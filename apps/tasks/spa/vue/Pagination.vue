@@ -33,7 +33,11 @@ let bq = new build_query();
 })
 
 export default class Pagintaion extends Vue {
-    pagination;
+    pagination:{
+      totalPage:number,
+      currentPage:number,
+      queryPrams:{string}
+    };
     domain:String;
     numbers = [];
     
@@ -64,7 +68,7 @@ export default class Pagintaion extends Vue {
     format( number : number ) {
       let query = this.pagination.queryPrams;
       let httpQuery = bq.http(query)
-      return `/${this.domain}/page/` + number + "/" + httpQuery 
+      return `/${this.domain}/page/${number}/${httpQuery}`
     }
 
 

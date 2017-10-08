@@ -1706,7 +1706,7 @@ let Pagintaion = class Pagintaion extends __WEBPACK_IMPORTED_MODULE_0_vue___defa
     format(number) {
         let query = this.pagination.queryPrams;
         let httpQuery = bq.http(query);
-        return `/${this.domain}/page/` + number + "/" + httpQuery;
+        return `/${this.domain}/page/${number}/${httpQuery}`;
     }
     mounted() {
         this.page();

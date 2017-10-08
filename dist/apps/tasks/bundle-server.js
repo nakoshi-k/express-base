@@ -1497,7 +1497,7 @@
             format(number) {
                 let query = this.pagination.queryPrams;
                 let httpQuery = bq.http(query);
-                return `/${this.domain}/page/` + number + "/" + httpQuery;
+                return `/${this.domain}/page/${number}/${httpQuery}`;
             }
             mounted() {
                 this.page();
