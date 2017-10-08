@@ -3,9 +3,7 @@
   <ul class="pagination-list">
     <li v-if="show.first" @click="move"><router-link :to="first">first</router-link></li>
     <li v-if="show.prev" @click="move"><router-link :to="prev">prev</router-link></li>
-    <li v-for="list in numbers" @click="move" >
-       <router-link :to="list.url">{{list.num}}</router-link>
-    </li>
+    <li v-for="list in numbers" @click="move" ><router-link :to="list.url">{{list.num}}</router-link></li>
     <li v-if="show.next" @click="move"><router-link :to="next">next</router-link></li>
     <li v-if="show.last" @click="move"><router-link :to="last">last</router-link></li>
   </ul>
