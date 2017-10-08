@@ -2,12 +2,12 @@ export interface createOptionsInterFace{
     host : string;
     entities: string;
     entity : string;
-    request : any;
+    server: any;
 }
 
 export let createOptions = {
     host : "",
     entities : "",
     entity : "",
-    request:{}
+    server : { request : {} },
 }

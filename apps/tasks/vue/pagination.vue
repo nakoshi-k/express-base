@@ -31,9 +31,13 @@ export default class pagintaion extends Vue {
     mounted(){
         this.page();
     }
-    numbers = [];
+    ...mapGetters([
+      'domain',
+    ])
 
     number(numbers,pagination){
+      console.log(12);
+
       let httpQuery = bq.http(pagination.queryPrams);
       for(let i = 1;i <= pagination.totalPage ;i++){
         numbers.push({ url : "/tasks/page/" + i + "/" + httpQuery , num : i });

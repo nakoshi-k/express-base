@@ -11,8 +11,8 @@ class Internal {
                 'Content-Type': 'application/json'
             }
         };
-        this.name = "";
-        this.names = "";
+        this.entity_name = "";
+        this.entities_name = "";
         this.host = "";
         this.client = (url, options) => {
             let client = (resolve, reject) => {
@@ -50,24 +50,28 @@ class Internal {
             };
             return new Promise(server);
         };
-        this.entities = (query = { page: 1, search: "" }) => {
-            let url = `/${this.names}/page/${query.page}${query.search}`;
+        this.paginate = (query = { page: 1, search: "" }) => {
+            let url = `/${this.entities_name}/page/${query.page}${query.search}`;
             if (typeof window === "undefined") {
                 return this.server(url, {});
             }
             return this.client(url, {});
         };
         this.entity = (query = { page: 1, search: "" }) => {
-            let url = `/${this.names}/page/${query.page}${query.search}`;
+            let url = `/${this.entity_name}/page/${query.page}${query.search}`;
             if (typeof window === "undefined") {
                 return this.server(url, {});
             }
             return this.client(url, {});
         };
-        this.name = options.entity;
-        this.names = options.entities;
+        this.insert = () => {
+        };
+        this.delete = () => {
+        };
+        this.entity_name = options.entity;
+        this.entities_name = options.entities;
         this.host = options.host;
-        this.request = options.request;
+        this.request = options.server.request;
     }
 }
 exports.Internal = Internal;

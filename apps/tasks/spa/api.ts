@@ -9,16 +9,16 @@ export class Internal{
             'Content-Type': 'application/json'
         }
     }
-    private name = "";
-    private names  = "";
+    private entity_name = "";
+    private entities_name = "";
     private host = "";
     private request:Request;
 
     constructor( options : createOptionsInterFace = createOptions){
-        this.name = options.entity;
-        this.names = options.entities;
+        this.entity_name = options.entity;
+        this.entities_name = options.entities;
         this.host = options.host;
-        this.request = options.request;
+        this.request = options.server.request;
     }
 
     private client = (url :string ,options : {} ) =>{
@@ -58,8 +58,8 @@ export class Internal{
         return new Promise(server);
     }
 
-    public entities = (query = {page : 1, search : ""}) => {
-        let url = `/${this.names}/page/${query.page}${query.search}`;
+    public paginate = (query = {page : 1, search : ""}) => {
+        let url = `/${this.entities_name}/page/${query.page}${query.search}`;
         if(typeof window === "undefined"){
             return this.server(url,{});
         }
@@ -67,11 +67,19 @@ export class Internal{
     }
 
     public entity = (query = {page : 1, search : ""}) => {
-        let url = `/${this.names}/page/${query.page}${query.search}`;
+        let url = `/${this.entity_name}/page/${query.page}${query.search}`;
         if(typeof window === "undefined"){
             return this.server(url,{});
         }
         return this.client(url ,{});
     }
+    public insert = () => {
+
+    }
+
+    public delete = () => {
+
+    }    
+
 }
 

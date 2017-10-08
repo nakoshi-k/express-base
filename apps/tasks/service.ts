@@ -10,7 +10,7 @@ export class service extends app_service{
         let search = this.search();
         search.query = req.query;
         search.page = req.params.page;
-        search.limit = 20;
+        search.limit = 5;
         search.append("name",search.like("%{word}%"));
         return search.build();
     }

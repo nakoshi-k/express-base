@@ -16,7 +16,7 @@
     "watch:scripts": "npm run build:scripts -- -w",
     "watch:scripts:vue": "npm run build:scripts:vue -- -w",
     "prebuild": "mkdir -p dist/apps/public/scripts dist/apps/public/stylesheets",
-    "build": "npm-run-all build:tsc build:view build:stylus build:scripts build:vue:client build:scripts:vue:server",
+    "build": "npm-run-all build:tsc build:view build:stylus build:scripts build:vue:client build:vue:server",
     "watch": "npm-run-all -p \"build:tsc -- -w\" \"build:view -- -w -u --no-initial\" watch:stylus watch:scripts watch:vue",
     "dev": "npm-run-all -p watch start browsersync",
     "bake": "node ../ts-curd-generator/dist/cli.js"
@@ -49,6 +49,7 @@
     "riot": "^3.7.0",
     "sequelize": "^3.30.4",
     "sequelize-cli": "^2.8.0",
+    "serialize-javascript": "^1.4.0",
     "serve-favicon": "^2.3.2",
     "ts-loader": "^2.3.7",
     "typescript": "^2.5.2",

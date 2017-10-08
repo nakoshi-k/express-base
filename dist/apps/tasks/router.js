@@ -6,6 +6,7 @@ const helpers = require("../../base/helper");
 const Vue = require("vue");
 const Router = require("vue-router");
 const Request = require("request");
+const serialize = require("serialize-javascript");
 Vue.use(Router);
 const VueRender = require("vue-server-renderer");
 const bundle_server_1 = require("./bundle-server");
@@ -23,9 +24,9 @@ class router extends router_1.router {
                 url: `/${this.name}${req.url}`,
                 serverOptions: {
                     host: req.protocol + '://' + req.headers.host,
-                    entities: "tasks",
-                    entity: "task",
-                    request: Request
+                    entities: this.entities_name,
+                    entity: this.entity_name,
+                    server: { request: Request }
                 }
             };
             this.ssr(context).then(ssr => {
@@ -40,89 +41,38 @@ class router extends router_1.router {
             });
         };
         this.search = (req, res, next) => {
-            const Vue = require('vue');
-            const app = new Vue({
-                template: `<div>Hello World</div>`
-            });
-            // ステップ 2: レンダラを作成
-            const renderer = require('vue-server-renderer').createRenderer();
-            // ステップ 3: Vue インスタンスを HTML に描画
-            renderer.renderToString(app, (err, html) => {
-                if (err)
-                    throw err;
-                console.log(html);
-                // => <div data-server-rendered="true">hello world</div>
-            });
             let pagination = this.service.pagination();
             let conditions = this.service.conditions(req);
             let entities = pagination.find(conditions, req.query);
             let data = {};
             entities.then((result) => {
+                console.log(85);
                 data[this.entities_name] = result.rows;
                 data["page"] = result.pagination;
-                if (this.isXhr(req)) {
-                    res.status(201);
-                    res.json(data);
-                    return;
-                }
-                // for rows
-                this.setData(data);
-                this.render(req, res, "vue");
+                res.status(201);
+                res.json(data);
             }).catch((error) => {
                 data[this.entities_name] = {};
-                if (this.isXhr(req)) {
-                    res.status(400);
-                    res.json(data);
-                    return;
-                }
-                this.setData(data);
-                this.render(req, res, "vue");
+                res.status(400);
+                res.json(data);
             });
-        };
-        this.add = (req, res, next) => {
-            console.log(req.body);
-            //スキーマを取得してセットする。
-            let data = {};
-            data[this.entity_name] = {};
-            if (req.body) {
-                data[this.entity_name] = req.body;
-            }
-            this.setData(data);
-            this.render(req, res, "vue");
         };
         this.view = (req, res, next) => {
             let model = this.model;
+            let data = {};
             model.findById(req.params.id).then((result) => {
                 if (!result) {
                     throw Error;
                 }
-                if (this.isXhr(req)) {
-                    res.status(201);
-                    res.json(result);
-                    return;
-                }
-                let data = {};
-                data[this.entity_name] = result.dataValues;
-                this.setData(data);
-                this.render(req, res, "vue");
+                res.status(201);
+                res.json(result);
             }).catch((res) => {
-                if (this.isXhr(req)) {
-                    res.status(401);
-                    return;
-                }
-                res.redirect(`/${this.entities_name}`);
-            });
-        };
-        this.edit = (req, res, next) => {
-            let model = this.model;
-            model.findById(req.params.id).then((result) => {
-                if (!result) {
-                    res.redirect(`/${this.entities_name}`);
-                }
-                let data = {};
-                data[this.entity_name] = result.dataValues;
-                this.setData(data);
-                this.render(req, res, "vue");
+                res.status(401);
+                res.json(data);
+            }).catch((error) => {
+                data[this.entities_name] = {};
+                res.status(400);
+                res.json(data);
             });
         };
         this.delete = (req, res) => {
@@ -179,6 +129,7 @@ class router extends router_1.router {
         let server = bundle_server_1.default;
         let ssr = (resolve, reject) => {
             server(context).then((app) => {
+                let stateTag = `<script>window.__INITIAL_STATE__=${serialize(app.$store.state, { isJSON: true })}</script>`;
                 renderer.renderToString(app, (err, html) => {
                     if (err) {
                         if (err.code === 404) {
@@ -188,7 +139,7 @@ class router extends router_1.router {
                             reject(500);
                         }
                     }
-                    resolve(html);
+                    resolve(html + stateTag);
                 });
             });
         };

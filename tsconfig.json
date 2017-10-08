@@ -9,7 +9,11 @@
         "watch" : false,
         "allowJs" : true,
         "pretty" : true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": "./",
+        "paths": {
+            "@flat" : [ "node_modules/flatpickr/dist/plugins"]
+        }
     },
     "include": [
         "**/*.ts"
