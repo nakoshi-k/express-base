@@ -1,6 +1,8 @@
 <template>
 <div class="over-lay">
 オーバーレイ
+<modal><modal>
+<loading><loading>
 </div>
 </template>
 

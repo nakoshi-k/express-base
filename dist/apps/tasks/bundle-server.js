@@ -4177,6 +4177,7 @@
             let state = {
                 domain: options.entities,
                 orverLay: true,
+                modal: true,
                 indicator: {
                     status: true,
                     complate: 0
@@ -4472,15 +4473,7 @@
     /* 40 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        var render = function () {
-            var _vm = this;
-            var _h = _vm.$createElement;
-            var _c = _vm._self._c || _h;
-            return _c("div", { staticClass: "over-lay" }, [_vm._ssrNode("\nオーバーレイ\n")]);
-        };
-        var staticRenderFns = [];
-        render._withStripped = true;
-        var esExports = { render: render, staticRenderFns: staticRenderFns };
+        var esExports = { render: function () { }, staticRenderFns: [] };
         /* harmony default export */ __webpack_exports__["a"] = (esExports);
         /***/ 
     })
