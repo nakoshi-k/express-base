@@ -4047,7 +4047,6 @@ __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
 ]);
 let Page = class Page extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
     asyncData({ store, route }) {
-        console.log(route);
         return store.dispatch('fetchEntities', route);
     }
     get pagination() {
@@ -4766,14 +4765,13 @@ function createStore(options = __WEBPACK_IMPORTED_MODULE_3__Interface__["a" /* c
         server: { request: options.server.request },
     });
     let state = {
-        test: "test",
         domain: options.entities,
         tasks: [],
         task: {},
         page: {
-            totalPage: 0,
-            currentPage: 0,
-            queryPrams: null
+            totalPage: 1,
+            currentPage: 1,
+            queryPrams: {}
         }
     };
     let actions = {
@@ -4783,6 +4781,16 @@ function createStore(options = __WEBPACK_IMPORTED_MODULE_3__Interface__["a" /* c
             });
         },
         fetchEntity: ({ commit }, route) => {
+            return api.entity(route).then((entity) => {
+                commit("setEntity", entity);
+            });
+        },
+        insertEntity: ({ commit }, route) => {
+            return api.entity(route).then((entity) => {
+                commit("setEntity", entity);
+            });
+        },
+        saveEntity: ({ commit }, route) => {
             return api.entity(route).then((entity) => {
                 commit("setEntity", entity);
             });
@@ -5118,7 +5126,7 @@ var render = function() {
     _vm._ssrNode(
       "<h2>Edit</h2> <form" +
         _vm._ssrAttr("action", _vm.action) +
-        ' method="put"><input type="hidden" name="id"' +
+        ' method="post"><input type="hidden" name="id"' +
         _vm._ssrAttr("value", _vm.task.id) +
         '> <input type="hidden" name="_csrf"' +
         _vm._ssrAttr("value", _vm.token) +

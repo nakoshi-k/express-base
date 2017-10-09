@@ -35,7 +35,6 @@ Component.registerHooks([
 export default class Page extends Vue {
   
   asyncData ({ store, route }) {
-    console.log(route);
     return store.dispatch('fetchEntities' ,route);
   }
   

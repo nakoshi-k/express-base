@@ -13,14 +13,13 @@ function createStore(options = Interface_1.createOptions) {
         server: { request: options.server.request },
     });
     let state = {
-        test: "test",
         domain: options.entities,
         tasks: [],
         task: {},
         page: {
-            totalPage: 0,
-            currentPage: 0,
-            queryPrams: null
+            totalPage: 1,
+            currentPage: 1,
+            queryPrams: {}
         }
     };
     let actions = {
@@ -30,6 +29,16 @@ function createStore(options = Interface_1.createOptions) {
             });
         },
         fetchEntity: ({ commit }, route) => {
+            return api.entity(route).then((entity) => {
+                commit("setEntity", entity);
+            });
+        },
+        insertEntity: ({ commit }, route) => {
+            return api.entity(route).then((entity) => {
+                commit("setEntity", entity);
+            });
+        },
+        saveEntity: ({ commit }, route) => {
             return api.entity(route).then((entity) => {
                 commit("setEntity", entity);
             });

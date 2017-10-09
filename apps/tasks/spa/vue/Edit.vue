@@ -1,7 +1,7 @@
 <template>
 <div class="resource column column-75">
   <h2>Edit</h2>
-  <form :action="action" method="put">
+  <form :action="action" method="post">
     <input type="hidden" name="id" :value="task.id"  @change="updateEntity">
     <input type="hidden" name="_csrf" :value="token">
     <input type="hidden" name="_method" value="put">

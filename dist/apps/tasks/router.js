@@ -95,6 +95,10 @@ class router extends router_1.router {
             });
         };
         this.insert = (req, res, next) => {
+            if (!this.isXhr(req)) {
+                this.vue(req, res, next);
+                return;
+            }
             let entity = this.model.build(req.body);
             entity.save().then((result) => {
                 res.status(201);
@@ -106,6 +110,10 @@ class router extends router_1.router {
             });
         };
         this.update = (req, res, next) => {
+            if (!this.isXhr(req)) {
+                this.vue(req, res, next);
+                return;
+            }
             let model = this.model;
             model.findById(req.params.id).then((entity) => {
                 entity.update(req.body).then((result) => {

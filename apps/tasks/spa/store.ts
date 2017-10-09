@@ -14,14 +14,13 @@ export function createStore(options : createOptionsInterFace = createOptions){
   });
 
   let state = {
-      test : "test",
       domain : options.entities,
       tasks : [],
       task:{},
       page:{
-        totalPage: 0,
-        currentPage: 0,
-        queryPrams: null 
+        totalPage: 1,
+        currentPage: 1,
+        queryPrams: {} 
       }
   };
 
@@ -32,6 +31,16 @@ export function createStore(options : createOptionsInterFace = createOptions){
       })
     },
     fetchEntity : ( {commit},route) => {
+      return  api.entity(route).then((entity) => {
+          commit("setEntity",entity);
+      })
+    },
+    insertEntity : ( {commit}, route) => {
+      return api.entity(route).then((entity) => {
+          commit("setEntity",entity);
+      })
+    },
+    saveEntity : ( {commit}, route) => {
       return  api.entity(route).then((entity) => {
           commit("setEntity",entity);
       })
@@ -51,7 +60,6 @@ export function createStore(options : createOptionsInterFace = createOptions){
     }
   }
 
-
   let getters = {
     domain : (state) => {
       return state.domain;
@@ -65,7 +73,6 @@ export function createStore(options : createOptionsInterFace = createOptions){
       return csrfToken;
     }
   }
-
 
   let vuex : Vuex.StoreOptions<any> =  {
     state : state ,

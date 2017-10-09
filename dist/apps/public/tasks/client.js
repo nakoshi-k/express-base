@@ -14708,7 +14708,6 @@ var Page = /** @class */ (function (_super) {
     }
     Page.prototype.asyncData = function (_a) {
         var store = _a.store, route = _a.route;
-        console.log(route);
         return store.dispatch('fetchEntities', route);
     };
     Object.defineProperty(Page.prototype, "pagination", {
@@ -15667,14 +15666,13 @@ function createStore(options) {
         server: { request: options.server.request },
     });
     var state = {
-        test: "test",
         domain: options.entities,
         tasks: [],
         task: {},
         page: {
-            totalPage: 0,
-            currentPage: 0,
-            queryPrams: null
+            totalPage: 1,
+            currentPage: 1,
+            queryPrams: {}
         }
     };
     var actions = {
@@ -15685,6 +15683,18 @@ function createStore(options) {
             });
         },
         fetchEntity: function (_a, route) {
+            var commit = _a.commit;
+            return api.entity(route).then(function (entity) {
+                commit("setEntity", entity);
+            });
+        },
+        insertEntity: function (_a, route) {
+            var commit = _a.commit;
+            return api.entity(route).then(function (entity) {
+                commit("setEntity", entity);
+            });
+        },
+        saveEntity: function (_a, route) {
             var commit = _a.commit;
             return api.entity(route).then(function (entity) {
                 commit("setEntity", entity);
@@ -16062,7 +16072,7 @@ var render = function() {
   return _c("div", { staticClass: "resource column column-75" }, [
     _c("h2", [_vm._v("Edit")]),
     _vm._v(" "),
-    _c("form", { attrs: { action: _vm.action, method: "put" } }, [
+    _c("form", { attrs: { action: _vm.action, method: "post" } }, [
       _c("input", {
         attrs: { type: "hidden", name: "id" },
         domProps: { value: _vm.task.id },
