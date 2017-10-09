@@ -15,6 +15,11 @@ export function createStore(options : createOptionsInterFace = createOptions){
 
   let state = {
       domain : options.entities,
+      orverLay: true,
+      indicator:{
+        status : true,
+        complate : 0
+      },
       tasks : [],
       task:{},
       page:{

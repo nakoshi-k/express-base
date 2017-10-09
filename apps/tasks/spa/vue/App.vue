@@ -7,11 +7,13 @@
       <router-view name="main"></router-view>
     </div>
   </div>
+  <over-lay></over-lay>
 </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
+import OverLay from './OverLay.vue';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -25,7 +27,10 @@ Component.registerHooks([
 ])
 
 @Component({
-  name: 'App'
+  name: 'App',
+  components:{
+    "over-lay":OverLay
+  }
 })
 export default class App extends Vue {
 

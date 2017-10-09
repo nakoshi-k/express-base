@@ -14,6 +14,11 @@ function createStore(options = Interface_1.createOptions) {
     });
     let state = {
         domain: options.entities,
+        orverLay: true,
+        indicator: {
+            status: true,
+            complate: 0
+        },
         tasks: [],
         task: {},
         page: {

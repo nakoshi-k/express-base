@@ -56,7 +56,6 @@ export default class Page extends Vue {
   }
 
   destroy(id){
-    console.log("destroy");
     return `/tasks/${id}/delete`;
   }
 
