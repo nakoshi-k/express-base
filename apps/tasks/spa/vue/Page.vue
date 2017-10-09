@@ -5,6 +5,7 @@
     <div v-for="task in tasks">
     <h3><router-link :to="view(task.id)">{{ task.title }}</router-link></h3>
     <router-link :to="edit(task.id)" class="button small">edit</router-link>
+    <button @click="destroy(task.id)" class="button small">delete</button>
     </div>
   </div>
   <pagination :pagination="pagination"></pagination>
@@ -54,6 +55,10 @@ export default class Page extends Vue {
     return `/tasks/${id}/edit`;
   }
 
+  destroy(id){
+    console.log("destroy");
+    return `/tasks/${id}/delete`;
+  }
 
   
 }

@@ -2146,3 +2146,15 @@ textarea {
 .wrap {
   padding-top: 7.5rem;
 }
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+.text-medium {
+  font-size: 1.4rem;
+}
+.text-small {
+  font-size: 1rem;
+}

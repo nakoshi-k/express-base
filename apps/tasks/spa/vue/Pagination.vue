@@ -15,7 +15,7 @@
     </ul>
 
   </nav>
-  <div class="text-right"> Page {{pagination.currentPage}} / {{pagination.totalPage}} </div>
+  <div class="text-right text-medium"> Page {{pagination.currentPage}} / {{pagination.totalPage}} </div>
 </div>
 </template>
 
