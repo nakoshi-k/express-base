@@ -6,6 +6,8 @@ const Navi_vue_1 = require("./vue/Navi.vue");
 const Page_vue_1 = require("./vue/Page.vue");
 const Sub_vue_1 = require("./vue/Sub.vue");
 const Add_vue_1 = require("./vue/Add.vue");
+const View_vue_1 = require("./vue/View.vue");
+const Edit_vue_1 = require("./vue/Edit.vue");
 const Interface_1 = require("./Interface");
 vue_1.default.use(vue_router_1.default);
 function createRouter(options = Interface_1.createOptions) {
@@ -13,11 +15,11 @@ function createRouter(options = Interface_1.createOptions) {
     return new vue_router_1.default({
         mode: 'history',
         routes: [
-            { path: `/${opt.entities}/`, components: { main: Page_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
-            { path: `/${opt.entities}/page/:page`, components: { main: Page_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
-            { path: `/${opt.entities}/add`, components: { main: Add_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
-            { path: `/${opt.entities}/:id`, components: { main: Page_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
-            { path: `/${opt.entities}/:id/edit`, components: { main: Page_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
+            { name: "page", path: `/${opt.entities}/page/:page`, components: { main: Page_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
+            { name: "index", path: `/${opt.entities}/page/1`, alias: `/${opt.entities}/` },
+            { name: "add", path: `/${opt.entities}/add`, components: { main: Add_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
+            { name: "view", path: `/${opt.entities}/:id`, components: { main: View_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
+            { name: "edit", path: `/${opt.entities}/:id/edit`, components: { main: Edit_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
         ]
     });
 }

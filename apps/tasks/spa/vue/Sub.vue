@@ -1,7 +1,7 @@
 <template>
 <div class="column column-25">
     <ul>
-        <li><router-link :to="`/${domain}/`">Index</router-link></li>
+        <li><router-link :to="`/${domain}`">Index</router-link></li>
         <li><router-link :to="`/${domain}/add`">Add</router-link></li>
     </ul>
 </div>

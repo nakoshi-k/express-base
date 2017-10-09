@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Interface_1 = require("./Interface");
+const build_query_1 = require("../../../base/sideless/build_query");
 class Internal {
     constructor(options = Interface_1.createOptions) {
         this.options = {
@@ -50,15 +51,17 @@ class Internal {
             };
             return new Promise(server);
         };
-        this.paginate = (query = { page: 1, search: "" }) => {
-            let url = `/${this.entities_name}/page/${query.page}${query.search}`;
+        this.paginate = (route) => {
+            let bq = new build_query_1.build_query();
+            let url = `/${this.entities_name}/${this.routeParse(route)}${bq.http(route.query)}`;
             if (typeof window === "undefined") {
                 return this.server(url, {});
             }
             return this.client(url, {});
         };
-        this.entity = (query = { page: 1, search: "" }) => {
-            let url = `/${this.entity_name}/page/${query.page}${query.search}`;
+        this.entity = (route) => {
+            let id = route.params.id;
+            let url = `/${this.entities_name}/${id}`;
             if (typeof window === "undefined") {
                 return this.server(url, {});
             }
@@ -72,6 +75,14 @@ class Internal {
         this.entities_name = options.entities;
         this.host = options.host;
         this.request = options.server.request;
+    }
+    routeParse(route) {
+        let params = route.params;
+        let paramsStr = "";
+        for (let key in params) {
+            paramsStr = `${key}/${params[key]}`;
+        }
+        return paramsStr;
     }
 }
 exports.Internal = Internal;

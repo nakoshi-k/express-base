@@ -1,4 +1,6 @@
 import {createOptionsInterFace,createOptions} from "./Interface";
+import {build_query} from "../../../base/sideless/build_query";
+
 export class Internal{
     
     private options = {
@@ -58,21 +60,33 @@ export class Internal{
         return new Promise(server);
     }
 
-    public paginate = (query = {page : 1, search : ""}) => {
-        let url = `/${this.entities_name}/page/${query.page}${query.search}`;
+    public routeParse(route){
+        let params = route.params;
+        let paramsStr = "";
+        for(let key in params){
+            paramsStr = `${key}/${params[key]}`
+        }
+        return paramsStr;
+    }
+
+    public paginate = (route) => {
+        let bq = new build_query();
+        let url = `/${this.entities_name}/${this.routeParse(route)}${bq.http(route.query)}`;
         if(typeof window === "undefined"){
             return this.server(url,{});
         }
         return this.client(url ,{});
     }
 
-    public entity = (query = {page : 1, search : ""}) => {
-        let url = `/${this.entity_name}/page/${query.page}${query.search}`;
+    public entity = (route) => {
+        let id = route.params.id;
+        let url = `/${this.entities_name}/${id}`;
         if(typeof window === "undefined"){
             return this.server(url,{});
         }
         return this.client(url ,{});
     }
+
     public insert = () => {
 
     }

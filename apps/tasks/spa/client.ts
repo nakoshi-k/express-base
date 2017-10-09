@@ -7,6 +7,7 @@ let domain = {
     server : { request : {} },
 }
 const {app, router,store} = createApp(domain);
+
 if (window["__INITIAL_STATE__"]) {
     store.replaceState(window["__INITIAL_STATE__"])
 }

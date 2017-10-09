@@ -13,26 +13,51 @@ function createStore(options = Interface_1.createOptions) {
         server: { request: options.server.request },
     });
     let state = {
+        test: "test",
         domain: options.entities,
         tasks: [],
         task: {},
+        page: {
+            totalPage: 0,
+            currentPage: 0,
+            queryPrams: null
+        }
     };
     let actions = {
-        fetchEntities: ({ commit }, query = { page: 1, search: "" }) => {
-            return api.paginate(query).then((paginate) => {
+        fetchEntities: ({ commit }, route) => {
+            return api.paginate(route).then((paginate) => {
                 commit("setEntities", paginate);
             });
-        }
+        },
+        fetchEntity: ({ commit }, route) => {
+            return api.entity(route).then((entity) => {
+                commit("setEntity", entity);
+            });
+        },
     };
     let mutations = {
         setEntities: (state, paginate) => {
             state.tasks = paginate.tasks;
             state.page = paginate.page;
         },
+        setEntity: (state, entity) => {
+            state.task = entity;
+        },
+        updateEntity: (state, kv) => {
+            state.task[kv.key] = kv.value;
+        }
     };
     let getters = {
         domain: (state) => {
             return state.domain;
+        },
+        token: (state) => {
+            if (typeof window === "undefined") {
+                return "";
+            }
+            let body = document.getElementsByTagName("body")[0];
+            let csrfToken = body.attributes["data-csrf-token"].value;
+            return csrfToken;
         }
     };
     let vuex = {

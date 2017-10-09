@@ -51,6 +51,7 @@ export class router extends app_router {
     }
 
     private vue = (req : express.Request,res: express.Response, next : express.NextFunction) => {
+        
         const context = {
             url: `/${this.name}${req.url}`,
             serverOptions : {
@@ -75,6 +76,10 @@ export class router extends app_router {
 
     private search = (req : express.Request,res: express.Response, next : express.NextFunction) => {
 
+        if(!this.isXhr(req)){
+            this.vue( req , res , next );
+            return; 
+        }
 
         let pagination = this.service.pagination();
         let conditions = this.service.conditions( req );
@@ -82,19 +87,25 @@ export class router extends app_router {
         let data = {};
         
         entities.then( (result : {rows : any, count :number,pagination:any}) => {
-            console.log(85);
             data[this.entities_name] = result.rows;
             data["page"] = result.pagination;
             res.status(201);
             res.json(data);
         }).catch((error) => { 
             data[this.entities_name] = {};
+            data["page"] = {};
             res.status(400);
             res.json(data);
         })
     }
    
-    private view = (req:express.Request,res:express.Response,next:express.NextFunction) => {
+    private entity = (req:express.Request,res:express.Response,next:express.NextFunction) => {
+        
+        if(!this.isXhr(req)){
+            this.vue( req , res , next );
+            return; 
+        }
+
         let model = this.model;
         let data = {};
         model.findById( req.params.id ).then((result) => {
@@ -156,7 +167,9 @@ export class router extends app_router {
 
     public bind  = (router : express.Router) : express.Router => {
         let csrfProtection = this.csrfProtection;
+        router.get("/", csrfProtection , this.search);
         router.get("/page/:page", csrfProtection , this.search);
+        router.get("/:id", csrfProtection , this.entity);
         router.get("/*", csrfProtection , this.vue);
         router.post("/",  csrfProtection , this.insert);
         router.put("/:id",csrfProtection,this.update);

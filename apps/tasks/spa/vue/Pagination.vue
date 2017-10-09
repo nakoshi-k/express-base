@@ -1,14 +1,22 @@
 <template>
-<nav class="pagination">
-  <ul class="pagination-list">
-    <li v-if="show.first" @click="move"><router-link :to="first">first</router-link></li>
-    <li v-if="show.prev" @click="move"><router-link :to="prev">prev</router-link></li>
-    <li v-for="list in numbers" @click="move" ><router-link :to="list.url">{{list.num}}</router-link></li>
-    <li v-if="show.next" @click="move"><router-link :to="next">next</router-link></li>
-    <li v-if="show.last" @click="move"><router-link :to="last">last</router-link></li>
-  </ul>
+<div v-if="numbers">
+  <nav class="pagination clearfix">
+    <ul class="pagination-list">
+      <li v-if="special.first">
+        <router-link :to="first.link" :class="first.css">&laquo; First</router-link></li>
+      <li v-if="special.prev">
+        <router-link :to="prev.link" :class="prev.css">&lsaquo; Prev</router-link></li>
+      <li v-for="list in numbers" :class="list.active">
+        <router-link :to="list.link">{{list.num}}</router-link></li>
+      <li v-if="special.prev">
+        <router-link :to="next.link" :class="next.css">Next &rsaquo;</router-link></li>
+      <li v-if="special.prev">
+        <router-link :to="last.link" :class="last.css">Last &raquo;</router-link></li>
+    </ul>
 
-</nav>
+  </nav>
+  <div class="text-right"> Page {{pagination.currentPage}} / {{pagination.totalPage}} </div>
+</div>
 </template>
 
 <script lang="ts">
@@ -33,36 +41,63 @@ let bq = new build_query();
 })
 
 export default class Pagintaion extends Vue {
+  
     pagination:{
       totalPage:number,
       currentPage:number,
       queryPrams:{string}
     };
-    domain:String;
-    numbers = [];
     
-    show = {
-      first : true,
+
+    domain:String;
+    
+    special = {
+      first : true ,
       last : true,
       next : true,
-      prev : true
+      prev : true 
     }
     
     get prev(){
-      return ""
+      let cr = this.pagination.currentPage;
+      let link = ( cr > 1 ) ? this.format(cr -1 ) : this.format(1);
+      let css = (cr === 1 ) ? "disable" : "";
+      return {
+        link : link,
+        css : css 
+      }
     }
     
     get next(){
-      return ""; 
+      let cr = this.pagination.currentPage;
+      let tr = this.pagination.totalPage;
+      let link = ( tr <= cr ) ? this.format(tr) : this.format(cr+1);
+      let css = ( tr <= cr ) ? "disable" : "";
+      return {
+        link : link,
+        css : css 
+      }
     }
 
     get first() {
-      return this.format(1);
+      let cr = this.pagination.currentPage;
+      let link = this.format(1);
+      let css = (cr === 1 ) ? "disable" : "";
+      return {
+        link : link,
+        css : css 
+      }
     }
 
     get last(){
-      let last = this.pagination.totalPage;
-      return this.format(last);
+      let cr = this.pagination.currentPage;
+      let tr = this.pagination.totalPage;
+      let link = this.format(tr);
+      let css = ( tr <= cr ) ? "disable" : "";
+      return {
+        link : link,
+        css : css 
+      }
     }
 
     format( number : number ) {
@@ -72,26 +107,18 @@ export default class Pagintaion extends Vue {
     }
 
 
-    mounted(){
-        this.page();
-    }
 
-    number(numbers){
+    get numbers(){
+
       let total = this.pagination.totalPage;
+      let numbers = [];
       for(let i = 1;i <= total ;i++){
-        numbers.push({ url : this.format(i)  , num : i });
+        let active = ( i === this.pagination.currentPage) ? "active" : "" ;
+        numbers.push({ link : this.format(i)  , num : i ,active : active });
       }
+      return numbers;
     }   
 
-    page(){
-      if(!this.pagination.currentPage){
-        return "";
-      }
-      this.number(this.numbers);
-    }
 
-    move() {
-      this.$emit('movepage');
-    }
 }
 </script>

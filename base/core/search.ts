@@ -4,20 +4,18 @@ export class search{
     private  _query = {};
     private _limit = 10; 
     private _offset = 1; 
+    private _page = 1; 
     
     constructor(query  = {}){
         this.query = query;
         return this;
     }
-    get offset () {
-        return this._offset;
-    }    
-    set offset ( offset : number ) {
-        this._offset = offset;
-    }
+
+    
     get limit () {
         return this._limit;
-    }    
+    }
+
     set limit ( limit: number ) {
         this._limit = limit;
     }
@@ -26,12 +24,14 @@ export class search{
         if(!page){
             page = 1;
         }
-        this.offset = this.limit * (page - 1);
+        this._page = page;
     }
-
-    public build() {
+    private offset(){
+        return ( this._page - 1 ) * this.limit;
+    }
+    public build = () => {
         return {
-            offset : this.offset,
+            offset : this.offset(),
             limit : this.limit,
             where :this._where
         };

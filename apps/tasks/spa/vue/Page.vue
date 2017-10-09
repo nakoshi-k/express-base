@@ -7,7 +7,7 @@
     <router-link :to="edit(task.id)" class="button small">edit</router-link>
     </div>
   </div>
-  <pagination :pagination="pagination" v-on:movepage="reload"></pagination>
+  <pagination :pagination="pagination"></pagination>
 </div>
 </template>
 
@@ -35,11 +35,14 @@ Component.registerHooks([
 export default class Page extends Vue {
   
   asyncData ({ store, route }) {
-    return store.dispatch('fetchEntities');
+    console.log(route);
+    return store.dispatch('fetchEntities' ,route);
   }
+  
   get pagination (){
     return this.$store.state.page;
   }
+  
   get tasks(){
     return this.$store.state.tasks;
   }
@@ -52,9 +55,7 @@ export default class Page extends Vue {
     return `/tasks/${id}/edit`;
   }
 
-  reload(){
 
-  }
   
 }
 </script>

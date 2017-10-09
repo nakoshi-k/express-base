@@ -1,18 +1,16 @@
 <template>
 <div class="resource column column-75">
-  <h2>Add</h2>
-  <form action="./" method="post">
-    <input type="hidden" name="_csrf" :value="token" placeholder="title">
-    <div class="form-item">
-      <label for="title">title</label>
-      <input type="text" name="title" v-model="task.title" placeholder="title">
-    </div>
-    <div class="form-item">
-      <label for="priod">priod</label>
-      <input type="text" name="priod" class="calendar" v-model="task.priod" placeholder="priod">
-    </div>
-    <button type="submit" >submit</button>
-  </form>
+  <h2>View</h2>
+  <h3>Id</h3>
+  <div>{{task.id}}</div>
+  <h3>Title</h3>
+  <div>{{task.title}}</div>
+  <h3>Priod</h3>
+  <div>{{task.priod}}</div>
+  <h3>Created</h3>
+  <div>{{task.created_at}}</div>
+  <h3>Updated</h3>
+  <div>{{task.updated_at}}</div>
 </div>
 </template>
 
@@ -44,10 +42,15 @@ Component.registerHooks([
 })
 
 export default class Add extends Vue {
-  task = {
-    title : "",
-    priod : ""
+    
+  get task(){
+    return this.$store.state.task;
   }
+  
+  asyncData ({ store, route }) {
+    return store.dispatch('fetchEntity' ,route);
+  }
+
   mounted(){
     if(window){
       flatpickr(".calendar" , {
