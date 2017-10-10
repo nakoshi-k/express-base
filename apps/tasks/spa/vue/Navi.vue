@@ -1,14 +1,17 @@
 <template>
-<nav class="navigation column">
-    <div class="container">
-        <div class="row">
-            <ul class="navigation-list">
-                <li><a href="/tasks/aaa">menu 1</a></li>
-                <li><a href="/tasks/aaa">menu 2</a></li>
-                <li><a href="/tasks/aaa">menu 3</a></li>
-                <li><a href="/tasks/aaa">menu 4</a></li>
-            </ul>
+<div>
+    <nav class="navigation column">
+        <div class="container">
+            <div class="row">
+                <ul class="navigation-list">
+                    <li><a href="/tasks/aaa">menu 1</a></li>
+                    <li><a href="/tasks/aaa">menu 2</a></li>
+                    <li><a href="/tasks/aaa">menu 3</a></li>
+                    <li><a href="/tasks/aaa">menu 4</a></li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+        <div id="indicator" class="indicator"></div>
+    </nav>
+</div>
 </template>

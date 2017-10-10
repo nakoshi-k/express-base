@@ -39,12 +39,14 @@ export class router extends app_router {
                     if (err) {
                         if (err.code === 404) {
                           reject(404);
-                        } else {
+                        } {
                           reject(500);
                         }
                     }
                     resolve( html + stateTag);
               });
+            }).catch((err) => {
+                reject(err)
             })
         }
         return new Promise(ssr);
@@ -61,16 +63,17 @@ export class router extends app_router {
                 server : { request : Request}
             }
         };
-
         this.ssr(context).then(ssr => {
             this.setData( {ssr : ssr} );
             this.render( req , res ,"vue");
         }).catch(err => {
-            console.log(err);
-            if( err === 404 ){
-                res.send(404);
+            if ( err.code == 404){
+                res.status(404);
             }
-            res.send(500);
+            res.render('error', {
+                message: err.code,
+                error: {}
+              });
         })
     }
 

@@ -14602,27 +14602,31 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("nav", { staticClass: "navigation column" }, [
-      _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("ul", { staticClass: "navigation-list" }, [
-            _c("li", [
-              _c("a", { attrs: { href: "/tasks/aaa" } }, [_vm._v("menu 1")])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("a", { attrs: { href: "/tasks/aaa" } }, [_vm._v("menu 2")])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("a", { attrs: { href: "/tasks/aaa" } }, [_vm._v("menu 3")])
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("a", { attrs: { href: "/tasks/aaa" } }, [_vm._v("menu 4")])
+    return _c("div", [
+      _c("nav", { staticClass: "navigation column" }, [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("ul", { staticClass: "navigation-list" }, [
+              _c("li", [
+                _c("a", { attrs: { href: "/tasks/aaa" } }, [_vm._v("menu 1")])
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("a", { attrs: { href: "/tasks/aaa" } }, [_vm._v("menu 2")])
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("a", { attrs: { href: "/tasks/aaa" } }, [_vm._v("menu 3")])
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("a", { attrs: { href: "/tasks/aaa" } }, [_vm._v("menu 4")])
+              ])
             ])
           ])
-        ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "indicator", attrs: { id: "indicator" } })
       ])
     ])
   }

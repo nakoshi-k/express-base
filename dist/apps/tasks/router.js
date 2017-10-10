@@ -33,11 +33,13 @@ class router extends router_1.router {
                 this.setData({ ssr: ssr });
                 this.render(req, res, "vue");
             }).catch(err => {
-                console.log(err);
-                if (err === 404) {
-                    res.send(404);
+                if (err.code == 404) {
+                    res.status(404);
                 }
-                res.send(500);
+                res.render('error', {
+                    message: err.code,
+                    error: {}
+                });
             });
         };
         this.search = (req, res, next) => {
@@ -150,12 +152,14 @@ class router extends router_1.router {
                         if (err.code === 404) {
                             reject(404);
                         }
-                        else {
+                        {
                             reject(500);
                         }
                     }
                     resolve(html + stateTag);
                 });
+            }).catch((err) => {
+                reject(err);
             });
         };
         return new Promise(ssr);

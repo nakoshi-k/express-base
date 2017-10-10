@@ -2217,3 +2217,11 @@ textarea {
 .typcn.large:before {
   font-size: 3.6rem;
 }
+.indicator {
+  position: absolute;
+  bottom: -1px;
+  background: #a4c520;
+  height: 3px;
+  width: 100%;
+  z-index: 100;
+}
