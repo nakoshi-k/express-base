@@ -3993,6 +3993,7 @@
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(2);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Pagination_vue__ = __webpack_require__(33);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
         var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
             var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
             if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
@@ -4020,6 +4021,12 @@
             get pagination() {
                 return this.$store.state.page;
             }
+            mounted() {
+                let pg = this.pagination;
+                if (pg.currentPage > pg.totalPage) {
+                    this.$router.push({ path: `/${this.domain}/page/${pg.totalPage}` });
+                }
+            }
             get tasks() {
                 return this.$store.state.tasks;
             }
@@ -4036,6 +4043,9 @@
         Page = __decorate([
             __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
                 name: "Page",
+                computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapGetters */])([
+                    'domain'
+                ])),
                 components: { Pagination: __WEBPACK_IMPORTED_MODULE_2__Pagination_vue__["a" /* default */] }
             })
         ], Page);

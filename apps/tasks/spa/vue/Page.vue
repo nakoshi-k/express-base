@@ -16,7 +16,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import Pagination from './Pagination.vue';
-
+import {mapGetters} from "vuex";
 Component.registerHooks([
   'beforeRouteEnter',
   'beforeRouteLeave',
@@ -30,19 +30,34 @@ Component.registerHooks([
 
 @Component({
   name : "Page",
+    computed : {
+    ...mapGetters([
+      'domain'
+    ])
+  },
   components:{Pagination}
 })
 
 export default class Page extends Vue {
-  
+  pagination:{
+    totalPage:number,
+    currentPage:number,
+    queryPrams:{string}
+  };
   asyncData ({ store, route }) {
     return store.dispatch('fetchEntities' ,route);
   }
 
-
-
   get pagination (){
     return this.$store.state.page;
+  }
+
+  mounted(){
+    let pg = this.pagination;
+    if(pg.currentPage > pg.totalPage){
+      this.$router.push({ path: `/${this.domain}/page/${pg.totalPage}` });
+    }
+
   }
   
   get tasks(){
