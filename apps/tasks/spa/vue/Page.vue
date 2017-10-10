@@ -57,7 +57,6 @@ export default class Page extends Vue {
     if(pg.currentPage > pg.totalPage){
       this.$router.push({ path: `/${this.domain}/page/${pg.totalPage}` });
     }
-
   }
   
   get tasks(){
