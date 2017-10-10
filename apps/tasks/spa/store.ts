@@ -15,8 +15,9 @@ export function createStore(options : createOptionsInterFace = createOptions){
 
   let state = {
       domain : options.entities,
-      orverLay: true,
-      modal : true,
+      overLay: false,
+      loading : false,
+      modal : false,
       indicator:{
         status : true,
         complate : 0
@@ -32,7 +33,7 @@ export function createStore(options : createOptionsInterFace = createOptions){
 
   let actions = {
     fetchEntities  : ( {commit},route) => {
-      return  api.paginate(route).then((paginate) => {
+      return api.paginate(route).then((paginate) => {
           commit("setEntities",paginate);
       })
     },
@@ -50,7 +51,7 @@ export function createStore(options : createOptionsInterFace = createOptions){
       return  api.entity(route).then((entity) => {
           commit("setEntity",entity);
       })
-    },
+    }
   };
 
   let mutations = {
@@ -63,6 +64,20 @@ export function createStore(options : createOptionsInterFace = createOptions){
     },
     updateEntity : (state , kv : {key:string,value:string} ) => {
       state.task[ kv.key ] = kv.value;
+    },
+    loading : (state) => {
+        state.overLay = true;
+        state.loading = true;
+    },
+    endLoading : (state) => {
+      state.loading = false;
+      state.overLay = false;
+    },
+    openModal(state,modal){
+      state.modal = true;
+    },
+    closeModal(state){
+      state.modal = false;
     }
   }
 

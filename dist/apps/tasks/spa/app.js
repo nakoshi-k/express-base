@@ -8,24 +8,30 @@ const vuex_router_sync_1 = require("vuex-router-sync");
 const Interface_1 = require("./Interface");
 vue_1.default.mixin({
     beforeMount() {
-        let alias = this;
-        const { asyncData } = alias.$options;
+        const asyncData = this.$options["asyncData"];
         if (asyncData) {
-            alias.dataPromise = asyncData({
-                store: this.$store,
-                route: this.$route
+            let loading = new Promise((resolve, reject) => {
+                this.$store.commit("loading");
+                resolve(asyncData({ store: this.$store, route: this.$route }));
+            }).then(() => {
+                this.$store.commit("endLoading");
+            }).catch((err) => {
+                this.$store.commit("endLoading");
             });
+            this["dataPromise"] = loading;
         }
-    }
-});
-vue_1.default.mixin({
+    },
     beforeRouteUpdate(to, from, next) {
         const { asyncData } = this.$options;
         if (asyncData) {
+            this.$store.commit("loading");
             asyncData({
                 store: this.$store,
                 route: to
-            }).then(next).catch(next);
+            }).then(() => {
+                this.$store.commit("endLoading");
+                next();
+            }).catch(next);
         }
         else {
             next();

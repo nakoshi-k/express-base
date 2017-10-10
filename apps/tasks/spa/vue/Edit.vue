@@ -56,6 +56,15 @@ export default class Edit extends Vue {
     return store.dispatch('fetchEntity' ,route);
   }
 
+  beforeEnter(to, from, next){
+    next(vm => {
+      this.$store.commit("loading");
+    })
+  }
+  beforeRouteUpdate(to, from, next){
+      this.$store.commit("endLoading");
+  }
+  
   get action(){
     return `/${this.domain}/${this.task.id}`
   }

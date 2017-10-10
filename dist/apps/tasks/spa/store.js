@@ -14,8 +14,9 @@ function createStore(options = Interface_1.createOptions) {
     });
     let state = {
         domain: options.entities,
-        orverLay: true,
-        modal: true,
+        overLay: false,
+        loading: false,
+        modal: false,
         indicator: {
             status: true,
             complate: 0
@@ -48,7 +49,7 @@ function createStore(options = Interface_1.createOptions) {
             return api.entity(route).then((entity) => {
                 commit("setEntity", entity);
             });
-        },
+        }
     };
     let mutations = {
         setEntities: (state, paginate) => {
@@ -60,6 +61,20 @@ function createStore(options = Interface_1.createOptions) {
         },
         updateEntity: (state, kv) => {
             state.task[kv.key] = kv.value;
+        },
+        loading: (state) => {
+            state.overLay = true;
+            state.loading = true;
+        },
+        endLoading: (state) => {
+            state.loading = false;
+            state.overLay = false;
+        },
+        openModal(state, modal) {
+            state.modal = true;
+        },
+        closeModal(state) {
+            state.modal = false;
         }
     };
     let getters = {

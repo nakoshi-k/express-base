@@ -16,6 +16,7 @@ export default context => {
 
       Promise.all(matchedComponents.map( (Component:any) => {
         if (Component.asyncData) {
+          store.commit("loading");
           return Component.asyncData({
             store,
             route: router.currentRoute
@@ -24,14 +25,18 @@ export default context => {
         if(!Component.extendOptions){
           return;
         }
+
         if(Component.extendOptions.asyncData){
+          store.commit("loading");
           return Component.extendOptions.asyncData({
             store,route: router.currentRoute
           });
         }
+        
       })).then(() => {
         context.state = store.state;
         resolve(app);
+        
       })
 
     },reject)

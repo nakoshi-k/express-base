@@ -1,15 +1,18 @@
 <template>
-<div class="over-lay">
-オーバーレイ
-<modal><modal>
-<loading><loading>
+<div>
+  <transition name="orverlay">
+  <div v-if="overLay" id="over-lay" class="over-lay">
+    <app-loading>ローディング</app-loading>
+  </div>
+  </transition>
 </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import {mapGetters} from 'vuex'
+import {mapGetters,mapState} from 'vuex'
+import Loading from './Loading'
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -24,10 +27,16 @@ Component.registerHooks([
 
 @Component({
   name : "OrverLay",
+  components : {
+    "app-loading" : Loading,
+  },
   computed : {
     ...mapGetters([
       'domain' , 'token'
-    ])
+    ]),
+    ...mapState({
+      overLay: (state:{overLay:boolean}) => state.overLay,
+    }) 
   },
 })
 

@@ -38,7 +38,9 @@ export default class Page extends Vue {
   asyncData ({ store, route }) {
     return store.dispatch('fetchEntities' ,route);
   }
-  
+
+
+
   get pagination (){
     return this.$store.state.page;
   }

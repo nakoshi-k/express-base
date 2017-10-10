@@ -7,6 +7,7 @@
       <router-view name="main"></router-view>
     </div>
   </div>
+  <app-modal></app-modal>
   <over-lay></over-lay>
 </div>
 </template>
@@ -14,6 +15,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import OverLay from './OverLay.vue';
+import Modal from './Modal'
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -29,7 +31,8 @@ Component.registerHooks([
 @Component({
   name: 'App',
   components:{
-    "over-lay":OverLay
+    "over-lay":OverLay,
+    "app-modal":Modal
   }
 })
 export default class App extends Vue {

@@ -1,5 +1,5 @@
 <template>
-<div v-if="numbers">
+<div v-if="check">
   <nav class="pagination clearfix">
     <ul class="pagination-list">
       <li v-if="special.first">
@@ -47,7 +47,14 @@ export default class Pagintaion extends Vue {
       currentPage:number,
       queryPrams:{string}
     };
-    
+
+    get check(){
+      let pg = this.pagination
+      if(pg.currentPage > pg.totalPage){
+        return false
+      }
+      return true;
+    } 
 
     domain:String;
     

@@ -4,6 +4,7 @@
         <li><router-link :to="`/${domain}`">Index</router-link></li>
         <li><router-link :to="`/${domain}/add`">Add</router-link></li>
     </ul>
+    <button type="button" @click="modal">modal</button>
 </div>
 </template>
 <script lang="ts">
@@ -27,6 +28,12 @@ Component.registerHooks([
 export default class Sub extends Vue {
   get domain (){
     return this.$store.state.domain;
-  }  
+  }
+
+  modal(){
+    this.$store.commit("openModal");
+  }
+
+
 }
 </script>
