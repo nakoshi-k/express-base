@@ -114,15 +114,11 @@ export class router extends app_router {
             }
             res.status(201);
             res.json(result);
-        }).catch((res) => {
+        }).catch((err) => {
+            data[this.entities_name] = {};
             res.status(401);
             res.json(data);
-        }).catch((error) => { 
-            data[this.entities_name] = {};
-            res.status(400);
-            res.json(data);
-        })
-        
+        })        
     }
    
     private delete = (req:express.Request,res:express.Response) => {

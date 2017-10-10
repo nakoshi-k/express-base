@@ -33,15 +33,14 @@ Component.registerHooks([
 })
 
 export default class Loading extends Vue {
-    blocks:[];
     blockNum = 5;
-    get blocks(){
+    blocks = [];
+    entry(){
       let l = this.blockNum;
-      let blocks = [];
+      let blocks = this.blocks;
       for(let i = 0 ; i < l ;i++){
-        blocks.push({class:"block"});
+        blocks.push({class:""});
       }
-      return blocks;
     }
     animate = () => {
       let l = this.blockNum;
@@ -57,8 +56,8 @@ export default class Loading extends Vue {
       } 
       loading();
     }
-
     mounted(){
+      this.entry();
       this.animate();
     }
 }

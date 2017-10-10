@@ -3,11 +3,9 @@ import Vue from "vue";
 
 export default context => {
   let server = (resolve,reject) => {
-
     const {app, router,store} = createApp( context.serverOptions);
     router.push(context.url);
     router.onReady(() => {
-      
       const matchedComponents = router.getMatchedComponents();
       
       if(!matchedComponents.length){
@@ -25,20 +23,16 @@ export default context => {
         if(!Component.extendOptions){
           return;
         }
-
         if(Component.extendOptions.asyncData){
           store.commit("loading");
           return Component.extendOptions.asyncData({
             store,route: router.currentRoute
           });
         }
-        
       })).then(() => {
         context.state = store.state;
         resolve(app);
-        
       })
-
     },reject)
   } 
   return new Promise(server);

@@ -15,7 +15,7 @@ function createRouter(options = Interface_1.createOptions) {
     return new vue_router_1.default({
         mode: 'history',
         routes: [
-            { name: "page", path: `/${opt.entities}/page/:page`, components: { main: Page_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
+            { name: "page", path: `/${opt.entities}/page/:page*`, components: { main: Page_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
             { name: "index", path: `/${opt.entities}/page/1`, alias: `/${opt.entities}/` },
             { name: "add", path: `/${opt.entities}/add`, components: { main: Add_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },
             { name: "view", path: `/${opt.entities}/:id`, components: { main: View_vue_1.default, navi: Navi_vue_1.default, sub: Sub_vue_1.default } },

@@ -74,12 +74,9 @@ class router extends router_1.router {
                 }
                 res.status(201);
                 res.json(result);
-            }).catch((res) => {
-                res.status(401);
-                res.json(data);
-            }).catch((error) => {
+            }).catch((err) => {
                 data[this.entities_name] = {};
-                res.status(400);
+                res.status(401);
                 res.json(data);
             });
         };

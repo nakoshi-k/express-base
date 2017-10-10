@@ -14,9 +14,12 @@ vue_1.default.mixin({
                 this.$store.commit("loading");
                 resolve(asyncData({ store: this.$store, route: this.$route }));
             }).then(() => {
-                this.$store.commit("endLoading");
+                setTimeout(() => {
+                    this.$store.commit("endLoading");
+                }, 480);
             }).catch((err) => {
-                this.$store.commit("endLoading");
+                let domain = this.$store.state["domain"];
+                this.$router.push({ path: `/${domain}` });
             });
             this["dataPromise"] = loading;
         }
@@ -29,7 +32,9 @@ vue_1.default.mixin({
                 store: this.$store,
                 route: to
             }).then(() => {
-                this.$store.commit("endLoading");
+                setTimeout(() => {
+                    this.$store.commit("endLoading");
+                }, 360);
                 next();
             }).catch(next);
         }

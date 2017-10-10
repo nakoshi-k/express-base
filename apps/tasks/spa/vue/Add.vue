@@ -2,7 +2,7 @@
 <div class="resource column column-75">
   <h2>Add</h2>
   <form action="./" method="post">
-    <input type="hidden" name="_csrf" :value="token" placeholder="title">
+    <input type="hidden" name="_csrf" :value="token">
     <div class="form-item">
       <label for="title">title</label>
       <input type="text" name="title" v-model="task.title" placeholder="title">

@@ -18,7 +18,7 @@ function createStore(options = Interface_1.createOptions) {
         loading: false,
         modal: false,
         indicator: {
-            status: true,
+            status: "sccuess",
             complate: 0
         },
         tasks: [],

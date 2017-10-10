@@ -15,7 +15,7 @@ export function createRouter(options : createOptionsInterFace = createOptions){
     return new Router({
         mode: 'history',
         routes: [
-            { name : "page" ,path: `/${opt.entities}/page/:page`, components: { main : Page , navi : Navi ,sub : Sub } } as RouteConfig,
+            { name : "page" ,path: `/${opt.entities}/page/:page*`, components: { main : Page , navi : Navi ,sub : Sub } } as RouteConfig,
             { name : "index" ,path: `/${opt.entities}/page/1` , alias : `/${opt.entities}/` } as RouteConfig,
             { name : "add" , path: `/${opt.entities}/add`, components: { main : Add , navi : Navi ,sub : Sub } } as RouteConfig,
             { name : "view" , path: `/${opt.entities}/:id`, components: { main : View , navi : Navi ,sub : Sub } } as RouteConfig,

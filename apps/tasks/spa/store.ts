@@ -19,7 +19,7 @@ export function createStore(options : createOptionsInterFace = createOptions){
       loading : false,
       modal : false,
       indicator:{
-        status : true,
+        status : "sccuess",
         complate : 0
       },
       tasks : [],
@@ -37,7 +37,7 @@ export function createStore(options : createOptionsInterFace = createOptions){
           commit("setEntities",paginate);
       })
     },
-    fetchEntity : ( {commit},route) => {
+    fetchEntity : ( {commit} ,route) => {
       return  api.entity(route).then((entity) => {
           commit("setEntity",entity);
       })
