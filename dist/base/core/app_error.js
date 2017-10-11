@@ -13,3 +13,6 @@ exports.app_error = app_error;
 class input_error extends app_error {
 }
 exports.input_error = input_error;
+class response_error extends app_error {
+}
+exports.response_error = response_error;

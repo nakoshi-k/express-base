@@ -1,11 +1,11 @@
 <template>
-<div id="modal-container" v-if="modal" @click.self="close">
+<div id="modal-container" v-if="modal.show" @click.self="close">
   <div class="modal">
       <div class="text-right">
         <span @click="close" class="typcn typcn-delete large"></span>
       </div>
     <div class="content">
-      モーダル
+      <modal-destroy></modal-destroy>
     </div>
   </div>
 </div>
@@ -15,6 +15,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { mapGetters , mapState} from 'vuex'
+import Destroy from './modal/Destroy'
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -37,12 +38,13 @@ Component.registerHooks([
       'modal'
     ])
   },
+  components : {
+    "modal-destroy" : Destroy
+  }
 })
 
 export default class Modal extends Vue {
-  ignore(){
 
-  }
   close(){
     this.$store.commit("closeModal");
   }

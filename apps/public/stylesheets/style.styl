@@ -101,11 +101,11 @@ fieldset, input, select, textarea {
     min-height 6rem
     padding 1rem
     background-color color-initial
-    border 1px solid color-tertiary
+    border 1px solid color-quaternary
     border-radius 0.6rem
-    box-shadow:3px 6px 10px -3px color-tertiary;
-    -moz-box-shadow:3px 6px 10px -3px color-tertiary;
-    -webkit-box-shadow:3px 6px 10px -3px color-tertiary;
+    box-shadow:3px 6px 10px -3px color-quaternary;
+    -moz-box-shadow:3px 6px 10px -3px color-quaternary;
+    -webkit-box-shadow:3px 6px 10px -3px color-quaternary;
 
 .typcn
     line-height 1
@@ -114,9 +114,37 @@ fieldset, input, select, textarea {
     font-size 3.6rem
 
 .indicator 
+    transition 0.6s background ease-in-out , 0.6s width ease-in-out , 0.6s  border-top ease-in-out
     position absolute
-    bottom -1px
-    background color-success
-    height 3px;
-    width 100%;
+    bottom -3px
+    background color-quaternary
+    height 3px
+    width 0
     z-index 100
+
+
+.indicator.light
+    background color-quinary
+    border-top 1px solid color-quaternary
+
+.indicator.primary
+    background color-secondary
+    border-top 1px solid color-primary
+
+.indicator.warning
+    background color-warning-light
+    border-top 1px solid color-warning
+
+
+.indicator.success
+    background color-success-light
+    border-top 1px solid color-success
+
+
+.indicator.info
+    background color-info-light
+    border-top 1px solid color-info
+
+.indicator.special
+    background color-special-light
+    border-top 1px solid color-special

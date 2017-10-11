@@ -20,11 +20,11 @@ class Internal {
                 options = Object.assign(this.options, options);
                 fetch(url, options)
                     .then((response) => {
-                    if (response.status === 201) {
-                        return response.json();
+                    if (response.status !== 201) {
+                        reject(response.status);
                     }
                     ;
-                    throw Error;
+                    return response.json();
                 }).then((data) => {
                     resolve(data);
                 }).catch((err) => {
@@ -45,6 +45,7 @@ class Internal {
                 req(options, (error, response, body) => {
                     if (error) {
                         reject(true);
+                        return;
                     }
                     resolve(JSON.parse(body));
                 });

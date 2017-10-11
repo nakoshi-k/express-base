@@ -5,6 +5,7 @@
         <li><router-link :to="`/${domain}/add`">Add</router-link></li>
     </ul>
     <button type="button" @click="modal">modal</button>
+    <button type="button" @click="indicater">indicater</button>
 </div>
 </template>
 <script lang="ts">
@@ -31,9 +32,13 @@ export default class Sub extends Vue {
   }
 
   modal(){
-    this.$store.commit("openModal");
+
+    this.$store.commit( "openModal" , {template : "Destroy" , data : { id : 1} } );
   }
 
+  indicater = () => {
+    this.$store.commit("setIndicator" , { status : "success" , complate : 30 });
+  }
 
 }
 </script>

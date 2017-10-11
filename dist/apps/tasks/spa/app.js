@@ -10,18 +10,17 @@ vue_1.default.mixin({
     beforeMount() {
         const asyncData = this.$options["asyncData"];
         if (asyncData) {
-            let loading = new Promise((resolve, reject) => {
-                this.$store.commit("loading");
-                resolve(asyncData({ store: this.$store, route: this.$route }));
-            }).then(() => {
+            let ad = Promise.resolve(this.$store.commit("loading"));
+            ad.then(() => asyncData({ store: this.$store, route: this.$route }))
+                .then(res => {
                 setTimeout(() => {
                     this.$store.commit("endLoading");
-                }, 480);
-            }).catch((err) => {
+                }, 240);
+            }).catch(err => {
                 let domain = this.$store.state["domain"];
                 this.$router.push({ path: `/${domain}` });
             });
-            this["dataPromise"] = loading;
+            this["dataPromise"] = ad;
         }
     },
     beforeRouteUpdate(to, from, next) {
@@ -34,7 +33,7 @@ vue_1.default.mixin({
             }).then(() => {
                 setTimeout(() => {
                     this.$store.commit("endLoading");
-                }, 360);
+                }, 240);
                 next();
             }).catch(next);
         }

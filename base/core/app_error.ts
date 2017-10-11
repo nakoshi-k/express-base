@@ -13,3 +13,7 @@ export class app_error implements Error {
 export class input_error extends app_error {
 
 }
+
+export class response_error extends app_error {
+  
+  }

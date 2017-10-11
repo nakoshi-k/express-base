@@ -11,7 +11,41 @@
                 </ul>
             </div>
         </div>
-        <div id="indicator" class="indicator"></div>
+        <app-indicater></app-indicater>
     </nav>
 </div>
 </template>
+
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import {mapGetters,mapState} from 'vuex'
+import Indicater from './Indicator'
+
+Component.registerHooks([
+  'beforeRouteEnter',
+  'beforeRouteLeave',
+  'asyncData',
+  'fetch',
+  'middleware',
+  'layout',
+  'transition',
+  'scrollToTop'
+])
+
+@Component({
+  name : "Navi",
+  components : {
+    "app-indicater" : Indicater,
+  },
+  computed : {
+    ...mapGetters([
+      'domain' , 'token'
+    ])
+  },
+})
+
+export default class Navi extends Vue {
+
+}
+</script>

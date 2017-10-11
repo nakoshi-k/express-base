@@ -16,10 +16,16 @@ function createStore(options = Interface_1.createOptions) {
         domain: options.entities,
         overLay: false,
         loading: false,
-        modal: false,
+        modal: {
+            show: false,
+            template: "",
+            data: {}
+        },
         indicator: {
-            status: "sccuess",
-            complate: 0
+            show: false,
+            status: "success",
+            complate: 0,
+            prosess: true
         },
         tasks: [],
         task: {},
@@ -51,6 +57,30 @@ function createStore(options = Interface_1.createOptions) {
             });
         }
     };
+    let setIndicator = (indicator, status, complate) => {
+        let before = indicator.complate;
+        indicator.status = status;
+        if (complate >= 100) {
+            indicator.prosess = false;
+            setTimeout(() => {
+                indicator.status = "primary";
+            }, 500);
+        }
+        else {
+            indicator.prosess = true;
+        }
+        if (before > complate) {
+            indicator.show = false;
+            indicator.complate = 0;
+            setTimeout(() => {
+                indicator.show = true;
+                indicator.complate = complate;
+            }, 1);
+            return;
+        }
+        indicator.show = true;
+        indicator.complate = complate;
+    };
     let mutations = {
         setEntities: (state, paginate) => {
             state.tasks = paginate.tasks;
@@ -63,18 +93,26 @@ function createStore(options = Interface_1.createOptions) {
             state.task[kv.key] = kv.value;
         },
         loading: (state) => {
+            setIndicator(state.indicator, "success", 8);
             state.overLay = true;
             state.loading = true;
         },
-        endLoading: (state) => {
+        endLoading: (state, status) => {
+            setIndicator(state.indicator, "success", 100);
             state.loading = false;
             state.overLay = false;
         },
-        openModal(state, modal) {
-            state.modal = true;
+        openModal(state, { template, data }) {
+            state.modal.template = template;
+            state.modal.data = data;
+            state.modal.show = true;
         },
         closeModal(state) {
-            state.modal = false;
+            state.modal.template = "";
+            state.modal.show = false;
+        },
+        setIndicator({ indicator }, { status, complate }) {
+            setIndicator(indicator, status, complate);
         }
     };
     let getters = {
