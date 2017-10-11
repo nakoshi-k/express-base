@@ -4,8 +4,6 @@
         <li><router-link :to="`/${domain}`">Index</router-link></li>
         <li><router-link :to="`/${domain}/add`">Add</router-link></li>
     </ul>
-    <button type="button" @click="modal">modal</button>
-    <button type="button" @click="indicater">indicater</button>
 </div>
 </template>
 <script lang="ts">
@@ -27,17 +25,9 @@ Component.registerHooks([
   name: 'Sub'
 })
 export default class Sub extends Vue {
+
   get domain (){
     return this.$store.state.domain;
-  }
-
-  modal(){
-
-    this.$store.commit( "openModal" , {template : "Destroy" , data : { id : 1} } );
-  }
-
-  indicater = () => {
-    this.$store.commit("setIndicator" , { status : "success" , complate : 30 });
   }
 
 }

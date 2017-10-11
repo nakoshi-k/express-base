@@ -5,7 +5,7 @@
     <div v-for="task in tasks">
     <h3><router-link :to="view(task.id)">{{ task.title }}</router-link></h3>
     <router-link :to="edit(task.id)" class="button small">edit</router-link>
-    <button @click="destroy(task.id)" class="button small">delete</button>
+    <button @click="destroy(task.id,task.title)" class="button small">delete</button>
     </div>
   </div>
   <pagination :pagination="pagination"></pagination>
@@ -16,7 +16,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import Pagination from './Pagination.vue';
-import {mapGetters,mapState} from "vuex";
+import {mapGetters,mapState,mapMutations} from "vuex";
 Component.registerHooks([
   'beforeRouteEnter',
   'beforeRouteLeave',
@@ -31,17 +31,22 @@ Component.registerHooks([
 @Component({
   name : "Page",
     computed : {
-    ...mapGetters([
-      'domain'
-    ]),
-    ...mapState({
-      pagination:'page'
-    })
-  },
+      ...mapGetters([
+        'domain'
+      ]),
+      ...mapState({
+        pagination:'page'
+      }),
+    },
+    methods : {
+      ...mapMutations(["setModal","toggleModal"])
+    },
   components:{Pagination}
 })
 
 export default class Page extends Vue {
+  
+
   domain:string;
   pagination:any;
   asyncData ({ store, route }) {
@@ -67,8 +72,19 @@ export default class Page extends Vue {
     return `/tasks/${id}/edit`;
   }
 
-  destroy(id){
-    return `/tasks/${id}/delete`;
+  setModal:(modal) => {};
+  toggleModal:() => {};
+
+  destroy(id : string , title : string){
+    let modal = { 
+      template : "Destroy" , 
+      data : {
+        id : id,
+        name : title
+      }
+      }
+    this.setModal(modal);
+    this.toggleModal();
   }
 
   

@@ -76,12 +76,12 @@ fieldset, input, select, textarea {
 .text-small
     font-size 1.0rem
 
-#over-lay .loading
+.over-lay .loading
     display flex;          
     justify-content center
     align-items center
 
-#over-lay .loading .block
+.over-lay .loading .block
     transition 0.6s all ease
     background-color color-quaternary
     height 1.4rem
@@ -89,29 +89,44 @@ fieldset, input, select, textarea {
     margin 0.6rem
     border-radius 0.4rem
 
-#over-lay .loading .block.pop
+.over-lay .loading .block.pop
     transition 0.3s all ease-in-out
     background-color transparent 
     margin-bottom -1.6rem;
 
+.margin
+    margin :1rem
 
-#modal-container .modal
+.modal
     margin-top 8rem
     min-width 40rem
     min-height 6rem
-    padding 1rem
+    padding 2rem
     background-color color-initial
     border 1px solid color-quaternary
     border-radius 0.6rem
     box-shadow:3px 6px 10px -3px color-quaternary;
     -moz-box-shadow:3px 6px 10px -3px color-quaternary;
     -webkit-box-shadow:3px 6px 10px -3px color-quaternary;
+    position relative
+.modal h3{
+    border-bottom 1px solid color-secondary
+    padding-bottom .9rem
+}
+.modal .close
+    transition 0.3s color ease
+    position absolute
+    top -2rem
+    right -2rem
 
+.modal .close:hover
+    color color-tertiary
+    
 .typcn
     line-height 1
 
 .typcn.large:before
-    font-size 3.6rem
+    font-size 4.8rem
 
 .indicator 
     transition 0.6s background ease-in-out , 0.6s width ease-in-out , 0.6s  border-top ease-in-out

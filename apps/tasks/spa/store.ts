@@ -18,9 +18,13 @@ export function createStore(options : createOptionsInterFace = createOptions){
       overLay: false,
       loading : false,
       modal : {
+        close : true,
         show : false,
         template : "",
-        data : {}
+        data : {
+          id : "",
+          name : ""
+        }
       },
       indicator:{
         show : false,
@@ -109,10 +113,12 @@ export function createStore(options : createOptionsInterFace = createOptions){
       state.loading = false;
       state.overLay = false;
     },
-    openModal(state,{ template , data }:{template : string , data : {any}}){
+    setModal(state,{template , data , show }:{template : string , data : {any} , show : boolean}){
       state.modal.template = template;
       state.modal.data = data;
-      state.modal.show = true;
+    },
+    toggleModal(state){
+      state.modal.show = ( state.modal.show ) ? false : true; 
     },
     closeModal(state){
       state.modal.template = "";                                                                                                                                                                                              

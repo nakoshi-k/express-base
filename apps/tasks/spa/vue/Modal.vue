@@ -1,9 +1,7 @@
 <template>
-<div id="modal-container" v-if="modal.show" @click.self="close">
+<div id="modal-container" v-if="modal.show" @click.self="close()">
   <div class="modal">
-      <div class="text-right">
-        <span @click="close" class="typcn typcn-delete large"></span>
-      </div>
+    <span @click="close()" class="close typcn typcn-delete large"></span>
     <div class="content">
       <modal-destroy></modal-destroy>
     </div>
@@ -14,7 +12,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import { mapGetters , mapState} from 'vuex'
+import { mapGetters , mapState , mapMutations} from 'vuex'
 import Destroy from './modal/Destroy'
 
 Component.registerHooks([
@@ -38,17 +36,23 @@ Component.registerHooks([
       'modal'
     ])
   },
+  methods : {
+    ...mapMutations(["closeModal"])
+  },
   components : {
     "modal-destroy" : Destroy
   }
+
 })
 
 export default class Modal extends Vue {
-
+  modal:{close:boolean};
+  closeModal:() => {};
   close(){
-    this.$store.commit("closeModal");
+    if(this.modal.close){
+      this.closeModal()
+    }
   }
-
 
 }
 </script>

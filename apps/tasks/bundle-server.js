@@ -318,8 +318,8 @@ exports.createDecorator = createDecorator;
 "use strict";
 /* unused harmony export Store */
 /* unused harmony export install */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return mapState; });
-/* unused harmony export mapMutations */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return mapState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return mapMutations; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return mapGetters; });
 /* unused harmony export mapActions */
 /* unused harmony export createNamespacedHelpers */
@@ -4110,7 +4110,7 @@ OverLay = __decorate([
         },
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapGetters */])([
             'domain', 'token'
-        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapState */])({
+        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapState */])({
             overLay: (state) => state.overLay,
         })),
     })
@@ -4286,7 +4286,7 @@ Loading = __decorate([
         name: "Loading",
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapGetters */])([
             'domain', 'token'
-        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapState */])([
+        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapState */])([
             'loading'
         ])),
     })
@@ -4414,7 +4414,9 @@ __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
 ]);
 let Modal = class Modal extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
     close() {
-        this.$store.commit("closeModal");
+        if (this.modal.close) {
+            this.closeModal();
+        }
     }
 };
 Modal = __decorate([
@@ -4422,9 +4424,10 @@ Modal = __decorate([
         name: "Modal",
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapGetters */])([
             'domain', 'token'
-        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapState */])([
+        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapState */])([
             'modal'
         ])),
+        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapMutations */])(["closeModal"])),
         components: {
             "modal-destroy": __WEBPACK_IMPORTED_MODULE_3__modal_Destroy__["a" /* default */]
         }
@@ -4452,7 +4455,7 @@ var render = function() {
               if ($event.target !== $event.currentTarget) {
                 return null
               }
-              _vm.close($event)
+              _vm.close()
             }
           }
         },
@@ -4462,7 +4465,7 @@ var render = function() {
             "</div>",
             [
               _vm._ssrNode(
-                '<div class="text-right"><span class="typcn typcn-delete large"></span></div> '
+                '<span class="close typcn typcn-delete large"></span> '
               ),
               _vm._ssrNode(
                 '<div class="content">',
@@ -4784,7 +4787,7 @@ Indicator = __decorate([
         name: "Indicator",
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapGetters */])([
             'domain', 'token'
-        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapState */])([
+        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapState */])([
             'indicator'
         ])),
     })
@@ -4928,8 +4931,16 @@ let Page = class Page extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
     edit(id) {
         return `/tasks/${id}/edit`;
     }
-    destroy(id) {
-        return `/tasks/${id}/delete`;
+    destroy(id, title) {
+        let modal = {
+            template: "Destroy",
+            data: {
+                id: id,
+                name: title
+            }
+        };
+        this.setModal(modal);
+        this.toggleModal();
     }
 };
 Page = __decorate([
@@ -4937,9 +4948,10 @@ Page = __decorate([
         name: "Page",
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapGetters */])([
             'domain'
-        ]), Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["c" /* mapState */])({
+        ]), Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["d" /* mapState */])({
             pagination: 'page'
         })),
+        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["c" /* mapMutations */])(["setModal", "toggleModal"])),
         components: { Pagination: __WEBPACK_IMPORTED_MODULE_2__Pagination_vue__["a" /* default */] }
     })
 ], Page);
@@ -5322,17 +5334,8 @@ __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
     'scrollToTop'
 ]);
 let Sub = class Sub extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
-    constructor() {
-        super(...arguments);
-        this.indicater = () => {
-            this.$store.commit("setIndicator", { status: "success", complate: 30 });
-        };
-    }
     get domain() {
         return this.$store.state.domain;
-    }
-    modal() {
-        this.$store.commit("openModal", { template: "Destroy", data: { id: 1 } });
     }
 };
 Sub = __decorate([
@@ -5352,44 +5355,36 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "column column-25" },
-    [
-      _vm._ssrNode(
-        "<ul>",
-        "</ul>",
-        [
-          _vm._ssrNode(
-            "<li>",
-            "</li>",
-            [
-              _c("router-link", { attrs: { to: "/" + _vm.domain } }, [
-                _vm._v("Index")
-              ])
-            ],
-            1
-          ),
-          _vm._ssrNode(" "),
-          _vm._ssrNode(
-            "<li>",
-            "</li>",
-            [
-              _c("router-link", { attrs: { to: "/" + _vm.domain + "/add" } }, [
-                _vm._v("Add")
-              ])
-            ],
-            1
-          )
-        ],
-        2
-      ),
-      _vm._ssrNode(
-        ' <button type="button">modal</button> <button type="button">indicater</button>'
-      )
-    ],
-    2
-  )
+  return _c("div", { staticClass: "column column-25" }, [
+    _vm._ssrNode(
+      "<ul>",
+      "</ul>",
+      [
+        _vm._ssrNode(
+          "<li>",
+          "</li>",
+          [
+            _c("router-link", { attrs: { to: "/" + _vm.domain } }, [
+              _vm._v("Index")
+            ])
+          ],
+          1
+        ),
+        _vm._ssrNode(" "),
+        _vm._ssrNode(
+          "<li>",
+          "</li>",
+          [
+            _c("router-link", { attrs: { to: "/" + _vm.domain + "/add" } }, [
+              _vm._v("Add")
+            ])
+          ],
+          1
+        )
+      ],
+      2
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -5738,7 +5733,7 @@ Edit = __decorate([
         name: "Add",
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapGetters */])([
             'domain', 'token'
-        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapState */])({
+        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapState */])({
             task: state => state["task"]
         })),
     })
@@ -5804,9 +5799,13 @@ function createStore(options = __WEBPACK_IMPORTED_MODULE_3__Interface__["a" /* c
         overLay: false,
         loading: false,
         modal: {
+            close: true,
             show: false,
             template: "",
-            data: {}
+            data: {
+                id: "",
+                name: ""
+            }
         },
         indicator: {
             show: false,
@@ -5889,10 +5888,12 @@ function createStore(options = __WEBPACK_IMPORTED_MODULE_3__Interface__["a" /* c
             state.loading = false;
             state.overLay = false;
         },
-        openModal(state, { template, data }) {
+        setModal(state, { template, data, show }) {
             state.modal.template = template;
             state.modal.data = data;
-            state.modal.show = true;
+        },
+        toggleModal(state) {
+            state.modal.show = (state.modal.show) ? false : true;
         },
         closeModal(state) {
             state.modal.template = "";
@@ -6167,10 +6168,26 @@ __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
 let Destroy = class Destroy extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
     constructor() {
         super(...arguments);
+        this.button = {
+            done: true,
+            cancel: true
+        };
         this.name = "Destroy";
     }
     get show() {
         return this.modal.template === this.name;
+    }
+    disable() {
+        let disable = (resolve, reject) => {
+            this.modal.close = false;
+            this.openModal();
+        };
+        return new Promise();
+    }
+    delete() {
+    }
+    cancel() {
+        this.closeModal();
     }
 };
 Destroy = __decorate([
@@ -6178,9 +6195,10 @@ Destroy = __decorate([
         name: "Destroy",
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapGetters */])([
             'domain', 'token'
-        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapState */])([
+        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapState */])([
             'modal'
         ])),
+        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapMutations */])(["setModal", "toggleModal", "closeModal"]))
     })
 ], Destroy);
 /* harmony default export */ __webpack_exports__["a"] = (Destroy);
@@ -6196,7 +6214,21 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.show
-    ? _c("div", [_vm._ssrNode("<div>Destroy</div>\n  削除するかい？\n")])
+    ? _c("div", [
+        _vm._ssrNode(
+          "<h3>" +
+            _vm._ssrEscape("Delete #" + _vm._s(_vm.modal.data.id)) +
+            "</h3>" +
+            _vm._ssrEscape(
+              '\n  "' +
+                _vm._s(_vm.modal.data.name) +
+                '" を削除します。一度削除されたデータは元に戻す事ができません。\n  '
+            ) +
+            '<div class="margin text-right"><button' +
+            _vm._ssrAttr("disabled", !_vm.button.done) +
+            ' class="button primary">Done</button> <button class="button warning">Cancel</button></div>'
+        )
+      ])
     : _vm._e()
 }
 var staticRenderFns = []

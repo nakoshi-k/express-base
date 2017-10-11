@@ -12757,7 +12757,9 @@ var Modal = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Modal.prototype.close = function () {
-        this.$store.commit("closeModal");
+        if (this.modal.close) {
+            this.closeModal();
+        }
     };
     Modal = __decorate([
         vue_class_component_1.default({
@@ -12767,6 +12769,7 @@ var Modal = /** @class */ (function (_super) {
             ]), vuex_1.mapState([
                 'modal'
             ])),
+            methods: __assign({}, vuex_1.mapMutations(["closeModal"])),
             components: {
                 "modal-destroy": Destroy_1.default
             }
@@ -12796,18 +12799,20 @@ var render = function() {
               if ($event.target !== $event.currentTarget) {
                 return null
               }
-              _vm.close($event)
+              _vm.close()
             }
           }
         },
         [
           _c("div", { staticClass: "modal" }, [
-            _c("div", { staticClass: "text-right" }, [
-              _c("span", {
-                staticClass: "typcn typcn-delete large",
-                on: { click: _vm.close }
-              })
-            ]),
+            _c("span", {
+              staticClass: "close typcn typcn-delete large",
+              on: {
+                click: function($event) {
+                  _vm.close()
+                }
+              }
+            }),
             _vm._v(" "),
             _c("div", { staticClass: "content" }, [_c("modal-destroy")], 1)
           ])
@@ -15943,8 +15948,16 @@ var Page = /** @class */ (function (_super) {
     Page.prototype.edit = function (id) {
         return "/tasks/" + id + "/edit";
     };
-    Page.prototype.destroy = function (id) {
-        return "/tasks/" + id + "/delete";
+    Page.prototype.destroy = function (id, title) {
+        var modal = {
+            template: "Destroy",
+            data: {
+                id: id,
+                name: title
+            }
+        };
+        this.setModal(modal);
+        this.toggleModal();
     };
     Page = __decorate([
         vue_class_component_1.default({
@@ -15954,6 +15967,7 @@ var Page = /** @class */ (function (_super) {
             ]), vuex_1.mapState({
                 pagination: 'page'
             })),
+            methods: __assign({}, vuex_1.mapMutations(["setModal", "toggleModal"])),
             components: { Pagination: Pagination_vue_1.default }
         })
     ], Page);
@@ -16320,7 +16334,7 @@ var render = function() {
                   staticClass: "button small",
                   on: {
                     click: function($event) {
-                      _vm.destroy(task.id)
+                      _vm.destroy(task.id, task.title)
                     }
                   }
                 },
@@ -16437,11 +16451,7 @@ vue_class_component_1.default.registerHooks([
 var Sub = /** @class */ (function (_super) {
     __extends(Sub, _super);
     function Sub() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.indicater = function () {
-            _this.$store.commit("setIndicator", { status: "success", complate: 30 });
-        };
-        return _this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     Object.defineProperty(Sub.prototype, "domain", {
         get: function () {
@@ -16450,9 +16460,6 @@ var Sub = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Sub.prototype.modal = function () {
-        this.$store.commit("openModal", { template: "Destroy", data: { id: 1 } });
-    };
     Sub = __decorate([
         vue_class_component_1.default({
             name: 'Sub'
@@ -16493,14 +16500,6 @@ var render = function() {
         ],
         1
       )
-    ]),
-    _vm._v(" "),
-    _c("button", { attrs: { type: "button" }, on: { click: _vm.modal } }, [
-      _vm._v("modal")
-    ]),
-    _vm._v(" "),
-    _c("button", { attrs: { type: "button" }, on: { click: _vm.indicater } }, [
-      _vm._v("indicater")
     ])
   ])
 }
@@ -17135,9 +17134,13 @@ function createStore(options) {
         overLay: false,
         loading: false,
         modal: {
+            close: true,
             show: false,
             template: "",
-            data: {}
+            data: {
+                id: "",
+                name: ""
+            }
         },
         indicator: {
             show: false,
@@ -17224,11 +17227,13 @@ function createStore(options) {
             state.loading = false;
             state.overLay = false;
         },
-        openModal: function (state, _a) {
-            var template = _a.template, data = _a.data;
+        setModal: function (state, _a) {
+            var template = _a.template, data = _a.data, show = _a.show;
             state.modal.template = template;
             state.modal.data = data;
-            state.modal.show = true;
+        },
+        toggleModal: function (state) {
+            state.modal.show = (state.modal.show) ? false : true;
         },
         closeModal: function (state) {
             state.modal.template = "";
@@ -17544,6 +17549,10 @@ var Destroy = /** @class */ (function (_super) {
     __extends(Destroy, _super);
     function Destroy() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.button = {
+            done: true,
+            cancel: true
+        };
         _this.name = "Destroy";
         return _this;
     }
@@ -17554,6 +17563,19 @@ var Destroy = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Destroy.prototype.disable = function () {
+        var _this = this;
+        var disable = function (resolve, reject) {
+            _this.modal.close = false;
+            _this.openModal();
+        };
+        return new Promise();
+    };
+    Destroy.prototype.delete = function () {
+    };
+    Destroy.prototype.cancel = function () {
+        this.closeModal();
+    };
     Destroy = __decorate([
         vue_class_component_1.default({
             name: "Destroy",
@@ -17562,6 +17584,7 @@ var Destroy = /** @class */ (function (_super) {
             ]), vuex_1.mapState([
                 'modal'
             ])),
+            methods: __assign({}, vuex_1.mapMutations(["setModal", "toggleModal", "closeModal"]))
         })
     ], Destroy);
     return Destroy;
@@ -17579,7 +17602,37 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.show
-    ? _c("div", [_c("div", [_vm._v("Destroy")]), _vm._v("\n  削除するかい？\n")])
+    ? _c("div", [
+        _c("h3", [_vm._v("Delete #" + _vm._s(_vm.modal.data.id))]),
+        _vm._v(
+          '\n  "' +
+            _vm._s(_vm.modal.data.name) +
+            '" を削除します。一度削除されたデータは元に戻す事ができません。\n  '
+        ),
+        _c("div", { staticClass: "margin text-right" }, [
+          _c(
+            "button",
+            {
+              staticClass: "button primary",
+              attrs: { disabled: !_vm.button.done }
+            },
+            [_vm._v("Done")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "button warning",
+              on: {
+                click: function($event) {
+                  !_vm.button.cancel
+                }
+              }
+            },
+            [_vm._v("Cancel")]
+          )
+        ])
+      ])
     : _vm._e()
 }
 var staticRenderFns = []
