@@ -2229,6 +2229,9 @@ textarea {
   top: -2rem;
   right: -2rem;
 }
+.modal .close.disabled {
+  color: #d1d1d1;
+}
 .modal .close:hover {
   color: #d1d1d1;
 }

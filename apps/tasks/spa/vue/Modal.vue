@@ -1,7 +1,7 @@
 <template>
 <div id="modal-container" v-if="modal.show" @click.self="close()">
   <div class="modal">
-    <span @click="close()" class="close typcn typcn-delete large"></span>
+    <span @click="close()" class="close typcn typcn-delete large" :class="{disabled : isDisable }"></span>
     <div class="content">
       <modal-destroy></modal-destroy>
     </div>
@@ -52,6 +52,9 @@ export default class Modal extends Vue {
     if(this.modal.close){
       this.closeModal()
     }
+  }
+  get isDisable(){
+    return !this.modal.close;
   }
 
 }

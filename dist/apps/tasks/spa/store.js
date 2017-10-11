@@ -17,7 +17,7 @@ function createStore(options = Interface_1.createOptions) {
         overLay: false,
         loading: false,
         modal: {
-            close: true,
+            close: false,
             show: false,
             template: "",
             data: {
@@ -111,6 +111,9 @@ function createStore(options = Interface_1.createOptions) {
             state.modal.data = data;
         },
         toggleModal(state) {
+            if (!state.modal.show) {
+                state.modal.close = true;
+            }
             state.modal.show = (state.modal.show) ? false : true;
         },
         closeModal(state) {

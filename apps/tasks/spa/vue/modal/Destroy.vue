@@ -3,7 +3,7 @@
   <h3>Delete #{{modal.data.id}}</h3>
   "{{modal.data.name}}" を削除します。一度削除されたデータは元に戻す事ができません。
   <div class="margin text-right">
-    <button :disabled="!button.done" class="button primary">Done</button>
+    <button :disabled="!button.done" class="button primary">Apply</button>
     <button :disabled="!button.cancel" @click="closeModal()" class="button warning">Cancel</button>
   </div>
 </div>
@@ -67,8 +67,9 @@ export default class Destroy extends Vue {
       let disable = (resolve,reject) => {
           this.modal.close = false;
           this.setModal(this.modal);
+          resolve(true);
       }
-      return new Promise();
+      return new Promise(disable);
     }
 
     delete(){
@@ -76,7 +77,10 @@ export default class Destroy extends Vue {
     } 
 
     cancel(){
-      this.closeModal();
+      let plot  = this.disable();
+      plot.then(res => {
+        this.closeModal();
+      })
     }       
 }
 </script>

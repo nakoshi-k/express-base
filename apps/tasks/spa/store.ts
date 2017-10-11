@@ -18,7 +18,7 @@ export function createStore(options : createOptionsInterFace = createOptions){
       overLay: false,
       loading : false,
       modal : {
-        close : true,
+        close : false,
         show : false,
         template : "",
         data : {
@@ -118,6 +118,9 @@ export function createStore(options : createOptionsInterFace = createOptions){
       state.modal.data = data;
     },
     toggleModal(state){
+      if(!state.modal.show){
+        state.modal.close = true;
+      }
       state.modal.show = ( state.modal.show ) ? false : true; 
     },
     closeModal(state){
