@@ -17567,7 +17567,7 @@ var Destroy = /** @class */ (function (_super) {
         var _this = this;
         var disable = function (resolve, reject) {
             _this.modal.close = false;
-            _this.openModal();
+            _this.setModal(_this.modal);
         };
         return new Promise();
     };
@@ -17623,9 +17623,10 @@ var render = function() {
             "button",
             {
               staticClass: "button warning",
+              attrs: { disabled: !_vm.button.cancel },
               on: {
                 click: function($event) {
-                  !_vm.button.cancel
+                  _vm.closeModal()
                 }
               }
             },

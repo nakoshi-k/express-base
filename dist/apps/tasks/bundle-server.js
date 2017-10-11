@@ -5313,7 +5313,7 @@
             disable() {
                 let disable = (resolve, reject) => {
                     this.modal.close = false;
-                    this.openModal();
+                    this.setModal(this.modal);
                 };
                 return new Promise();
             }
@@ -5354,7 +5354,9 @@
                             '" を削除します。一度削除されたデータは元に戻す事ができません。\n  ') +
                         '<div class="margin text-right"><button' +
                         _vm._ssrAttr("disabled", !_vm.button.done) +
-                        ' class="button primary">Done</button> <button class="button warning">Cancel</button></div>')
+                        ' class="button primary">Done</button> <button' +
+                        _vm._ssrAttr("disabled", !_vm.button.cancel) +
+                        ' class="button warning">Cancel</button></div>')
                 ])
                 : _vm._e();
         };

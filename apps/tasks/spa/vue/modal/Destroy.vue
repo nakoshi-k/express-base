@@ -4,7 +4,7 @@
   "{{modal.data.name}}" を削除します。一度削除されたデータは元に戻す事ができません。
   <div class="margin text-right">
     <button :disabled="!button.done" class="button primary">Done</button>
-    <button @click="!button.cancel" class="button warning">Cancel</button>
+    <button :disabled="!button.cancel" @click="closeModal()" class="button warning">Cancel</button>
   </div>
 </div>
 </template>
@@ -43,10 +43,11 @@ Component.registerHooks([
 export default class Destroy extends Vue {
     
     closeModal:() => {};
-    setModal:() => {};
+    setModal:(modal) => {};
 
     modal:{
       template:string,
+      close : boolean,
       data : {
         id : string,
         name : string
@@ -65,7 +66,7 @@ export default class Destroy extends Vue {
     disable(){
       let disable = (resolve,reject) => {
           this.modal.close = false;
-          this.openModal();
+          this.setModal(this.modal);
       }
       return new Promise();
     }

@@ -6180,7 +6180,7 @@ let Destroy = class Destroy extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a 
     disable() {
         let disable = (resolve, reject) => {
             this.modal.close = false;
-            this.openModal();
+            this.setModal(this.modal);
         };
         return new Promise();
     }
@@ -6226,7 +6226,9 @@ var render = function() {
             ) +
             '<div class="margin text-right"><button' +
             _vm._ssrAttr("disabled", !_vm.button.done) +
-            ' class="button primary">Done</button> <button class="button warning">Cancel</button></div>'
+            ' class="button primary">Done</button> <button' +
+            _vm._ssrAttr("disabled", !_vm.button.cancel) +
+            ' class="button warning">Cancel</button></div>'
         )
       ])
     : _vm._e()
