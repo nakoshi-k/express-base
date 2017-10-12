@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import {Internal} from './api';
 import {createOptionsInterFace,createOptions} from "./Interface";
 Vue.use(Vuex)
+import { indicator as indicatorClass } from "./mutations/indicator"; 
 
 export function createStore(options : createOptionsInterFace = createOptions){ 
 
@@ -65,32 +66,7 @@ export function createStore(options : createOptionsInterFace = createOptions){
   };
 
 
-  let setIndicator = (indicator , status ,complate) =>  {
-    let before = indicator.complate;
-    indicator.status = status;
-    if(complate >= 100){
-      indicator.prosess = false;
-      setTimeout( () => {
-        indicator.status = "primary";
-      },500);
-    }else{
-      indicator.prosess = true  ;
-    }
-    
-    if(before > complate ){
-      indicator.show = false;
-      indicator.complate = 0;
-      setTimeout( () => {
-        indicator.show = true;
-        indicator.complate = complate;
-      },1)
-      return;
-    }
-    
-    indicator.show = true;
-    indicator.complate = complate;
-  }
-
+  let indicator = new indicatorClass();
 
   let mutations = {
     setEntities : ( state , paginate ) => {
@@ -103,17 +79,7 @@ export function createStore(options : createOptionsInterFace = createOptions){
     updateEntity : (state , kv : {key:string,value:string} ) => {
       state.task[ kv.key ] = kv.value;
     },
-    loading : (state) => {
-        setIndicator(state.indicator,"success" , 8);
-        state.overLay = true;
-        state.loading = true;
-    },
-    endLoading : (state , status ) => {
-      setIndicator(state.indicator,"success" , 100);
-      state.loading = false;
-      state.overLay = false;
-    },
-    setModal(state,{template , data , show }:{template : string , data : {any} , show : boolean}){
+    setModal:(state,{template , data , show }:{template : string , data : {any} , show : boolean}) =>{
       state.modal.template = template;
       state.modal.data = data;
     },
@@ -127,9 +93,7 @@ export function createStore(options : createOptionsInterFace = createOptions){
       state.modal.template = "";                                                                                                                                                                                              
       state.modal.show = false;                                                                                                                                                                                              
     },
-    setIndicator({indicator},{status,complate}){
-      setIndicator(indicator,status,complate)
-    }
+    ...indicator.map( ["setIndicator" , "loading" , "endLoading"] )
   }
 
   let getters = {
@@ -146,11 +110,13 @@ export function createStore(options : createOptionsInterFace = createOptions){
     }
   }
 
+  
   let vuex : Vuex.StoreOptions<any> =  {
     state : state ,
     actions: actions ,
     mutations:mutations,
-    getters:getters
+    getters: getters
   }
+
   return new Vuex.Store(vuex);
 }

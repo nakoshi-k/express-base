@@ -15934,12 +15934,21 @@ if (false) {
 
 "use strict";
 
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var vue_1 = __webpack_require__(0);
 var vuex_1 = __webpack_require__(3);
 var api_1 = __webpack_require__(38);
 var Interface_1 = __webpack_require__(5);
 vue_1.default.use(vuex_1.default);
+var indicator_1 = __webpack_require__(63);
 function createStore(options) {
     if (options === void 0) { options = Interface_1.createOptions; }
     var api = new api_1.Internal({
@@ -16001,57 +16010,19 @@ function createStore(options) {
             });
         }
     };
-    var setIndicator = function (indicator, status, complate) {
-        var before = indicator.complate;
-        indicator.status = status;
-        if (complate >= 100) {
-            indicator.prosess = false;
-            setTimeout(function () {
-                indicator.status = "primary";
-            }, 500);
-        }
-        else {
-            indicator.prosess = true;
-        }
-        if (before > complate) {
-            indicator.show = false;
-            indicator.complate = 0;
-            setTimeout(function () {
-                indicator.show = true;
-                indicator.complate = complate;
-            }, 1);
-            return;
-        }
-        indicator.show = true;
-        indicator.complate = complate;
-    };
-    var mutations = {
-        setEntities: function (state, paginate) {
+    var indicator = new indicator_1.indicator();
+    var mutations = __assign({ setEntities: function (state, paginate) {
             state.tasks = paginate.tasks;
             state.page = paginate.page;
-        },
-        setEntity: function (state, entity) {
+        }, setEntity: function (state, entity) {
             state.task = entity;
-        },
-        updateEntity: function (state, kv) {
+        }, updateEntity: function (state, kv) {
             state.task[kv.key] = kv.value;
-        },
-        loading: function (state) {
-            setIndicator(state.indicator, "success", 8);
-            state.overLay = true;
-            state.loading = true;
-        },
-        endLoading: function (state, status) {
-            setIndicator(state.indicator, "success", 100);
-            state.loading = false;
-            state.overLay = false;
-        },
-        setModal: function (state, _a) {
+        }, setModal: function (state, _a) {
             var template = _a.template, data = _a.data, show = _a.show;
             state.modal.template = template;
             state.modal.data = data;
-        },
-        toggleModal: function (state) {
+        }, toggleModal: function (state) {
             if (!state.modal.show) {
                 state.modal.close = true;
             }
@@ -16060,13 +16031,7 @@ function createStore(options) {
         closeModal: function (state) {
             state.modal.template = "";
             state.modal.show = false;
-        },
-        setIndicator: function (_a, _b) {
-            var indicator = _a.indicator;
-            var status = _b.status, complate = _b.complate;
-            setIndicator(indicator, status, complate);
-        }
-    };
+        } }, indicator.map(["setIndicator", "loading", "endLoading"]));
     var getters = {
         domain: function (state) {
             return state.domain;
@@ -17662,6 +17627,70 @@ if (false) {
      require("vue-hot-reload-api").rerender("data-v-bb130540", esExports)
   }
 }
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var indicator = /** @class */ (function () {
+    function indicator() {
+        var _this = this;
+        this.setIndicator = function (indicator, status, complate) {
+            var before = indicator.complate;
+            indicator.status = status;
+            if (complate >= 100) {
+                indicator.prosess = false;
+                setTimeout(function () {
+                    indicator.status = "primary";
+                }, 500);
+            }
+            else {
+                indicator.prosess = true;
+            }
+            if (before > complate) {
+                indicator.show = false;
+                indicator.complate = 0;
+                setTimeout(function () {
+                    indicator.show = true;
+                    indicator.complate = complate;
+                }, 1);
+                return;
+            }
+            indicator.show = true;
+            indicator.complate = complate;
+        };
+        this.loading = function (state) {
+            _this.setIndicator(state.indicator, "success", 8);
+            state.overLay = true;
+            state.loading = true;
+        };
+        this.endLoading = function (state, status) {
+            _this.setIndicator(state.indicator, status, 100);
+            state.loading = false;
+            state.overLay = false;
+        };
+        this.map = function (call) {
+            var map = {};
+            for (var key in call) {
+                if (typeof _this[call[key]] === 'undefined') {
+                    continue;
+                }
+                if (typeof key === 'number') {
+                    map[call[key]] = _this[call[key]];
+                    continue;
+                }
+                map[call[key]] = _this[call[key]];
+            }
+            return map;
+        };
+    }
+    return indicator;
+}());
+exports.indicator = indicator;
+
 
 /***/ })
 /******/ ]);

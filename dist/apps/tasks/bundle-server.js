@@ -4210,6 +4210,7 @@
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(3);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__api__ = __webpack_require__(36);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Interface__ = __webpack_require__(4);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mutations_indicator__ = __webpack_require__(61);
         __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
         function createStore(options = __WEBPACK_IMPORTED_MODULE_3__Interface__["a" /* createOptions */]) {
             let api = new __WEBPACK_IMPORTED_MODULE_2__api__["a" /* Internal */]({
@@ -4267,56 +4268,18 @@
                     });
                 }
             };
-            let setIndicator = (indicator, status, complate) => {
-                let before = indicator.complate;
-                indicator.status = status;
-                if (complate >= 100) {
-                    indicator.prosess = false;
-                    setTimeout(() => {
-                        indicator.status = "primary";
-                    }, 500);
-                }
-                else {
-                    indicator.prosess = true;
-                }
-                if (before > complate) {
-                    indicator.show = false;
-                    indicator.complate = 0;
-                    setTimeout(() => {
-                        indicator.show = true;
-                        indicator.complate = complate;
-                    }, 1);
-                    return;
-                }
-                indicator.show = true;
-                indicator.complate = complate;
-            };
-            let mutations = {
-                setEntities: (state, paginate) => {
+            let indicator = new __WEBPACK_IMPORTED_MODULE_4__mutations_indicator__["a" /* indicator */]();
+            let mutations = Object.assign({ setEntities: (state, paginate) => {
                     state.tasks = paginate.tasks;
                     state.page = paginate.page;
-                },
-                setEntity: (state, entity) => {
+                }, setEntity: (state, entity) => {
                     state.task = entity;
-                },
-                updateEntity: (state, kv) => {
+                }, updateEntity: (state, kv) => {
                     state.task[kv.key] = kv.value;
-                },
-                loading: (state) => {
-                    setIndicator(state.indicator, "success", 8);
-                    state.overLay = true;
-                    state.loading = true;
-                },
-                endLoading: (state, status) => {
-                    setIndicator(state.indicator, "success", 100);
-                    state.loading = false;
-                    state.overLay = false;
-                },
-                setModal(state, { template, data, show }) {
+                }, setModal: (state, { template, data, show }) => {
                     state.modal.template = template;
                     state.modal.data = data;
-                },
-                toggleModal(state) {
+                }, toggleModal(state) {
                     if (!state.modal.show) {
                         state.modal.close = true;
                     }
@@ -4325,11 +4288,7 @@
                 closeModal(state) {
                     state.modal.template = "";
                     state.modal.show = false;
-                },
-                setIndicator({ indicator }, { status, complate }) {
-                    setIndicator(indicator, status, complate);
-                }
-            };
+                } }, indicator.map(["setIndicator", "loading", "endLoading"]));
             let getters = {
                 domain: (state) => {
                     return state.domain;
@@ -5378,6 +5337,64 @@
         render._withStripped = true;
         var esExports = { render: render, staticRenderFns: staticRenderFns };
         /* harmony default export */ __webpack_exports__["a"] = (esExports);
+        /***/ 
+    }),
+    /* 61 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        class indicator {
+            constructor() {
+                this.setIndicator = (indicator, status, complate) => {
+                    let before = indicator.complate;
+                    indicator.status = status;
+                    if (complate >= 100) {
+                        indicator.prosess = false;
+                        setTimeout(() => {
+                            indicator.status = "primary";
+                        }, 500);
+                    }
+                    else {
+                        indicator.prosess = true;
+                    }
+                    if (before > complate) {
+                        indicator.show = false;
+                        indicator.complate = 0;
+                        setTimeout(() => {
+                            indicator.show = true;
+                            indicator.complate = complate;
+                        }, 1);
+                        return;
+                    }
+                    indicator.show = true;
+                    indicator.complate = complate;
+                };
+                this.loading = (state) => {
+                    this.setIndicator(state.indicator, "success", 8);
+                    state.overLay = true;
+                    state.loading = true;
+                };
+                this.endLoading = (state, status) => {
+                    this.setIndicator(state.indicator, status, 100);
+                    state.loading = false;
+                    state.overLay = false;
+                };
+                this.map = (call) => {
+                    let map = {};
+                    for (let key in call) {
+                        if (typeof this[call[key]] === 'undefined') {
+                            continue;
+                        }
+                        if (typeof key === 'number') {
+                            map[call[key]] = this[call[key]];
+                            continue;
+                        }
+                        map[call[key]] = this[call[key]];
+                    }
+                    return map;
+                };
+            }
+        }
+        /* harmony export (immutable) */ __webpack_exports__["a"] = indicator;
         /***/ 
     })
     /******/ 
