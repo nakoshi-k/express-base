@@ -23,6 +23,7 @@ export class indicator{
         }
         indicator.show = true;
         indicator.complate = complate;
+        
       }
      
      loading = (state) => {
