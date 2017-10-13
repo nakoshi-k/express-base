@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import Router, { RouteConfig } from 'vue-router';
-import Hello from './vue/Hello.vue';
-import Navi from './vue/Navi.vue';
-import Page from './vue/Page.vue';
-import Sub from './vue/Sub.vue';
-import Add from './vue/Add.vue';
-import View from './vue/View.vue';
-import Edit from './vue/Edit.vue';
+import Hello from './components/Hello.vue';
+import Navi from './components/Navi.vue';
+import Page from './components/tasks/Page.vue';
+import Sub from './components/Sub.vue';
+import Add from './components/tasks/Add.vue';
+import View from './components/tasks/View.vue';
+import Edit from './components/tasks/Edit.vue';
 import {createOptionsInterFace,createOptions} from "./Interface";
 Vue.use(Router)
 
@@ -20,6 +20,7 @@ export function createRouter(options : createOptionsInterFace = createOptions){
             { name : "add" , path: `/${opt.entities}/add`, components: { main : Add , navi : Navi ,sub : Sub } } as RouteConfig,
             { name : "view" , path: `/${opt.entities}/:id`, components: { main : View , navi : Navi ,sub : Sub } } as RouteConfig,
             { name : "edit" , path: `/${opt.entities}/:id/edit`, components: { main : Edit , navi : Navi ,sub : Sub } } as RouteConfig,
+
         ]
     })
 }

@@ -24,7 +24,7 @@ export default context => {
           return;
         }
         if(Component.extendOptions.asyncData){
-          store.commit("loading");
+          store.commit("loading/loading");
           return Component.extendOptions.asyncData({
             store,route: router.currentRoute
           });

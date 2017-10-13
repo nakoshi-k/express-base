@@ -26,9 +26,10 @@ Component.registerHooks([
     ...mapGetters([
       'domain' , 'token'
     ]),
-    ...mapState([
-      'loading'
-    ])
+    ...mapState( "loading" , {
+        loading : ({loading}) => loading,
+        overLay: ({overLay}) => overLay
+    })
   },
 })  
 

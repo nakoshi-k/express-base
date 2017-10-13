@@ -1,5 +1,5 @@
 <template>
-<div id="modal-container" v-if="modal.show" @click.self="close()">
+<div id="modal-container" v-if="show" @click.self="close()">
   <div class="modal">
     <span @click="close()" class="close typcn typcn-delete large" :class="{disabled : isDisable }"></span>
     <div class="content">
@@ -32,12 +32,14 @@ Component.registerHooks([
     ...mapGetters([
       'domain' , 'token'
     ]),
-    ...mapState([
-      'modal'
-    ])
+    ...mapState( 'modal' , {
+        'show' : ({show}) => show,
+        '_close' : ({close}) => close
+      }
+    )
   },
   methods : {
-    ...mapMutations(["closeModal"])
+    ...mapMutations( "modal" , ["closeModal"])
   },
   components : {
     "modal-destroy" : Destroy
@@ -46,15 +48,18 @@ Component.registerHooks([
 })
 
 export default class Modal extends Vue {
-  modal:{close:boolean};
+  show:boolean;
+  _close:boolean;
   closeModal:() => {};
+  
   close(){
-    if(this.modal.close){
+    if(this._close){
       this.closeModal()
     }
   }
+
   get isDisable(){
-    return !this.modal.close;
+    return !this.close;
   }
 
 }

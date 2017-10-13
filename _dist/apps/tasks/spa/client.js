@@ -5,7 +5,7 @@ let domain = {
     host: "",
     entities: "tasks",
     entity: "task",
-    request: {}
+    server: { request: {} },
 };
 const { app, router, store } = app_1.createApp(domain);
 if (window["__INITIAL_STATE__"]) {

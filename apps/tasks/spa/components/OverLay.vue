@@ -34,8 +34,8 @@ Component.registerHooks([
     ...mapGetters([
       'domain' , 'token'
     ]),
-    ...mapState({
-      overLay: (state:{overLay:boolean}) => state.overLay,
+    ...mapState("loading" , {
+      overLay: ({overLay}) => overLay,
     }) 
   },
 })

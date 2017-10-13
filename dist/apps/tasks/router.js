@@ -33,6 +33,7 @@ class router extends router_1.router {
                 this.setData({ ssr: ssr });
                 this.render(req, res, "vue");
             }).catch(err => {
+                console.log(err);
                 if (err.code == 404) {
                     res.status(404);
                 }

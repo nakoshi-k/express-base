@@ -24,9 +24,10 @@ Component.registerHooks([
     ...mapGetters([
       'domain' , 'token'
     ]),
-    ...mapState([
-      'indicator'
-    ])
+    ...mapState( "loading" ,{
+        indicator : (state:any) => state.indicator
+      } 
+    )
   },
 })  
 

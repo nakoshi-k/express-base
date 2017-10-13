@@ -1,7 +1,7 @@
 <template>
 <div v-if="show">
-  <h3>Delete #{{modal.data.id}}</h3>
-  "{{modal.data.name}}" を削除します。一度削除されたデータは元に戻す事ができません。
+  <h3>Delete #{{data.id}}</h3>
+  "{{data.name}}" を削除します。一度削除されたデータは元に戻す事ができません。
   <div class="margin text-right">
     <button :disabled="!button.done" class="button primary">Apply</button>
     <button :disabled="!button.cancel" @click="closeModal()" class="button warning">Cancel</button>
@@ -31,12 +31,14 @@ Component.registerHooks([
     ...mapGetters([
       'domain' , 'token'
     ]),
-    ...mapState([
-      'modal'
-    ])
+    ...mapState('modal' , { 
+      'close' : ({close}) => close,
+      'data' : ({data}) => data,
+      'template' : ({template}) => template,
+    })
   },
   methods : {
-    ...mapMutations([ "setModal" , "toggleModal", "closeModal"])
+    ...mapMutations('modal' , [ "setModal" , "toggleModal", "closeModal"])
   }
 })
 
@@ -45,14 +47,13 @@ export default class Destroy extends Vue {
     closeModal:() => {};
     setModal:(modal) => {};
 
-    modal:{
-      template:string,
-      close : boolean,
-      data : {
-        id : string,
-        name : string
-      }
-      }
+    template:string;
+    close : boolean;
+    data : {
+      id : string,
+      name : string
+    };
+  
     button = {
       done : true,
       cancel : true
@@ -60,13 +61,11 @@ export default class Destroy extends Vue {
     name = "Destroy";
     
     get show(){
-        return this.modal.template === this.name
+        return this.template === this.name
     }
 
     disable(){
       let disable = (resolve,reject) => {
-          this.modal.close = false;
-          this.setModal(this.modal);
           resolve(true);
       }
       return new Promise(disable);

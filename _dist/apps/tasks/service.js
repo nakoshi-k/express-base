@@ -7,9 +7,9 @@ class service extends service_1.service {
         this.conditions = (req) => {
             let search = this.search();
             search.query = req.query;
+            search.limit = 5;
             search.page = req.params.page;
-            search.limit = 1;
-            search.append("name", search.like("%{word}%"));
+            search.append("title", search.like("%{word}%"));
             return search.build();
         };
     }

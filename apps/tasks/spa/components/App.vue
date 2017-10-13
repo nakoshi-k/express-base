@@ -8,7 +8,7 @@
     </div>
   </div>
   <app-modal></app-modal>
-  <over-lay></over-lay>
+  <app-overlay></app-overlay>
 </div>
 </template>
 <script lang="ts">
@@ -31,7 +31,7 @@ Component.registerHooks([
 @Component({
   name: 'App',
   components:{
-    "over-lay":OverLay,
+    "app-overlay":OverLay,
     "app-modal":Modal
   }
 })

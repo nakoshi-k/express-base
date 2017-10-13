@@ -7,6 +7,14 @@ class search {
         this._query = {};
         this._limit = 10;
         this._offset = 1;
+        this._page = 1;
+        this.build = () => {
+            return {
+                offset: this.offset(),
+                limit: this.limit,
+                where: this._where
+            };
+        };
         this.like = (template, alias = "") => {
             return (names, self) => {
                 alias = (alias !== "") ? alias : names;
@@ -75,12 +83,6 @@ class search {
         this.query = query;
         return this;
     }
-    get offset() {
-        return this._offset;
-    }
-    set offset(offset) {
-        this._offset = offset;
-    }
     get limit() {
         return this._limit;
     }
@@ -91,14 +93,10 @@ class search {
         if (!page) {
             page = 1;
         }
-        this.offset = this.limit * (page - 1);
+        this._page = page;
     }
-    build() {
-        return {
-            offset: this.offset,
-            limit: this.limit,
-            where: this._where
-        };
+    offset() {
+        return (this._page - 1) * this.limit;
     }
     set query(query) {
         this._query = query;

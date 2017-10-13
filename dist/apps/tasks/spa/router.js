@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const vue_1 = require("vue");
 const vue_router_1 = require("vue-router");
-const Navi_vue_1 = require("./vue/Navi.vue");
-const Page_vue_1 = require("./vue/Page.vue");
-const Sub_vue_1 = require("./vue/Sub.vue");
-const Add_vue_1 = require("./vue/Add.vue");
-const View_vue_1 = require("./vue/View.vue");
-const Edit_vue_1 = require("./vue/Edit.vue");
+const Navi_vue_1 = require("./components/Navi.vue");
+const Page_vue_1 = require("./components/tasks/Page.vue");
+const Sub_vue_1 = require("./components/Sub.vue");
+const Add_vue_1 = require("./components/tasks/Add.vue");
+const View_vue_1 = require("./components/tasks/View.vue");
+const Edit_vue_1 = require("./components/tasks/Edit.vue");
 const Interface_1 = require("./Interface");
 vue_1.default.use(vue_router_1.default);
 function createRouter(options = Interface_1.createOptions) {

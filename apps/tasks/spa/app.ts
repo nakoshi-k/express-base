@@ -1,5 +1,5 @@
 import  Vue , {mixin,ComponentOptions } from 'vue';
-import App from './vue/App.vue';
+import App from './components/App.vue';
 import { createRouter } from './router';
 import { createStore } from './store';
 import { sync } from 'vuex-router-sync'
@@ -9,11 +9,11 @@ Vue.mixin({
   beforeMount () {
     const asyncData = this.$options["asyncData"];
     if (asyncData) {
-      let ad = Promise.resolve(this.$store.commit("loading"));
+      let ad = Promise.resolve(this.$store.commit("loading/loading"));
       ad.then( () => asyncData({store: this.$store,route: this.$route}) )
       .then(res => {
         setTimeout(() => {
-          this.$store.commit("endLoading");
+          this.$store.commit("loading/endLoading");
         },240)
       }).catch(err => {
         let domain = this.$store.state["domain"];
@@ -25,13 +25,13 @@ Vue.mixin({
   beforeRouteUpdate (to, from, next) {
     const { asyncData } = this.$options
     if (asyncData) {
-      this.$store.commit("loading");
+      this.$store.commit("loading/loading");
       asyncData({
         store: this.$store,
         route: to
       }).then(() => {
         setTimeout(() => {
-          this.$store.commit("endLoading");
+          this.$store.commit("loading/endLoading");
         },240)
         next();
       }).catch(next)
