@@ -17,7 +17,7 @@ Vue.mixin({
         },240)
       }).catch(err => {
         let domain = this.$store.state["domain"];
-        this.$router.push({path : `/${domain}`});
+        this.$router.push({path : `/tasks`});
       });
       this["dataPromise"] = ad;
     }

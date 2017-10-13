@@ -1,4 +1,5 @@
 import * as express from "express";
+import * as path from "path";
 import {router as app_router} from "../router";
 import {service} from "./service";
 import * as helpers  from "../../base/helper";
@@ -41,9 +42,9 @@ export class router extends app_router {
                     if (err) {
                         if (err.code === 404) {
                           reject(404);
-                        } {
-                          reject(500);
-                        }
+                        } 
+                       reject(500);
+                       return
                     }
                     resolve( html + stateTag);
               });
@@ -54,7 +55,7 @@ export class router extends app_router {
         return new Promise(ssr);
     }
 
-    private vue = (req : express.Request,res: express.Response, next : express.NextFunction) => {
+    private spa = (req : express.Request,res: express.Response, next : express.NextFunction) => {
         const context = {
             url: `${this.mount}${req.url}`,
             server : {
@@ -63,8 +64,9 @@ export class router extends app_router {
             }
         };
         this.ssr(context).then(ssr => {
+            let viewDir = path.resolve(__dirname + '/../views/spa');
             this.setData( {ssr : ssr} );
-            this.render( req , res ,"vue");
+            this.render( req , res ,viewDir);
         }).catch(err => {
             if ( err.code == 404){
                 res.status(404);
@@ -79,7 +81,7 @@ export class router extends app_router {
     private search = (req : express.Request,res: express.Response, next : express.NextFunction) => {
 
         if(!this.isXhr(req)){
-            this.vue( req , res , next );
+            this.spa( req , res , next );
             return; 
         }
 
@@ -104,7 +106,7 @@ export class router extends app_router {
     private entity = (req:express.Request,res:express.Response,next:express.NextFunction) => {
         
         if(!this.isXhr(req)){
-            this.vue( req , res , next );
+            this.spa( req , res , next );
             return; 
         }
 
@@ -138,7 +140,7 @@ export class router extends app_router {
     private insert = (req: express.Request,res:express.Response,next:express.NextFunction) => {
 
         if(!this.isXhr(req)){
-            this.vue( req , res , next );
+            this.spa( req , res , next );
             return; 
         }
 
@@ -156,7 +158,7 @@ export class router extends app_router {
     private update = (req:express.Request,res:express.Response,next:express.NextFunction) => {
 
         if(!this.isXhr(req)){
-            this.vue( req , res , next );
+            this.spa( req , res , next );
             return; 
         }
 
@@ -180,7 +182,7 @@ export class router extends app_router {
         router.get("/", csrfProtection , this.search);
         router.get("/page/:page", csrfProtection , this.search);
         router.get("/:id", csrfProtection , this.entity);
-        router.get("/*", csrfProtection , this.vue);
+        router.get("/*", csrfProtection , this.spa);
         router.post("/",  csrfProtection , this.insert);
         router.put("/:id",csrfProtection,this.update);
         router.delete("/:id", csrfProtection , this.delete);

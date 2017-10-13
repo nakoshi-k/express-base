@@ -12278,7 +12278,7 @@ vue_1.default.mixin({
                 }, 240);
             }).catch(function (err) {
                 var domain = _this.$store.state["domain"];
-                _this.$router.push({ path: "/" + domain });
+                _this.$router.push({ path: "/tasks" });
             });
             this["dataPromise"] = ad;
         }
@@ -16270,7 +16270,7 @@ if (false) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_sub_vue__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_sub_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_sub_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_f6229848_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_sub_vue__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_173c359c_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_sub_vue__ = __webpack_require__(48);
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
@@ -16285,12 +16285,12 @@ var __vue_scopeId__ = null
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_sub_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_f6229848_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_sub_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_173c359c_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_sub_vue__["a" /* default */],
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "apps/spa/components/sub.vue"
+Component.options.__file = "apps/tasks/components/sub.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] sub.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -16301,9 +16301,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-f6229848", Component.options)
+    hotAPI.createRecord("data-v-173c359c", Component.options)
   } else {
-    hotAPI.reload("data-v-f6229848", Component.options)
+    hotAPI.reload("data-v-173c359c", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -16329,6 +16329,14 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -16338,6 +16346,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var vue_1 = __webpack_require__(0);
 var vue_class_component_1 = __webpack_require__(2);
+var vuex_1 = __webpack_require__(3);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -16355,7 +16364,13 @@ var sub = /** @class */ (function (_super) {
     }
     sub = __decorate([
         vue_class_component_1.default({
-            name: 'sub'
+            name: 'sub',
+            computed: __assign({}, vuex_1.mapState('tasks', {
+                mount: function (_a) {
+                    var mount = _a.mount;
+                    return mount;
+                }
+            }))
         })
     ], sub);
     return sub;
@@ -16376,13 +16391,17 @@ var render = function() {
     _c("ul", [
       _c(
         "li",
-        [_c("router-link", { attrs: { to: "/tasks" } }, [_vm._v("Index")])],
+        [_c("router-link", { attrs: { to: _vm.mount } }, [_vm._v("Index")])],
         1
       ),
       _vm._v(" "),
       _c(
         "li",
-        [_c("router-link", { attrs: { to: "/tasks/add" } }, [_vm._v("Add")])],
+        [
+          _c("router-link", { attrs: { to: _vm.mount + "/add" } }, [
+            _vm._v("Add")
+          ])
+        ],
         1
       )
     ])
@@ -16395,7 +16414,7 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-f6229848", esExports)
+     require("vue-hot-reload-api").rerender("data-v-173c359c", esExports)
   }
 }
 
@@ -17032,7 +17051,7 @@ var add = /** @class */ (function (_super) {
     __extends(add, _super);
     function add() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.task = {
+        _this.entity = {
             title: "",
             priod: ""
         };
@@ -17085,18 +17104,18 @@ var render = function() {
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.task.title,
-              expression: "task.title"
+              value: _vm.entity.title,
+              expression: "entity.title"
             }
           ],
           attrs: { type: "text", name: "title", placeholder: "title" },
-          domProps: { value: _vm.task.title },
+          domProps: { value: _vm.entity.title },
           on: {
             input: function($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.task.title = $event.target.value
+              _vm.entity.title = $event.target.value
             }
           }
         })
@@ -17110,19 +17129,19 @@ var render = function() {
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.task.priod,
-              expression: "task.priod"
+              value: _vm.entity.priod,
+              expression: "entity.priod"
             }
           ],
           staticClass: "calendar",
           attrs: { type: "text", name: "priod", placeholder: "priod" },
-          domProps: { value: _vm.task.priod },
+          domProps: { value: _vm.entity.priod },
           on: {
             input: function($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.task.priod = $event.target.value
+              _vm.entity.priod = $event.target.value
             }
           }
         })
@@ -17274,29 +17293,31 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "resource column column-75" }, [
-    _c("h2", [_vm._v("View")]),
-    _vm._v(" "),
-    _c("h3", [_vm._v("Id")]),
-    _vm._v(" "),
-    _c("div", [_vm._v(_vm._s(_vm.entity.id))]),
-    _vm._v(" "),
-    _c("h3", [_vm._v("Title")]),
-    _vm._v(" "),
-    _c("div", [_vm._v(_vm._s(_vm.entity.title))]),
-    _vm._v(" "),
-    _c("h3", [_vm._v("Priod")]),
-    _vm._v(" "),
-    _c("div", [_vm._v(_vm._s(_vm.entity.priod))]),
-    _vm._v(" "),
-    _c("h3", [_vm._v("Created")]),
-    _vm._v(" "),
-    _c("div", [_vm._v(_vm._s(_vm.entity.created_at))]),
-    _vm._v(" "),
-    _c("h3", [_vm._v("Updated")]),
-    _vm._v(" "),
-    _c("div", [_vm._v(_vm._s(_vm.entity.updated_at))])
-  ])
+  return _vm.entity.id
+    ? _c("div", { staticClass: "resource column column-75" }, [
+        _c("h2", [_vm._v("View")]),
+        _vm._v(" "),
+        _c("h3", [_vm._v("Id")]),
+        _vm._v(" "),
+        _c("div", [_vm._v(_vm._s(_vm.entity.id))]),
+        _vm._v(" "),
+        _c("h3", [_vm._v("Title")]),
+        _vm._v(" "),
+        _c("div", [_vm._v(_vm._s(_vm.entity.title))]),
+        _vm._v(" "),
+        _c("h3", [_vm._v("Priod")]),
+        _vm._v(" "),
+        _c("div", [_vm._v(_vm._s(_vm.entity.priod))]),
+        _vm._v(" "),
+        _c("h3", [_vm._v("Created")]),
+        _vm._v(" "),
+        _c("div", [_vm._v(_vm._s(_vm.entity.created_at))]),
+        _vm._v(" "),
+        _c("h3", [_vm._v("Updated")]),
+        _vm._v(" "),
+        _c("div", [_vm._v(_vm._s(_vm.entity.updated_at))])
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -17424,7 +17445,7 @@ var edit = /** @class */ (function (_super) {
     };
     Object.defineProperty(edit.prototype, "action", {
         get: function () {
-            return "/" + this.domain + "/" + this.entity.id;
+            return this.mount + "/" + this.entity.id;
         },
         enumerable: true,
         configurable: true
@@ -17446,6 +17467,10 @@ var edit = /** @class */ (function (_super) {
                 entity: function (_a) {
                     var entity = _a.entity;
                     return entity;
+                },
+                mount: function (_a) {
+                    var mount = _a.mount;
+                    return mount;
                 }
             })),
             methods: __assign({}, vuex_1.mapActions("tasks", ["fetchEntity"]), vuex_1.mapMutations("tasks", ["updateEntity"]))
@@ -17541,9 +17566,6 @@ var vue_module_2 = __webpack_require__(70);
 var vue_module_3 = __webpack_require__(75);
 function createStore(server) {
     var getters = {
-        domain: function (state) {
-            return state.domain;
-        },
         token: function (state) {
             if (typeof window === "undefined") {
                 return "";
@@ -18105,6 +18127,7 @@ var internal = /** @class */ (function () {
                     .then(function (response) {
                     if (response.status !== 201) {
                         reject(response.status);
+                        throw Error;
                     }
                     ;
                     return response.json();
@@ -18112,6 +18135,7 @@ var internal = /** @class */ (function () {
                     resolve(data);
                 }).catch(function (err) {
                     reject(err);
+                    throw Error;
                 });
             };
             return new Promise(client);
@@ -18129,7 +18153,7 @@ var internal = /** @class */ (function () {
                 req(options, function (error, response, body) {
                     if (error) {
                         reject(true);
-                        return;
+                        throw Error;
                     }
                     resolve(JSON.parse(body));
                 });

@@ -4105,7 +4105,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin({
                 }, 240);
             }).catch(err => {
                 let domain = this.$store.state["domain"];
-                this.$router.push({ path: `/${domain}` });
+                this.$router.push({ path: `/tasks` });
             });
             this["dataPromise"] = ad;
         }
@@ -4865,7 +4865,7 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_router__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_navi_vue__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_sub_vue__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tasks_components_sub_vue__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__tasks_components_page_vue__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__tasks_components_add_vue__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__tasks_components_view_vue__ = __webpack_require__(56);
@@ -4883,11 +4883,11 @@ function createRouter() {
     return new __WEBPACK_IMPORTED_MODULE_1_vue_router___default.a({
         mode: 'history',
         routes: [
-            { name: "page", path: `/tasks/page/:page*`, components: { main: __WEBPACK_IMPORTED_MODULE_4__tasks_components_page_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_2__components_navi_vue__["a" /* default */], sub: __WEBPACK_IMPORTED_MODULE_3__components_sub_vue__["a" /* default */] } },
+            { name: "page", path: `/tasks/page/:page*`, components: { main: __WEBPACK_IMPORTED_MODULE_4__tasks_components_page_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_2__components_navi_vue__["a" /* default */], sub: __WEBPACK_IMPORTED_MODULE_3__tasks_components_sub_vue__["a" /* default */] } },
             { name: "index", path: `/tasks/page/1`, alias: `/tasks/` },
-            { name: "add", path: `/tasks/add`, components: { main: __WEBPACK_IMPORTED_MODULE_5__tasks_components_add_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_2__components_navi_vue__["a" /* default */], sub: __WEBPACK_IMPORTED_MODULE_3__components_sub_vue__["a" /* default */] } },
-            { name: "view", path: `/tasks/:id`, components: { main: __WEBPACK_IMPORTED_MODULE_6__tasks_components_view_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_2__components_navi_vue__["a" /* default */], sub: __WEBPACK_IMPORTED_MODULE_3__components_sub_vue__["a" /* default */] } },
-            { name: "edit", path: `/tasks/:id/edit`, components: { main: __WEBPACK_IMPORTED_MODULE_7__tasks_components_edit_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_2__components_navi_vue__["a" /* default */], sub: __WEBPACK_IMPORTED_MODULE_3__components_sub_vue__["a" /* default */] } },
+            { name: "add", path: `/tasks/add`, components: { main: __WEBPACK_IMPORTED_MODULE_5__tasks_components_add_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_2__components_navi_vue__["a" /* default */], sub: __WEBPACK_IMPORTED_MODULE_3__tasks_components_sub_vue__["a" /* default */] } },
+            { name: "view", path: `/tasks/:id`, components: { main: __WEBPACK_IMPORTED_MODULE_6__tasks_components_view_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_2__components_navi_vue__["a" /* default */], sub: __WEBPACK_IMPORTED_MODULE_3__tasks_components_sub_vue__["a" /* default */] } },
+            { name: "edit", path: `/tasks/:id/edit`, components: { main: __WEBPACK_IMPORTED_MODULE_7__tasks_components_edit_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_2__components_navi_vue__["a" /* default */], sub: __WEBPACK_IMPORTED_MODULE_3__tasks_components_sub_vue__["a" /* default */] } },
         ]
     });
 }
@@ -5181,7 +5181,7 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_sub_vue__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_f6229848_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_sub_vue__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_173c359c_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_sub_vue__ = __webpack_require__(46);
 var normalizeComponent = __webpack_require__(1)
 /* script */
 
@@ -5192,15 +5192,15 @@ var __vue_styles__ = null
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
-var __vue_module_identifier__ = "6e10e2c3"
+var __vue_module_identifier__ = "1db3f659"
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_sub_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_f6229848_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_sub_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_173c359c_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_sub_vue__["a" /* default */],
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "apps/spa/components/sub.vue"
+Component.options.__file = "apps/tasks/components/sub.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] sub.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -5216,12 +5216,14 @@ if (Component.options.functional) {console.error("[vue-loader] sub.vue: function
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(3);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
@@ -5238,7 +5240,10 @@ let sub = class sub extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
 };
 sub = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
-        name: 'sub'
+        name: 'sub',
+        computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])('tasks', {
+            mount: ({ mount }) => mount
+        }))
     })
 ], sub);
 /* harmony default export */ __webpack_exports__["a"] = (sub);
@@ -5261,14 +5266,18 @@ var render = function() {
         _vm._ssrNode(
           "<li>",
           "</li>",
-          [_c("router-link", { attrs: { to: "/tasks" } }, [_vm._v("Index")])],
+          [_c("router-link", { attrs: { to: _vm.mount } }, [_vm._v("Index")])],
           1
         ),
         _vm._ssrNode(" "),
         _vm._ssrNode(
           "<li>",
           "</li>",
-          [_c("router-link", { attrs: { to: "/tasks/add" } }, [_vm._v("Add")])],
+          [
+            _c("router-link", { attrs: { to: _vm.mount + "/add" } }, [
+              _vm._v("Add")
+            ])
+          ],
           1
         )
       ],
@@ -5772,7 +5781,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
 let add = class add extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
     constructor() {
         super(...arguments);
-        this.task = {
+        this.entity = {
             title: "",
             priod: ""
         };
@@ -5811,9 +5820,9 @@ var render = function() {
       '<h2>Add</h2> <form action="./" method="post"><input type="hidden" name="_csrf"' +
         _vm._ssrAttr("value", _vm.token) +
         '> <div class="form-item"><label for="title">title</label> <input type="text" name="title" placeholder="title"' +
-        _vm._ssrAttr("value", _vm.task.title) +
+        _vm._ssrAttr("value", _vm.entity.title) +
         '></div> <div class="form-item"><label for="priod">priod</label> <input type="text" name="priod" placeholder="priod"' +
-        _vm._ssrAttr("value", _vm.task.priod) +
+        _vm._ssrAttr("value", _vm.entity.priod) +
         ' class="calendar"></div> <button type="submit">submit</button></form>'
     )
   ])
@@ -5911,21 +5920,23 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "resource column column-75" }, [
-    _vm._ssrNode(
-      "<h2>View</h2> <h3>Id</h3> <div>" +
-        _vm._ssrEscape(_vm._s(_vm.entity.id)) +
-        "</div> <h3>Title</h3> <div>" +
-        _vm._ssrEscape(_vm._s(_vm.entity.title)) +
-        "</div> <h3>Priod</h3> <div>" +
-        _vm._ssrEscape(_vm._s(_vm.entity.priod)) +
-        "</div> <h3>Created</h3> <div>" +
-        _vm._ssrEscape(_vm._s(_vm.entity.created_at)) +
-        "</div> <h3>Updated</h3> <div>" +
-        _vm._ssrEscape(_vm._s(_vm.entity.updated_at)) +
-        "</div>"
-    )
-  ])
+  return _vm.entity.id
+    ? _c("div", { staticClass: "resource column column-75" }, [
+        _vm._ssrNode(
+          "<h2>View</h2> <h3>Id</h3> <div>" +
+            _vm._ssrEscape(_vm._s(_vm.entity.id)) +
+            "</div> <h3>Title</h3> <div>" +
+            _vm._ssrEscape(_vm._s(_vm.entity.title)) +
+            "</div> <h3>Priod</h3> <div>" +
+            _vm._ssrEscape(_vm._s(_vm.entity.priod)) +
+            "</div> <h3>Created</h3> <div>" +
+            _vm._ssrEscape(_vm._s(_vm.entity.created_at)) +
+            "</div> <h3>Updated</h3> <div>" +
+            _vm._ssrEscape(_vm._s(_vm.entity.updated_at)) +
+            "</div>"
+        )
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -6013,7 +6024,7 @@ let edit = class edit extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
         return store.dispatch('tasks/fetchEntity', route);
     }
     get action() {
-        return `/${this.domain}/${this.entity.id}`;
+        return `${this.mount}/${this.entity.id}`;
     }
     mounted() {
         if (window) {
@@ -6030,7 +6041,8 @@ edit = __decorate([
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])([
             'domain', 'token'
         ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])("tasks", {
-            entity: ({ entity }) => entity
+            entity: ({ entity }) => entity,
+            mount: ({ mount }) => mount
         })),
         methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])("tasks", ["fetchEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("tasks", ["updateEntity"]))
     })
@@ -6088,9 +6100,6 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
 function createStore(server) {
     let getters = {
-        domain: (state) => {
-            return state.domain;
-        },
         token: (state) => {
             if (typeof window === "undefined") {
                 return "";
@@ -6490,6 +6499,7 @@ class internal {
                     .then((response) => {
                     if (response.status !== 201) {
                         reject(response.status);
+                        throw Error;
                     }
                     ;
                     return response.json();
@@ -6497,6 +6507,7 @@ class internal {
                     resolve(data);
                 }).catch((err) => {
                     reject(err);
+                    throw Error;
                 });
             };
             return new Promise(client);
@@ -6513,7 +6524,7 @@ class internal {
                 req(options, (error, response, body) => {
                     if (error) {
                         reject(true);
-                        return;
+                        throw Error;
                     }
                     resolve(JSON.parse(body));
                 });

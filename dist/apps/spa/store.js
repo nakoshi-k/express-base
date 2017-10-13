@@ -8,9 +8,6 @@ const vue_module_2 = require("./store/modal/vue_module");
 const vue_module_3 = require("./store/crud/vue_module");
 function createStore(server) {
     let getters = {
-        domain: (state) => {
-            return state.domain;
-        },
         token: (state) => {
             if (typeof window === "undefined") {
                 return "";

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const vue_1 = require("vue");
 const vue_router_1 = require("vue-router");
 const navi_vue_1 = require("./components/navi.vue");
-const sub_vue_1 = require("./components/sub.vue");
+const sub_vue_1 = require("../tasks/components/sub.vue");
 const page_vue_1 = require("../tasks/components/page.vue");
 const add_vue_1 = require("../tasks/components/add.vue");
 const view_vue_1 = require("../tasks/components/view.vue");

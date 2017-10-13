@@ -5,11 +5,11 @@
     <input type="hidden" name="_csrf" :value="token">
     <div class="form-item">
       <label for="title">title</label>
-      <input type="text" name="title" v-model="task.title" placeholder="title">
+      <input type="text" name="title" v-model="entity.title" placeholder="title">
     </div>
     <div class="form-item">
       <label for="priod">priod</label>
-      <input type="text" name="priod" class="calendar" v-model="task.priod" placeholder="priod">
+      <input type="text" name="priod" class="calendar" v-model="entity.priod" placeholder="priod">
     </div>
     <button type="submit" >submit</button>
   </form>
@@ -45,7 +45,7 @@ Component.registerHooks([
 })
 
 export default class add extends Vue {
-  task = {
+  entity = {
     title : "",
     priod : ""
   }

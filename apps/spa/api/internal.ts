@@ -29,12 +29,14 @@ export class internal{
             .then((response) => {
                 if(response.status !== 201){ 
                     reject(response.status);
+                    throw Error;
                 };
                 return response.json();
             }).then((data) => {
                 resolve(data);
             }).catch((err) => {
                 reject(err);
+                throw Error;
             });
         }
         return new Promise(client);
@@ -52,7 +54,7 @@ export class internal{
             req(options, (error, response, body) => {
                 if(error){
                     reject(true);
-                    return;
+                    throw Error;
                 }
                 resolve( JSON.parse(body) );
             })

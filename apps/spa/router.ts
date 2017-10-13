@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router, { RouteConfig } from 'vue-router';
 import hello from './components/hello.vue';
 import navi from './components/navi.vue';
-import sub from './components/sub.vue';
+import sub from '../tasks/components/sub.vue';
 import page from '../tasks/components/page.vue';
 import add from '../tasks/components/add.vue';
 import view from '../tasks/components/view.vue';

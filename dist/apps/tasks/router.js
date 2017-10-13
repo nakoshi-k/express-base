@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const path = require("path");
 const router_1 = require("../router");
 const service_1 = require("./service");
 const helpers = require("../../base/helper");
@@ -19,7 +20,7 @@ class router extends router_1.router {
             this.helper("pagination", new helpers.pagination());
             this.csrfReady(req);
         };
-        this.vue = (req, res, next) => {
+        this.spa = (req, res, next) => {
             const context = {
                 url: `${this.mount}${req.url}`,
                 server: {
@@ -28,8 +29,9 @@ class router extends router_1.router {
                 }
             };
             this.ssr(context).then(ssr => {
+                let viewDir = path.resolve(__dirname + '/../views/spa');
                 this.setData({ ssr: ssr });
-                this.render(req, res, "vue");
+                this.render(req, res, viewDir);
             }).catch(err => {
                 if (err.code == 404) {
                     res.status(404);
@@ -42,7 +44,7 @@ class router extends router_1.router {
         };
         this.search = (req, res, next) => {
             if (!this.isXhr(req)) {
-                this.vue(req, res, next);
+                this.spa(req, res, next);
                 return;
             }
             let pagination = this.service.pagination();
@@ -63,7 +65,7 @@ class router extends router_1.router {
         };
         this.entity = (req, res, next) => {
             if (!this.isXhr(req)) {
-                this.vue(req, res, next);
+                this.spa(req, res, next);
                 return;
             }
             let model = this.model;
@@ -93,7 +95,7 @@ class router extends router_1.router {
         };
         this.insert = (req, res, next) => {
             if (!this.isXhr(req)) {
-                this.vue(req, res, next);
+                this.spa(req, res, next);
                 return;
             }
             let entity = this.model.build(req.body);
@@ -108,7 +110,7 @@ class router extends router_1.router {
         };
         this.update = (req, res, next) => {
             if (!this.isXhr(req)) {
-                this.vue(req, res, next);
+                this.spa(req, res, next);
                 return;
             }
             let model = this.model;
@@ -130,7 +132,7 @@ class router extends router_1.router {
             router.get("/", csrfProtection, this.search);
             router.get("/page/:page", csrfProtection, this.search);
             router.get("/:id", csrfProtection, this.entity);
-            router.get("/*", csrfProtection, this.vue);
+            router.get("/*", csrfProtection, this.spa);
             router.post("/", csrfProtection, this.insert);
             router.put("/:id", csrfProtection, this.update);
             router.delete("/:id", csrfProtection, this.delete);
@@ -151,9 +153,8 @@ class router extends router_1.router {
                         if (err.code === 404) {
                             reject(404);
                         }
-                        {
-                            reject(500);
-                        }
+                        reject(500);
+                        return;
                     }
                     resolve(html + stateTag);
                 });

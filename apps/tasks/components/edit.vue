@@ -43,7 +43,8 @@ Component.registerHooks([
       'domain' , 'token'
     ]),
     ...mapState("tasks" , {
-        entity : ({entity}) =>  entity
+        entity : ({entity}) =>  entity,
+        mount : ({mount}) => mount 
     }),
   },
   methods : {
@@ -58,8 +59,7 @@ Component.registerHooks([
 })
 
 export default class edit extends Vue {
-  task:{id:string};
-  domain:string;
+  mount:string;
   entity:{
     id : string,
     title : string,
@@ -70,7 +70,7 @@ export default class edit extends Vue {
   }
  
   get action(){
-    return `/${this.domain}/${this.entity.id}`
+    return `${this.mount}/${this.entity.id}`
 
   }
   updateEntity:(kv) => {};

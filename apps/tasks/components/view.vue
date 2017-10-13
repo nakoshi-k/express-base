@@ -1,5 +1,5 @@
 <template>
-<div class="resource column column-75">
+<div v-if="entity.id" class="resource column column-75">
   <h2>View</h2>
   <h3>Id</h3>
   <div>{{entity.id}}</div>

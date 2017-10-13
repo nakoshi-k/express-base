@@ -10,9 +10,6 @@ import {vue_module as crud_module } from './store/crud/vue_module';
 export function createStore(server){ 
 
   let getters = {
-    domain : (state) => {
-      return state.domain;
-    },
     token : (state) => {
       if(typeof window === "undefined"){
         return "";
