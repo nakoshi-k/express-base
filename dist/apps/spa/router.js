@@ -8,18 +8,16 @@ const page_vue_1 = require("../tasks/components/page.vue");
 const add_vue_1 = require("../tasks/components/add.vue");
 const view_vue_1 = require("../tasks/components/view.vue");
 const edit_vue_1 = require("../tasks/components/edit.vue");
-const interface_1 = require("./interface/interface");
 vue_1.default.use(vue_router_1.default);
-function createRouter(options = interface_1.createOptions) {
-    let opt = options;
+function createRouter() {
     return new vue_router_1.default({
         mode: 'history',
         routes: [
-            { name: "page", path: `/${opt.entities}/page/:page*`, components: { main: page_vue_1.default, navi: navi_vue_1.default, sub: sub_vue_1.default } },
-            { name: "index", path: `/${opt.entities}/page/1`, alias: `/${opt.entities}/` },
-            { name: "add", path: `/${opt.entities}/add`, components: { main: add_vue_1.default, navi: navi_vue_1.default, sub: sub_vue_1.default } },
-            { name: "view", path: `/${opt.entities}/:id`, components: { main: view_vue_1.default, navi: navi_vue_1.default, sub: sub_vue_1.default } },
-            { name: "edit", path: `/${opt.entities}/:id/edit`, components: { main: edit_vue_1.default, navi: navi_vue_1.default, sub: sub_vue_1.default } },
+            { name: "page", path: `/tasks/page/:page*`, components: { main: page_vue_1.default, navi: navi_vue_1.default, sub: sub_vue_1.default } },
+            { name: "index", path: `/tasks/page/1`, alias: `/tasks/` },
+            { name: "add", path: `/tasks/add`, components: { main: add_vue_1.default, navi: navi_vue_1.default, sub: sub_vue_1.default } },
+            { name: "view", path: `/tasks/:id`, components: { main: view_vue_1.default, navi: navi_vue_1.default, sub: sub_vue_1.default } },
+            { name: "edit", path: `/tasks/:id/edit`, components: { main: edit_vue_1.default, navi: navi_vue_1.default, sub: sub_vue_1.default } },
         ]
     });
 }

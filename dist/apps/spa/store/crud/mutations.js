@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const mutations_1 = require("../mutations");
 class mutations extends mutations_1.mutations {
-    constructor(ssr) {
-        super(ssr);
+    constructor(options) {
+        super();
         this.setEntities = (state, paginate) => {
             state.entities = paginate[this._entities];
             state.page = paginate.page;
@@ -14,8 +14,8 @@ class mutations extends mutations_1.mutations {
         this.updateEntity = (state, kv) => {
             state.entity[kv.key] = kv.value;
         };
-        this._entities = ssr.entities;
-        this._entity = ssr.entity;
+        this._mount = options.mount;
+        this._entities = options.entities;
     }
 }
 exports.mutations = mutations;

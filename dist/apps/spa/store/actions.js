@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class actions {
-    constructor(ssr) {
+    constructor() {
         this.map = (call) => {
             if (call === "all") {
                 call = Object.keys(this);

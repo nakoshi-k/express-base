@@ -1,11 +1,12 @@
 import {state as core_state} from "../state";
 export class state extends core_state{
-    
-    constructor(ssr){
-        super(ssr);
+    mount = ""
+    constructor(options){
+        super();
+        this.mount = options.endPoint
     }
 
-    entities = [];
+    entities = []
     entity = {}
     page = {
         totalPage: 1,

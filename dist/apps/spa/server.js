@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = require("./app");
 exports.default = context => {
     let server = (resolve, reject) => {
-        const { app, router, store } = app_1.createApp(context.serverOptions);
+        let server = context.server;
+        const { app, router, store } = app_1.createApp(server);
         router.push(context.url);
         router.onReady(() => {
             const matchedComponents = router.getMatchedComponents();

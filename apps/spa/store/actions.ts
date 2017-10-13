@@ -1,8 +1,5 @@
 import vuex ,{Action,Dispatch,Store,Getter} from "vuex";
 export class actions{
-    constructor(ssr){
-        
-    }
     map = ( call : any ) => {
         if(call === "all" ){
             call = Object.keys(this);

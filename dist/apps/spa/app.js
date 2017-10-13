@@ -5,7 +5,6 @@ const app_vue_1 = require("./components/app.vue");
 const router_1 = require("./router");
 const store_1 = require("./store");
 const vuex_router_sync_1 = require("vuex-router-sync");
-const interface_1 = require("./interface/interface");
 vue_1.default.mixin({
     beforeMount() {
         const asyncData = this.$options["asyncData"];
@@ -42,9 +41,9 @@ vue_1.default.mixin({
         }
     }
 });
-function createApp(options = interface_1.createOptions) {
-    const router = router_1.createRouter(options);
-    const store = store_1.createStore(options);
+function createApp(server) {
+    const router = router_1.createRouter();
+    const store = store_1.createStore(server);
     vuex_router_sync_1.sync(store, router);
     const app = new vue_1.default({
         router,

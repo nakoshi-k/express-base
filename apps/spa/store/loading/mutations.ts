@@ -1,8 +1,8 @@
 import {mutations as core_mutations} from "../mutations"
 
 export class mutations extends core_mutations{
-    constructor(ssr){
-      super(ssr)
+    constructor(options){
+      super()
     }
     setIndicator = ( {indicator} , {status ,complate} ) =>  {
         let before = indicator.complate;

@@ -1,12 +1,7 @@
 import {createApp} from './app';
 
-let domain = {
-    host:"",
-    entities:"tasks",
-    entity : "task",
-    server : { request : {} },
-}
-const {app, router,store} = createApp(domain);
+
+const {app, router,store} = createApp({ host : "" , request : {} });
 
 
 if (window["__INITIAL_STATE__"]) {

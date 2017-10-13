@@ -7,12 +7,12 @@ import {getters} from "./getters"
 
 export class vue_module extends core_module{
     
-    constructor(ssr){
-        super(ssr);
-        this.state = new state(ssr).map("all");
-        this.actions = new actions(ssr).map("all");
-        this.mutations = new mutations(ssr).map("all");
-        this.getters = new getters(ssr).map("all");
+    constructor( options ){
+        super();
+        this.state = new state( options ).map("all");
+        this.actions = new actions( options ).map("all");
+        this.mutations = new mutations( options ).map("all");
+        this.getters = new getters( options ).map("all");
     }
 
 }

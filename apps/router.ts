@@ -4,8 +4,9 @@ import * as helpers  from "../base/helper";
 export class router extends core_router{
     public name = "router";
     public parent = {};
-    constructor (){
-        super();
+    public mount = "router";
+    constructor (mount){
+        super(mount);
         this.views = {
             common : __dirname + system.ds + "views",
             typical: __dirname 

@@ -1,9 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const interface_1 = require("../interface/interface");
 const build_query_1 = require("../../../base/sideless/build_query");
 class internal {
-    constructor(options = interface_1.createOptions) {
+    constructor(options) {
         this.options = {
             credentials: 'same-origin',
             method: "get",
@@ -12,8 +11,7 @@ class internal {
                 'Content-Type': 'application/json'
             }
         };
-        this.entity_name = "";
-        this.entities_name = "";
+        this.endPoint = "";
         this.host = "";
         this.client = (url, options) => {
             let client = (resolve, reject) => {
@@ -54,28 +52,27 @@ class internal {
         };
         this.paginate = (route) => {
             let bq = new build_query_1.build_query();
-            let url = `/${this.entities_name}/${this.routeParse(route)}${bq.http(route.query)}`;
+            let URI = `${this.endPoint}/${this.routeParse(route)}${bq.http(route.query)}`;
             if (typeof window === "undefined") {
-                return this.server(url, {});
+                return this.server(URI, {});
             }
-            return this.client(url, {});
+            return this.client(URI, {});
         };
         this.entity = (route) => {
             let id = route.params.id;
-            let url = `/${this.entities_name}/${id}`;
+            let URI = `${this.endPoint}/${id}`;
             if (typeof window === "undefined") {
-                return this.server(url, {});
+                return this.server(URI, {});
             }
-            return this.client(url, {});
+            return this.client(URI, {});
         };
         this.insert = () => {
         };
         this.delete = () => {
         };
-        this.entity_name = options.entity;
-        this.entities_name = options.entities;
+        this.endPoint = options.endPoint;
         this.host = options.host;
-        this.request = options.server.request;
+        this.request = options.request;
     }
     routeParse(route) {
         let params = route.params;

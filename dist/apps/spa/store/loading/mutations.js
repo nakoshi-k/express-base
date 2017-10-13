@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const mutations_1 = require("../mutations");
 class mutations extends mutations_1.mutations {
-    constructor(ssr) {
-        super(ssr);
+    constructor(options) {
+        super();
         this.setIndicator = ({ indicator }, { status, complate }) => {
             let before = indicator.complate;
             indicator.status = status;

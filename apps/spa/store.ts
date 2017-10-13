@@ -3,22 +3,11 @@ import Vuex from 'vuex';
 Vue.use(Vuex)
 import {createOptionsInterFace,createOptions} from "./interface/interface";
 
-import {vue_module as loading } from './store/loading/vue_module';
-import {vue_module as modal } from './store/modal/vue_module';
-import {vue_module as crud } from './store/crud/vue_module';
+import {vue_module as loading_module } from './store/loading/vue_module';
+import {vue_module as modal_module } from './store/modal/vue_module';
+import {vue_module as crud_module } from './store/crud/vue_module';
 
-export function createStore(options : createOptionsInterFace = createOptions){ 
-
-  let ssr = {
-      host:options.host,
-      entities:options.entities,
-      entity:options.entity,
-      server: {request : options.server.request},
-  } 
-
-  let state = {
-      domain : options.entities,
- };
+export function createStore(server){ 
 
   let getters = {
     domain : (state) => {
@@ -33,15 +22,16 @@ export function createStore(options : createOptionsInterFace = createOptions){
       return csrfToken;
     }
   }
-
+  let tasks = new crud_module({ entities : "tasks" , endPoint : "/tasks" , ...server} ).store();
+  let loading = new loading_module({server}).store();
+  let modal = new modal_module({server}).store();
   
   let vuex : Vuex.StoreOptions<any> =  {
-    state : state ,
     getters: getters,
     modules:{
-      "loading" : new loading(ssr).store(),
-      "modal" : new modal(ssr).store(),
-      "tasks" : new crud(ssr).store()
+      "loading" : loading,
+      "modal" : modal,
+      "tasks" : tasks
     }
   }
 

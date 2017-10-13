@@ -12,8 +12,9 @@ const csurf = require("csurf");
 const inflection = require("inflection");
 const core_1 = require("../core");
 class router {
-    constructor() {
+    constructor(mount) {
         this.name = "router";
+        this.mount = "router";
         this.useModel = true;
         this.vars = { "title": "Application", "csrf": "", "hlp": {} };
         this.csrfReady = (req, form = "form") => {
@@ -89,6 +90,7 @@ class router {
         this.setData = (vars) => {
             this.vars = Object.assign(this.vars, vars);
         };
+        this.mount = mount;
         let csrf = csurf;
         let csrfProtection = csrf({ cookie: true });
         this.csrfProtection = csrfProtection;

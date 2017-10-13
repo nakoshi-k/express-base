@@ -3,7 +3,8 @@ import Vue from "vue";
 
 export default context => {
   let server = (resolve,reject) => {
-    const {app, router,store} = createApp( context.serverOptions);
+    let server = context.server;
+    const {app, router,store} = createApp(server);
     router.push(context.url);
     router.onReady(() => {
       const matchedComponents = router.getMatchedComponents();

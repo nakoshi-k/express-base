@@ -5,9 +5,6 @@ export class vue_module{
     protected _mutations:{key?:Dispatch};
     protected _getters:{key?:Getter<any,any>};
     
-    constructor(ssr){
-
-    }
     
     set state(state:{key?:any}){
         this._state = state

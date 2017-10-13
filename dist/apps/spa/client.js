@@ -1,13 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = require("./app");
-let domain = {
-    host: "",
-    entities: "tasks",
-    entity: "task",
-    server: { request: {} },
-};
-const { app, router, store } = app_1.createApp(domain);
+const { app, router, store } = app_1.createApp({ host: "", request: {} });
 if (window["__INITIAL_STATE__"]) {
     store.replaceState(window["__INITIAL_STATE__"]);
 }

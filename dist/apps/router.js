@@ -4,10 +4,11 @@ const core_1 = require("../base/core");
 const core_2 = require("../base/core");
 const helpers = require("../base/helper");
 class router extends core_1.router {
-    constructor() {
-        super();
+    constructor(mount) {
+        super(mount);
         this.name = "router";
         this.parent = {};
+        this.mount = "router";
         this.views = {
             common: __dirname + core_2.system.ds + "views",
             typical: __dirname

@@ -39,13 +39,12 @@ Vue.mixin({
       next()
     }
   }
-
 })
 
 
-export function createApp(options : createOptionsInterFace = createOptions){
-  const router = createRouter(options);
-  const store = createStore(options);
+export function createApp(server){
+  const router = createRouter();
+  const store = createStore(server);
   sync(store, router);
   const app = new Vue({
     router,

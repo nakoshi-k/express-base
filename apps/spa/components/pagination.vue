@@ -28,20 +28,15 @@ let bq = new build_query();
 
 @Component({
   name: 'pagination',
-  computed : {
-    ...mapGetters([
-      'domain'
-    ])
-  },
+  computed :{},
   props: {
-    modelName:String,
-    pagination: {},
-    load:{}
+    pagination : {},
+    mount : String,
   }
 })
 
 export default class pagintaion extends Vue {
-  
+    mount:string;
     pagination:{
       totalPage:number,
       currentPage:number,
@@ -55,8 +50,6 @@ export default class pagintaion extends Vue {
       }
       return true;
     } 
-
-    domain:String;
     
     special = {
       first : true ,
@@ -110,7 +103,7 @@ export default class pagintaion extends Vue {
     format( number : number ) {
       let query = this.pagination.queryPrams;
       let httpQuery = bq.http(query)
-      return `/${this.domain}/page/${number}/${httpQuery}`
+      return `${this.mount}/page/${number}/${httpQuery}`
     }
 
 

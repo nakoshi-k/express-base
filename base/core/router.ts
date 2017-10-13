@@ -9,6 +9,7 @@ import {system,helper} from "../core";
 
 export abstract class router{
     abstract name = "router";
+    abstract mount = "router";
     protected parseForm;
     protected csrfProtection;
     protected useModel = true;
@@ -30,7 +31,8 @@ export abstract class router{
         return inflection.pluralize(this.name);
     }
 
-    constructor(){
+    constructor(mount){
+        this.mount = mount;
         let csrf = csurf;
         let csrfProtection = csrf({ cookie: true });
         this.csrfProtection = csrfProtection;

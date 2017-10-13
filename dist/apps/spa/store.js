@@ -3,20 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const vue_1 = require("vue");
 const vuex_1 = require("vuex");
 vue_1.default.use(vuex_1.default);
-const interface_1 = require("./interface/interface");
 const vue_module_1 = require("./store/loading/vue_module");
 const vue_module_2 = require("./store/modal/vue_module");
 const vue_module_3 = require("./store/crud/vue_module");
-function createStore(options = interface_1.createOptions) {
-    let ssr = {
-        host: options.host,
-        entities: options.entities,
-        entity: options.entity,
-        server: { request: options.server.request },
-    };
-    let state = {
-        domain: options.entities,
-    };
+function createStore(server) {
     let getters = {
         domain: (state) => {
             return state.domain;
@@ -30,13 +20,15 @@ function createStore(options = interface_1.createOptions) {
             return csrfToken;
         }
     };
+    let tasks = new vue_module_3.vue_module(Object.assign({ entities: "tasks", endPoint: "/tasks" }, server)).store();
+    let loading = new vue_module_1.vue_module({ server }).store();
+    let modal = new vue_module_2.vue_module({ server }).store();
     let vuex = {
-        state: state,
         getters: getters,
         modules: {
-            "loading": new vue_module_1.vue_module(ssr).store(),
-            "modal": new vue_module_2.vue_module(ssr).store(),
-            "tasks": new vue_module_3.vue_module(ssr).store()
+            "loading": loading,
+            "modal": modal,
+            "tasks": tasks
         }
     };
     return new vuex_1.default.Store(vuex);

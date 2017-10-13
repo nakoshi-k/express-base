@@ -11,8 +11,8 @@ Vue.use(Router);
 const VueRender = require("vue-server-renderer");
 const bundle_server_1 = require("../spa/bundle-server");
 class router extends router_1.router {
-    constructor() {
-        super();
+    constructor(mount) {
+        super(mount);
         this.name = "tasks";
         this.beforeRender = (req, res) => {
             this.helper("form", new helpers.form());
@@ -21,12 +21,10 @@ class router extends router_1.router {
         };
         this.vue = (req, res, next) => {
             const context = {
-                url: `/${this.name}${req.url}`,
-                serverOptions: {
+                url: `${this.mount}${req.url}`,
+                server: {
                     host: req.protocol + '://' + req.headers.host,
-                    entities: this.entities_name,
-                    entity: this.entity_name,
-                    server: { request: Request }
+                    request: Request
                 }
             };
             this.ssr(context).then(ssr => {
@@ -138,6 +136,7 @@ class router extends router_1.router {
             router.delete("/:id", csrfProtection, this.delete);
             return router;
         };
+        this.mount = mount;
         this.service = new service_1.service(this.name);
         return this.create();
     }
@@ -148,7 +147,6 @@ class router extends router_1.router {
             server(context).then((app) => {
                 let stateTag = `<script>window.__INITIAL_STATE__=${serialize(app.$store.state, { isJSON: true })}</script>`;
                 renderer.renderToString(app, (err, html) => {
-                    console.log(err);
                     if (err) {
                         if (err.code === 404) {
                             reject(404);

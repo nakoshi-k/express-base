@@ -2,8 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const state_1 = require("../state");
 class state extends state_1.state {
-    constructor(ssr) {
-        super(ssr);
+    constructor(options) {
+        super();
+        this.mount = "";
         this.entities = [];
         this.entity = {};
         this.page = {
@@ -11,6 +12,7 @@ class state extends state_1.state {
             currentPage: 1,
             queryPrams: {}
         };
+        this.mount = options.endPoint;
     }
 }
 exports.state = state;

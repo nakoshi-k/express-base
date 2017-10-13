@@ -8,7 +8,7 @@
     <button @click="destroy(entity.id,entity.title)" class="button small">delete</button>
     </div>
   </div>
-  <pagination :pagination="pagination"></pagination>
+  <pagination :pagination="pagination" :mount="mount"></pagination>
 </div>
 </template>
 
@@ -36,7 +36,8 @@ Component.registerHooks([
     ]),
     ...mapState( 'tasks' , {
       entities : ({entities}) => entities , 
-      pagination: ({page}) => page
+      pagination: ({page}) => page,
+      mount : ({mount}) => mount 
     }),
   },
   methods : {
@@ -51,7 +52,7 @@ Component.registerHooks([
 export default class Page extends Vue {
   
 
-  domain:string;
+  mount:string;
   pagination:any;
   fetchEntities : (route) => {};
   asyncData ( {store,route}) {
@@ -61,16 +62,16 @@ export default class Page extends Vue {
   mounted(){
     let pg = this.pagination;
     if(pg.currentPage > pg.totalPage){
-      this.$router. push({ path: `/${this.domain}/page/${pg.totalPage}` });
+      this.$router. push({ path: `${this.mount}/page/${pg.totalPage}` });
     }
   }
  
   view(id){
-    return `/${this.domain}/${id}`;
+    return `${this.mount}/${id}`;
   }
 
   edit(id){
-    return `/${this.domain}/${id}/edit`;
+    return `${this.mount}/${id}/edit`;
   }
 
   setModal:(modal) => {};

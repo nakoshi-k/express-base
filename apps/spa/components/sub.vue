@@ -1,8 +1,8 @@
 <template>
 <div class="column column-25">
     <ul>
-        <li><router-link :to="`/${domain}`">Index</router-link></li>
-        <li><router-link :to="`/${domain}/add`">Add</router-link></li>
+        <li><router-link :to="`/tasks`">Index</router-link></li>
+        <li><router-link :to="`/tasks/add`">Add</router-link></li>
     </ul>
 </div>
 </template>
@@ -26,9 +26,7 @@ Component.registerHooks([
 })
 export default class sub extends Vue {
 
-  get domain (){
-    return this.$store.state.domain;
-  }
+
 
 }
 </script>

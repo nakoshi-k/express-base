@@ -1,8 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class vue_module {
-    constructor(ssr) {
-    }
     set state(state) {
         this._state = state;
     }

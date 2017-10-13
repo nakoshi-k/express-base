@@ -2,14 +2,13 @@ import {actions as core_actions} from "../actions"
 import {internal} from "../../api/internal"
 let api;
 export class actions extends core_actions{
-    constructor(ssr){
-        super(ssr);
-        api = new internal({
-            host:ssr.host,
-            entities:ssr.entities,
-            entity:ssr.entity,
-            server: {request : ssr.server.request},
-          });
+    constructor(options){
+        super();
+        api = new internal( {
+            host: options.host,
+            endPoint : options.endPoint,
+            request:options.request ,
+          } );
     }
 
     fetchEntities  = ( {commit},route) => {

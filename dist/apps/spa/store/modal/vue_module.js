@@ -6,12 +6,12 @@ const actions_1 = require("./actions");
 const state_1 = require("./state");
 const getters_1 = require("./getters");
 class vue_module extends vue_module_1.vue_module {
-    constructor(ssr) {
-        super(ssr);
-        this.state = new state_1.state(ssr).map("all");
-        this.actions = new actions_1.actions(ssr).map("all");
-        this.mutations = new mutations_1.mutations(ssr).map("all");
-        this.getters = new getters_1.getters(ssr).map("all");
+    constructor(options) {
+        super();
+        this.state = new state_1.state(options).map("all");
+        this.actions = new actions_1.actions(options).map("all");
+        this.mutations = new mutations_1.mutations(options).map("all");
+        this.getters = new getters_1.getters(options).map("all");
     }
 }
 exports.vue_module = vue_module;

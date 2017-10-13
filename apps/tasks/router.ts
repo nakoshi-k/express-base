@@ -17,8 +17,9 @@ export class router extends app_router {
     public name = "tasks";
     public service:service;
     
-    constructor(){
-        super();
+    constructor(mount){
+        super(mount);
+        this.mount = mount;
         this.service = new service(this.name);
         return this.create();
     }
@@ -29,6 +30,7 @@ export class router extends app_router {
         this.csrfReady(req);
     }
 
+
     private ssr(context){
         const renderer = VueRender.createRenderer();
         let server : any = BundleServer;
@@ -36,7 +38,6 @@ export class router extends app_router {
             server( context ).then( (app : Vue) => {
                 let stateTag =`<script>window.__INITIAL_STATE__=${ serialize(app.$store.state, { isJSON: true }) }</script>` ;
                 renderer.renderToString( app , (err:any,html)  => {
-                    console.log(err);
                     if (err) {
                         if (err.code === 404) {
                           reject(404);
@@ -55,12 +56,10 @@ export class router extends app_router {
 
     private vue = (req : express.Request,res: express.Response, next : express.NextFunction) => {
         const context = {
-            url: `/${this.name}${req.url}`,
-            serverOptions : {
+            url: `${this.mount}${req.url}`,
+            server : {
                 host : req.protocol + '://' + req.headers.host ,
-                entities : this.entities_name,
-                entity : this.entity_name,
-                server : { request : Request}
+                request : Request
             }
         };
         this.ssr(context).then(ssr => {

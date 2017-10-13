@@ -10,17 +10,15 @@ import edit from '../tasks/components/edit.vue';
 import {createOptionsInterFace,createOptions} from "./interface/interface";
 Vue.use(Router)
 
-export function createRouter(options : createOptionsInterFace = createOptions){
-    let opt = options;
+export function createRouter(){
     return new Router({
         mode: 'history',
         routes: [
-            { name : "page" ,path: `/${opt.entities}/page/:page*`, components: { main : page , navi : navi ,sub : sub } } as RouteConfig,
-            { name : "index" ,path: `/${opt.entities}/page/1` , alias : `/${opt.entities}/` } as RouteConfig,
-            { name : "add" , path: `/${opt.entities}/add`, components: { main : add , navi : navi ,sub : sub } } as RouteConfig,
-            { name : "view" , path: `/${opt.entities}/:id`, components: { main : view , navi : navi ,sub : sub } } as RouteConfig,
-            { name : "edit" , path: `/${opt.entities}/:id/edit`, components: { main : edit , navi : navi ,sub : sub } } as RouteConfig,
-
+            { name : "page" ,path: `/tasks/page/:page*`, components: { main : page , navi : navi ,sub : sub } } as RouteConfig,
+            { name : "index" ,path: `/tasks/page/1` , alias : `/tasks/` } as RouteConfig,
+            { name : "add" , path: `/tasks/add`, components: { main : add , navi : navi ,sub : sub } } as RouteConfig,
+            { name : "view" , path: `/tasks/:id`, components: { main : view , navi : navi ,sub : sub } } as RouteConfig,
+            { name : "edit" , path: `/tasks/:id/edit`, components: { main : edit , navi : navi ,sub : sub } } as RouteConfig,
         ]
     })
 }
