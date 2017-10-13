@@ -7,7 +7,6 @@ class actions extends actions_1.actions {
     constructor(ssr) {
         super(ssr);
         this.fetchEntities = ({ commit }, route) => {
-            console.log(this);
             return api.paginate(route).then((paginate) => {
                 commit("setEntities", paginate);
             });

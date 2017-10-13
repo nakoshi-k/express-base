@@ -11,7 +11,7 @@ import * as serialize from "serialize-javascript";
 Vue.use(Router);
 
 import * as VueRender from "vue-server-renderer";
-import {default as BundleServer}  from "./bundle-server";
+import {default as BundleServer}  from "../spa/bundle-server";
 
 export class router extends app_router {
     public name = "tasks";

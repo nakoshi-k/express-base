@@ -9,7 +9,7 @@ const Request = require("request");
 const serialize = require("serialize-javascript");
 Vue.use(Router);
 const VueRender = require("vue-server-renderer");
-const bundle_server_1 = require("./bundle-server");
+const bundle_server_1 = require("../spa/bundle-server");
 class router extends router_1.router {
     constructor() {
         super();
