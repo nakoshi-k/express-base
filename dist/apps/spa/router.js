@@ -4,10 +4,10 @@ const vue_1 = require("vue");
 const vue_router_1 = require("vue-router");
 const navi_vue_1 = require("./components/navi.vue");
 const sub_vue_1 = require("./components/sub.vue");
-const page_vue_1 = require("./components/tasks/page.vue");
-const add_vue_1 = require("./components/tasks/add.vue");
-const view_vue_1 = require("./components/tasks/view.vue");
-const edit_vue_1 = require("./components/tasks/edit.vue");
+const page_vue_1 = require("../tasks/components/page.vue");
+const add_vue_1 = require("../tasks/components/add.vue");
+const view_vue_1 = require("../tasks/components/view.vue");
+const edit_vue_1 = require("../tasks/components/edit.vue");
 const interface_1 = require("./interface/interface");
 vue_1.default.use(vue_router_1.default);
 function createRouter(options = interface_1.createOptions) {

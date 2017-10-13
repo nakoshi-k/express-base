@@ -12,7 +12,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import {mapGetters,mapState} from 'vuex'
-import Loading from './Loading'
+import loading from './loading'
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -28,7 +28,7 @@ Component.registerHooks([
 @Component({
   name : "orver_lay",
   components : {
-    "app-loading" : Loading,
+    "app-loading" : loading,
   },
   computed : {
     ...mapGetters([

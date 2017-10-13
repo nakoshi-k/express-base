@@ -33,7 +33,6 @@ class router extends router_1.router {
                 this.setData({ ssr: ssr });
                 this.render(req, res, "vue");
             }).catch(err => {
-                console.log(err);
                 if (err.code == 404) {
                     res.status(404);
                 }
@@ -149,6 +148,7 @@ class router extends router_1.router {
             server(context).then((app) => {
                 let stateTag = `<script>window.__INITIAL_STATE__=${serialize(app.$store.state, { isJSON: true })}</script>`;
                 renderer.renderToString(app, (err, html) => {
+                    console.log(err);
                     if (err) {
                         if (err.code === 404) {
                             reject(404);

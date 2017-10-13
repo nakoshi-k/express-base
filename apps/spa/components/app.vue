@@ -14,8 +14,8 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import OverLay from './OverLay.vue';
-import Modal from './Modal'
+import over_lay from './over_lay.vue';
+import modal from './modal'
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -29,10 +29,10 @@ Component.registerHooks([
 ])
 
 @Component({
-  name: 'App',
+  name: 'app',
   components:{
-    "app-overlay":OverLay,
-    "app-modal":Modal
+    "app-overlay":over_lay,
+    "app-modal":modal
   }
 })
 export default class app extends Vue {

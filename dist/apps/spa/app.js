@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const vue_1 = require("vue");
+const app_vue_1 = require("./components/app.vue");
 const router_1 = require("./router");
 const store_1 = require("./store");
 const vuex_router_sync_1 = require("vuex-router-sync");
@@ -48,7 +49,7 @@ function createApp(options = interface_1.createOptions) {
     const app = new vue_1.default({
         router,
         store,
-        render: h => h(app)
+        render: h => h(app_vue_1.default)
     });
     return { app, router, store };
 }

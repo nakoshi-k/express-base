@@ -19,7 +19,7 @@ glob.sync( input ).map(function(file){
 let outdir = path.resolve( __dirname + "/../../dist/apps/public/");
 
 module.exports  = {
-            entry: __dirname + "client.ts",
+            entry: __dirname + "/client.ts",
             target : "web",
             output: {
                 path: outdir ,

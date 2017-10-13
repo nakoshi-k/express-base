@@ -3,10 +3,10 @@ import Router, { RouteConfig } from 'vue-router';
 import hello from './components/hello.vue';
 import navi from './components/navi.vue';
 import sub from './components/sub.vue';
-import page from './components/tasks/page.vue';
-import add from './components/tasks/add.vue';
-import view from './components/tasks/view.vue';
-import edit from './components/tasks/edit.vue';
+import page from '../tasks/components/page.vue';
+import add from '../tasks/components/add.vue';
+import view from '../tasks/components/view.vue';
+import edit from '../tasks/components/edit.vue';
 import {createOptionsInterFace,createOptions} from "./interface/interface";
 Vue.use(Router)
 

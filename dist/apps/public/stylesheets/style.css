@@ -2227,7 +2227,7 @@ textarea {
   transition: 0.3s color ease;
   position: absolute;
   top: -2rem;
-  right: -2rem;
+  right: 0.6rem;
 }
 .modal .close.disabled {
   color: #d1d1d1;

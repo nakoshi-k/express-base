@@ -13,7 +13,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { mapGetters , mapState , mapMutations} from 'vuex'
-import Destroy from './modal/Destroy'
+import destroy from './modal/destroy'
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -42,7 +42,7 @@ Component.registerHooks([
     ...mapMutations( "modal" , ["closeModal"])
   },
   components : {
-    "modal-destroy" : Destroy
+    "modal-destroy" : destroy
   }
 
 })

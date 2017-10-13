@@ -1,5 +1,5 @@
 import  Vue , {mixin,ComponentOptions } from 'vue';
-import app from './components/app.vue';
+import App from './components/app.vue';
 import { createRouter } from './router';
 import { createStore } from './store';
 import { sync } from 'vuex-router-sync'
@@ -50,7 +50,7 @@ export function createApp(options : createOptionsInterFace = createOptions){
   const app = new Vue({
     router,
     store,
-    render : h => h(app)
+    render : h => h(App)
   }) 
   return {app,router,store};
 }

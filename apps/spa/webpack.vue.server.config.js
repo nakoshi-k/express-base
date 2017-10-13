@@ -1,23 +1,3 @@
-const path = require("path");
-const glob = require("glob");
-const ds = path.sep;
-var entities = {};
-
-
-let input = path.resolve( __dirname + "/**/public/*.ts" ) ;
-
-glob.sync( input ).map(function(file){
-    let pathArray = file.split(path.sep);
-    let nameArray = pathArray.pop().split(".");
-    nameArray.pop();
-    let dname = file.replace(/^.*\/(.*)\/public.*$/,"$1");
-    let extLessName = dname + ds + nameArray.join(".");
-    if(extLessName.substr(-2,2) !== ".d"){
-        entities[extLessName] = file;
-    }
-});
-
-let outdir = path.resolve( __dirname + "/../../dist/apps/tasks/" );
 
 module.exports  = {
             entry: __dirname + "/server.ts",
