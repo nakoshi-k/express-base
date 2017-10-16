@@ -16,20 +16,23 @@ class actions extends actions_1.actions {
                 commit("setEntity", entity);
             });
         };
-        this.insertEntity = ({ commit }, route) => {
-            return api.entity(route).then((entity) => {
-                commit("setEntity", entity);
-            });
+        this.insertEntity = ({ state, commit }, token) => {
+            return api.insert(state.entity, state.mount, token);
         };
-        this.saveEntity = ({ commit }, route) => {
-            return api.entity(route).then((entity) => {
-                commit("setEntity", entity);
-            });
+        this.saveEntity = ({ state, commit }, token) => {
+            return api.update(state.entity, state.mount, token);
+        };
+        this.deleteEntity = ({ state, commit }, delObj) => {
+            return api.delete(delObj.id, delObj.mount, delObj.token);
+        };
+        this.clearEntity = ({ commit }) => {
+            return Promise.resolve(commit("setClearEntity"));
         };
         api = new internal_1.internal({
             host: options.host,
             endPoint: options.endPoint,
             request: options.request,
+            service: options.service
         });
     }
 }

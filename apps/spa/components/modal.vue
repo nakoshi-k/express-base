@@ -48,9 +48,9 @@ Component.registerHooks([
 })
 
 export default class modal extends Vue {
-  show:boolean;
-  _close:boolean;
-  closeModal:() => {};
+  show:boolean
+  _close:boolean
+  closeModal:() => {}
   
   close(){
     if(this._close){
@@ -59,7 +59,7 @@ export default class modal extends Vue {
   }
 
   get isDisable(){
-    return !this.close;
+    return !this.close
   }
 
 }

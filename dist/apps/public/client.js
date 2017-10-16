@@ -12274,7 +12274,7 @@ vue_1.default.mixin({
             ad.then(function () { return asyncData({ store: _this.$store, route: _this.$route }); })
                 .then(function (res) {
                 setTimeout(function () {
-                    _this.$store.commit("loading/endLoading");
+                    _this.$store.commit("loading/endLoading", "success");
                 }, 240);
             }).catch(function (err) {
                 var domain = _this.$store.state["domain"];
@@ -12293,7 +12293,7 @@ vue_1.default.mixin({
                 route: to
             }).then(function () {
                 setTimeout(function () {
-                    _this.$store.commit("loading/endLoading");
+                    _this.$store.commit("loading/endLoading", "success");
                 }, 240);
                 next();
             }).catch(next);
@@ -13129,7 +13129,19 @@ var Destroy = /** @class */ (function (_super) {
         };
         return new Promise(disable);
     };
-    Destroy.prototype.delete = function () {
+    Destroy.prototype.destroy = function () {
+        var _this = this;
+        var data = this.data;
+        data["token"] = this.token;
+        this.loading();
+        var names = data.mount.replace("/", "");
+        this.$store.dispatch(names + "/deleteEntity", data).then(function (r) {
+            _this.closeModal();
+            _this.$store.dispatch(names + "/fetchEntities", _this.$store.state.route);
+            _this.endLoading("success");
+        }).catch(function (e) {
+            _this.endLoading("warning");
+        });
     };
     Destroy.prototype.cancel = function () {
         var _this = this;
@@ -13157,7 +13169,7 @@ var Destroy = /** @class */ (function (_super) {
                     return template;
                 },
             })),
-            methods: __assign({}, vuex_1.mapMutations('modal', ["setModal", "toggleModal", "closeModal"]))
+            methods: __assign({}, vuex_1.mapMutations('modal', ["setModal", "toggleModal", "closeModal", "deleteEntity"]), vuex_1.mapMutations("loading", ["loading", "endLoading"]))
         })
     ], Destroy);
     return Destroy;
@@ -13187,7 +13199,12 @@ var render = function() {
             "button",
             {
               staticClass: "button primary",
-              attrs: { disabled: !_vm.button.done }
+              attrs: { disabled: !_vm.button.done },
+              on: {
+                click: function($event) {
+                  _vm.destroy()
+                }
+              }
             },
             [_vm._v("Apply")]
           ),
@@ -16523,12 +16540,6 @@ var Page = /** @class */ (function (_super) {
         var store = _a.store, route = _a.route;
         return store.dispatch("tasks/fetchEntities", route);
     };
-    Page.prototype.mounted = function () {
-        var pg = this.pagination;
-        if (pg.currentPage > pg.totalPage) {
-            this.$router.push({ path: this.mount + "/page/" + pg.totalPage });
-        }
-    };
     Page.prototype.view = function (id) {
         return this.mount + "/" + id;
     };
@@ -16540,11 +16551,14 @@ var Page = /** @class */ (function (_super) {
             template: "Destroy",
             data: {
                 id: id,
-                name: title
+                name: title,
+                mount: this.mount
             }
         };
         this.setModal(modal);
-        this.toggleModal();
+        this.openModal();
+    };
+    Page.prototype.copy = function (id) {
     };
     Page = __decorate([
         vue_class_component_1.default({
@@ -16565,7 +16579,7 @@ var Page = /** @class */ (function (_super) {
                     return mount;
                 }
             })),
-            methods: __assign({}, vuex_1.mapMutations("modal", ["setModal", "toggleModal"]), vuex_1.mapActions("tasks", ["fetchEntities"])),
+            methods: __assign({}, vuex_1.mapMutations("modal", ["setModal", "toggleModal", "openModal"]), vuex_1.mapActions("tasks", ["fetchEntities"])),
             components: { pagination: pagination_vue_1.default }
         })
     ], Page);
@@ -16925,6 +16939,19 @@ var render = function() {
                   }
                 },
                 [_vm._v("delete")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "button small",
+                  on: {
+                    click: function($event) {
+                      _vm.copy(entity.id, entity.title)
+                    }
+                  }
+                },
+                [_vm._v("copy")]
               )
             ],
             1
@@ -17051,9 +17078,11 @@ var add = /** @class */ (function (_super) {
     __extends(add, _super);
     function add() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.entity = {
-            title: "",
-            priod: ""
+        _this.change = function (e) {
+            var kv = {};
+            kv["key"] = e.target.name;
+            kv["value"] = e.target.value;
+            _this.updateEntity(kv);
         };
         return _this;
     }
@@ -17064,13 +17093,39 @@ var add = /** @class */ (function (_super) {
                 "plugins": [confirmDatePlugin({})]
             });
         }
+        this.clearEntity();
+        //copy
+    };
+    add.prototype.beforeDestroy = function () {
+        this.clearEntity();
+    };
+    add.prototype.save = function () {
+        var _this = this;
+        this.loading();
+        this.insertEntity(this.token).then(function (r) {
+            _this.endLoading("success");
+            _this.$router.push({ path: _this.mount });
+        }).catch(function (e) {
+            _this.endLoading("warning");
+        });
+        return false;
     };
     add = __decorate([
         vue_class_component_1.default({
             name: "add",
             computed: __assign({}, vuex_1.mapGetters([
                 'domain', 'token'
-            ])),
+            ]), vuex_1.mapState("tasks", {
+                entity: function (_a) {
+                    var entity = _a.entity;
+                    return entity;
+                },
+                mount: function (_a) {
+                    var mount = _a.mount;
+                    return mount;
+                }
+            })),
+            methods: __assign({}, vuex_1.mapActions("tasks", ["insertEntity", "clearEntity"]), vuex_1.mapMutations("tasks", ["updateEntity"]), vuex_1.mapMutations("loading", ["loading", "endLoading"]))
         })
     ], add);
     return add;
@@ -17100,24 +17155,9 @@ var render = function() {
         _c("label", { attrs: { for: "title" } }, [_vm._v("title")]),
         _vm._v(" "),
         _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.entity.title,
-              expression: "entity.title"
-            }
-          ],
           attrs: { type: "text", name: "title", placeholder: "title" },
           domProps: { value: _vm.entity.title },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.entity.title = $event.target.value
-            }
-          }
+          on: { change: _vm.change }
         })
       ]),
       _vm._v(" "),
@@ -17125,29 +17165,25 @@ var render = function() {
         _c("label", { attrs: { for: "priod" } }, [_vm._v("priod")]),
         _vm._v(" "),
         _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.entity.priod,
-              expression: "entity.priod"
-            }
-          ],
           staticClass: "calendar",
           attrs: { type: "text", name: "priod", placeholder: "priod" },
           domProps: { value: _vm.entity.priod },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.entity.priod = $event.target.value
-            }
-          }
+          on: { change: _vm.change }
         })
       ]),
       _vm._v(" "),
-      _c("button", { attrs: { type: "submit" } }, [_vm._v("submit")])
+      _c(
+        "button",
+        {
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              _vm.save()
+            }
+          }
+        },
+        [_vm._v("submit")]
+      )
     ])
   ])
 }
@@ -17458,6 +17494,15 @@ var edit = /** @class */ (function (_super) {
             });
         }
     };
+    edit.prototype.save = function () {
+        var _this = this;
+        this.loading();
+        this.saveEntity(this.token).then(function (r) {
+            _this.endLoading("success");
+        }).catch(function (e) {
+            _this.endLoading("warning");
+        });
+    };
     edit = __decorate([
         vue_class_component_1.default({
             name: "edit",
@@ -17473,7 +17518,7 @@ var edit = /** @class */ (function (_super) {
                     return mount;
                 }
             })),
-            methods: __assign({}, vuex_1.mapActions("tasks", ["fetchEntity"]), vuex_1.mapMutations("tasks", ["updateEntity"]))
+            methods: __assign({}, vuex_1.mapActions("tasks", ["fetchEntity", "saveEntity"]), vuex_1.mapMutations("tasks", ["updateEntity"]), vuex_1.mapMutations("loading", ["loading", "endLoading"]))
         })
     ], edit);
     return edit;
@@ -17528,7 +17573,9 @@ var render = function() {
         })
       ]),
       _vm._v(" "),
-      _c("button", { attrs: { type: "submit" } }, [_vm._v("submit")])
+      _c("button", { attrs: { type: "button" }, on: { click: _vm.save } }, [
+        _vm._v("submit")
+      ])
     ])
   ])
 }
@@ -17860,6 +17907,7 @@ var mutations = /** @class */ (function (_super) {
             state.show = false;
         };
         _this.openModal = function (state) {
+            state.close = true;
             state.show = true;
         };
         return _this;
@@ -18030,6 +18078,15 @@ var mutations = /** @class */ (function (_super) {
         _this.updateEntity = function (state, kv) {
             state.entity[kv.key] = kv.value;
         };
+        _this.setClearEntity = function (state) {
+            var entity = state.entity;
+            for (var key in entity) {
+                entity[key] = null;
+                if (key === "id" || key === "created_at" || key === "updated_at") {
+                    delete entity[key];
+                }
+            }
+        };
         _this._mount = options.mount;
         _this._entities = options.entities;
         return _this;
@@ -18075,22 +18132,27 @@ var actions = /** @class */ (function (_super) {
                 commit("setEntity", entity);
             });
         };
-        _this.insertEntity = function (_a, route) {
-            var commit = _a.commit;
-            return api.entity(route).then(function (entity) {
-                commit("setEntity", entity);
-            });
+        _this.insertEntity = function (_a, token) {
+            var state = _a.state, commit = _a.commit;
+            return api.insert(state.entity, state.mount, token);
         };
-        _this.saveEntity = function (_a, route) {
+        _this.saveEntity = function (_a, token) {
+            var state = _a.state, commit = _a.commit;
+            return api.update(state.entity, state.mount, token);
+        };
+        _this.deleteEntity = function (_a, delObj) {
+            var state = _a.state, commit = _a.commit;
+            return api.delete(delObj.id, delObj.mount, delObj.token);
+        };
+        _this.clearEntity = function (_a) {
             var commit = _a.commit;
-            return api.entity(route).then(function (entity) {
-                commit("setEntity", entity);
-            });
+            return Promise.resolve(commit("setClearEntity"));
         };
         api = new internal_1.internal({
             host: options.host,
             endPoint: options.endPoint,
             request: options.request,
+            service: options.service
         });
         return _this;
     }
@@ -18110,7 +18172,7 @@ var build_query_1 = __webpack_require__(12);
 var internal = /** @class */ (function () {
     function internal(options) {
         var _this = this;
-        this.options = {
+        this._options = {
             credentials: 'same-origin',
             method: "get",
             headers: {
@@ -18121,50 +18183,91 @@ var internal = /** @class */ (function () {
         this.endPoint = "";
         this.host = "";
         this.client = function (url, options) {
+            var base = _this.options;
+            if (options.headers) {
+                options.headers = Object.assign(base.headers, options.headers);
+            }
+            options = Object.assign(base, options);
             var client = function (resolve, reject) {
-                options = Object.assign(_this.options, options);
                 fetch(url, options)
                     .then(function (response) {
-                    if (response.status !== 201) {
+                    if (response.status < 200 || response.status > 210) {
                         reject(response.status);
                         throw Error;
                     }
                     ;
+                    //deleted
+                    if (response.status === 204) {
+                        resolve(response.status);
+                        return;
+                    }
                     return response.json();
                 }).then(function (data) {
                     resolve(data);
                 }).catch(function (err) {
+                    console.log(err);
                     reject(err);
-                    throw Error;
+                    //throw Error;
                 });
             };
             return new Promise(client);
         };
-        this.server = function (url, options) {
-            if (options === void 0) { options = {}; }
-            var req = _this.request;
-            var srvOptions = Object.assign(_this.options, options);
-            var server = function (resolve, reject) {
-                var options = {
-                    url: "" + _this.host + url,
-                    method: srvOptions.method,
-                    headers: srvOptions.headers
-                };
-                req(options, function (error, response, body) {
-                    if (error) {
-                        reject(true);
-                        throw Error;
+        this.serverPagination = function (route) {
+            var serverPagination = function (resolve, reject) {
+                var pagination = _this.service.pagination();
+                var conditions = _this.service.conditions(route);
+                var entities = pagination.find(conditions, route.query);
+                var name = _this.service.name;
+                var data = {};
+                entities.then(function (result) {
+                    if (result.rows.length === 0) {
+                        reject(false);
                     }
-                    resolve(JSON.parse(body));
+                    ;
+                    data[name] = result.rows;
+                    data["page"] = result.pagination;
+                    resolve(data);
+                }).catch(function (error) {
+                    data[name] = {};
+                    data["page"] = {};
+                    reject(error);
                 });
             };
+            return serverPagination;
+        };
+        this.serverEntity = function (route) {
+            var entity = _this.service.model;
+            var serverEntity = function (resolve, reject) {
+                var model = _this.service.model;
+                var data = {};
+                model.findById(route.params.id).then(function (result) {
+                    if (!result) {
+                        reject();
+                        throw Error;
+                    }
+                    resolve(result);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            };
+            return serverEntity;
+        };
+        this.server = function (type, route) {
+            var req = _this.request;
+            var server;
+            if (type === "paginate") {
+                server = _this.serverPagination(route);
+            }
+            if (type === "entity") {
+                server = _this.serverEntity(route);
+            }
             return new Promise(server);
         };
         this.paginate = function (route) {
             var bq = new build_query_1.build_query();
             var URI = _this.endPoint + "/" + _this.routeParse(route) + bq.http(route.query);
             if (typeof window === "undefined") {
-                return _this.server(URI, {});
+                return _this.server("paginate", route);
             }
             return _this.client(URI, {});
         };
@@ -18172,18 +18275,74 @@ var internal = /** @class */ (function () {
             var id = route.params.id;
             var URI = _this.endPoint + "/" + id;
             if (typeof window === "undefined") {
-                return _this.server(URI, {});
+                return _this.server("entity", route);
             }
             return _this.client(URI, {});
         };
-        this.insert = function () {
+        this.insert = function (entity, mount, token) {
+            entity = JSON.stringify(entity);
+            var URI = mount;
+            var insert = function (resolve, reject) {
+                _this.client(URI, {
+                    body: entity,
+                    method: "post",
+                    headers: {
+                        'X-XSRF-Token': token
+                    }
+                }).then(function (r) {
+                    resolve("api insert");
+                }).catch(function (e) {
+                    resolve("api insert error");
+                });
+            };
+            return new Promise(insert);
         };
-        this.delete = function () {
+        this.update = function (entity, mount, token) {
+            var URI = mount + "/" + entity.id;
+            entity = JSON.stringify(entity);
+            var insert = function (resolve, reject) {
+                _this.client(URI, {
+                    body: entity,
+                    method: "put",
+                    headers: {
+                        'X-XSRF-Token': token
+                    }
+                }).then(function (r) {
+                    resolve("api update ok");
+                }).catch(function (e) {
+                    resolve("api update error");
+                });
+            };
+            return new Promise(insert);
+        };
+        this.delete = function (id, mount, token) {
+            var URI = mount + "/" + id;
+            var del = function (resolve, reject) {
+                _this.client(URI, {
+                    method: "delete",
+                    headers: {
+                        'X-XSRF-Token': token
+                    }
+                }).then(function (r) {
+                    resolve("api delete ok");
+                }).catch(function (e) {
+                    reject("api delete error");
+                });
+            };
+            return new Promise(del);
         };
         this.endPoint = options.endPoint;
         this.host = options.host;
         this.request = options.request;
+        this.service = options.service;
     }
+    Object.defineProperty(internal.prototype, "options", {
+        get: function () {
+            return Object.create(this._options);
+        },
+        enumerable: true,
+        configurable: true
+    });
     internal.prototype.routeParse = function (route) {
         var params = route.params;
         var paramsStr = "";

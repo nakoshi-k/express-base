@@ -8,6 +8,7 @@ export class actions extends core_actions{
             host: options.host,
             endPoint : options.endPoint,
             request:options.request ,
+            service:options.service 
           } );
     }
 
@@ -23,16 +24,20 @@ export class actions extends core_actions{
         })
     }
     
-    insertEntity = ( {commit}, route) => {
-        return api.entity(route).then((entity) => {
-            commit("setEntity",entity);
-        })
+    insertEntity = ( {state, commit } , token : string ) => {
+        return api.insert(state.entity , state.mount , token);
     }
 
-    saveEntity = ( {commit}, route) => {
-        return  api.entity(route).then((entity) => {
-            commit("setEntity",entity);
-        })
+    saveEntity = ( {state,commit}, token) => {
+        return  api.update(state.entity, state.mount ,token)
+    }
+    
+    deleteEntity = ( {state,commit}, delObj ) => {
+        return  api.delete( delObj.id , delObj.mount ,delObj.token)
     }
 
+    clearEntity = ({commit}) => {
+        return Promise.resolve(commit("setClearEntity"));
+
+    }
 }

@@ -13,7 +13,7 @@ vue_1.default.mixin({
             ad.then(() => asyncData({ store: this.$store, route: this.$route }))
                 .then(res => {
                 setTimeout(() => {
-                    this.$store.commit("loading/endLoading");
+                    this.$store.commit("loading/endLoading", "success");
                 }, 240);
             }).catch(err => {
                 let domain = this.$store.state["domain"];
@@ -31,7 +31,7 @@ vue_1.default.mixin({
                 route: to
             }).then(() => {
                 setTimeout(() => {
-                    this.$store.commit("loading/endLoading");
+                    this.$store.commit("loading/endLoading", "success");
                 }, 240);
                 next();
             }).catch(next);

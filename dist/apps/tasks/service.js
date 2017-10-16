@@ -4,6 +4,7 @@ const service_1 = require("../service");
 class service extends service_1.service {
     constructor(name) {
         super(name);
+        this.name = "tasks";
         this.conditions = (req) => {
             let search = this.search();
             search.query = req.query;

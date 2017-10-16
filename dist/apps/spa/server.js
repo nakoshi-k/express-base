@@ -31,6 +31,9 @@ exports.default = context => {
             })).then(() => {
                 context.state = store.state;
                 resolve(app);
+            }).catch(e => {
+                router.push({ path: context.mount });
+                resolve(app);
             });
         }, reject);
     };

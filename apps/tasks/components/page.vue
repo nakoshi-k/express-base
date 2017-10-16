@@ -6,6 +6,7 @@
     <h3><router-link :to="view(entity.id)">{{ entity.title }}</router-link></h3>
     <router-link :to="edit(entity.id)" class="button small">edit</router-link>
     <button @click="destroy(entity.id,entity.title)" class="button small">delete</button>
+    <button @click="copy(entity.id,entity.title)" class="button small">copy</button>
     </div>
   </div>
   <pagination :pagination="pagination" :mount="mount"></pagination>
@@ -41,7 +42,7 @@ Component.registerHooks([
     }),
   },
   methods : {
-    ...mapMutations( "modal" , ["setModal","toggleModal"] ),
+    ...mapMutations( "modal" , ["setModal","toggleModal" , "openModal"] ),
     ...mapActions( "tasks" , 
       ["fetchEntities"]
     )
@@ -55,16 +56,10 @@ export default class Page extends Vue {
   mount:string;
   pagination:any;
   fetchEntities : (route) => {};
-  asyncData ( {store,route}) {
+  asyncData ( {store,route} ) {
     return store.dispatch("tasks/fetchEntities" ,route);
   }
 
-  mounted(){
-    let pg = this.pagination;
-    if(pg.currentPage > pg.totalPage){
-      this.$router. push({ path: `${this.mount}/page/${pg.totalPage}` });
-    }
-  }
  
   view(id){
     return `${this.mount}/${id}`;
@@ -76,17 +71,23 @@ export default class Page extends Vue {
 
   setModal:(modal) => {};
   toggleModal:() => {};
+  openModal:() => {};
 
   destroy(id : string , title : string){
     let modal = { 
       template : "Destroy" , 
       data : {
         id : id,
-        name : title
+        name : title,
+        mount : this.mount
       }
       }
     this.setModal(modal);
-    this.toggleModal();
+    this.openModal();
+  }
+
+  copy(id:string){
+
   }
 
   

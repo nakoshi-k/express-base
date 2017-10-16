@@ -1,7 +1,7 @@
 import {service as app_service} from "../service";
 import * as sequelize from "sequelize";
 export class service extends app_service{
-   
+    name = "tasks";
     constructor(name:string){
         super(name);
     }

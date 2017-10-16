@@ -20,6 +20,7 @@ export class mutations extends core_mutations{
   }
 
   openModal = (state) => {
+    state.close = true;
     state.show = true;                                                                                                                                                                                              
   }
 

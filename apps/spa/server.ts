@@ -30,10 +30,15 @@ export default context => {
             store,route: router.currentRoute
           });
         }
+
       })).then(() => {
         context.state = store.state;
         resolve(app);
+      }).catch(e => {
+        router.push({ path : context.mount });
+        resolve(app);
       })
+
     },reject)
   } 
   return new Promise(server);

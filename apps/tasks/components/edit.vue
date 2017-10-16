@@ -13,7 +13,7 @@
       <label for="priod">priod</label>
       <input type="text" name="priod" class="calendar" :value="entity.priod" placeholder="priod" @change="change">
     </div>
-    <button type="submit">submit</button>
+    <button type="button" @click="save">submit</button>
   </form>
 </div>
 </template>
@@ -49,10 +49,13 @@ Component.registerHooks([
   },
   methods : {
     ...mapActions( "tasks" , 
-      ["fetchEntity"]
+      ["fetchEntity" , "saveEntity"]
     ),
     ...mapMutations( "tasks" , 
       ["updateEntity"]
+    ),
+    ...mapMutations( "loading" , 
+      ["loading","endLoading"]
     )
   }
 
@@ -88,6 +91,18 @@ export default class edit extends Vue {
         "plugins": [confirmDatePlugin({})]
       });
     }
+  }
+  token : string;
+  saveEntity:(token : string) => Promise<string>;
+  loading : () => {};
+  endLoading: (status) => {};
+  save(){
+    this.loading();
+    this.saveEntity(this.token).then(r => {
+      this.endLoading("success");
+    }).catch(e => {
+      this.endLoading("warning");
+    });
   }
 }
 </script>

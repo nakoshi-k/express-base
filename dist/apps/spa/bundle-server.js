@@ -3518,6 +3518,9 @@
                     })).then(() => {
                         context.state = store.state;
                         resolve(app);
+                    }).catch(e => {
+                        router.push({ path: context.mount });
+                        resolve(app);
                     });
                 }, reject);
             };
@@ -3544,7 +3547,7 @@
                     ad.then(() => asyncData({ store: this.$store, route: this.$route }))
                         .then(res => {
                         setTimeout(() => {
-                            this.$store.commit("loading/endLoading");
+                            this.$store.commit("loading/endLoading", "success");
                         }, 240);
                     }).catch(err => {
                         let domain = this.$store.state["domain"];
@@ -3562,7 +3565,7 @@
                         route: to
                     }).then(() => {
                         setTimeout(() => {
-                            this.$store.commit("loading/endLoading");
+                            this.$store.commit("loading/endLoading", "success");
                         }, 240);
                         next();
                     }).catch(next);
@@ -4083,7 +4086,18 @@
                 };
                 return new Promise(disable);
             }
-            delete() {
+            destroy() {
+                let data = this.data;
+                data["token"] = this.token;
+                this.loading();
+                let names = data.mount.replace("/", "");
+                this.$store.dispatch(`${names}/deleteEntity`, data).then(r => {
+                    this.closeModal();
+                    this.$store.dispatch(`${names}/fetchEntities`, this.$store.state.route);
+                    this.endLoading("success");
+                }).catch(e => {
+                    this.endLoading("warning");
+                });
             }
             cancel() {
                 let plot = this.disable();
@@ -4102,7 +4116,7 @@
                     'data': ({ data }) => data,
                     'template': ({ template }) => template,
                 })),
-                methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])('modal', ["setModal", "toggleModal", "closeModal"]))
+                methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])('modal', ["setModal", "toggleModal", "closeModal", "deleteEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("loading", ["loading", "endLoading"]))
             })
         ], Destroy);
         /* harmony default export */ __webpack_exports__["a"] = (Destroy);
@@ -4626,12 +4640,6 @@
             asyncData({ store, route }) {
                 return store.dispatch("tasks/fetchEntities", route);
             }
-            mounted() {
-                let pg = this.pagination;
-                if (pg.currentPage > pg.totalPage) {
-                    this.$router.push({ path: `${this.mount}/page/${pg.totalPage}` });
-                }
-            }
             view(id) {
                 return `${this.mount}/${id}`;
             }
@@ -4643,11 +4651,14 @@
                     template: "Destroy",
                     data: {
                         id: id,
-                        name: title
+                        name: title,
+                        mount: this.mount
                     }
                 };
                 this.setModal(modal);
-                this.toggleModal();
+                this.openModal();
+            }
+            copy(id) {
             }
         };
         Page = __decorate([
@@ -4660,7 +4671,7 @@
                     pagination: ({ page }) => page,
                     mount: ({ mount }) => mount
                 })),
-                methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["d" /* mapMutations */])("modal", ["setModal", "toggleModal"]), Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapActions */])("tasks", ["fetchEntities"])),
+                methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["d" /* mapMutations */])("modal", ["setModal", "toggleModal", "openModal"]), Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapActions */])("tasks", ["fetchEntities"])),
                 components: { pagination: __WEBPACK_IMPORTED_MODULE_2__spa_components_pagination_vue__["a" /* default */] }
             })
         ], Page);
@@ -4878,7 +4889,7 @@
                             staticClass: "button small",
                             attrs: { to: _vm.edit(entity.id) }
                         }, [_vm._v("edit")]),
-                        _vm._ssrNode(' <button class="button small">delete</button>')
+                        _vm._ssrNode(' <button class="button small">delete</button> <button class="button small">copy</button>')
                     ], 2);
                 })),
                 _vm._ssrNode(" "),
@@ -4953,9 +4964,11 @@
         let add = class add extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
             constructor() {
                 super(...arguments);
-                this.entity = {
-                    title: "",
-                    priod: ""
+                this.change = (e) => {
+                    let kv = {};
+                    kv["key"] = e.target.name;
+                    kv["value"] = e.target.value;
+                    this.updateEntity(kv);
                 };
             }
             mounted() {
@@ -4965,6 +4978,21 @@
                         "plugins": [__WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__({})]
                     });
                 }
+                this.clearEntity();
+                //copy
+            }
+            beforeDestroy() {
+                this.clearEntity();
+            }
+            save() {
+                this.loading();
+                this.insertEntity(this.token).then(r => {
+                    this.endLoading("success");
+                    this.$router.push({ path: this.mount });
+                }).catch(e => {
+                    this.endLoading("warning");
+                });
+                return false;
             }
         };
         add = __decorate([
@@ -4972,7 +5000,11 @@
                 name: "add",
                 computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])([
                     'domain', 'token'
-                ])),
+                ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])("tasks", {
+                    entity: ({ entity }) => entity,
+                    mount: ({ mount }) => mount
+                })),
+                methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])("tasks", ["insertEntity", "clearEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("tasks", ["updateEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("loading", ["loading", "endLoading"]))
             })
         ], add);
         /* harmony default export */ __webpack_exports__["a"] = (add);
@@ -4992,7 +5024,7 @@
                     _vm._ssrAttr("value", _vm.entity.title) +
                     '></div> <div class="form-item"><label for="priod">priod</label> <input type="text" name="priod" placeholder="priod"' +
                     _vm._ssrAttr("value", _vm.entity.priod) +
-                    ' class="calendar"></div> <button type="submit">submit</button></form>')
+                    ' class="calendar"></div> <button type="button">submit</button></form>')
             ]);
         };
         var staticRenderFns = [];
@@ -5182,6 +5214,14 @@
                     });
                 }
             }
+            save() {
+                this.loading();
+                this.saveEntity(this.token).then(r => {
+                    this.endLoading("success");
+                }).catch(e => {
+                    this.endLoading("warning");
+                });
+            }
         };
         edit = __decorate([
             __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
@@ -5192,7 +5232,7 @@
                     entity: ({ entity }) => entity,
                     mount: ({ mount }) => mount
                 })),
-                methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])("tasks", ["fetchEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("tasks", ["updateEntity"]))
+                methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])("tasks", ["fetchEntity", "saveEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("tasks", ["updateEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("loading", ["loading", "endLoading"]))
             })
         ], edit);
         /* harmony default export */ __webpack_exports__["a"] = (edit);
@@ -5216,7 +5256,7 @@
                     _vm._ssrAttr("value", _vm.entity.title) +
                     '></div> <div class="form-item"><label for="priod">priod</label> <input type="text" name="priod" placeholder="priod"' +
                     _vm._ssrAttr("value", _vm.entity.priod) +
-                    ' class="calendar"></div> <button type="submit">submit</button></form>')
+                    ' class="calendar"></div> <button type="button">submit</button></form>')
             ]);
         };
         var staticRenderFns = [];
@@ -5413,6 +5453,7 @@
                     state.show = false;
                 };
                 this.openModal = (state) => {
+                    state.close = true;
                     state.show = true;
                 };
             }
@@ -5500,6 +5541,15 @@
                 this.updateEntity = (state, kv) => {
                     state.entity[kv.key] = kv.value;
                 };
+                this.setClearEntity = (state) => {
+                    let entity = state.entity;
+                    for (let key in entity) {
+                        entity[key] = null;
+                        if (key === "id" || key === "created_at" || key === "updated_at") {
+                            delete entity[key];
+                        }
+                    }
+                };
                 this._mount = options.mount;
                 this._entities = options.entities;
             }
@@ -5526,20 +5576,23 @@
                         commit("setEntity", entity);
                     });
                 };
-                this.insertEntity = ({ commit }, route) => {
-                    return api.entity(route).then((entity) => {
-                        commit("setEntity", entity);
-                    });
+                this.insertEntity = ({ state, commit }, token) => {
+                    return api.insert(state.entity, state.mount, token);
                 };
-                this.saveEntity = ({ commit }, route) => {
-                    return api.entity(route).then((entity) => {
-                        commit("setEntity", entity);
-                    });
+                this.saveEntity = ({ state, commit }, token) => {
+                    return api.update(state.entity, state.mount, token);
+                };
+                this.deleteEntity = ({ state, commit }, delObj) => {
+                    return api.delete(delObj.id, delObj.mount, delObj.token);
+                };
+                this.clearEntity = ({ commit }) => {
+                    return Promise.resolve(commit("setClearEntity"));
                 };
                 api = new __WEBPACK_IMPORTED_MODULE_1__api_internal__["a" /* internal */]({
                     host: options.host,
                     endPoint: options.endPoint,
                     request: options.request,
+                    service: options.service
                 });
             }
         }
@@ -5552,7 +5605,7 @@
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_sideless_build_query__ = __webpack_require__(11);
         class internal {
             constructor(options) {
-                this.options = {
+                this._options = {
                     credentials: 'same-origin',
                     method: "get",
                     headers: {
@@ -5563,49 +5616,91 @@
                 this.endPoint = "";
                 this.host = "";
                 this.client = (url, options) => {
+                    let base = this.options;
+                    if (options.headers) {
+                        options.headers = Object.assign(base.headers, options.headers);
+                    }
+                    options = Object.assign(base, options);
                     let client = (resolve, reject) => {
-                        options = Object.assign(this.options, options);
                         fetch(url, options)
                             .then((response) => {
-                            if (response.status !== 201) {
+                            if (response.status < 200 || response.status > 210) {
                                 reject(response.status);
                                 throw Error;
                             }
                             ;
+                            //deleted
+                            if (response.status === 204) {
+                                resolve(response.status);
+                                return;
+                            }
                             return response.json();
                         }).then((data) => {
                             resolve(data);
                         }).catch((err) => {
+                            console.log(err);
                             reject(err);
-                            throw Error;
+                            //throw Error;
                         });
                     };
                     return new Promise(client);
                 };
-                this.server = (url, options = {}) => {
-                    let req = this.request;
-                    let srvOptions = Object.assign(this.options, options);
-                    let server = (resolve, reject) => {
-                        let options = {
-                            url: `${this.host}${url}`,
-                            method: srvOptions.method,
-                            headers: srvOptions.headers
-                        };
-                        req(options, (error, response, body) => {
-                            if (error) {
-                                reject(true);
-                                throw Error;
+                this.serverPagination = (route) => {
+                    let serverPagination = (resolve, reject) => {
+                        let pagination = this.service.pagination();
+                        let conditions = this.service.conditions(route);
+                        let entities = pagination.find(conditions, route.query);
+                        let name = this.service.name;
+                        let data = {};
+                        entities.then((result) => {
+                            if (result.rows.length === 0) {
+                                reject(false);
                             }
-                            resolve(JSON.parse(body));
+                            ;
+                            data[name] = result.rows;
+                            data["page"] = result.pagination;
+                            resolve(data);
+                        }).catch((error) => {
+                            data[name] = {};
+                            data["page"] = {};
+                            reject(error);
                         });
                     };
+                    return serverPagination;
+                };
+                this.serverEntity = (route) => {
+                    let entity = this.service.model;
+                    let serverEntity = (resolve, reject) => {
+                        let model = this.service.model;
+                        let data = {};
+                        model.findById(route.params.id).then((result) => {
+                            if (!result) {
+                                reject();
+                                throw Error;
+                            }
+                            resolve(result);
+                        }).catch((err) => {
+                            reject(err);
+                        });
+                    };
+                    return serverEntity;
+                };
+                this.server = (type, route) => {
+                    let req = this.request;
+                    let server;
+                    if (type === "paginate") {
+                        server = this.serverPagination(route);
+                    }
+                    if (type === "entity") {
+                        server = this.serverEntity(route);
+                    }
                     return new Promise(server);
                 };
                 this.paginate = (route) => {
                     let bq = new __WEBPACK_IMPORTED_MODULE_0__base_sideless_build_query__["a" /* build_query */]();
                     let URI = `${this.endPoint}/${this.routeParse(route)}${bq.http(route.query)}`;
                     if (typeof window === "undefined") {
-                        return this.server(URI, {});
+                        return this.server("paginate", route);
                     }
                     return this.client(URI, {});
                 };
@@ -5613,17 +5708,69 @@
                     let id = route.params.id;
                     let URI = `${this.endPoint}/${id}`;
                     if (typeof window === "undefined") {
-                        return this.server(URI, {});
+                        return this.server("entity", route);
                     }
                     return this.client(URI, {});
                 };
-                this.insert = () => {
+                this.insert = (entity, mount, token) => {
+                    entity = JSON.stringify(entity);
+                    let URI = mount;
+                    let insert = (resolve, reject) => {
+                        this.client(URI, {
+                            body: entity,
+                            method: "post",
+                            headers: {
+                                'X-XSRF-Token': token
+                            }
+                        }).then(r => {
+                            resolve("api insert");
+                        }).catch(e => {
+                            resolve("api insert error");
+                        });
+                    };
+                    return new Promise(insert);
                 };
-                this.delete = () => {
+                this.update = (entity, mount, token) => {
+                    let URI = mount + "/" + entity.id;
+                    entity = JSON.stringify(entity);
+                    let insert = (resolve, reject) => {
+                        this.client(URI, {
+                            body: entity,
+                            method: "put",
+                            headers: {
+                                'X-XSRF-Token': token
+                            }
+                        }).then(r => {
+                            resolve("api update ok");
+                        }).catch(e => {
+                            resolve("api update error");
+                        });
+                    };
+                    return new Promise(insert);
+                };
+                this.delete = (id, mount, token) => {
+                    let URI = mount + "/" + id;
+                    let del = (resolve, reject) => {
+                        this.client(URI, {
+                            method: "delete",
+                            headers: {
+                                'X-XSRF-Token': token
+                            }
+                        }).then(r => {
+                            resolve("api delete ok");
+                        }).catch(e => {
+                            reject("api delete error");
+                        });
+                    };
+                    return new Promise(del);
                 };
                 this.endPoint = options.endPoint;
                 this.host = options.host;
                 this.request = options.request;
+                this.service = options.service;
+            }
+            get options() {
+                return Object.create(this._options);
             }
             routeParse(route) {
                 let params = route.params;

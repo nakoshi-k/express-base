@@ -18,6 +18,7 @@ class mutations extends mutations_1.mutations {
             state.show = false;
         };
         this.openModal = (state) => {
+            state.close = true;
             state.show = true;
         };
     }

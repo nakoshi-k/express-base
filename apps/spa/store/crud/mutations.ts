@@ -21,5 +21,15 @@ export class mutations extends core_mutations{
     updateEntity = ( state , kv : {key:string,value:string} ) => {
       state.entity[ kv.key ] = kv.value
     }
+    
+    setClearEntity = (state) => {
+      let entity = state.entity;
+      for(let key in entity){
+        entity[key] = null;
+        if(key === "id" || key === "created_at" || key === "updated_at" ){
+          delete entity[key];
+        }
+      }
+    }
 
 }
