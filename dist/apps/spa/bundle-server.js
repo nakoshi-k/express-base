@@ -5334,9 +5334,11 @@
                     indicator.status = status;
                     if (complate >= 100) {
                         indicator.prosess = false;
-                        setTimeout(() => {
-                            indicator.status = "primary";
-                        }, 500);
+                        if (status === "success") {
+                            setTimeout(() => {
+                                indicator.status = "primary";
+                            }, 500);
+                        }
                     }
                     else {
                         indicator.prosess = true;

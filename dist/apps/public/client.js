@@ -17704,9 +17704,11 @@ var mutations = /** @class */ (function (_super) {
             indicator.status = status;
             if (complate >= 100) {
                 indicator.prosess = false;
-                setTimeout(function () {
-                    indicator.status = "primary";
-                }, 500);
+                if (status === "success") {
+                    setTimeout(function () {
+                        indicator.status = "primary";
+                    }, 500);
+                }
             }
             else {
                 indicator.prosess = true;
