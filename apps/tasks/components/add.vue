@@ -48,7 +48,7 @@ Component.registerHooks([
   },
   methods : {
     ...mapActions( "tasks" , 
-      ["insertEntity" , "clearEntity" ]
+      ["insertEntity" , "clearEntity" ,"copyEntity"]
     ),
     ...mapMutations( "tasks" , 
       ["updateEntity"]
@@ -73,7 +73,6 @@ export default class add extends Vue {
     title : "",
     priod : ""
   }
-
    
   change = (e) => {
     let kv = {}
@@ -82,6 +81,7 @@ export default class add extends Vue {
     this.updateEntity(kv);
   }
 
+  copyEntity:(any) => {};
   mounted(){
     if(window){
       flatpickr(".calendar" , {
@@ -90,7 +90,10 @@ export default class add extends Vue {
       });
     }
     this.clearEntity();
-    //copy
+    let query = this.$store.state.route.query;
+    if(query["copy"]){
+      this.copyEntity({ id : query["copy"] , mount : this.mount });
+    }
   }
 
   beforeDestroy(){

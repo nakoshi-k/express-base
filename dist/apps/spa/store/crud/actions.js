@@ -16,6 +16,22 @@ class actions extends actions_1.actions {
                 commit("setEntity", entity);
             });
         };
+        this.copyEntity = ({ commit }, copy) => {
+            let route = {
+                params: {
+                    id: copy.id,
+                },
+                path: copy.mount + "/" + copy.id,
+            };
+            return api.entity(route).then((entity) => {
+                for (let key in entity) {
+                    if (key === "id" || key === "updated_at" || key === "created_at") {
+                        delete entity[key];
+                    }
+                }
+                commit("setEntity", entity);
+            });
+        };
         this.insertEntity = ({ state, commit }, token) => {
             return api.insert(state.entity, state.mount, token);
         };

@@ -5390,6 +5390,7 @@ let Page = class Page extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
         this.openModal();
     }
     copy(id) {
+        return `${this.mount}/add?copy=${id}`;
     }
 };
 Page = __decorate([
@@ -5703,8 +5704,14 @@ var render = function() {
                 },
                 [_vm._v("edit")]
               ),
-              _vm._ssrNode(
-                ' <button class="button small">delete</button> <button class="button small">copy</button>'
+              _vm._ssrNode(' <button class="button small">delete</button> '),
+              _c(
+                "router-link",
+                {
+                  staticClass: "button small",
+                  attrs: { to: _vm.copy(entity.id) }
+                },
+                [_vm._v("copy")]
               )
             ],
             2
@@ -5809,7 +5816,10 @@ let add = class add extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
             });
         }
         this.clearEntity();
-        //copy
+        let query = this.$store.state.route.query;
+        if (query["copy"]) {
+            this.copyEntity({ id: query["copy"], mount: this.mount });
+        }
     }
     beforeDestroy() {
         this.clearEntity();
@@ -5834,7 +5844,7 @@ add = __decorate([
             entity: ({ entity }) => entity,
             mount: ({ mount }) => mount
         })),
-        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])("tasks", ["insertEntity", "clearEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("tasks", ["updateEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("loading", ["loading", "endLoading"]))
+        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])("tasks", ["insertEntity", "clearEntity", "copyEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("tasks", ["updateEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("loading", ["loading", "endLoading"]))
     })
 ], add);
 /* harmony default export */ __webpack_exports__["a"] = (add);
@@ -6503,6 +6513,22 @@ class actions extends __WEBPACK_IMPORTED_MODULE_0__actions__["a" /* actions */] 
         };
         this.fetchEntity = ({ commit }, route) => {
             return api.entity(route).then((entity) => {
+                commit("setEntity", entity);
+            });
+        };
+        this.copyEntity = ({ commit }, copy) => {
+            let route = {
+                params: {
+                    id: copy.id,
+                },
+                path: copy.mount + "/" + copy.id,
+            };
+            return api.entity(route).then((entity) => {
+                for (let key in entity) {
+                    if (key === "id" || key === "updated_at" || key === "created_at") {
+                        delete entity[key];
+                    }
+                }
                 commit("setEntity", entity);
             });
         };

@@ -16559,6 +16559,7 @@ var Page = /** @class */ (function (_super) {
         this.openModal();
     };
     Page.prototype.copy = function (id) {
+        return this.mount + "/add?copy=" + id;
     };
     Page = __decorate([
         vue_class_component_1.default({
@@ -16942,14 +16943,10 @@ var render = function() {
               ),
               _vm._v(" "),
               _c(
-                "button",
+                "router-link",
                 {
                   staticClass: "button small",
-                  on: {
-                    click: function($event) {
-                      _vm.copy(entity.id, entity.title)
-                    }
-                  }
+                  attrs: { to: _vm.copy(entity.id) }
                 },
                 [_vm._v("copy")]
               )
@@ -17094,7 +17091,10 @@ var add = /** @class */ (function (_super) {
             });
         }
         this.clearEntity();
-        //copy
+        var query = this.$store.state.route.query;
+        if (query["copy"]) {
+            this.copyEntity({ id: query["copy"], mount: this.mount });
+        }
     };
     add.prototype.beforeDestroy = function () {
         this.clearEntity();
@@ -17125,7 +17125,7 @@ var add = /** @class */ (function (_super) {
                     return mount;
                 }
             })),
-            methods: __assign({}, vuex_1.mapActions("tasks", ["insertEntity", "clearEntity"]), vuex_1.mapMutations("tasks", ["updateEntity"]), vuex_1.mapMutations("loading", ["loading", "endLoading"]))
+            methods: __assign({}, vuex_1.mapActions("tasks", ["insertEntity", "clearEntity", "copyEntity"]), vuex_1.mapMutations("tasks", ["updateEntity"]), vuex_1.mapMutations("loading", ["loading", "endLoading"]))
         })
     ], add);
     return add;
@@ -18131,6 +18131,23 @@ var actions = /** @class */ (function (_super) {
         _this.fetchEntity = function (_a, route) {
             var commit = _a.commit;
             return api.entity(route).then(function (entity) {
+                commit("setEntity", entity);
+            });
+        };
+        _this.copyEntity = function (_a, copy) {
+            var commit = _a.commit;
+            var route = {
+                params: {
+                    id: copy.id,
+                },
+                path: copy.mount + "/" + copy.id,
+            };
+            return api.entity(route).then(function (entity) {
+                for (var key in entity) {
+                    if (key === "id" || key === "updated_at" || key === "created_at") {
+                        delete entity[key];
+                    }
+                }
                 commit("setEntity", entity);
             });
         };

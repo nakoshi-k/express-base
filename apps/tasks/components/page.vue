@@ -6,7 +6,7 @@
     <h3><router-link :to="view(entity.id)">{{ entity.title }}</router-link></h3>
     <router-link :to="edit(entity.id)" class="button small">edit</router-link>
     <button @click="destroy(entity.id,entity.title)" class="button small">delete</button>
-    <button @click="copy(entity.id,entity.title)" class="button small">copy</button>
+    <router-link :to="copy(entity.id)" class="button small">copy</router-link>
     </div>
   </div>
   <pagination :pagination="pagination" :mount="mount"></pagination>
@@ -87,7 +87,7 @@ export default class Page extends Vue {
   }
 
   copy(id:string){
-
+     return `${this.mount}/add?copy=${id}`;
   }
 
   

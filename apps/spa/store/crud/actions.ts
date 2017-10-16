@@ -23,7 +23,23 @@ export class actions extends core_actions{
             commit("setEntity",entity);
         })
     }
-    
+    copyEntity = ( {commit} , copy ) => {
+        let route = {
+            params :{
+                id : copy.id,
+            },
+            path : copy.mount + "/" + copy.id,
+        }
+        return  api.entity(route).then((entity) => {
+            for(let key in entity){
+                if(key === "id" || key === "updated_at" || key === "created_at"){
+                    delete entity[key];
+                }
+            }
+            commit("setEntity",entity);
+        })
+    }
+
     insertEntity = ( {state, commit } , token : string ) => {
         return api.insert(state.entity , state.mount , token);
     }
