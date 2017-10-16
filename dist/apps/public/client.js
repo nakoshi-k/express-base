@@ -13198,20 +13198,6 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "button primary",
-              attrs: { disabled: !_vm.button.done },
-              on: {
-                click: function($event) {
-                  _vm.destroy()
-                }
-              }
-            },
-            [_vm._v("Apply")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
               staticClass: "button warning",
               attrs: { disabled: !_vm.button.cancel },
               on: {
@@ -13221,6 +13207,20 @@ var render = function() {
               }
             },
             [_vm._v("Cancel")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "button primary",
+              attrs: { disabled: !_vm.button.done },
+              on: {
+                click: function($event) {
+                  _vm.destroy()
+                }
+              }
+            },
+            [_vm._v("Apply")]
           )
         ])
       ])

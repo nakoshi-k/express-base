@@ -3,8 +3,8 @@
   <h3>Delete #{{data.id}}</h3>
   "{{data.name}}" を削除します。一度削除されたデータは元に戻す事ができません。
   <div class="margin text-right">
-    <button :disabled="!button.done" @click="destroy()" class="button primary">Apply</button>
     <button :disabled="!button.cancel" @click="closeModal()" class="button warning">Cancel</button>
+    <button :disabled="!button.done" @click="destroy()" class="button primary">Apply</button>
   </div>
 </div>
 </template>

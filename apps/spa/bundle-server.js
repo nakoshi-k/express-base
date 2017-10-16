@@ -4762,10 +4762,10 @@ var render = function() {
                 '" を削除します。一度削除されたデータは元に戻す事ができません。\n  '
             ) +
             '<div class="margin text-right"><button' +
-            _vm._ssrAttr("disabled", !_vm.button.done) +
-            ' class="button primary">Apply</button> <button' +
             _vm._ssrAttr("disabled", !_vm.button.cancel) +
-            ' class="button warning">Cancel</button></div>'
+            ' class="button warning">Cancel</button> <button' +
+            _vm._ssrAttr("disabled", !_vm.button.done) +
+            ' class="button primary">Apply</button></div>'
         )
       ])
     : _vm._e()
