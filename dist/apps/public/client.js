@@ -17212,11 +17212,11 @@ var render = function() {
         _vm._v(" "),
         _c("div", [_vm._v(_vm._s(_vm.entity.priod))]),
         _vm._v(" "),
-        _c("h3", [_vm._v("Created")]),
+        _c("h3", [_vm._v("Created at")]),
         _vm._v(" "),
         _c("div", [_vm._v(_vm._s(_vm.entity.created_at))]),
         _vm._v(" "),
-        _c("h3", [_vm._v("Updated")]),
+        _c("h3", [_vm._v("Updated at")]),
         _vm._v(" "),
         _c("div", [_vm._v(_vm._s(_vm.entity.updated_at))])
       ])

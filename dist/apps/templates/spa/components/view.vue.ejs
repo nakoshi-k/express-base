@@ -1,16 +1,10 @@
 <template>
 <div v-if="entity.id" class="resource column column-75">
   <h2>View</h2>
-  <h3>Id</h3>
-  <div>{{entity.id}}</div>
-  <h3>Title</h3>
-  <div>{{entity.title}}</div>
-  <h3>Priod</h3>
-  <div>{{entity.priod}}</div>
-  <h3>Created</h3>
-  <div>{{entity.created_at}}</div>
-  <h3>Updated</h3>
-  <div>{{entity.updated_at}}</div>
+  <%_ fields.forEach(function (field) { _%>
+  <h3><%= inflection.humanize(field.name) %></h3>
+  <div>{{entity.<%= field.name %>}}</div>
+  <%_ }); _%>
 </div>
 </template>
 

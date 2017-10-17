@@ -5073,9 +5073,9 @@
                         _vm._ssrEscape(_vm._s(_vm.entity.title)) +
                         "</div> <h3>Priod</h3> <div>" +
                         _vm._ssrEscape(_vm._s(_vm.entity.priod)) +
-                        "</div> <h3>Created</h3> <div>" +
+                        "</div> <h3>Created at</h3> <div>" +
                         _vm._ssrEscape(_vm._s(_vm.entity.created_at)) +
-                        "</div> <h3>Updated</h3> <div>" +
+                        "</div> <h3>Updated at</h3> <div>" +
                         _vm._ssrEscape(_vm._s(_vm.entity.updated_at)) +
                         "</div>")
                 ])
