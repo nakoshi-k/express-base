@@ -25,7 +25,9 @@ class router extends router_1.router {
                 url: `${this.mount}${req.url}`,
                 server: {
                     host: req.protocol + '://' + req.headers.host,
-                    request: Request
+                    request: Request,
+                    service: this.service,
+                    mount: this.mount
                 }
             };
             this.ssr(context).then(ssr => {
@@ -87,10 +89,17 @@ class router extends router_1.router {
             model.findById(req.params.id).then((result) => {
                 if (result) {
                     result.destroy().then(() => {
-                        res.sendStatus(204);
+                        res.status(204);
+                        res.json({});
+                    }).catch(e => {
+                        res.status(500);
+                        res.json({});
                     });
                 }
-                res.sendStatus(500);
+                else {
+                    res.status(500);
+                    res.json({});
+                }
             });
         };
         this.insert = (req, res, next) => {
@@ -103,9 +112,8 @@ class router extends router_1.router {
                 res.status(201);
                 res.json(entity.dataValues);
             }).catch((err) => {
-                req.body.errors = this.service.validationError(err);
                 res.status(400);
-                res.json(req.body.errors);
+                res.json(this.service.validationError(err));
             });
         };
         this.update = (req, res, next) => {
@@ -120,7 +128,7 @@ class router extends router_1.router {
                     res.json(result);
                 }).catch((err) => {
                     res.status(400);
-                    res.json(err);
+                    res.json(this.service.validationError(err));
                 });
             }).catch((err) => {
                 res.status(400);
@@ -149,6 +157,7 @@ class router extends router_1.router {
             server(context).then((app) => {
                 let stateTag = `<script>window.__INITIAL_STATE__=${serialize(app.$store.state, { isJSON: true })}</script>`;
                 renderer.renderToString(app, (err, html) => {
+                    console.log(err);
                     if (err) {
                         if (err.code === 404) {
                             reject(404);
@@ -158,8 +167,6 @@ class router extends router_1.router {
                     }
                     resolve(html + stateTag);
                 });
-            }).catch((err) => {
-                reject(err);
             });
         };
         return new Promise(ssr);

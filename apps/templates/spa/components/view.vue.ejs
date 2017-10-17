@@ -1,0 +1,49 @@
+<template>
+<div v-if="entity.id" class="resource column column-75">
+  <h2>View</h2>
+  <%_ fields.forEach(function (field) { _%>
+  <h3><%= inflection.humanize(field.name) %></h3>
+  <div>{{entity.<%= field.name %>}}</div>
+  <%_ }); _%>
+</div>
+</template>
+
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import {mapGetters,mapState} from 'vuex'
+
+Component.registerHooks([
+  'beforeRouteEnter',
+  'beforeRouteLeave',
+  'asyncData',
+  'fetch',
+  'middleware',
+  'layout',
+  'transition',
+  'scrollToTop'
+])
+
+@Component({
+  name : "view",
+  computed : {
+    ...mapGetters([
+      'domain' , 'token'
+    ]),
+    ...mapState("<%- names %>" , {
+      entity : ({entity}) =>  entity
+    }),
+
+  },
+})
+
+export default class view extends Vue {
+
+  
+  asyncData ({ store, route }) {
+    return store.dispatch('<%- names %>/fetchEntity' ,route);
+  }
+
+
+}
+</script>

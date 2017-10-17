@@ -7,10 +7,12 @@ export class state extends core_state{
     }
 
     entities = []
-    entity = {}
+    entity = {
+    }
     page = {
         totalPage: 1,
         currentPage: 1,
         queryPrams: {} 
     }
+    
 }

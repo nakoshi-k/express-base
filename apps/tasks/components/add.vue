@@ -1,17 +1,20 @@
 <template>
 <div class="resource column column-75">
   <h2>Add</h2>
-  <form action="./" method="post">
-    <input type="hidden" name="_csrf" :value="token">
-    <div class="form-item">
-      <label for="title">title</label>
-      <input type="text" name="title" v-model="entity.title" placeholder="title">
-    </div>
-    <div class="form-item">
-      <label for="priod">priod</label>
-      <input type="text" name="priod" class="calendar" v-model="entity.priod" placeholder="priod">
-    </div>
-    <button type="submit" >submit</button>
+  <form :action="action" method="post" v-on:submit.prevent="save">
+
+      <div class="form-item">
+        <label for="title">title</label>
+        <input type="text" name="title" @change="change" :class="validationClass( errors , 'title')" :value="entity.title" placeholder="title">
+        <div class="errors" v-for="e in errors.title"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
+      </div>
+
+      <div class="form-item">
+        <label for="priod">priod</label>
+        <input class="calendar" type="text" name="priod" @change="change" :class="validationClass( errors , 'priod')" :value="entity.priod" placeholder="priod">
+        <div class="errors" v-for="e in errors.priod"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
+      </div>
+    <button type="submit" :class="validationClass(errors , 'submit')">update</button>
   </form>
 </div>
 </template>
@@ -19,9 +22,10 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import {mapGetters} from 'vuex'
+import {mapGetters,mapState,mapActions,mapMutations} from 'vuex'
 import * as flatpickr from "flatpickr";
 import * as confirmDatePlugin from "../../../node_modules/flatpickr/src/plugins/confirmDate/confirmDate.js";
+import form_validation from "../../spa/utility/validation";
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -34,21 +38,59 @@ Component.registerHooks([
   'scrollToTop'
 ])
 
-
 @Component({
   name : "add",
   computed : {
     ...mapGetters([
       'domain' , 'token'
-    ])
+    ]),
+    ...mapState("tasks" , {
+        entity : ({entity}) =>  entity,
+        mount : ({mount}) => mount 
+    }),
   },
+  methods : {
+    ...mapActions( "tasks" , 
+      ["insertEntity" , "clearEntity" ,"copyEntity"]
+    ),
+    ...mapMutations( "tasks" , 
+      ["updateEntity" , "setErrors"]
+    ),
+    ...mapMutations( "loading" , 
+      ["loading","endLoading"]
+    ),
+    ...form_validation.map(["validationClass"])
+  }
 })
 
 export default class add extends Vue {
-  entity = {
+  /*from mutations */
+  updateEntity:(kv) => {}//from mutations
+  insertEntity:any;//from mutations
+  loading:() => {};
+  endLoading:(status:string) => {};
+  token : string;
+  mount : string
+  clearEntity:() => {}
+  
+  get action(){
+    return `${this.mount}`
+  }
+
+  entity : {
     title : "",
     priod : ""
+    errors : {}
   }
+   
+  change = (e) => {
+    let kv = {}
+    kv["key"] = e.target.name;
+    kv["value"] = e.target.value;
+    this.updateEntity(kv);
+  }
+
+  copyEntity:(any) => {};
   mounted(){
     if(window){
       flatpickr(".calendar" , {
@@ -56,6 +98,41 @@ export default class add extends Vue {
         "plugins": [confirmDatePlugin({})]
       });
     }
+    this.clearEntity();
+    let query = this.$store.state.route.query;
+    if(query["copy"]){
+      this.copyEntity({ id : query["copy"] , mount : this.mount });
+    }
   }
+
+  beforeDestroy(){
+    this.clearEntity();
+  }
+  
+  errors = {};
+
+  save(){
+    this.loading();
+    this.insertEntity(this.token).then(r => {
+      this.endLoading("success");
+      this.$router.push({path : this.mount})
+    }).catch( e => {
+      this.errors = e;
+      this.endLoading("warning");
+    });
+    return false;
+  }
+/*
+  validationClass(errors , name){
+    if(name === "submit"){
+       if( (Object.keys(errors).length > 0) ){
+         return "warning"
+       }
+    }
+    if(errors[name]){
+      return "warning"
+    }
+  }
+*/
 }
 </script>

@@ -14,6 +14,21 @@ class mutations extends mutations_1.mutations {
         this.updateEntity = (state, kv) => {
             state.entity[kv.key] = kv.value;
         };
+        this.setClearEntity = (state) => {
+            let entity = state.entity;
+            for (let key in entity) {
+                entity[key] = null;
+                if (key === "id" || key === "created_at" || key === "updated_at") {
+                    delete entity[key];
+                }
+                if (key === "errors") {
+                    entity[key] = [];
+                }
+            }
+        };
+        this.setErrors = (state, errors) => {
+            state.entity["errors"] = errors;
+        };
         this._mount = options.mount;
         this._entities = options.entities;
     }

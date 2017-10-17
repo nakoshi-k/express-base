@@ -39,19 +39,17 @@ export class router extends app_router {
             server( context ).then( (app : Vue) => {
                 let stateTag =`<script>window.__INITIAL_STATE__=${ serialize(app.$store.state, { isJSON: true }) }</script>` ;
                 renderer.renderToString( app , (err:any,html)  => {
+                    console.log(err)
                     if (err) {
                         if (err.code === 404) {
                           reject(404);
                         } 
                        reject(500);
-                       return
+                       return;
                     }
                     resolve( html + stateTag);
               });
-            }).catch((err) => {
-                reject(err)
-            })
-        }
+            });        }
         return new Promise(ssr);
     }
 
@@ -60,7 +58,9 @@ export class router extends app_router {
             url: `${this.mount}${req.url}`,
             server : {
                 host : req.protocol + '://' + req.headers.host ,
-                request : Request
+                request : Request,
+                service : this.service,
+                mount : this.mount
             }
         };
         this.ssr(context).then(ssr => {
@@ -130,10 +130,16 @@ export class router extends app_router {
         model.findById( req.params.id ).then((result) => {
             if(result){
                 result.destroy().then( () => {
-                    res.sendStatus(204);
+                    res.status(204);
+                    res.json( {} );
+                }).catch(e => {
+                   res.status(500)
+                   res.json({});
                 });
+            }else{
+                res.status(500);
+                res.json({});
             }
-            res.sendStatus(500);
         })
     }
 
@@ -149,9 +155,8 @@ export class router extends app_router {
             res.status(201);
             res.json(entity.dataValues);
         }).catch((err) => {
-            req.body.errors = this.service.validationError(err);
             res.status(400);
-            res.json(req.body.errors);
+            res.json(this.service.validationError(err));
         })
     }
 
@@ -169,7 +174,7 @@ export class router extends app_router {
                 res.json(result);
             }).catch((err) => {
                 res.status(400);
-                res.json(err);
+                res.json(this.service.validationError(err));
             });
         }).catch((err) => {
             res.status(400);

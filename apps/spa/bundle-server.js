@@ -4068,6 +4068,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             })).then(() => {
                 context.state = store.state;
                 resolve(app);
+            }).catch(e => {
+                router.push({ path: context.mount });
+                resolve(app);
             });
         }, reject);
     };
@@ -4702,7 +4705,18 @@ let Destroy = class Destroy extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a 
         };
         return new Promise(disable);
     }
-    delete() {
+    destroy() {
+        let data = this.data;
+        data["token"] = this.token;
+        this.loading();
+        let names = data.mount.replace("/", "");
+        this.$store.dispatch(`${names}/deleteEntity`, data).then(r => {
+            this.closeModal();
+            this.$store.dispatch(`${names}/fetchEntities`, this.$store.state.route);
+            this.endLoading("success");
+        }).catch(e => {
+            this.endLoading("warning");
+        });
     }
     cancel() {
         let plot = this.disable();
@@ -4721,7 +4735,7 @@ Destroy = __decorate([
             'data': ({ data }) => data,
             'template': ({ template }) => template,
         })),
-        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])('modal', ["setModal", "toggleModal", "closeModal"]))
+        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])('modal', ["setModal", "toggleModal", "closeModal", "deleteEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("loading", ["loading", "endLoading"]))
     })
 ], Destroy);
 /* harmony default export */ __webpack_exports__["a"] = (Destroy);
@@ -4748,10 +4762,10 @@ var render = function() {
                 '" を削除します。一度削除されたデータは元に戻す事ができません。\n  '
             ) +
             '<div class="margin text-right"><button' +
-            _vm._ssrAttr("disabled", !_vm.button.done) +
-            ' class="button primary">Apply</button> <button' +
             _vm._ssrAttr("disabled", !_vm.button.cancel) +
-            ' class="button warning">Cancel</button></div>'
+            ' class="button warning">Cancel</button> <button' +
+            _vm._ssrAttr("disabled", !_vm.button.done) +
+            ' class="button primary">Apply</button></div>'
         )
       ])
     : _vm._e()
@@ -4866,7 +4880,7 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_router__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_navi_vue__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tasks_components_sub_vue__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__tasks_components_page_vue__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__tasks_components_idx_vue__ = __webpack_require__(81);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__tasks_components_add_vue__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__tasks_components_view_vue__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__tasks_components_edit_vue__ = __webpack_require__(59);
@@ -4883,7 +4897,7 @@ function createRouter() {
     return new __WEBPACK_IMPORTED_MODULE_1_vue_router___default.a({
         mode: 'history',
         routes: [
-            { name: "page", path: `/tasks/page/:page*`, components: { main: __WEBPACK_IMPORTED_MODULE_4__tasks_components_page_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_2__components_navi_vue__["a" /* default */], sub: __WEBPACK_IMPORTED_MODULE_3__tasks_components_sub_vue__["a" /* default */] } },
+            { name: "page", path: `/tasks/page/:page*`, components: { main: __WEBPACK_IMPORTED_MODULE_4__tasks_components_idx_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_2__components_navi_vue__["a" /* default */], sub: __WEBPACK_IMPORTED_MODULE_3__tasks_components_sub_vue__["a" /* default */] } },
             { name: "index", path: `/tasks/page/1`, alias: `/tasks/` },
             { name: "add", path: `/tasks/add`, components: { main: __WEBPACK_IMPORTED_MODULE_5__tasks_components_add_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_2__components_navi_vue__["a" /* default */], sub: __WEBPACK_IMPORTED_MODULE_3__tasks_components_sub_vue__["a" /* default */] } },
             { name: "view", path: `/tasks/:id`, components: { main: __WEBPACK_IMPORTED_MODULE_6__tasks_components_view_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_2__components_navi_vue__["a" /* default */], sub: __WEBPACK_IMPORTED_MODULE_3__tasks_components_sub_vue__["a" /* default */] } },
@@ -5291,114 +5305,8 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
 
 /***/ }),
-/* 47 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_page_vue__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_49a92c8d_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_page_vue__ = __webpack_require__(52);
-var normalizeComponent = __webpack_require__(1)
-/* script */
-
-/* template */
-
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = "4a994046"
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_page_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_49a92c8d_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_page_vue__["a" /* default */],
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "apps/tasks/components/page.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] page.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
-
-
-/***/ }),
-/* 48 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__spa_components_pagination_vue__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-
-__WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
-    'beforeRouteEnter',
-    'beforeRouteLeave',
-    'asyncData',
-    'fetch',
-    'middleware',
-    'layout',
-    'transition',
-    'scrollToTop'
-]);
-let Page = class Page extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
-    asyncData({ store, route }) {
-        return store.dispatch("tasks/fetchEntities", route);
-    }
-    mounted() {
-        let pg = this.pagination;
-        if (pg.currentPage > pg.totalPage) {
-            this.$router.push({ path: `${this.mount}/page/${pg.totalPage}` });
-        }
-    }
-    view(id) {
-        return `${this.mount}/${id}`;
-    }
-    edit(id) {
-        return `${this.mount}/${id}/edit`;
-    }
-    destroy(id, title) {
-        let modal = {
-            template: "Destroy",
-            data: {
-                id: id,
-                name: title
-            }
-        };
-        this.setModal(modal);
-        this.toggleModal();
-    }
-};
-Page = __decorate([
-    __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
-        name: "page",
-        computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["c" /* mapGetters */])([
-            'domain'
-        ]), Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["e" /* mapState */])('tasks', {
-            entities: ({ entities }) => entities,
-            pagination: ({ page }) => page,
-            mount: ({ mount }) => mount
-        })),
-        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["d" /* mapMutations */])("modal", ["setModal", "toggleModal"]), Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapActions */])("tasks", ["fetchEntities"])),
-        components: { pagination: __WEBPACK_IMPORTED_MODULE_2__spa_components_pagination_vue__["a" /* default */] }
-    })
-], Page);
-/* harmony default export */ __webpack_exports__["a"] = (Page);
-
-
-/***/ }),
+/* 47 */,
+/* 48 */,
 /* 49 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -5652,66 +5560,7 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
 
 /***/ }),
-/* 52 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "resource column column-75" },
-    [
-      _vm._ssrNode("<h2>Index</h2> "),
-      _vm._ssrNode(
-        "<div>",
-        "</div>",
-        _vm._l(_vm.entities, function(entity) {
-          return _vm._ssrNode(
-            "<div>",
-            "</div>",
-            [
-              _vm._ssrNode(
-                "<h3>",
-                "</h3>",
-                [
-                  _c("router-link", { attrs: { to: _vm.view(entity.id) } }, [
-                    _vm._v(_vm._s(entity.title))
-                  ])
-                ],
-                1
-              ),
-              _vm._ssrNode(" "),
-              _c(
-                "router-link",
-                {
-                  staticClass: "button small",
-                  attrs: { to: _vm.edit(entity.id) }
-                },
-                [_vm._v("edit")]
-              ),
-              _vm._ssrNode(' <button class="button small">delete</button>')
-            ],
-            2
-          )
-        })
-      ),
-      _vm._ssrNode(" "),
-      _c("pagination", {
-        attrs: { pagination: _vm.pagination, mount: _vm.mount }
-      })
-    ],
-    2
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
-
-/***/ }),
+/* 52 */,
 /* 53 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -5757,12 +5606,14 @@ if (Component.options.functional) {console.error("[vue-loader] add.vue: function
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_flatpickr___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_flatpickr__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__spa_utility_validation__ = __webpack_require__(80);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -5781,10 +5632,28 @@ __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
 let add = class add extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
     constructor() {
         super(...arguments);
-        this.entity = {
-            title: "",
-            priod: ""
+        this.change = (e) => {
+            let kv = {};
+            kv["key"] = e.target.name;
+            kv["value"] = e.target.value;
+            this.updateEntity(kv);
         };
+        this.errors = {};
+        /*
+          validationClass(errors , name){
+            if(name === "submit"){
+               if( (Object.keys(errors).length > 0) ){
+                 return "warning"
+               }
+            }
+            if(errors[name]){
+              return "warning"
+            }
+          }
+        */
+    }
+    get action() {
+        return `${this.mount}`;
     }
     mounted() {
         if (window) {
@@ -5793,6 +5662,25 @@ let add = class add extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
                 "plugins": [__WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__({})]
             });
         }
+        this.clearEntity();
+        let query = this.$store.state.route.query;
+        if (query["copy"]) {
+            this.copyEntity({ id: query["copy"], mount: this.mount });
+        }
+    }
+    beforeDestroy() {
+        this.clearEntity();
+    }
+    save() {
+        this.loading();
+        this.insertEntity(this.token).then(r => {
+            this.endLoading("success");
+            this.$router.push({ path: this.mount });
+        }).catch(e => {
+            this.errors = e;
+            this.endLoading("warning");
+        });
+        return false;
     }
 };
 add = __decorate([
@@ -5800,7 +5688,11 @@ add = __decorate([
         name: "add",
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])([
             'domain', 'token'
-        ])),
+        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])("tasks", {
+            entity: ({ entity }) => entity,
+            mount: ({ mount }) => mount
+        })),
+        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])("tasks", ["insertEntity", "clearEntity", "copyEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("tasks", ["updateEntity", "setErrors"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("loading", ["loading", "endLoading"]), __WEBPACK_IMPORTED_MODULE_5__spa_utility_validation__["a" /* default */].map(["validationClass"]))
     })
 ], add);
 /* harmony default export */ __webpack_exports__["a"] = (add);
@@ -5817,13 +5709,37 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "resource column column-75" }, [
     _vm._ssrNode(
-      '<h2>Add</h2> <form action="./" method="post"><input type="hidden" name="_csrf"' +
-        _vm._ssrAttr("value", _vm.token) +
-        '> <div class="form-item"><label for="title">title</label> <input type="text" name="title" placeholder="title"' +
+      "<h2>Add</h2> <form" +
+        _vm._ssrAttr("action", _vm.action) +
+        ' method="post"><div class="form-item"><label for="title">title</label> <input type="text" name="title" placeholder="title"' +
         _vm._ssrAttr("value", _vm.entity.title) +
-        '></div> <div class="form-item"><label for="priod">priod</label> <input type="text" name="priod" placeholder="priod"' +
+        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "title")) +
+        "> " +
+        _vm._ssrList(_vm.errors.title, function(e) {
+          return (
+            '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+            _vm._ssrEscape(
+              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
+            ) +
+            "</div>"
+          )
+        }) +
+        '</div> <div class="form-item"><label for="priod">priod</label> <input type="text" name="priod" placeholder="priod"' +
         _vm._ssrAttr("value", _vm.entity.priod) +
-        ' class="calendar"></div> <button type="submit">submit</button></form>'
+        _vm._ssrClass("calendar", _vm.validationClass(_vm.errors, "priod")) +
+        "> " +
+        _vm._ssrList(_vm.errors.priod, function(e) {
+          return (
+            '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+            _vm._ssrEscape(
+              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
+            ) +
+            "</div>"
+          )
+        }) +
+        '</div> <button type="submit"' +
+        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "submit")) +
+        ">update</button></form>"
     )
   ])
 }
@@ -5929,9 +5845,9 @@ var render = function() {
             _vm._ssrEscape(_vm._s(_vm.entity.title)) +
             "</div> <h3>Priod</h3> <div>" +
             _vm._ssrEscape(_vm._s(_vm.entity.priod)) +
-            "</div> <h3>Created</h3> <div>" +
+            "</div> <h3>Created at</h3> <div>" +
             _vm._ssrEscape(_vm._s(_vm.entity.created_at)) +
-            "</div> <h3>Updated</h3> <div>" +
+            "</div> <h3>Updated at</h3> <div>" +
             _vm._ssrEscape(_vm._s(_vm.entity.updated_at)) +
             "</div>"
         )
@@ -5989,12 +5905,14 @@ if (Component.options.functional) {console.error("[vue-loader] edit.vue: functio
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_flatpickr___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_flatpickr__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__spa_utility_validation__ = __webpack_require__(80);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -6019,6 +5937,7 @@ let edit = class edit extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
             kv["value"] = e.target.value;
             this.updateEntity(kv);
         };
+        this.errors = {};
     }
     asyncData({ store, route }) {
         return store.dispatch('tasks/fetchEntity', route);
@@ -6034,6 +5953,16 @@ let edit = class edit extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
             });
         }
     }
+    save() {
+        this.loading();
+        this.saveEntity(this.token).then(r => {
+            this.errors = {};
+            this.endLoading("success");
+        }).catch(e => {
+            this.errors = e;
+            this.endLoading("warning");
+        });
+    }
 };
 edit = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
@@ -6044,7 +5973,7 @@ edit = __decorate([
             entity: ({ entity }) => entity,
             mount: ({ mount }) => mount
         })),
-        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])("tasks", ["fetchEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("tasks", ["updateEntity"]))
+        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])("tasks", ["fetchEntity", "saveEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("tasks", ["updateEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("loading", ["loading", "endLoading"]), __WEBPACK_IMPORTED_MODULE_5__spa_utility_validation__["a" /* default */].map(["validationClass"]))
     })
 ], edit);
 /* harmony default export */ __webpack_exports__["a"] = (edit);
@@ -6065,13 +5994,36 @@ var render = function() {
         _vm._ssrAttr("action", _vm.action) +
         ' method="post"><input type="hidden" name="id"' +
         _vm._ssrAttr("value", _vm.entity.id) +
-        '> <input type="hidden" name="_csrf"' +
-        _vm._ssrAttr("value", _vm.token) +
-        '> <input type="hidden" name="_method" value="put"> <div class="form-item"><label for="title">title</label> <input type="text" name="title" placeholder="title"' +
+        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "id")) +
+        '> <div class="form-item"><label for="title">title</label> <input type="text" name="title" placeholder="title"' +
         _vm._ssrAttr("value", _vm.entity.title) +
-        '></div> <div class="form-item"><label for="priod">priod</label> <input type="text" name="priod" placeholder="priod"' +
+        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "title")) +
+        "> " +
+        _vm._ssrList(_vm.errors.title, function(e) {
+          return (
+            '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+            _vm._ssrEscape(
+              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
+            ) +
+            "</div>"
+          )
+        }) +
+        '</div> <div class="form-item"><label for="priod">priod</label> <input type="text" name="priod" placeholder="priod"' +
         _vm._ssrAttr("value", _vm.entity.priod) +
-        ' class="calendar"></div> <button type="submit">submit</button></form>'
+        _vm._ssrClass("calendar", _vm.validationClass(_vm.errors, "priod")) +
+        "> " +
+        _vm._ssrList(_vm.errors.priod, function(e) {
+          return (
+            '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+            _vm._ssrEscape(
+              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
+            ) +
+            "</div>"
+          )
+        }) +
+        '</div> <button type="submit"' +
+        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "submit")) +
+        ">save</button></form>"
     )
   ])
 }
@@ -6169,7 +6121,11 @@ class mutations extends __WEBPACK_IMPORTED_MODULE_0__mutations__["a" /* mutation
             indicator.complate = complate;
             if (complate >= 100) {
                 indicator.prosess = false;
-                indicator.status = "primary";
+                if (status === "success") {
+                    setTimeout(() => {
+                        indicator.status = "primary";
+                    }, 400);
+                }
             }
             else {
                 indicator.prosess = true;
@@ -6299,6 +6255,7 @@ class mutations extends __WEBPACK_IMPORTED_MODULE_0__mutations__["a" /* mutation
             state.show = false;
         };
         this.openModal = (state) => {
+            state.close = true;
             state.show = true;
         };
     }
@@ -6410,6 +6367,21 @@ class mutations extends __WEBPACK_IMPORTED_MODULE_0__mutations__["a" /* mutation
         this.updateEntity = (state, kv) => {
             state.entity[kv.key] = kv.value;
         };
+        this.setClearEntity = (state) => {
+            let entity = state.entity;
+            for (let key in entity) {
+                entity[key] = null;
+                if (key === "id" || key === "created_at" || key === "updated_at") {
+                    delete entity[key];
+                }
+                if (key === "errors") {
+                    entity[key] = [];
+                }
+            }
+        };
+        this.setErrors = (state, errors) => {
+            state.entity["errors"] = errors;
+        };
         this._mount = options.mount;
         this._entities = options.entities;
     }
@@ -6441,20 +6413,39 @@ class actions extends __WEBPACK_IMPORTED_MODULE_0__actions__["a" /* actions */] 
                 commit("setEntity", entity);
             });
         };
-        this.insertEntity = ({ commit }, route) => {
+        this.copyEntity = ({ commit }, copy) => {
+            let route = {
+                params: {
+                    id: copy.id,
+                },
+                path: copy.mount + "/" + copy.id,
+            };
             return api.entity(route).then((entity) => {
+                for (let key in entity) {
+                    if (key === "id" || key === "updated_at" || key === "created_at") {
+                        delete entity[key];
+                    }
+                }
                 commit("setEntity", entity);
             });
         };
-        this.saveEntity = ({ commit }, route) => {
-            return api.entity(route).then((entity) => {
-                commit("setEntity", entity);
-            });
+        this.insertEntity = ({ state, commit }, token) => {
+            return api.insert(state.entity, state.mount, token);
+        };
+        this.saveEntity = ({ state, commit }, token) => {
+            return api.update(state.entity, state.mount, token);
+        };
+        this.deleteEntity = ({ state, commit }, delObj) => {
+            return api.delete(delObj.id, delObj.mount, delObj.token);
+        };
+        this.clearEntity = ({ commit }) => {
+            return Promise.resolve(commit("setClearEntity"));
         };
         api = new __WEBPACK_IMPORTED_MODULE_1__api_internal__["a" /* internal */]({
             host: options.host,
             endPoint: options.endPoint,
             request: options.request,
+            service: options.service
         });
     }
 }
@@ -6471,7 +6462,7 @@ class actions extends __WEBPACK_IMPORTED_MODULE_0__actions__["a" /* actions */] 
 
 class internal {
     constructor(options) {
-        this.options = {
+        this._options = {
             credentials: 'same-origin',
             method: "get",
             headers: {
@@ -6482,49 +6473,88 @@ class internal {
         this.endPoint = "";
         this.host = "";
         this.client = (url, options) => {
+            let base = this.options;
+            if (options.headers) {
+                options.headers = Object.assign(base.headers, options.headers);
+            }
+            options = Object.assign(base, options);
             let client = (resolve, reject) => {
-                options = Object.assign(this.options, options);
                 fetch(url, options)
                     .then((response) => {
-                    if (response.status !== 201) {
-                        reject(response.status);
-                        throw Error;
+                    //deleted
+                    if (response.status === 204) {
+                        resolve(response.status);
+                        return;
                     }
-                    ;
-                    return response.json();
-                }).then((data) => {
-                    resolve(data);
+                    response.json().then(r => {
+                        if (response.status < 200 || response.status > 300) {
+                            reject(r);
+                            return;
+                        }
+                        resolve(r);
+                    });
                 }).catch((err) => {
                     reject(err);
-                    throw Error;
                 });
             };
             return new Promise(client);
         };
-        this.server = (url, options = {}) => {
-            let req = this.request;
-            let srvOptions = Object.assign(this.options, options);
-            let server = (resolve, reject) => {
-                let options = {
-                    url: `${this.host}${url}`,
-                    method: srvOptions.method,
-                    headers: srvOptions.headers
-                };
-                req(options, (error, response, body) => {
-                    if (error) {
-                        reject(true);
-                        throw Error;
+        this.serverPagination = (route) => {
+            let serverPagination = (resolve, reject) => {
+                let pagination = this.service.pagination();
+                let conditions = this.service.conditions(route);
+                let entities = pagination.find(conditions, route.query);
+                let name = this.service.name;
+                let data = {};
+                entities.then((result) => {
+                    if (result.rows.length === 0) {
+                        reject(false);
                     }
-                    resolve(JSON.parse(body));
+                    ;
+                    data[name] = result.rows;
+                    data["page"] = result.pagination;
+                    resolve(data);
+                }).catch((error) => {
+                    data[name] = {};
+                    data["page"] = {};
+                    reject(error);
                 });
             };
+            return serverPagination;
+        };
+        this.serverEntity = (route) => {
+            let entity = this.service.model;
+            let serverEntity = (resolve, reject) => {
+                let model = this.service.model;
+                let data = {};
+                model.findById(route.params.id).then((result) => {
+                    if (!result) {
+                        reject();
+                        throw Error;
+                    }
+                    resolve(result);
+                }).catch((err) => {
+                    reject(err);
+                });
+            };
+            return serverEntity;
+        };
+        this.server = (type, route) => {
+            let req = this.request;
+            let server;
+            if (type === "paginate") {
+                server = this.serverPagination(route);
+            }
+            if (type === "entity") {
+                server = this.serverEntity(route);
+            }
             return new Promise(server);
         };
         this.paginate = (route) => {
             let bq = new __WEBPACK_IMPORTED_MODULE_0__base_sideless_build_query__["a" /* build_query */]();
             let URI = `${this.endPoint}/${this.routeParse(route)}${bq.http(route.query)}`;
             if (typeof window === "undefined") {
-                return this.server(URI, {});
+                return this.server("paginate", route);
             }
             return this.client(URI, {});
         };
@@ -6532,17 +6562,69 @@ class internal {
             let id = route.params.id;
             let URI = `${this.endPoint}/${id}`;
             if (typeof window === "undefined") {
-                return this.server(URI, {});
+                return this.server("entity", route);
             }
             return this.client(URI, {});
         };
-        this.insert = () => {
+        this.insert = (entity, mount, token) => {
+            entity = JSON.stringify(entity);
+            let URI = mount;
+            let insert = (resolve, reject) => {
+                this.client(URI, {
+                    body: entity,
+                    method: "post",
+                    headers: {
+                        'X-XSRF-Token': token
+                    }
+                }).then(r => {
+                    resolve(r);
+                }).catch(e => {
+                    reject(e);
+                });
+            };
+            return new Promise(insert);
         };
-        this.delete = () => {
+        this.update = (entity, mount, token) => {
+            let URI = mount + "/" + entity.id;
+            entity = JSON.stringify(entity);
+            let insert = (resolve, reject) => {
+                this.client(URI, {
+                    body: entity,
+                    method: "put",
+                    headers: {
+                        'X-XSRF-Token': token
+                    }
+                }).then(r => {
+                    resolve(r);
+                }).catch(e => {
+                    reject(e);
+                });
+            };
+            return new Promise(insert);
+        };
+        this.delete = (id, mount, token) => {
+            let URI = mount + "/" + id;
+            let del = (resolve, reject) => {
+                this.client(URI, {
+                    method: "delete",
+                    headers: {
+                        'X-XSRF-Token': token
+                    }
+                }).then(r => {
+                    resolve("api delete ok");
+                }).catch(e => {
+                    reject("api delete error");
+                });
+            };
+            return new Promise(del);
         };
         this.endPoint = options.endPoint;
         this.host = options.host;
         this.request = options.request;
+        this.service = options.service;
+    }
+    get options() {
+        return Object.create(this._options);
     }
     routeParse(route) {
         let params = route.params;
@@ -6678,6 +6760,236 @@ function cloneRoute (to, from) {
 }
 
 
+
+/***/ }),
+/* 80 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class form_validation_class {
+    constructor() {
+        this.validationClass = (errors, name) => {
+            if (name === "submit") {
+                if ((Object.keys(errors).length > 0)) {
+                    return "warning";
+                }
+            }
+            if (errors[name]) {
+                return "warning";
+            }
+        };
+        this.map = (call) => {
+            if (call === "all") {
+                call = Object.keys(this);
+            }
+            let map = {};
+            for (let idx in call) {
+                if (typeof this[call[idx]] === 'undefined') {
+                    continue;
+                }
+                if (call[idx].charAt(0) === '_') {
+                    continue;
+                }
+                if (call[idx] === 'map') {
+                    continue;
+                }
+                if (call[idx] === 'constructor') {
+                    continue;
+                }
+                if (typeof idx === 'number') {
+                    map[call[String(idx)]] = this[call[String(idx)]];
+                    continue;
+                }
+                map[call[idx]] = this[call[idx]];
+            }
+            return map;
+        };
+    }
+}
+/* harmony default export */ __webpack_exports__["a"] = (new form_validation_class());
+
+
+/***/ }),
+/* 81 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_idx_vue__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_70d191a2_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_idx_vue__ = __webpack_require__(83);
+var normalizeComponent = __webpack_require__(1)
+/* script */
+
+/* template */
+
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = "1e2d6f54"
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_idx_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_70d191a2_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_idx_vue__["a" /* default */],
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "apps/tasks/components/idx.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] idx.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+
+
+/***/ }),
+/* 82 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__spa_components_pagination_vue__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+__WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
+    'beforeRouteEnter',
+    'beforeRouteLeave',
+    'asyncData',
+    'fetch',
+    'middleware',
+    'layout',
+    'transition',
+    'scrollToTop'
+]);
+let idx = class idx extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
+    asyncData({ store, route }) {
+        return store.dispatch("tasks/fetchEntities", route);
+    }
+    view(id) {
+        return `${this.mount}/${id}`;
+    }
+    edit(id) {
+        return `${this.mount}/${id}/edit`;
+    }
+    destroy(id, title) {
+        let modal = {
+            template: "Destroy",
+            data: {
+                id: id,
+                name: title,
+                mount: this.mount
+            }
+        };
+        this.setModal(modal);
+        this.openModal();
+    }
+    copy(id) {
+        return `${this.mount}/add?copy=${id}`;
+    }
+};
+idx = __decorate([
+    __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
+        name: "page",
+        computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["c" /* mapGetters */])([
+            'domain'
+        ]), Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["e" /* mapState */])('tasks', {
+            entities: ({ entities }) => entities,
+            pagination: ({ page }) => page,
+            mount: ({ mount }) => mount
+        })),
+        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["d" /* mapMutations */])("modal", ["setModal", "toggleModal", "openModal"]), Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapActions */])("tasks", ["fetchEntities"])),
+        components: { pagination: __WEBPACK_IMPORTED_MODULE_2__spa_components_pagination_vue__["a" /* default */] }
+    })
+], idx);
+/* harmony default export */ __webpack_exports__["a"] = (idx);
+
+
+/***/ }),
+/* 83 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "resource column column-75" },
+    [
+      _vm._ssrNode("<h2>Index</h2> "),
+      _vm._ssrNode(
+        "<div>",
+        "</div>",
+        _vm._l(_vm.entities, function(entity) {
+          return _vm._ssrNode(
+            "<div>",
+            "</div>",
+            [
+              _vm._ssrNode(
+                "<h3>",
+                "</h3>",
+                [
+                  _c("router-link", { attrs: { to: _vm.view(entity.id) } }, [
+                    _vm._v(_vm._s(entity.title))
+                  ])
+                ],
+                1
+              ),
+              _vm._ssrNode(" "),
+              _c(
+                "router-link",
+                {
+                  staticClass: "button small",
+                  attrs: { to: _vm.edit(entity.id) }
+                },
+                [
+                  _c("span", { staticClass: "typcn typcn-edit" }),
+                  _vm._v(" edit")
+                ]
+              ),
+              _vm._ssrNode(
+                ' <button class="button small"><span class="typcn typcn-document-delete"></span> delete</button> '
+              ),
+              _c(
+                "router-link",
+                {
+                  staticClass: "button small",
+                  attrs: { to: _vm.copy(entity.id) }
+                },
+                [
+                  _c("span", { staticClass: "typcn typcn-document-add" }),
+                  _vm._v(" copy")
+                ]
+              )
+            ],
+            2
+          )
+        })
+      ),
+      _vm._ssrNode(" "),
+      _c("pagination", {
+        attrs: { pagination: _vm.pagination, mount: _vm.mount }
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
 
 /***/ })
 /******/ ])));

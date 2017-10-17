@@ -31,7 +31,7 @@ Vue.mixin({
         route: to
       }).then(() => {
         setTimeout(() => {
-          this.$store.commit("loading/endLoading" , "success");
+          this.$store.commit("loading/endLoading", "success");
         },240)
         next();
       }).catch(next)

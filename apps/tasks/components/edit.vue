@@ -1,19 +1,21 @@
 <template>
 <div class="resource column column-75">
   <h2>Edit</h2>
-  <form :action="action" method="post">
-    <input type="hidden" name="id" :value="entity.id"  @change="change">
-    <input type="hidden" name="_csrf" :value="token">
-    <input type="hidden" name="_method" value="put">
-    <div class="form-item">
-      <label for="title">title</label>
-      <input type="text" name="title" :value="entity.title" placeholder="title" @change="change">
-    </div>
-    <div class="form-item">
-      <label for="priod">priod</label>
-      <input type="text" name="priod" class="calendar" :value="entity.priod" placeholder="priod" @change="change">
-    </div>
-    <button type="submit">submit</button>
+  <form :action="action" method="post" v-on:submit.prevent="save">
+      <input type="hidden" name="id" @change="change" :class="validationClass( errors , 'id')" :value="entity.id">
+
+      <div class="form-item">
+        <label for="title">title</label>
+        <input type="text" name="title" @change="change" :class="validationClass( errors , 'title')" :value="entity.title" placeholder="title">
+        <div class="errors" v-for="e in errors.title"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
+      </div>
+
+      <div class="form-item">
+        <label for="priod">priod</label>
+        <input class="calendar" type="text" name="priod" @change="change" :class="validationClass( errors , 'priod')" :value="entity.priod" placeholder="priod">
+        <div class="errors" v-for="e in errors.priod"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
+      </div>
+    <button type="submit" :class="validationClass(errors,'submit')">save</button>
   </form>
 </div>
 </template>
@@ -24,6 +26,8 @@ import Component from 'vue-class-component'
 import {mapGetters,mapState,mapActions,mapMutations} from 'vuex'
 import * as flatpickr from "flatpickr";
 import * as confirmDatePlugin from "../../../node_modules/flatpickr/src/plugins/confirmDate/confirmDate.js";
+import form_validation from "../../spa/utility/validation";
+
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -49,11 +53,15 @@ Component.registerHooks([
   },
   methods : {
     ...mapActions( "tasks" , 
-      ["fetchEntity"]
+      ["fetchEntity" , "saveEntity"]
     ),
     ...mapMutations( "tasks" , 
       ["updateEntity"]
-    )
+    ),
+    ...mapMutations( "loading" , 
+      ["loading","endLoading"]
+    ),
+    ...form_validation.map(["validationClass"])
   }
 
 })
@@ -89,5 +97,22 @@ export default class edit extends Vue {
       });
     }
   }
+  token : string;
+  saveEntity:(token : string) => Promise<string>;
+  loading : () => {};
+  endLoading: (status) => {};
+  errors = {};
+  save(){
+    this.loading();
+    this.saveEntity(this.token).then(r => {
+      this.errors = {};
+      this.endLoading("success");
+    }).catch(e => {
+      this.errors = e;
+      this.endLoading("warning");
+    });
+  }
+  
+
 }
 </script>

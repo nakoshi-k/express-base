@@ -4,8 +4,9 @@
   <div>
     <div v-for="entity in entities">
     <h3><router-link :to="view(entity.id)">{{ entity.title }}</router-link></h3>
-    <router-link :to="edit(entity.id)" class="button small">edit</router-link>
-    <button @click="destroy(entity.id,entity.title)" class="button small">delete</button>
+    <router-link :to="edit(entity.id)" class="button small"> <span class="typcn typcn-edit"></span> edit</router-link>
+    <button @click="destroy(entity.id,entity.title)" class="button small"> <span class="typcn typcn-document-delete"></span> delete</button>
+    <router-link :to="copy(entity.id)" class="button small"> <span class="typcn typcn-document-add"></span> copy</router-link>
     </div>
   </div>
   <pagination :pagination="pagination" :mount="mount"></pagination>
@@ -34,37 +35,31 @@ Component.registerHooks([
     ...mapGetters([
       'domain'
     ]),
-    ...mapState( 'tasks' , {
+    ...mapState( '<%- names %>' , {
       entities : ({entities}) => entities , 
       pagination: ({page}) => page,
       mount : ({mount}) => mount 
     }),
   },
   methods : {
-    ...mapMutations( "modal" , ["setModal","toggleModal"] ),
-    ...mapActions( "tasks" , 
+    ...mapMutations( "modal" , ["setModal","toggleModal" , "openModal"] ),
+    ...mapActions( "<%- names %>" , 
       ["fetchEntities"]
     )
   },
   components:{pagination}
 })
 
-export default class Page extends Vue {
+export default class idx extends Vue {
   
 
   mount:string;
   pagination:any;
   fetchEntities : (route) => {};
-  asyncData ( {store,route}) {
-    return store.dispatch("tasks/fetchEntities" ,route);
+  asyncData ( {store,route} ) {
+    return store.dispatch("<%- names %>/fetchEntities" ,route);
   }
 
-  mounted(){
-    let pg = this.pagination;
-    if(pg.currentPage > pg.totalPage){
-      this.$router. push({ path: `${this.mount}/page/${pg.totalPage}` });
-    }
-  }
  
   view(id){
     return `${this.mount}/${id}`;
@@ -76,17 +71,23 @@ export default class Page extends Vue {
 
   setModal:(modal) => {};
   toggleModal:() => {};
+  openModal:() => {};
 
   destroy(id : string , title : string){
     let modal = { 
       template : "Destroy" , 
       data : {
         id : id,
-        name : title
+        name : title,
+        mount : this.mount
       }
       }
     this.setModal(modal);
-    this.toggleModal();
+    this.openModal();
+  }
+
+  copy(id:string){
+     return `${this.mount}/add?copy=${id}`;
   }
 
   

@@ -13,7 +13,11 @@ export class mutations extends core_mutations{
 
         if(complate >= 100){
           indicator.prosess = false;
-          indicator.status = "primary";
+          if(status === "success"){
+            setTimeout( () => {
+              indicator.status = "primary";
+            },400);
+          }
         }else{
           indicator.prosess = true;
         }

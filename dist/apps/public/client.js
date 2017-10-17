@@ -13129,7 +13129,19 @@ var Destroy = /** @class */ (function (_super) {
         };
         return new Promise(disable);
     };
-    Destroy.prototype.delete = function () {
+    Destroy.prototype.destroy = function () {
+        var _this = this;
+        var data = this.data;
+        data["token"] = this.token;
+        this.loading();
+        var names = data.mount.replace("/", "");
+        this.$store.dispatch(names + "/deleteEntity", data).then(function (r) {
+            _this.closeModal();
+            _this.$store.dispatch(names + "/fetchEntities", _this.$store.state.route);
+            _this.endLoading("success");
+        }).catch(function (e) {
+            _this.endLoading("warning");
+        });
     };
     Destroy.prototype.cancel = function () {
         var _this = this;
@@ -13157,7 +13169,7 @@ var Destroy = /** @class */ (function (_super) {
                     return template;
                 },
             })),
-            methods: __assign({}, vuex_1.mapMutations('modal', ["setModal", "toggleModal", "closeModal"]))
+            methods: __assign({}, vuex_1.mapMutations('modal', ["setModal", "toggleModal", "closeModal", "deleteEntity"]), vuex_1.mapMutations("loading", ["loading", "endLoading"]))
         })
     ], Destroy);
     return Destroy;
@@ -13186,15 +13198,6 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "button primary",
-              attrs: { disabled: !_vm.button.done }
-            },
-            [_vm._v("Apply")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
               staticClass: "button warning",
               attrs: { disabled: !_vm.button.cancel },
               on: {
@@ -13204,6 +13207,20 @@ var render = function() {
               }
             },
             [_vm._v("Cancel")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "button primary",
+              attrs: { disabled: !_vm.button.done },
+              on: {
+                click: function($event) {
+                  _vm.destroy()
+                }
+              }
+            },
+            [_vm._v("Apply")]
           )
         ])
       ])
@@ -13329,7 +13346,7 @@ var vue_1 = __webpack_require__(0);
 var vue_router_1 = __webpack_require__(37);
 var navi_vue_1 = __webpack_require__(38);
 var sub_vue_1 = __webpack_require__(46);
-var page_vue_1 = __webpack_require__(49);
+var idx_vue_1 = __webpack_require__(83);
 var add_vue_1 = __webpack_require__(55);
 var view_vue_1 = __webpack_require__(58);
 var edit_vue_1 = __webpack_require__(61);
@@ -13338,7 +13355,7 @@ function createRouter() {
     return new vue_router_1.default({
         mode: 'history',
         routes: [
-            { name: "page", path: "/tasks/page/:page*", components: { main: page_vue_1.default, navi: navi_vue_1.default, sub: sub_vue_1.default } },
+            { name: "page", path: "/tasks/page/:page*", components: { main: idx_vue_1.default, navi: navi_vue_1.default, sub: sub_vue_1.default } },
             { name: "index", path: "/tasks/page/1", alias: "/tasks/" },
             { name: "add", path: "/tasks/add", components: { main: add_vue_1.default, navi: navi_vue_1.default, sub: sub_vue_1.default } },
             { name: "view", path: "/tasks/:id", components: { main: view_vue_1.default, navi: navi_vue_1.default, sub: sub_vue_1.default } },
@@ -16419,162 +16436,8 @@ if (false) {
 }
 
 /***/ }),
-/* 49 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_page_vue__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_page_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_page_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_49a92c8d_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_page_vue__ = __webpack_require__(54);
-var disposed = false
-var normalizeComponent = __webpack_require__(1)
-/* script */
-
-/* template */
-
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_page_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_49a92c8d_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_page_vue__["a" /* default */],
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "apps/tasks/components/page.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] page.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-49a92c8d", Component.options)
-  } else {
-    hotAPI.reload("data-v-49a92c8d", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
-
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var pagination_vue_1 = __webpack_require__(51);
-var vuex_1 = __webpack_require__(3);
-vue_class_component_1.default.registerHooks([
-    'beforeRouteEnter',
-    'beforeRouteLeave',
-    'asyncData',
-    'fetch',
-    'middleware',
-    'layout',
-    'transition',
-    'scrollToTop'
-]);
-var Page = /** @class */ (function (_super) {
-    __extends(Page, _super);
-    function Page() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    Page.prototype.asyncData = function (_a) {
-        var store = _a.store, route = _a.route;
-        return store.dispatch("tasks/fetchEntities", route);
-    };
-    Page.prototype.mounted = function () {
-        var pg = this.pagination;
-        if (pg.currentPage > pg.totalPage) {
-            this.$router.push({ path: this.mount + "/page/" + pg.totalPage });
-        }
-    };
-    Page.prototype.view = function (id) {
-        return this.mount + "/" + id;
-    };
-    Page.prototype.edit = function (id) {
-        return this.mount + "/" + id + "/edit";
-    };
-    Page.prototype.destroy = function (id, title) {
-        var modal = {
-            template: "Destroy",
-            data: {
-                id: id,
-                name: title
-            }
-        };
-        this.setModal(modal);
-        this.toggleModal();
-    };
-    Page = __decorate([
-        vue_class_component_1.default({
-            name: "page",
-            computed: __assign({}, vuex_1.mapGetters([
-                'domain'
-            ]), vuex_1.mapState('tasks', {
-                entities: function (_a) {
-                    var entities = _a.entities;
-                    return entities;
-                },
-                pagination: function (_a) {
-                    var page = _a.page;
-                    return page;
-                },
-                mount: function (_a) {
-                    var mount = _a.mount;
-                    return mount;
-                }
-            })),
-            methods: __assign({}, vuex_1.mapMutations("modal", ["setModal", "toggleModal"]), vuex_1.mapActions("tasks", ["fetchEntities"])),
-            components: { pagination: pagination_vue_1.default }
-        })
-    ], Page);
-    return Page;
-}(vue_1.default));
-exports.default = Page;
-
-
-/***/ }),
+/* 49 */,
+/* 50 */,
 /* 51 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -16875,82 +16738,7 @@ if (false) {
 }
 
 /***/ }),
-/* 54 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "resource column column-75" },
-    [
-      _c("h2", [_vm._v("Index")]),
-      _vm._v(" "),
-      _c(
-        "div",
-        _vm._l(_vm.entities, function(entity) {
-          return _c(
-            "div",
-            [
-              _c(
-                "h3",
-                [
-                  _c("router-link", { attrs: { to: _vm.view(entity.id) } }, [
-                    _vm._v(_vm._s(entity.title))
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "router-link",
-                {
-                  staticClass: "button small",
-                  attrs: { to: _vm.edit(entity.id) }
-                },
-                [_vm._v("edit")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "button small",
-                  on: {
-                    click: function($event) {
-                      _vm.destroy(entity.id, entity.title)
-                    }
-                  }
-                },
-                [_vm._v("delete")]
-              )
-            ],
-            1
-          )
-        })
-      ),
-      _vm._v(" "),
-      _c("pagination", {
-        attrs: { pagination: _vm.pagination, mount: _vm.mount }
-      })
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-49a92c8d", esExports)
-  }
-}
-
-/***/ }),
+/* 54 */,
 /* 55 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -17037,6 +16825,7 @@ var vue_class_component_1 = __webpack_require__(2);
 var vuex_1 = __webpack_require__(3);
 var flatpickr = __webpack_require__(13);
 var confirmDatePlugin = __webpack_require__(14);
+var validation_1 = __webpack_require__(82);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -17051,12 +16840,34 @@ var add = /** @class */ (function (_super) {
     __extends(add, _super);
     function add() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.entity = {
-            title: "",
-            priod: ""
+        _this.change = function (e) {
+            var kv = {};
+            kv["key"] = e.target.name;
+            kv["value"] = e.target.value;
+            _this.updateEntity(kv);
         };
+        _this.errors = {};
         return _this;
+        /*
+          validationClass(errors , name){
+            if(name === "submit"){
+               if( (Object.keys(errors).length > 0) ){
+                 return "warning"
+               }
+            }
+            if(errors[name]){
+              return "warning"
+            }
+          }
+        */
     }
+    Object.defineProperty(add.prototype, "action", {
+        get: function () {
+            return "" + this.mount;
+        },
+        enumerable: true,
+        configurable: true
+    });
     add.prototype.mounted = function () {
         if (window) {
             flatpickr(".calendar", {
@@ -17064,13 +16875,43 @@ var add = /** @class */ (function (_super) {
                 "plugins": [confirmDatePlugin({})]
             });
         }
+        this.clearEntity();
+        var query = this.$store.state.route.query;
+        if (query["copy"]) {
+            this.copyEntity({ id: query["copy"], mount: this.mount });
+        }
+    };
+    add.prototype.beforeDestroy = function () {
+        this.clearEntity();
+    };
+    add.prototype.save = function () {
+        var _this = this;
+        this.loading();
+        this.insertEntity(this.token).then(function (r) {
+            _this.endLoading("success");
+            _this.$router.push({ path: _this.mount });
+        }).catch(function (e) {
+            _this.errors = e;
+            _this.endLoading("warning");
+        });
+        return false;
     };
     add = __decorate([
         vue_class_component_1.default({
             name: "add",
             computed: __assign({}, vuex_1.mapGetters([
                 'domain', 'token'
-            ])),
+            ]), vuex_1.mapState("tasks", {
+                entity: function (_a) {
+                    var entity = _a.entity;
+                    return entity;
+                },
+                mount: function (_a) {
+                    var mount = _a.mount;
+                    return mount;
+                }
+            })),
+            methods: __assign({}, vuex_1.mapActions("tasks", ["insertEntity", "clearEntity", "copyEntity"]), vuex_1.mapMutations("tasks", ["updateEntity", "setErrors"]), vuex_1.mapMutations("loading", ["loading", "endLoading"]), validation_1.default.map(["validationClass"]))
         })
     ], add);
     return add;
@@ -17090,65 +16931,75 @@ var render = function() {
   return _c("div", { staticClass: "resource column column-75" }, [
     _c("h2", [_vm._v("Add")]),
     _vm._v(" "),
-    _c("form", { attrs: { action: "./", method: "post" } }, [
-      _c("input", {
-        attrs: { type: "hidden", name: "_csrf" },
-        domProps: { value: _vm.token }
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-item" }, [
-        _c("label", { attrs: { for: "title" } }, [_vm._v("title")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.entity.title,
-              expression: "entity.title"
-            }
-          ],
-          attrs: { type: "text", name: "title", placeholder: "title" },
-          domProps: { value: _vm.entity.title },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.entity.title = $event.target.value
-            }
+    _c(
+      "form",
+      {
+        attrs: { action: _vm.action, method: "post" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            _vm.save($event)
           }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-item" }, [
-        _c("label", { attrs: { for: "priod" } }, [_vm._v("priod")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.entity.priod,
-              expression: "entity.priod"
-            }
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "form-item" },
+          [
+            _c("label", { attrs: { for: "title" } }, [_vm._v("title")]),
+            _vm._v(" "),
+            _c("input", {
+              class: _vm.validationClass(_vm.errors, "title"),
+              attrs: { type: "text", name: "title", placeholder: "title" },
+              domProps: { value: _vm.entity.title },
+              on: { change: _vm.change }
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.errors.title, function(e) {
+              return _c("div", { staticClass: "errors" }, [
+                _c("span", { staticClass: "typcn typcn-warning-outline" }),
+                _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+              ])
+            })
           ],
-          staticClass: "calendar",
-          attrs: { type: "text", name: "priod", placeholder: "priod" },
-          domProps: { value: _vm.entity.priod },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.entity.priod = $event.target.value
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("button", { attrs: { type: "submit" } }, [_vm._v("submit")])
-    ])
+          2
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-item" },
+          [
+            _c("label", { attrs: { for: "priod" } }, [_vm._v("priod")]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "calendar",
+              class: _vm.validationClass(_vm.errors, "priod"),
+              attrs: { type: "text", name: "priod", placeholder: "priod" },
+              domProps: { value: _vm.entity.priod },
+              on: { change: _vm.change }
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.errors.priod, function(e) {
+              return _c("div", { staticClass: "errors" }, [
+                _c("span", { staticClass: "typcn typcn-warning-outline" }),
+                _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+              ])
+            })
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            class: _vm.validationClass(_vm.errors, "submit"),
+            attrs: { type: "submit" }
+          },
+          [_vm._v("update")]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -17309,11 +17160,11 @@ var render = function() {
         _vm._v(" "),
         _c("div", [_vm._v(_vm._s(_vm.entity.priod))]),
         _vm._v(" "),
-        _c("h3", [_vm._v("Created")]),
+        _c("h3", [_vm._v("Created at")]),
         _vm._v(" "),
         _c("div", [_vm._v(_vm._s(_vm.entity.created_at))]),
         _vm._v(" "),
-        _c("h3", [_vm._v("Updated")]),
+        _c("h3", [_vm._v("Updated at")]),
         _vm._v(" "),
         _c("div", [_vm._v(_vm._s(_vm.entity.updated_at))])
       ])
@@ -17417,6 +17268,7 @@ var vue_class_component_1 = __webpack_require__(2);
 var vuex_1 = __webpack_require__(3);
 var flatpickr = __webpack_require__(13);
 var confirmDatePlugin = __webpack_require__(14);
+var validation_1 = __webpack_require__(82);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -17437,6 +17289,7 @@ var edit = /** @class */ (function (_super) {
             kv["value"] = e.target.value;
             _this.updateEntity(kv);
         };
+        _this.errors = {};
         return _this;
     }
     edit.prototype.asyncData = function (_a) {
@@ -17458,6 +17311,17 @@ var edit = /** @class */ (function (_super) {
             });
         }
     };
+    edit.prototype.save = function () {
+        var _this = this;
+        this.loading();
+        this.saveEntity(this.token).then(function (r) {
+            _this.errors = {};
+            _this.endLoading("success");
+        }).catch(function (e) {
+            _this.errors = e;
+            _this.endLoading("warning");
+        });
+    };
     edit = __decorate([
         vue_class_component_1.default({
             name: "edit",
@@ -17473,7 +17337,7 @@ var edit = /** @class */ (function (_super) {
                     return mount;
                 }
             })),
-            methods: __assign({}, vuex_1.mapActions("tasks", ["fetchEntity"]), vuex_1.mapMutations("tasks", ["updateEntity"]))
+            methods: __assign({}, vuex_1.mapActions("tasks", ["fetchEntity", "saveEntity"]), vuex_1.mapMutations("tasks", ["updateEntity"]), vuex_1.mapMutations("loading", ["loading", "endLoading"]), validation_1.default.map(["validationClass"]))
         })
     ], edit);
     return edit;
@@ -17493,43 +17357,82 @@ var render = function() {
   return _c("div", { staticClass: "resource column column-75" }, [
     _c("h2", [_vm._v("Edit")]),
     _vm._v(" "),
-    _c("form", { attrs: { action: _vm.action, method: "post" } }, [
-      _c("input", {
-        attrs: { type: "hidden", name: "id" },
-        domProps: { value: _vm.entity.id },
-        on: { change: _vm.change }
-      }),
-      _vm._v(" "),
-      _c("input", {
-        attrs: { type: "hidden", name: "_csrf" },
-        domProps: { value: _vm.token }
-      }),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "hidden", name: "_method", value: "put" } }),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-item" }, [
-        _c("label", { attrs: { for: "title" } }, [_vm._v("title")]),
-        _vm._v(" "),
+    _c(
+      "form",
+      {
+        attrs: { action: _vm.action, method: "post" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            _vm.save($event)
+          }
+        }
+      },
+      [
         _c("input", {
-          attrs: { type: "text", name: "title", placeholder: "title" },
-          domProps: { value: _vm.entity.title },
+          class: _vm.validationClass(_vm.errors, "id"),
+          attrs: { type: "hidden", name: "id" },
+          domProps: { value: _vm.entity.id },
           on: { change: _vm.change }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-item" }, [
-        _c("label", { attrs: { for: "priod" } }, [_vm._v("priod")]),
+        }),
         _vm._v(" "),
-        _c("input", {
-          staticClass: "calendar",
-          attrs: { type: "text", name: "priod", placeholder: "priod" },
-          domProps: { value: _vm.entity.priod },
-          on: { change: _vm.change }
-        })
-      ]),
-      _vm._v(" "),
-      _c("button", { attrs: { type: "submit" } }, [_vm._v("submit")])
-    ])
+        _c(
+          "div",
+          { staticClass: "form-item" },
+          [
+            _c("label", { attrs: { for: "title" } }, [_vm._v("title")]),
+            _vm._v(" "),
+            _c("input", {
+              class: _vm.validationClass(_vm.errors, "title"),
+              attrs: { type: "text", name: "title", placeholder: "title" },
+              domProps: { value: _vm.entity.title },
+              on: { change: _vm.change }
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.errors.title, function(e) {
+              return _c("div", { staticClass: "errors" }, [
+                _c("span", { staticClass: "typcn typcn-warning-outline" }),
+                _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+              ])
+            })
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-item" },
+          [
+            _c("label", { attrs: { for: "priod" } }, [_vm._v("priod")]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "calendar",
+              class: _vm.validationClass(_vm.errors, "priod"),
+              attrs: { type: "text", name: "priod", placeholder: "priod" },
+              domProps: { value: _vm.entity.priod },
+              on: { change: _vm.change }
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.errors.priod, function(e) {
+              return _c("div", { staticClass: "errors" }, [
+                _c("span", { staticClass: "typcn typcn-warning-outline" }),
+                _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+              ])
+            })
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            class: _vm.validationClass(_vm.errors, "submit"),
+            attrs: { type: "submit" }
+          },
+          [_vm._v("save")]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -17659,7 +17562,11 @@ var mutations = /** @class */ (function (_super) {
             indicator.complate = complate;
             if (complate >= 100) {
                 indicator.prosess = false;
-                indicator.status = "primary";
+                if (status === "success") {
+                    setTimeout(function () {
+                        indicator.status = "primary";
+                    }, 400);
+                }
             }
             else {
                 indicator.prosess = true;
@@ -17849,6 +17756,7 @@ var mutations = /** @class */ (function (_super) {
             state.show = false;
         };
         _this.openModal = function (state) {
+            state.close = true;
             state.show = true;
         };
         return _this;
@@ -18019,6 +17927,21 @@ var mutations = /** @class */ (function (_super) {
         _this.updateEntity = function (state, kv) {
             state.entity[kv.key] = kv.value;
         };
+        _this.setClearEntity = function (state) {
+            var entity = state.entity;
+            for (var key in entity) {
+                entity[key] = null;
+                if (key === "id" || key === "created_at" || key === "updated_at") {
+                    delete entity[key];
+                }
+                if (key === "errors") {
+                    entity[key] = [];
+                }
+            }
+        };
+        _this.setErrors = function (state, errors) {
+            state.entity["errors"] = errors;
+        };
         _this._mount = options.mount;
         _this._entities = options.entities;
         return _this;
@@ -18064,22 +17987,44 @@ var actions = /** @class */ (function (_super) {
                 commit("setEntity", entity);
             });
         };
-        _this.insertEntity = function (_a, route) {
+        _this.copyEntity = function (_a, copy) {
             var commit = _a.commit;
+            var route = {
+                params: {
+                    id: copy.id,
+                },
+                path: copy.mount + "/" + copy.id,
+            };
             return api.entity(route).then(function (entity) {
+                for (var key in entity) {
+                    if (key === "id" || key === "updated_at" || key === "created_at") {
+                        delete entity[key];
+                    }
+                }
                 commit("setEntity", entity);
             });
         };
-        _this.saveEntity = function (_a, route) {
+        _this.insertEntity = function (_a, token) {
+            var state = _a.state, commit = _a.commit;
+            return api.insert(state.entity, state.mount, token);
+        };
+        _this.saveEntity = function (_a, token) {
+            var state = _a.state, commit = _a.commit;
+            return api.update(state.entity, state.mount, token);
+        };
+        _this.deleteEntity = function (_a, delObj) {
+            var state = _a.state, commit = _a.commit;
+            return api.delete(delObj.id, delObj.mount, delObj.token);
+        };
+        _this.clearEntity = function (_a) {
             var commit = _a.commit;
-            return api.entity(route).then(function (entity) {
-                commit("setEntity", entity);
-            });
+            return Promise.resolve(commit("setClearEntity"));
         };
         api = new internal_1.internal({
             host: options.host,
             endPoint: options.endPoint,
             request: options.request,
+            service: options.service
         });
         return _this;
     }
@@ -18099,7 +18044,7 @@ var build_query_1 = __webpack_require__(12);
 var internal = /** @class */ (function () {
     function internal(options) {
         var _this = this;
-        this.options = {
+        this._options = {
             credentials: 'same-origin',
             method: "get",
             headers: {
@@ -18110,50 +18055,88 @@ var internal = /** @class */ (function () {
         this.endPoint = "";
         this.host = "";
         this.client = function (url, options) {
+            var base = _this.options;
+            if (options.headers) {
+                options.headers = Object.assign(base.headers, options.headers);
+            }
+            options = Object.assign(base, options);
             var client = function (resolve, reject) {
-                options = Object.assign(_this.options, options);
                 fetch(url, options)
                     .then(function (response) {
-                    if (response.status !== 201) {
-                        reject(response.status);
-                        throw Error;
+                    //deleted
+                    if (response.status === 204) {
+                        resolve(response.status);
+                        return;
                     }
-                    ;
-                    return response.json();
-                }).then(function (data) {
-                    resolve(data);
+                    response.json().then(function (r) {
+                        if (response.status < 200 || response.status > 300) {
+                            reject(r);
+                            return;
+                        }
+                        resolve(r);
+                    });
                 }).catch(function (err) {
                     reject(err);
-                    throw Error;
                 });
             };
             return new Promise(client);
         };
-        this.server = function (url, options) {
-            if (options === void 0) { options = {}; }
-            var req = _this.request;
-            var srvOptions = Object.assign(_this.options, options);
-            var server = function (resolve, reject) {
-                var options = {
-                    url: "" + _this.host + url,
-                    method: srvOptions.method,
-                    headers: srvOptions.headers
-                };
-                req(options, function (error, response, body) {
-                    if (error) {
-                        reject(true);
-                        throw Error;
+        this.serverPagination = function (route) {
+            var serverPagination = function (resolve, reject) {
+                var pagination = _this.service.pagination();
+                var conditions = _this.service.conditions(route);
+                var entities = pagination.find(conditions, route.query);
+                var name = _this.service.name;
+                var data = {};
+                entities.then(function (result) {
+                    if (result.rows.length === 0) {
+                        reject(false);
                     }
-                    resolve(JSON.parse(body));
+                    ;
+                    data[name] = result.rows;
+                    data["page"] = result.pagination;
+                    resolve(data);
+                }).catch(function (error) {
+                    data[name] = {};
+                    data["page"] = {};
+                    reject(error);
                 });
             };
+            return serverPagination;
+        };
+        this.serverEntity = function (route) {
+            var entity = _this.service.model;
+            var serverEntity = function (resolve, reject) {
+                var model = _this.service.model;
+                var data = {};
+                model.findById(route.params.id).then(function (result) {
+                    if (!result) {
+                        reject();
+                        throw Error;
+                    }
+                    resolve(result);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            };
+            return serverEntity;
+        };
+        this.server = function (type, route) {
+            var req = _this.request;
+            var server;
+            if (type === "paginate") {
+                server = _this.serverPagination(route);
+            }
+            if (type === "entity") {
+                server = _this.serverEntity(route);
+            }
             return new Promise(server);
         };
         this.paginate = function (route) {
             var bq = new build_query_1.build_query();
             var URI = _this.endPoint + "/" + _this.routeParse(route) + bq.http(route.query);
             if (typeof window === "undefined") {
-                return _this.server(URI, {});
+                return _this.server("paginate", route);
             }
             return _this.client(URI, {});
         };
@@ -18161,18 +18144,74 @@ var internal = /** @class */ (function () {
             var id = route.params.id;
             var URI = _this.endPoint + "/" + id;
             if (typeof window === "undefined") {
-                return _this.server(URI, {});
+                return _this.server("entity", route);
             }
             return _this.client(URI, {});
         };
-        this.insert = function () {
+        this.insert = function (entity, mount, token) {
+            entity = JSON.stringify(entity);
+            var URI = mount;
+            var insert = function (resolve, reject) {
+                _this.client(URI, {
+                    body: entity,
+                    method: "post",
+                    headers: {
+                        'X-XSRF-Token': token
+                    }
+                }).then(function (r) {
+                    resolve(r);
+                }).catch(function (e) {
+                    reject(e);
+                });
+            };
+            return new Promise(insert);
         };
-        this.delete = function () {
+        this.update = function (entity, mount, token) {
+            var URI = mount + "/" + entity.id;
+            entity = JSON.stringify(entity);
+            var insert = function (resolve, reject) {
+                _this.client(URI, {
+                    body: entity,
+                    method: "put",
+                    headers: {
+                        'X-XSRF-Token': token
+                    }
+                }).then(function (r) {
+                    resolve(r);
+                }).catch(function (e) {
+                    reject(e);
+                });
+            };
+            return new Promise(insert);
+        };
+        this.delete = function (id, mount, token) {
+            var URI = mount + "/" + id;
+            var del = function (resolve, reject) {
+                _this.client(URI, {
+                    method: "delete",
+                    headers: {
+                        'X-XSRF-Token': token
+                    }
+                }).then(function (r) {
+                    resolve("api delete ok");
+                }).catch(function (e) {
+                    reject("api delete error");
+                });
+            };
+            return new Promise(del);
         };
         this.endPoint = options.endPoint;
         this.host = options.host;
         this.request = options.request;
+        this.service = options.service;
     }
+    Object.defineProperty(internal.prototype, "options", {
+        get: function () {
+            return Object.create(this._options);
+        },
+        enumerable: true,
+        configurable: true
+    });
     internal.prototype.routeParse = function (route) {
         var params = route.params;
         var paramsStr = "";
@@ -18332,6 +18371,306 @@ function cloneRoute (to, from) {
 }
 
 
+
+/***/ }),
+/* 82 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var form_validation_class = /** @class */ (function () {
+    function form_validation_class() {
+        var _this = this;
+        this.validationClass = function (errors, name) {
+            if (name === "submit") {
+                if ((Object.keys(errors).length > 0)) {
+                    return "warning";
+                }
+            }
+            if (errors[name]) {
+                return "warning";
+            }
+        };
+        this.map = function (call) {
+            if (call === "all") {
+                call = Object.keys(_this);
+            }
+            var map = {};
+            for (var idx in call) {
+                if (typeof _this[call[idx]] === 'undefined') {
+                    continue;
+                }
+                if (call[idx].charAt(0) === '_') {
+                    continue;
+                }
+                if (call[idx] === 'map') {
+                    continue;
+                }
+                if (call[idx] === 'constructor') {
+                    continue;
+                }
+                if (typeof idx === 'number') {
+                    map[call[String(idx)]] = _this[call[String(idx)]];
+                    continue;
+                }
+                map[call[idx]] = _this[call[idx]];
+            }
+            return map;
+        };
+    }
+    return form_validation_class;
+}());
+exports.default = new form_validation_class();
+
+
+/***/ }),
+/* 83 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_idx_vue__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_idx_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_idx_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_70d191a2_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_idx_vue__ = __webpack_require__(85);
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+
+/* template */
+
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_idx_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_70d191a2_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_idx_vue__["a" /* default */],
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "apps/tasks/components/idx.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] idx.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-70d191a2", Component.options)
+  } else {
+    hotAPI.reload("data-v-70d191a2", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var vue_1 = __webpack_require__(0);
+var vue_class_component_1 = __webpack_require__(2);
+var pagination_vue_1 = __webpack_require__(51);
+var vuex_1 = __webpack_require__(3);
+vue_class_component_1.default.registerHooks([
+    'beforeRouteEnter',
+    'beforeRouteLeave',
+    'asyncData',
+    'fetch',
+    'middleware',
+    'layout',
+    'transition',
+    'scrollToTop'
+]);
+var idx = /** @class */ (function (_super) {
+    __extends(idx, _super);
+    function idx() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    idx.prototype.asyncData = function (_a) {
+        var store = _a.store, route = _a.route;
+        return store.dispatch("tasks/fetchEntities", route);
+    };
+    idx.prototype.view = function (id) {
+        return this.mount + "/" + id;
+    };
+    idx.prototype.edit = function (id) {
+        return this.mount + "/" + id + "/edit";
+    };
+    idx.prototype.destroy = function (id, title) {
+        var modal = {
+            template: "Destroy",
+            data: {
+                id: id,
+                name: title,
+                mount: this.mount
+            }
+        };
+        this.setModal(modal);
+        this.openModal();
+    };
+    idx.prototype.copy = function (id) {
+        return this.mount + "/add?copy=" + id;
+    };
+    idx = __decorate([
+        vue_class_component_1.default({
+            name: "page",
+            computed: __assign({}, vuex_1.mapGetters([
+                'domain'
+            ]), vuex_1.mapState('tasks', {
+                entities: function (_a) {
+                    var entities = _a.entities;
+                    return entities;
+                },
+                pagination: function (_a) {
+                    var page = _a.page;
+                    return page;
+                },
+                mount: function (_a) {
+                    var mount = _a.mount;
+                    return mount;
+                }
+            })),
+            methods: __assign({}, vuex_1.mapMutations("modal", ["setModal", "toggleModal", "openModal"]), vuex_1.mapActions("tasks", ["fetchEntities"])),
+            components: { pagination: pagination_vue_1.default }
+        })
+    ], idx);
+    return idx;
+}(vue_1.default));
+exports.default = idx;
+
+
+/***/ }),
+/* 85 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "resource column column-75" },
+    [
+      _c("h2", [_vm._v("Index")]),
+      _vm._v(" "),
+      _c(
+        "div",
+        _vm._l(_vm.entities, function(entity) {
+          return _c(
+            "div",
+            [
+              _c(
+                "h3",
+                [
+                  _c("router-link", { attrs: { to: _vm.view(entity.id) } }, [
+                    _vm._v(_vm._s(entity.title))
+                  ])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                {
+                  staticClass: "button small",
+                  attrs: { to: _vm.edit(entity.id) }
+                },
+                [
+                  _c("span", { staticClass: "typcn typcn-edit" }),
+                  _vm._v(" edit")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "button small",
+                  on: {
+                    click: function($event) {
+                      _vm.destroy(entity.id, entity.title)
+                    }
+                  }
+                },
+                [
+                  _c("span", { staticClass: "typcn typcn-document-delete" }),
+                  _vm._v(" delete")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                {
+                  staticClass: "button small",
+                  attrs: { to: _vm.copy(entity.id) }
+                },
+                [
+                  _c("span", { staticClass: "typcn typcn-document-add" }),
+                  _vm._v(" copy")
+                ]
+              )
+            ],
+            1
+          )
+        })
+      ),
+      _vm._v(" "),
+      _c("pagination", {
+        attrs: { pagination: _vm.pagination, mount: _vm.mount }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-70d191a2", esExports)
+  }
+}
 
 /***/ })
 /******/ ]);

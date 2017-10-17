@@ -7,9 +7,9 @@
   <div>{{entity.title}}</div>
   <h3>Priod</h3>
   <div>{{entity.priod}}</div>
-  <h3>Created</h3>
+  <h3>Created at</h3>
   <div>{{entity.created_at}}</div>
-  <h3>Updated</h3>
+  <h3>Updated at</h3>
   <div>{{entity.updated_at}}</div>
 </div>
 </template>

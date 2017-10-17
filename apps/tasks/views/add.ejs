@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <%- include('../../views/tile/head') %>
+  </head>
+  <body>
+<%- include('../../views/tile/body-initial') %>
+  <%- include('../../views/tile/navigation') %>
+
+
+<div class="wrap">
+  <div class="container">
+    <div class="row">
+      <div class="column column-25">
+          <%- include('./sidebar') %>
+      </div>
+      <div class="column column-75">
+
+        <%- hlp.form.start( "task" , task , { "id" : "add" ,"method" :"post" , "action" : "/tasks/" }); %>
+
+        <fieldset>
+          
+            
+            
+            
+            
+            
+            
+            <label for="title">updated_at</label>
+            <%- hlp.form.input("updated_at" , { "class" : "calendar","type" : "date" }); %>
+              
+          
+        </fieldset>
+
+        <%- hlp.form.submit( "submit" , { "class" : "xhr-post" , "data-target" : "#add" } ); %>
+        <%- hlp.form.end(); %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../../views/tile/footer') %>
+<%- include('../../views/tile/scripts') %>
+<%- include('../../views/tile/body-final') %>
+
+<script> 
+</script>
+
+  </body>
+</html>
+
