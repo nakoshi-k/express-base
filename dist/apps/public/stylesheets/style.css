@@ -2242,7 +2242,7 @@ textarea {
   font-size: 4.8rem;
 }
 .indicator {
-  transition: 0.6s background ease-in-out, 0.6s width ease-in-out, 0.6s border-top ease-in-out;
+  transition: 0.3s background ease-in-out, 0.3s width ease-in-out, 0.3s border-top ease-in-out;
   position: absolute;
   bottom: -3px;
   background: #f4f5f6;
@@ -2258,11 +2258,19 @@ textarea {
   background: #d75969;
   border-top: 1px solid #c7243a;
 }
+.indicator.primary.light {
+  background: #d75969;
+  border-top: 1px solid #c7243a;
+}
 .indicator.warning {
   background: #f2c44e;
   border-top: 1px solid #edad0b;
 }
 .indicator.success {
+  background: #399fc7;
+  border-top: 1px solid #007fb1;
+}
+.indicator.success.light {
   background: #399fc7;
   border-top: 1px solid #007fb1;
 }

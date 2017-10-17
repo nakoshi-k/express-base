@@ -12270,11 +12270,11 @@ vue_1.default.mixin({
         var _this = this;
         var asyncData = this.$options["asyncData"];
         if (asyncData) {
-            var ad = Promise.resolve(this.$store.commit("loading/loading"));
+            var ad = Promise.resolve(this.$store.commit("loading/loading", "success"));
             ad.then(function () { return asyncData({ store: _this.$store, route: _this.$route }); })
                 .then(function (res) {
                 setTimeout(function () {
-                    _this.$store.commit("loading/endLoading");
+                    _this.$store.commit("loading/endLoading", "success");
                 }, 240);
             }).catch(function (err) {
                 var domain = _this.$store.state["domain"];
@@ -12287,13 +12287,13 @@ vue_1.default.mixin({
         var _this = this;
         var asyncData = this.$options.asyncData;
         if (asyncData) {
-            this.$store.commit("loading/loading");
+            this.$store.commit("loading/loading", "success");
             asyncData({
                 store: this.$store,
                 route: to
             }).then(function () {
                 setTimeout(function () {
-                    _this.$store.commit("loading/endLoading");
+                    _this.$store.commit("loading/endLoading", "success");
                 }, 240);
                 next();
             }).catch(next);
@@ -17655,29 +17655,18 @@ var mutations = /** @class */ (function (_super) {
             var status = _b.status, complate = _b.complate;
             var before = indicator.complate;
             indicator.status = status;
+            indicator.show = true;
+            indicator.complate = complate;
             if (complate >= 100) {
                 indicator.prosess = false;
-                setTimeout(function () {
-                    indicator.status = "primary";
-                }, 500);
+                indicator.status = "primary";
             }
             else {
                 indicator.prosess = true;
             }
-            if (before > complate) {
-                indicator.show = false;
-                indicator.complate = 0;
-                setTimeout(function () {
-                    indicator.show = true;
-                    indicator.complate = complate;
-                }, 1);
-                return;
-            }
-            indicator.show = true;
-            indicator.complate = complate;
         };
-        _this.loading = function (state) {
-            _this.setIndicator(state, { status: "success", complate: 8 });
+        _this.loading = function (state, status) {
+            _this.setIndicator(state, { status: status, complate: 3 });
             state.overLay = true;
             state.loading = true;
         };

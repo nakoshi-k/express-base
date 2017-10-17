@@ -7,29 +7,18 @@ class mutations extends mutations_1.mutations {
         this.setIndicator = ({ indicator }, { status, complate }) => {
             let before = indicator.complate;
             indicator.status = status;
+            indicator.show = true;
+            indicator.complate = complate;
             if (complate >= 100) {
                 indicator.prosess = false;
-                setTimeout(() => {
-                    indicator.status = "primary";
-                }, 500);
+                indicator.status = "primary";
             }
             else {
                 indicator.prosess = true;
             }
-            if (before > complate) {
-                indicator.show = false;
-                indicator.complate = 0;
-                setTimeout(() => {
-                    indicator.show = true;
-                    indicator.complate = complate;
-                }, 1);
-                return;
-            }
-            indicator.show = true;
-            indicator.complate = complate;
         };
-        this.loading = (state) => {
-            this.setIndicator(state, { status: "success", complate: 8 });
+        this.loading = (state, status) => {
+            this.setIndicator(state, { status: status, complate: 3 });
             state.overLay = true;
             state.loading = true;
         };
