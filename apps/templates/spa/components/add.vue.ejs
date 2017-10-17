@@ -2,18 +2,36 @@
 <div class="resource column column-75">
   <h2>Add</h2>
   <form :action="action" method="post" v-on:submit.prevent="save">
+    <%_ fields.forEach(function (field) { _%>
+      <%_
+      if( ["updated_at", "created_at" , 'id'].indexOf(field.name)  >= 0 ) {
+        return;
+        }
+      if( /"type" : "hidden"/.test(field.attr) ) { _%>
+      <input type="hidden" name="<%- field.name %>" @change="change" :class="validationClass( errors , '<%= field.name %>')" :value="entity.<%= field.name %>">
+      <%_
+        return;
+      } _%>
 
+      <%_
+      if( field.tag === "input" ) {
+      _%>
       <div class="form-item">
-        <label for="title">title</label>
-        <input type="text" name="title" @change="change" :class="validationClass( errors , 'title')" :value="entity.title" placeholder="title">
-        <div class="errors" v-for="e in errors.title"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
+        <label for="<%= field.name %>"><%= field.name %></label>
+        <input <%- field.attrString %> name="<%- field.name %>" @change="change" :class="validationClass( errors , '<%= field.name %>')" :value="entity.<%= field.name %>" placeholder="<%= field.name %>">
+        <div class="errors" v-for="e in errors.<%- field.name %>"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
       </div>
-
+      <%_ } _%>
+      <%_
+      if( field.tag === "textarea" ) {
+      _%>
       <div class="form-item">
-        <label for="priod">priod</label>
-        <input class="calendar" type="text" name="priod" @change="change" :class="validationClass( errors , 'priod')" :value="entity.priod" placeholder="priod">
-        <div class="errors" v-for="e in errors.priod"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
+        <label for="<%= field.name %>"><%= field.name %></label>
+        <textarea <%- field.attrString %> name="<%- field.name %>" @change="change" :class="validationClass( errors , '<%= field.name %>')" :value="entity.<%= field.name %>" placeholder="<%= field.name %>"></textarea>
+        <div class="errors" v-for="e in errors.<%- field.name %>"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
       </div>
+      <%_ } _%>
+    <%_ }); _%>
     <button type="submit" :class="validationClass(errors , 'submit')">update</button>
   </form>
 </div>
@@ -44,16 +62,16 @@ Component.registerHooks([
     ...mapGetters([
       'domain' , 'token'
     ]),
-    ...mapState("tasks" , {
+    ...mapState("<%- names %>" , {
         entity : ({entity}) =>  entity,
         mount : ({mount}) => mount 
     }),
   },
   methods : {
-    ...mapActions( "tasks" , 
+    ...mapActions( "<%- names %>" , 
       ["insertEntity" , "clearEntity" ,"copyEntity"]
     ),
-    ...mapMutations( "tasks" , 
+    ...mapMutations( "<%- names %>" , 
       ["updateEntity" , "setErrors"]
     ),
     ...mapMutations( "loading" , 

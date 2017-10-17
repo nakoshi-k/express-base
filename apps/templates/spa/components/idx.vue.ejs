@@ -4,9 +4,9 @@
   <div>
     <div v-for="entity in entities">
     <h3><router-link :to="view(entity.id)">{{ entity.title }}</router-link></h3>
-    <router-link :to="edit(entity.id)" class="button small">edit</router-link>
-    <button @click="destroy(entity.id,entity.title)" class="button small">delete</button>
-    <router-link :to="copy(entity.id)" class="button small">copy</router-link>
+    <router-link :to="edit(entity.id)" class="button small"> <span class="typcn typcn-edit"></span> edit</router-link>
+    <button @click="destroy(entity.id,entity.title)" class="button small"> <span class="typcn typcn-document-delete"></span> delete</button>
+    <router-link :to="copy(entity.id)" class="button small"> <span class="typcn typcn-document-add"></span> copy</router-link>
     </div>
   </div>
   <pagination :pagination="pagination" :mount="mount"></pagination>
@@ -35,7 +35,7 @@ Component.registerHooks([
     ...mapGetters([
       'domain'
     ]),
-    ...mapState( 'tasks' , {
+    ...mapState( '<%- names %>' , {
       entities : ({entities}) => entities , 
       pagination: ({page}) => page,
       mount : ({mount}) => mount 
@@ -43,21 +43,21 @@ Component.registerHooks([
   },
   methods : {
     ...mapMutations( "modal" , ["setModal","toggleModal" , "openModal"] ),
-    ...mapActions( "tasks" , 
+    ...mapActions( "<%- names %>" , 
       ["fetchEntities"]
     )
   },
   components:{pagination}
 })
 
-export default class Page extends Vue {
+export default class idx extends Vue {
   
 
   mount:string;
   pagination:any;
   fetchEntities : (route) => {};
   asyncData ( {store,route} ) {
-    return store.dispatch("tasks/fetchEntities" ,route);
+    return store.dispatch("<%- names %>/fetchEntities" ,route);
   }
 
  
