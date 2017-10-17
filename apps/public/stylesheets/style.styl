@@ -24,6 +24,20 @@
 @import "../../../node_modules/milligram-stylus/dist/_Code"
 @import "../../../node_modules/milligram-stylus/dist/_Divider"
 @import "../../../node_modules/milligram-stylus/dist/_Form"
+
+input[type='email'].warning,
+input[type='number'].warning,
+input[type='password'].warning,
+input[type='search'].warning,
+input[type='tel'].warning,
+input[type='text'].warning,
+input[type='url'].warning,
+textarea.warning,
+select.warning
+    border-width 0.2rem 
+    border-color color-warning
+
+
 @import "../../../node_modules/milligram-stylus/dist/_Grid"
 @import "../../../node_modules/milligram-stylus/dist/_Link"
 @import "../../../node_modules/milligram-stylus/dist/_List"
@@ -127,6 +141,10 @@ fieldset, input, select, textarea {
     
 .typcn
     line-height 1
+
+.typcn:before
+    font-size 1.8rem
+    margin .3rem .6rem
 
 .typcn.large:before
     font-size 4.8rem

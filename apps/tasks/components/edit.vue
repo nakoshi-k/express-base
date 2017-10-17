@@ -1,19 +1,21 @@
 <template>
 <div class="resource column column-75">
   <h2>Edit</h2>
-  <form :action="action" method="post">
+  <form :action="action" method="post" v-on:submit.prevent="save">
     <input type="hidden" name="id" :value="entity.id"  @change="change">
     <input type="hidden" name="_csrf" :value="token">
     <input type="hidden" name="_method" value="put">
     <div class="form-item">
       <label for="title">title</label>
-      <input type="text" name="title" :value="entity.title" placeholder="title" @change="change">
+      <input type="text" name="title" :value="entity.title" :class="validationClass('title')" placeholder="title" @change="change">
+      <div class="errors" v-for="e in errors.title"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
     </div>
     <div class="form-item">
       <label for="priod">priod</label>
-      <input type="text" name="priod" class="calendar" :value="entity.priod" placeholder="priod" @change="change">
+      <input type="text" name="priod" class="calendar" :class="validationClass('priod')" :value="entity.priod" placeholder="priod" @change="change">
+      <div class="errors" v-for="e in errors.priod"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
     </div>
-    <button type="button" @click="save">submit</button>
+    <button type="submit">submit</button>
   </form>
 </div>
 </template>
@@ -96,13 +98,23 @@ export default class edit extends Vue {
   saveEntity:(token : string) => Promise<string>;
   loading : () => {};
   endLoading: (status) => {};
+  errors = {};
   save(){
     this.loading();
     this.saveEntity(this.token).then(r => {
+      this.errors = {};
       this.endLoading("success");
     }).catch(e => {
+      this.errors = e;
       this.endLoading("warning");
     });
   }
+  
+  validationClass(name){
+    if(this.errors[name]){
+      return "warning"
+    }
+  }
+
 }
 </script>

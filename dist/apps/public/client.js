@@ -17081,6 +17081,7 @@ var add = /** @class */ (function (_super) {
             kv["value"] = e.target.value;
             _this.updateEntity(kv);
         };
+        _this.errors = {};
         return _this;
     }
     add.prototype.mounted = function () {
@@ -17106,9 +17107,15 @@ var add = /** @class */ (function (_super) {
             _this.endLoading("success");
             _this.$router.push({ path: _this.mount });
         }).catch(function (e) {
+            _this.errors = e;
             _this.endLoading("warning");
         });
         return false;
+    };
+    add.prototype.validationClass = function (name) {
+        if (this.errors[name]) {
+            return "warning";
+        }
     };
     add = __decorate([
         vue_class_component_1.default({
@@ -17125,7 +17132,7 @@ var add = /** @class */ (function (_super) {
                     return mount;
                 }
             })),
-            methods: __assign({}, vuex_1.mapActions("tasks", ["insertEntity", "clearEntity", "copyEntity"]), vuex_1.mapMutations("tasks", ["updateEntity"]), vuex_1.mapMutations("loading", ["loading", "endLoading"]))
+            methods: __assign({}, vuex_1.mapActions("tasks", ["insertEntity", "clearEntity", "copyEntity"]), vuex_1.mapMutations("tasks", ["updateEntity", "setErrors"]), vuex_1.mapMutations("loading", ["loading", "endLoading"]))
         })
     ], add);
     return add;
@@ -17145,46 +17152,72 @@ var render = function() {
   return _c("div", { staticClass: "resource column column-75" }, [
     _c("h2", [_vm._v("Add")]),
     _vm._v(" "),
-    _c("form", { attrs: { action: "./", method: "post" } }, [
-      _c("input", {
-        attrs: { type: "hidden", name: "_csrf" },
-        domProps: { value: _vm.token }
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-item" }, [
-        _c("label", { attrs: { for: "title" } }, [_vm._v("title")]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { type: "text", name: "title", placeholder: "title" },
-          domProps: { value: _vm.entity.title },
-          on: { change: _vm.change }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-item" }, [
-        _c("label", { attrs: { for: "priod" } }, [_vm._v("priod")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "calendar",
-          attrs: { type: "text", name: "priod", placeholder: "priod" },
-          domProps: { value: _vm.entity.priod },
-          on: { change: _vm.change }
-        })
-      ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          attrs: { type: "button" },
-          on: {
-            click: function($event) {
-              _vm.save()
-            }
+    _c(
+      "form",
+      {
+        attrs: { action: "./", method: "post" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            _vm.save($event)
           }
-        },
-        [_vm._v("submit")]
-      )
-    ])
+        }
+      },
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "_csrf" },
+          domProps: { value: _vm.token }
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-item" },
+          [
+            _c("label", { attrs: { for: "title" } }, [_vm._v("title")]),
+            _vm._v(" "),
+            _c("input", {
+              class: _vm.validationClass("title"),
+              attrs: { type: "text", name: "title", placeholder: "title" },
+              domProps: { value: _vm.entity.title },
+              on: { change: _vm.change }
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.errors.title, function(e) {
+              return _c("div", { staticClass: "errors" }, [
+                _c("span", { staticClass: "typcn typcn-warning-outline" }),
+                _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+              ])
+            })
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-item" },
+          [
+            _c("label", { attrs: { for: "priod" } }, [_vm._v("priod")]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "calendar",
+              class: _vm.validationClass("priod"),
+              attrs: { type: "text", name: "priod", placeholder: "priod" },
+              domProps: { value: _vm.entity.priod },
+              on: { change: _vm.change }
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.errors.priod, function(e) {
+              return _c("div", [
+                _vm._v(_vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+              ])
+            })
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c("button", { attrs: { type: "submit" } }, [_vm._v("submit")])
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -17473,6 +17506,7 @@ var edit = /** @class */ (function (_super) {
             kv["value"] = e.target.value;
             _this.updateEntity(kv);
         };
+        _this.errors = {};
         return _this;
     }
     edit.prototype.asyncData = function (_a) {
@@ -17498,10 +17532,17 @@ var edit = /** @class */ (function (_super) {
         var _this = this;
         this.loading();
         this.saveEntity(this.token).then(function (r) {
+            _this.errors = {};
             _this.endLoading("success");
         }).catch(function (e) {
+            _this.errors = e;
             _this.endLoading("warning");
         });
+    };
+    edit.prototype.validationClass = function (name) {
+        if (this.errors[name]) {
+            return "warning";
+        }
     };
     edit = __decorate([
         vue_class_component_1.default({
@@ -17538,45 +17579,83 @@ var render = function() {
   return _c("div", { staticClass: "resource column column-75" }, [
     _c("h2", [_vm._v("Edit")]),
     _vm._v(" "),
-    _c("form", { attrs: { action: _vm.action, method: "post" } }, [
-      _c("input", {
-        attrs: { type: "hidden", name: "id" },
-        domProps: { value: _vm.entity.id },
-        on: { change: _vm.change }
-      }),
-      _vm._v(" "),
-      _c("input", {
-        attrs: { type: "hidden", name: "_csrf" },
-        domProps: { value: _vm.token }
-      }),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "hidden", name: "_method", value: "put" } }),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-item" }, [
-        _c("label", { attrs: { for: "title" } }, [_vm._v("title")]),
+    _c(
+      "form",
+      {
+        attrs: { action: _vm.action, method: "post" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            _vm.save($event)
+          }
+        }
+      },
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "id" },
+          domProps: { value: _vm.entity.id },
+          on: { change: _vm.change }
+        }),
         _vm._v(" "),
         _c("input", {
-          attrs: { type: "text", name: "title", placeholder: "title" },
-          domProps: { value: _vm.entity.title },
-          on: { change: _vm.change }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-item" }, [
-        _c("label", { attrs: { for: "priod" } }, [_vm._v("priod")]),
+          attrs: { type: "hidden", name: "_csrf" },
+          domProps: { value: _vm.token }
+        }),
         _vm._v(" "),
         _c("input", {
-          staticClass: "calendar",
-          attrs: { type: "text", name: "priod", placeholder: "priod" },
-          domProps: { value: _vm.entity.priod },
-          on: { change: _vm.change }
-        })
-      ]),
-      _vm._v(" "),
-      _c("button", { attrs: { type: "button" }, on: { click: _vm.save } }, [
-        _vm._v("submit")
-      ])
-    ])
+          attrs: { type: "hidden", name: "_method", value: "put" }
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-item" },
+          [
+            _c("label", { attrs: { for: "title" } }, [_vm._v("title")]),
+            _vm._v(" "),
+            _c("input", {
+              class: _vm.validationClass("title"),
+              attrs: { type: "text", name: "title", placeholder: "title" },
+              domProps: { value: _vm.entity.title },
+              on: { change: _vm.change }
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.errors.title, function(e) {
+              return _c("div", { staticClass: "errors" }, [
+                _c("span", { staticClass: "typcn typcn-warning-outline" }),
+                _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+              ])
+            })
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-item" },
+          [
+            _c("label", { attrs: { for: "priod" } }, [_vm._v("priod")]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "calendar",
+              class: _vm.validationClass("priod"),
+              attrs: { type: "text", name: "priod", placeholder: "priod" },
+              domProps: { value: _vm.entity.priod },
+              on: { change: _vm.change }
+            }),
+            _vm._v(" "),
+            _vm._l(_vm.errors.priod, function(e) {
+              return _c("div", { staticClass: "errors" }, [
+                _c("span", { staticClass: "typcn typcn-warning-outline" }),
+                _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+              ])
+            })
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c("button", { attrs: { type: "submit" } }, [_vm._v("submit")])
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -18087,7 +18166,13 @@ var mutations = /** @class */ (function (_super) {
                 if (key === "id" || key === "created_at" || key === "updated_at") {
                     delete entity[key];
                 }
+                if (key === "errors") {
+                    entity[key] = [];
+                }
             }
+        };
+        _this.setErrors = function (state, errors) {
+            state.entity["errors"] = errors;
         };
         _this._mount = options.mount;
         _this._entities = options.entities;
@@ -18210,23 +18295,20 @@ var internal = /** @class */ (function () {
             var client = function (resolve, reject) {
                 fetch(url, options)
                     .then(function (response) {
-                    if (response.status < 200 || response.status > 210) {
-                        reject(response.status);
-                        throw Error;
-                    }
-                    ;
                     //deleted
                     if (response.status === 204) {
                         resolve(response.status);
                         return;
                     }
-                    return response.json();
-                }).then(function (data) {
-                    resolve(data);
+                    response.json().then(function (r) {
+                        if (response.status < 200 || response.status > 300) {
+                            reject(r);
+                            return;
+                        }
+                        resolve(r);
+                    });
                 }).catch(function (err) {
-                    console.log(err);
                     reject(err);
-                    //throw Error;
                 });
             };
             return new Promise(client);
@@ -18309,9 +18391,9 @@ var internal = /** @class */ (function () {
                         'X-XSRF-Token': token
                     }
                 }).then(function (r) {
-                    resolve("api insert");
+                    resolve(r);
                 }).catch(function (e) {
-                    resolve("api insert error");
+                    reject(e);
                 });
             };
             return new Promise(insert);
@@ -18327,9 +18409,9 @@ var internal = /** @class */ (function () {
                         'X-XSRF-Token': token
                     }
                 }).then(function (r) {
-                    resolve("api update ok");
+                    resolve(r);
                 }).catch(function (e) {
-                    resolve("api update error");
+                    reject(e);
                 });
             };
             return new Promise(insert);

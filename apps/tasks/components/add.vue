@@ -1,17 +1,19 @@
 <template>
 <div class="resource column column-75">
   <h2>Add</h2>
-  <form action="./" method="post">
+  <form action="./" method="post" v-on:submit.prevent="save">
     <input type="hidden" name="_csrf" :value="token">
     <div class="form-item">
       <label for="title">title</label>
-      <input type="text" name="title" @change="change" :value="entity.title" placeholder="title">
+      <input type="text" name="title" @change="change" :class="validationClass('title')" :value="entity.title" placeholder="title">
+      <div class="errors" v-for="e in errors.title"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
     </div>
     <div class="form-item">
       <label for="priod">priod</label>
-      <input type="text" name="priod" @change="change" class="calendar" :value="entity.priod" placeholder="priod">
+      <input type="text" name="priod" @change="change" class="calendar" :class="validationClass('priod')" :value="entity.priod" placeholder="priod">
+      <div v-for="e in errors.priod">{{e.message}} ({{e.type}})</div>
     </div>
-    <button type="button" @click="save()" >submit</button>
+    <button type="submit">submit</button>
   </form>
 </div>
 </template>
@@ -34,7 +36,6 @@ Component.registerHooks([
   'scrollToTop'
 ])
 
-
 @Component({
   name : "add",
   computed : {
@@ -51,7 +52,7 @@ Component.registerHooks([
       ["insertEntity" , "clearEntity" ,"copyEntity"]
     ),
     ...mapMutations( "tasks" , 
-      ["updateEntity"]
+      ["updateEntity" , "setErrors"]
     ),
     ...mapMutations( "loading" , 
       ["loading","endLoading"]
@@ -72,6 +73,7 @@ export default class add extends Vue {
   entity : {
     title : "",
     priod : ""
+    errors : {}
   }
    
   change = (e) => {
@@ -100,16 +102,25 @@ export default class add extends Vue {
     this.clearEntity();
   }
   
- save(){
+  errors = {};
+
+  save(){
     this.loading();
     this.insertEntity(this.token).then(r => {
       this.endLoading("success");
       this.$router.push({path : this.mount})
-    }).catch( e=> {
+    }).catch( e => {
+      this.errors = e;
       this.endLoading("warning");
     });
     return false;
   }
 
+  validationClass(name){
+    if(this.errors[name]){
+      return "warning"
+    }
+  }
+  
 }
 </script>

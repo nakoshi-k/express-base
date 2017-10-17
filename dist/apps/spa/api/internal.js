@@ -22,23 +22,20 @@ class internal {
             let client = (resolve, reject) => {
                 fetch(url, options)
                     .then((response) => {
-                    if (response.status < 200 || response.status > 210) {
-                        reject(response.status);
-                        throw Error;
-                    }
-                    ;
                     //deleted
                     if (response.status === 204) {
                         resolve(response.status);
                         return;
                     }
-                    return response.json();
-                }).then((data) => {
-                    resolve(data);
+                    response.json().then(r => {
+                        if (response.status < 200 || response.status > 300) {
+                            reject(r);
+                            return;
+                        }
+                        resolve(r);
+                    });
                 }).catch((err) => {
-                    console.log(err);
                     reject(err);
-                    //throw Error;
                 });
             };
             return new Promise(client);
@@ -121,9 +118,9 @@ class internal {
                         'X-XSRF-Token': token
                     }
                 }).then(r => {
-                    resolve("api insert");
+                    resolve(r);
                 }).catch(e => {
-                    resolve("api insert error");
+                    reject(e);
                 });
             };
             return new Promise(insert);
@@ -139,9 +136,9 @@ class internal {
                         'X-XSRF-Token': token
                     }
                 }).then(r => {
-                    resolve("api update ok");
+                    resolve(r);
                 }).catch(e => {
-                    resolve("api update error");
+                    reject(e);
                 });
             };
             return new Promise(insert);

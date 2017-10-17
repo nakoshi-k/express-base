@@ -8,7 +8,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     title: {
       type : DataTypes.STRING,
-      validate : {
+      allowNull:false,
+      validate: {
+        notEmpty : true, 
+        min: -90,
+        max: 90
       }
     },
      priod: {

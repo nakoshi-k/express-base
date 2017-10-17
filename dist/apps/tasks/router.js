@@ -112,9 +112,8 @@ class router extends router_1.router {
                 res.status(201);
                 res.json(entity.dataValues);
             }).catch((err) => {
-                req.body.errors = this.service.validationError(err);
                 res.status(400);
-                res.json(req.body.errors);
+                res.json(this.service.validationError(err));
             });
         };
         this.update = (req, res, next) => {
@@ -129,7 +128,7 @@ class router extends router_1.router {
                     res.json(result);
                 }).catch((err) => {
                     res.status(400);
-                    res.json(err);
+                    res.json(this.service.validationError(err));
                 });
             }).catch((err) => {
                 res.status(400);

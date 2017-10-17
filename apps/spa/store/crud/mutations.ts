@@ -29,7 +29,14 @@ export class mutations extends core_mutations{
         if(key === "id" || key === "created_at" || key === "updated_at" ){
           delete entity[key];
         }
+        if(key === "errors" ){
+          entity[key] = [];
+        }
       }
+    }
+
+    setErrors = ( state , errors  ) => {
+      state.entity[ "errors" ] = errors;
     }
 
 }

@@ -4975,6 +4975,7 @@
                     kv["value"] = e.target.value;
                     this.updateEntity(kv);
                 };
+                this.errors = {};
             }
             mounted() {
                 if (window) {
@@ -4998,9 +4999,15 @@
                     this.endLoading("success");
                     this.$router.push({ path: this.mount });
                 }).catch(e => {
+                    this.errors = e;
                     this.endLoading("warning");
                 });
                 return false;
+            }
+            validationClass(name) {
+                if (this.errors[name]) {
+                    return "warning";
+                }
             }
         };
         add = __decorate([
@@ -5012,7 +5019,7 @@
                     entity: ({ entity }) => entity,
                     mount: ({ mount }) => mount
                 })),
-                methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])("tasks", ["insertEntity", "clearEntity", "copyEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("tasks", ["updateEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("loading", ["loading", "endLoading"]))
+                methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])("tasks", ["insertEntity", "clearEntity", "copyEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("tasks", ["updateEntity", "setErrors"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("loading", ["loading", "endLoading"]))
             })
         ], add);
         /* harmony default export */ __webpack_exports__["a"] = (add);
@@ -5030,9 +5037,23 @@
                     _vm._ssrAttr("value", _vm.token) +
                     '> <div class="form-item"><label for="title">title</label> <input type="text" name="title" placeholder="title"' +
                     _vm._ssrAttr("value", _vm.entity.title) +
-                    '></div> <div class="form-item"><label for="priod">priod</label> <input type="text" name="priod" placeholder="priod"' +
+                    _vm._ssrClass(null, _vm.validationClass("title")) +
+                    "> " +
+                    _vm._ssrList(_vm.errors.title, function (e) {
+                        return ('<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+                            _vm._ssrEscape(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")") +
+                            "</div>");
+                    }) +
+                    '</div> <div class="form-item"><label for="priod">priod</label> <input type="text" name="priod" placeholder="priod"' +
                     _vm._ssrAttr("value", _vm.entity.priod) +
-                    ' class="calendar"></div> <button type="button">submit</button></form>')
+                    _vm._ssrClass("calendar", _vm.validationClass("priod")) +
+                    "> " +
+                    _vm._ssrList(_vm.errors.priod, function (e) {
+                        return ("<div>" +
+                            _vm._ssrEscape(_vm._s(e.message) + " (" + _vm._s(e.type) + ")") +
+                            "</div>");
+                    }) +
+                    '</div> <button type="submit">submit</button></form>')
             ]);
         };
         var staticRenderFns = [];
@@ -5207,6 +5228,7 @@
                     kv["value"] = e.target.value;
                     this.updateEntity(kv);
                 };
+                this.errors = {};
             }
             asyncData({ store, route }) {
                 return store.dispatch('tasks/fetchEntity', route);
@@ -5225,10 +5247,17 @@
             save() {
                 this.loading();
                 this.saveEntity(this.token).then(r => {
+                    this.errors = {};
                     this.endLoading("success");
                 }).catch(e => {
+                    this.errors = e;
                     this.endLoading("warning");
                 });
+            }
+            validationClass(name) {
+                if (this.errors[name]) {
+                    return "warning";
+                }
             }
         };
         edit = __decorate([
@@ -5262,9 +5291,23 @@
                     _vm._ssrAttr("value", _vm.token) +
                     '> <input type="hidden" name="_method" value="put"> <div class="form-item"><label for="title">title</label> <input type="text" name="title" placeholder="title"' +
                     _vm._ssrAttr("value", _vm.entity.title) +
-                    '></div> <div class="form-item"><label for="priod">priod</label> <input type="text" name="priod" placeholder="priod"' +
+                    _vm._ssrClass(null, _vm.validationClass("title")) +
+                    "> " +
+                    _vm._ssrList(_vm.errors.title, function (e) {
+                        return ('<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+                            _vm._ssrEscape(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")") +
+                            "</div>");
+                    }) +
+                    '</div> <div class="form-item"><label for="priod">priod</label> <input type="text" name="priod" placeholder="priod"' +
                     _vm._ssrAttr("value", _vm.entity.priod) +
-                    ' class="calendar"></div> <button type="button">submit</button></form>')
+                    _vm._ssrClass("calendar", _vm.validationClass("priod")) +
+                    "> " +
+                    _vm._ssrList(_vm.errors.priod, function (e) {
+                        return ('<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+                            _vm._ssrEscape(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")") +
+                            "</div>");
+                    }) +
+                    '</div> <button type="submit">submit</button></form>')
             ]);
         };
         var staticRenderFns = [];
@@ -5558,7 +5601,13 @@
                         if (key === "id" || key === "created_at" || key === "updated_at") {
                             delete entity[key];
                         }
+                        if (key === "errors") {
+                            entity[key] = [];
+                        }
                     }
+                };
+                this.setErrors = (state, errors) => {
+                    state.entity["errors"] = errors;
                 };
                 this._mount = options.mount;
                 this._entities = options.entities;
@@ -5650,23 +5699,20 @@
                     let client = (resolve, reject) => {
                         fetch(url, options)
                             .then((response) => {
-                            if (response.status < 200 || response.status > 210) {
-                                reject(response.status);
-                                throw Error;
-                            }
-                            ;
                             //deleted
                             if (response.status === 204) {
                                 resolve(response.status);
                                 return;
                             }
-                            return response.json();
-                        }).then((data) => {
-                            resolve(data);
+                            response.json().then(r => {
+                                if (response.status < 200 || response.status > 300) {
+                                    reject(r);
+                                    return;
+                                }
+                                resolve(r);
+                            });
                         }).catch((err) => {
-                            console.log(err);
                             reject(err);
-                            //throw Error;
                         });
                     };
                     return new Promise(client);
@@ -5749,9 +5795,9 @@
                                 'X-XSRF-Token': token
                             }
                         }).then(r => {
-                            resolve("api insert");
+                            resolve(r);
                         }).catch(e => {
-                            resolve("api insert error");
+                            reject(e);
                         });
                     };
                     return new Promise(insert);
@@ -5767,9 +5813,9 @@
                                 'X-XSRF-Token': token
                             }
                         }).then(r => {
-                            resolve("api update ok");
+                            resolve(r);
                         }).catch(e => {
-                            resolve("api update error");
+                            reject(e);
                         });
                     };
                     return new Promise(insert);

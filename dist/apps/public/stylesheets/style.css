@@ -1608,6 +1608,18 @@ input[type='radio'] {
   font-weight: normal;
   margin-left: 0.5rem;
 }
+input[type='email'].warning,
+input[type='number'].warning,
+input[type='password'].warning,
+input[type='search'].warning,
+input[type='tel'].warning,
+input[type='text'].warning,
+input[type='url'].warning,
+textarea.warning,
+select.warning {
+  border-width: 0.2rem;
+  border-color: #edad0b;
+}
 /*
  * Milligram-stylus v1.3.0
  * https://milligram.github.io
@@ -2237,6 +2249,10 @@ textarea {
 }
 .typcn {
   line-height: 1;
+}
+.typcn:before {
+  font-size: 1.8rem;
+  margin: 0.3rem 0.6rem;
 }
 .typcn.large:before {
   font-size: 4.8rem;

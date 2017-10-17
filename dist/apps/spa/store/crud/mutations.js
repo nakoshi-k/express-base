@@ -21,7 +21,13 @@ class mutations extends mutations_1.mutations {
                 if (key === "id" || key === "created_at" || key === "updated_at") {
                     delete entity[key];
                 }
+                if (key === "errors") {
+                    entity[key] = [];
+                }
             }
+        };
+        this.setErrors = (state, errors) => {
+            state.entity["errors"] = errors;
         };
         this._mount = options.mount;
         this._entities = options.entities;
