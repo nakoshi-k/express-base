@@ -12156,6 +12156,9 @@ var build_query = /** @class */ (function () {
         }
         var q = "";
         Object.keys(prts).forEach(function (key) {
+            if (!prts[key]) {
+                return;
+            }
             q += "&" + encodeURIComponent(key) + "=" + encodeURIComponent(prts[key]);
         });
         return q.replace("&", "?");
@@ -16364,6 +16367,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var vue_1 = __webpack_require__(0);
 var vue_class_component_1 = __webpack_require__(2);
 var vuex_1 = __webpack_require__(3);
+var search_vue_1 = __webpack_require__(86);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -16387,7 +16391,8 @@ var sub = /** @class */ (function (_super) {
                     var mount = _a.mount;
                     return mount;
                 }
-            }))
+            })),
+            components: { "app-search": search_vue_1.default }
         })
     ], sub);
     return sub;
@@ -16405,22 +16410,34 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "column column-25" }, [
-    _c("ul", [
-      _c(
-        "li",
-        [_c("router-link", { attrs: { to: _vm.mount } }, [_vm._v("Index")])],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "li",
-        [
-          _c("router-link", { attrs: { to: _vm.mount + "/add" } }, [
-            _vm._v("Add")
-          ])
-        ],
-        1
-      )
+    _c("h4", { staticClass: "margin" }, [_vm._v("search")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "panel" }, [_c("app-search")], 1),
+    _vm._v(" "),
+    _c("h4", { staticClass: "margin" }, [_vm._v("menu")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "panel" }, [
+      _c("nav", { staticClass: "navigation-stack" }, [
+        _c("ul", { staticClass: "navigation-list" }, [
+          _c(
+            "li",
+            [
+              _c("router-link", { attrs: { to: _vm.mount } }, [_vm._v("Index")])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "li",
+            [
+              _c("router-link", { attrs: { to: _vm.mount + "/add" } }, [
+                _vm._v("Add")
+              ])
+            ],
+            1
+          )
+        ])
+      ])
     ])
   ])
 }
@@ -16714,7 +16731,7 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "text-right text-medium" }, [
+        _c("div", { staticClass: "column text-right text-medium" }, [
           _vm._v(
             " Page " +
               _vm._s(_vm.pagination.currentPage) +
@@ -16848,18 +16865,6 @@ var add = /** @class */ (function (_super) {
         };
         _this.errors = {};
         return _this;
-        /*
-          validationClass(errors , name){
-            if(name === "submit"){
-               if( (Object.keys(errors).length > 0) ){
-                 return "warning"
-               }
-            }
-            if(errors[name]){
-              return "warning"
-            }
-          }
-        */
     }
     Object.defineProperty(add.prototype, "action", {
         get: function () {
@@ -16943,52 +16948,54 @@ var render = function() {
         }
       },
       [
-        _c(
-          "div",
-          { staticClass: "form-item" },
-          [
-            _c("label", { attrs: { for: "title" } }, [_vm._v("title")]),
-            _vm._v(" "),
-            _c("input", {
-              class: _vm.validationClass(_vm.errors, "title"),
-              attrs: { type: "text", name: "title", placeholder: "title" },
-              domProps: { value: _vm.entity.title },
-              on: { change: _vm.change }
-            }),
-            _vm._v(" "),
-            _vm._l(_vm.errors.title, function(e) {
-              return _c("div", { staticClass: "errors" }, [
-                _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
-              ])
-            })
-          ],
-          2
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "form-item" },
-          [
-            _c("label", { attrs: { for: "priod" } }, [_vm._v("priod")]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "calendar",
-              class: _vm.validationClass(_vm.errors, "priod"),
-              attrs: { type: "text", name: "priod", placeholder: "priod" },
-              domProps: { value: _vm.entity.priod },
-              on: { change: _vm.change }
-            }),
-            _vm._v(" "),
-            _vm._l(_vm.errors.priod, function(e) {
-              return _c("div", { staticClass: "errors" }, [
-                _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
-              ])
-            })
-          ],
-          2
-        ),
+        _c("fieldset", [
+          _c(
+            "div",
+            { staticClass: "form-item" },
+            [
+              _c("label", { attrs: { for: "title" } }, [_vm._v("title")]),
+              _vm._v(" "),
+              _c("input", {
+                class: _vm.validationClass(_vm.errors, "title"),
+                attrs: { type: "text", name: "title", placeholder: "title" },
+                domProps: { value: _vm.entity.title },
+                on: { change: _vm.change }
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.errors.title, function(e) {
+                return _c("div", { staticClass: "errors" }, [
+                  _c("span", { staticClass: "typcn typcn-warning-outline" }),
+                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+                ])
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "form-item" },
+            [
+              _c("label", { attrs: { for: "priod" } }, [_vm._v("priod")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "calendar",
+                class: _vm.validationClass(_vm.errors, "priod"),
+                attrs: { type: "date", name: "priod", placeholder: "priod" },
+                domProps: { value: _vm.entity.priod },
+                on: { change: _vm.change }
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.errors.priod, function(e) {
+                return _c("div", { staticClass: "errors" }, [
+                  _c("span", { staticClass: "typcn typcn-warning-outline" }),
+                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+                ])
+              })
+            ],
+            2
+          )
+        ]),
         _vm._v(" "),
         _c(
           "button",
@@ -17369,59 +17376,61 @@ var render = function() {
         }
       },
       [
-        _c("input", {
-          class: _vm.validationClass(_vm.errors, "id"),
-          attrs: { type: "hidden", name: "id" },
-          domProps: { value: _vm.entity.id },
-          on: { change: _vm.change }
-        }),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "form-item" },
-          [
-            _c("label", { attrs: { for: "title" } }, [_vm._v("title")]),
-            _vm._v(" "),
-            _c("input", {
-              class: _vm.validationClass(_vm.errors, "title"),
-              attrs: { type: "text", name: "title", placeholder: "title" },
-              domProps: { value: _vm.entity.title },
-              on: { change: _vm.change }
-            }),
-            _vm._v(" "),
-            _vm._l(_vm.errors.title, function(e) {
-              return _c("div", { staticClass: "errors" }, [
-                _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
-              ])
-            })
-          ],
-          2
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "form-item" },
-          [
-            _c("label", { attrs: { for: "priod" } }, [_vm._v("priod")]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "calendar",
-              class: _vm.validationClass(_vm.errors, "priod"),
-              attrs: { type: "text", name: "priod", placeholder: "priod" },
-              domProps: { value: _vm.entity.priod },
-              on: { change: _vm.change }
-            }),
-            _vm._v(" "),
-            _vm._l(_vm.errors.priod, function(e) {
-              return _c("div", { staticClass: "errors" }, [
-                _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
-              ])
-            })
-          ],
-          2
-        ),
+        _c("fieldset", [
+          _c("input", {
+            class: _vm.validationClass(_vm.errors, "id"),
+            attrs: { type: "hidden", name: "id" },
+            domProps: { value: _vm.entity.id },
+            on: { change: _vm.change }
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "form-item" },
+            [
+              _c("label", { attrs: { for: "title" } }, [_vm._v("title")]),
+              _vm._v(" "),
+              _c("input", {
+                class: _vm.validationClass(_vm.errors, "title"),
+                attrs: { type: "text", name: "title", placeholder: "title" },
+                domProps: { value: _vm.entity.title },
+                on: { change: _vm.change }
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.errors.title, function(e) {
+                return _c("div", { staticClass: "errors" }, [
+                  _c("span", { staticClass: "typcn typcn-warning-outline" }),
+                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+                ])
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "form-item" },
+            [
+              _c("label", { attrs: { for: "priod" } }, [_vm._v("priod")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "calendar",
+                class: _vm.validationClass(_vm.errors, "priod"),
+                attrs: { type: "date", name: "priod", placeholder: "priod" },
+                domProps: { value: _vm.entity.priod },
+                on: { change: _vm.change }
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.errors.priod, function(e) {
+                return _c("div", { staticClass: "errors" }, [
+                  _c("span", { staticClass: "typcn typcn-warning-outline" }),
+                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+                ])
+              })
+            ],
+            2
+          )
+        ]),
         _vm._v(" "),
         _c(
           "button",
@@ -17563,9 +17572,7 @@ var mutations = /** @class */ (function (_super) {
             if (complate >= 100) {
                 indicator.prosess = false;
                 if (status === "success") {
-                    setTimeout(function () {
-                        indicator.status = "primary";
-                    }, 400);
+                    indicator.status = "primary";
                 }
             }
             else {
@@ -18593,22 +18600,28 @@ var render = function() {
     [
       _c("h2", [_vm._v("Index")]),
       _vm._v(" "),
-      _c(
-        "div",
-        _vm._l(_vm.entities, function(entity) {
-          return _c(
+      _c("pagination", {
+        attrs: { pagination: _vm.pagination, mount: _vm.mount }
+      }),
+      _vm._v(" "),
+      _vm._l(_vm.entities, function(entity) {
+        return _c("div", { staticClass: "row border-bottom margin-top" }, [
+          _c("div", { staticClass: "column" }, [
+            _c(
+              "h3",
+              [
+                _c("router-link", { attrs: { to: _vm.view(entity.id) } }, [
+                  _vm._v(_vm._s(entity.title))
+                ])
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c(
             "div",
+            { staticClass: "column" },
             [
-              _c(
-                "h3",
-                [
-                  _c("router-link", { attrs: { to: _vm.view(entity.id) } }, [
-                    _vm._v(_vm._s(entity.title))
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
               _c(
                 "router-link",
                 {
@@ -18618,6 +18631,18 @@ var render = function() {
                 [
                   _c("span", { staticClass: "typcn typcn-edit" }),
                   _vm._v(" edit")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                {
+                  staticClass: "button small",
+                  attrs: { to: _vm.copy(entity.id) }
+                },
+                [
+                  _c("span", { staticClass: "typcn typcn-document-add" }),
+                  _vm._v(" copy")
                 ]
               ),
               _vm._v(" "),
@@ -18635,30 +18660,18 @@ var render = function() {
                   _c("span", { staticClass: "typcn typcn-document-delete" }),
                   _vm._v(" delete")
                 ]
-              ),
-              _vm._v(" "),
-              _c(
-                "router-link",
-                {
-                  staticClass: "button small",
-                  attrs: { to: _vm.copy(entity.id) }
-                },
-                [
-                  _c("span", { staticClass: "typcn typcn-document-add" }),
-                  _vm._v(" copy")
-                ]
               )
             ],
             1
           )
-        })
-      ),
+        ])
+      }),
       _vm._v(" "),
       _c("pagination", {
         attrs: { pagination: _vm.pagination, mount: _vm.mount }
       })
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []
@@ -18669,6 +18682,331 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-70d191a2", esExports)
+  }
+}
+
+/***/ }),
+/* 86 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_4bf3d9a6_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_search_vue__ = __webpack_require__(88);
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+
+/* template */
+
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_4bf3d9a6_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_search_vue__["a" /* default */],
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "apps/tasks/components/search.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] search.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4bf3d9a6", Component.options)
+  } else {
+    hotAPI.reload("data-v-4bf3d9a6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var vue_1 = __webpack_require__(0);
+var vue_class_component_1 = __webpack_require__(2);
+var vuex_1 = __webpack_require__(3);
+var flatpickr = __webpack_require__(13);
+var confirmDatePlugin = __webpack_require__(14);
+var build_query_1 = __webpack_require__(12);
+var bq = new build_query_1.build_query();
+vue_class_component_1.default.registerHooks([
+    'beforeRouteEnter',
+    'beforeRouteLeave',
+    'asyncData',
+    'fetch',
+    'middleware',
+    'layout',
+    'transition',
+    'scrollToTop'
+]);
+var search = /** @class */ (function (_super) {
+    __extends(search, _super);
+    function search() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.frm = {
+            "id": "",
+            "title": "",
+            "priod": "",
+            "created_at": "",
+            "updated_at": "",
+        };
+        return _this;
+    }
+    search.prototype.search = function () {
+        var q = bq.http(this.frm);
+        this.$router.push(this.mount + "?" + q);
+    };
+    Object.defineProperty(search.prototype, "action", {
+        get: function () {
+            return this.mount;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    search.prototype.mounted = function () {
+        if (window) {
+            flatpickr(".calendar", {
+                "enableTime": true,
+                "plugins": [confirmDatePlugin({})]
+            });
+        }
+    };
+    search = __decorate([
+        vue_class_component_1.default({
+            name: 'find',
+            computed: __assign({}, vuex_1.mapState('tasks', {
+                mount: function (_a) {
+                    var mount = _a.mount;
+                    return mount;
+                }
+            }))
+        })
+    ], search);
+    return search;
+}(vue_1.default));
+exports.default = search;
+
+
+/***/ }),
+/* 88 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "search" }, [
+    _c(
+      "form",
+      {
+        attrs: { action: _vm.action, method: "get" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            _vm.search()
+          }
+        }
+      },
+      [
+        _c("fieldset", [
+          _c("label", { attrs: { for: "id" } }, [_vm._v("id")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.frm.id,
+                expression: "frm.id"
+              }
+            ],
+            attrs: { type: "text", name: "id", placeholder: "id" },
+            domProps: { value: _vm.frm.id },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.frm.id = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("label", { attrs: { for: "title" } }, [_vm._v("title")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.frm.title,
+                expression: "frm.title"
+              }
+            ],
+            attrs: { type: "text", name: "title", placeholder: "title" },
+            domProps: { value: _vm.frm.title },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.frm.title = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("label", { attrs: { for: "priod" } }, [_vm._v("priod")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.frm.priod,
+                expression: "frm.priod"
+              }
+            ],
+            staticClass: "calendar",
+            attrs: { type: "date", name: "priod", placeholder: "priod" },
+            domProps: { value: _vm.frm.priod },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.frm.priod = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("label", { attrs: { for: "created_at" } }, [_vm._v("created_at")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.frm.created_at,
+                expression: "frm.created_at"
+              }
+            ],
+            staticClass: "calendar",
+            attrs: {
+              type: "date",
+              name: "created_at",
+              placeholder: "created_at"
+            },
+            domProps: { value: _vm.frm.created_at },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.frm.created_at = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("label", { attrs: { for: "updated_at" } }, [_vm._v("updated_at")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.frm.updated_at,
+                expression: "frm.updated_at"
+              }
+            ],
+            staticClass: "calendar",
+            attrs: {
+              type: "date",
+              name: "updated_at",
+              placeholder: "updated_at"
+            },
+            domProps: { value: _vm.frm.updated_at },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.frm.updated_at = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _vm._m(0)
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "text-right" }, [
+      _c("button", { staticClass: "small button", attrs: { type: "submit" } }, [
+        _c("span", { staticClass: "typcn typcn-zoom" }),
+        _vm._v(" search")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-4bf3d9a6", esExports)
   }
 }
 

@@ -1,15 +1,24 @@
 <template>
 <div class="column column-25">
-    <ul>
-        <li><router-link :to="mount">Index</router-link></li>
-        <li><router-link :to="`${mount}/add`">Add</router-link></li>
-    </ul>
+    <h4 class="margin">search</h4>
+    <div class="panel"><app-search></app-search></div>
+    <h4 class="margin">menu</h4>
+    <div class="panel">
+      <nav class="navigation-stack">
+        <ul class="navigation-list">
+            <li><router-link :to="mount">Index</router-link></li>
+            <li><router-link :to="`${mount}/add`">Add</router-link></li>
+        </ul>
+      </nav>
+    </div>
 </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import {mapState} from "vuex";
+
+import search from './search.vue';
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -27,12 +36,12 @@ Component.registerHooks([
   computed : {
   ...mapState( 'tasks' , {
     mount : ({mount}) => mount 
-  }),
-}
+  })
+  },
+  components:{"app-search" : search}
 })
 export default class sub extends Vue {
   mount:string;
-
 
 }
 </script>

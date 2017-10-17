@@ -1,12 +1,15 @@
 <template>
 <div class="resource column column-75">
   <h2>Index</h2>
-  <div>
-    <div v-for="entity in entities">
-    <h3><router-link :to="view(entity.id)">{{ entity.title }}</router-link></h3>
-    <router-link :to="edit(entity.id)" class="button small"> <span class="typcn typcn-edit"></span> edit</router-link>
-    <button @click="destroy(entity.id,entity.title)" class="button small"> <span class="typcn typcn-document-delete"></span> delete</button>
-    <router-link :to="copy(entity.id)" class="button small"> <span class="typcn typcn-document-add"></span> copy</router-link>
+  <pagination :pagination="pagination" :mount="mount"></pagination>
+  <div class="row border-bottom margin-top" v-for="entity in entities">
+    <div class="column">
+      <h3><router-link :to="view(entity.id)">{{ entity.title }}</router-link></h3>
+    </div>
+    <div class="column">
+      <router-link :to="edit(entity.id)" class="button small"> <span class="typcn typcn-edit"></span> edit</router-link>
+      <router-link :to="copy(entity.id)" class="button small"> <span class="typcn typcn-document-add"></span> copy</router-link>
+      <button @click="destroy(entity.id,entity.title)" class="button small"> <span class="typcn typcn-document-delete"></span> delete</button>
     </div>
   </div>
   <pagination :pagination="pagination" :mount="mount"></pagination>

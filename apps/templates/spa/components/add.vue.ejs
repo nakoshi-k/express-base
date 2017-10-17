@@ -2,6 +2,7 @@
 <div class="resource column column-75">
   <h2>Add</h2>
   <form :action="action" method="post" v-on:submit.prevent="save">
+    <fieldset>
     <%_ fields.forEach(function (field) { _%>
       <%_
       if( ["updated_at", "created_at" , 'id'].indexOf(field.name)  >= 0 ) {
@@ -32,6 +33,7 @@
       </div>
       <%_ } _%>
     <%_ }); _%>
+    </fieldset>
     <button type="submit" :class="validationClass(errors , 'submit')">update</button>
   </form>
 </div>
@@ -140,17 +142,6 @@ export default class add extends Vue {
     });
     return false;
   }
-/*
-  validationClass(errors , name){
-    if(name === "submit"){
-       if( (Object.keys(errors).length > 0) ){
-         return "warning"
-       }
-    }
-    if(errors[name]){
-      return "warning"
-    }
-  }
-*/
+
 }
 </script>

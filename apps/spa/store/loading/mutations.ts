@@ -9,14 +9,13 @@ export class mutations extends core_mutations{
         let before = indicator.complate;
         indicator.status = status;
         indicator.show = true;
+        
         indicator.complate = complate;
 
         if(complate >= 100){
           indicator.prosess = false;
           if(status === "success"){
-            setTimeout( () => {
-              indicator.status = "primary";
-            },400);
+            indicator.status = "primary";
           }
         }else{
           indicator.prosess = true;

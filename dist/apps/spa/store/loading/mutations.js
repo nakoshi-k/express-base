@@ -12,9 +12,7 @@ class mutations extends mutations_1.mutations {
             if (complate >= 100) {
                 indicator.prosess = false;
                 if (status === "success") {
-                    setTimeout(() => {
-                        indicator.status = "primary";
-                    }, 400);
+                    indicator.status = "primary";
                 }
             }
             else {

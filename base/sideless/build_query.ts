@@ -7,6 +7,9 @@ export class build_query{
         }
         let q :string = "";
         Object.keys(prts).forEach(function(key) {
+            if(!prts[key]){
+                return
+            }
             q += `&${encodeURIComponent(key)}=${encodeURIComponent(prts[key])}`;
           });
         return q.replace("&","?");

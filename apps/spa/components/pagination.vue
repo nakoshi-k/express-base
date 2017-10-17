@@ -2,20 +2,14 @@
 <div v-if="check">
   <nav class="pagination clearfix">
     <ul class="pagination-list">
-      <li v-if="special.first">
-        <router-link :to="first.link" :class="first.css">&laquo; First</router-link></li>
-      <li v-if="special.prev">
-        <router-link :to="prev.link" :class="prev.css">&lsaquo; Prev</router-link></li>
-      <li v-for="list in numbers" :class="list.active">
-        <router-link :to="list.link">{{list.num}}</router-link></li>
-      <li v-if="special.prev">
-        <router-link :to="next.link" :class="next.css">Next &rsaquo;</router-link></li>
-      <li v-if="special.prev">
-        <router-link :to="last.link" :class="last.css">Last &raquo;</router-link></li>
+    <li v-if="special.first"><router-link :to="first.link" :class="first.css">&laquo; First</router-link></li> 
+    <li v-if="special.prev"><router-link :to="prev.link" :class="prev.css">&lsaquo; Prev</router-link></li>
+    <li v-for="list in numbers" :class="list.active"> <router-link :to="list.link">{{list.num}}</router-link></li>
+    <li v-if="special.prev"><router-link :to="next.link" :class="next.css">Next &rsaquo;</router-link></li>
+    <li v-if="special.prev"><router-link :to="last.link" :class="last.css">Last &raquo;</router-link></li>
     </ul>
-
   </nav>
-  <div class="text-right text-medium"> Page {{pagination.currentPage}} / {{pagination.totalPage}} </div>
+  <div class="column text-right text-medium"> Page {{pagination.currentPage}} / {{pagination.totalPage}} </div>
 </div>
 </template>
 
@@ -25,6 +19,7 @@ import {mapGetters} from 'vuex'
 import Component from 'vue-class-component';
 import {build_query} from "../../../base/sideless/build_query";
 let bq = new build_query();
+
 
 @Component({
   name: 'pagination',

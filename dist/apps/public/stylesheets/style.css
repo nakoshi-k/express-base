@@ -1359,7 +1359,7 @@ body {
  * Licensed under the MIT license
  */
 blockquote {
-  border-left: 0.3rem solid #f4f5f6;
+  border-left: 0.3rem solid #e1e1e1;
   margin-left: 0;
   margin-right: 0;
   padding: 1rem 1.5rem;
@@ -1554,11 +1554,12 @@ input[type='search'],
 input[type='tel'],
 input[type='text'],
 input[type='url'],
+input[type='date'],
 textarea,
 select {
   appearance: none;
   background-color: transparent;
-  border: 0.1rem solid #f4f5f6;
+  border: 0.1rem solid #e1e1e1;
   border-radius: 0.4rem;
   box-shadow: none;
   box-sizing: inherit;
@@ -1573,6 +1574,7 @@ input[type='search']:focus,
 input[type='tel']:focus,
 input[type='text']:focus,
 input[type='url']:focus,
+input[type='date']:focus,
 textarea:focus,
 select:focus {
   border-color: #c7243a;
@@ -1608,6 +1610,17 @@ input[type='radio'] {
   font-weight: normal;
   margin-left: 0.5rem;
 }
+input[type='date'] {
+  appearance: none;
+  background-color: transparent;
+  border: 0.1rem solid #e1e1e1;
+  border-radius: 0.4rem;
+  box-shadow: none;
+  box-sizing: inherit;
+  height: 3.8rem;
+  padding: 0.6rem 1rem;
+  width: 100%;
+}
 input[type='email'].warning,
 input[type='number'].warning,
 input[type='password'].warning,
@@ -1615,6 +1628,7 @@ input[type='search'].warning,
 input[type='tel'].warning,
 input[type='text'].warning,
 input[type='url'].warning,
+input[type='date'].warning,
 textarea.warning,
 select.warning {
   border-width: 0.2rem;
@@ -1857,7 +1871,7 @@ table {
 }
 td,
 th {
-  border-bottom: 0.1rem solid #e1e1e1;
+  border-bottom: 0.1rem solid #f4f5f6;
   padding: 1.2rem 1.5rem;
   text-align: left;
 }
@@ -1921,6 +1935,17 @@ h6 {
   letter-spacing: 0;
   line-height: 1.4;
 }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 300;
+  letter-spacing: -0.1rem;
+  margin-bottom: 1.2rem;
+  margin-top: 1.2rem;
+}
 /*
  * Milligram-stylus v1.3.0
  * https://milligram.github.io
@@ -1957,7 +1982,7 @@ textarea {
 }
 .navigation {
   background: #f4f5f6;
-  border-bottom: 0.1rem solid #d1d1d1;
+  border-bottom: 0.1rem solid #e1e1e1;
   display: block;
   height: 5.2rem;
   lef: 0;
@@ -1983,6 +2008,43 @@ textarea {
   line-height: 5.2rem;
   padding: 0;
   text-decoration: none;
+}
+.navigation-stack {
+  display: block;
+}
+.navigation-stack .navigation-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.navigation-stack .navigation-list li {
+  margin: 0;
+  border-bottom: 0.1rem solid #f4f5f6;
+  padding: 0;
+}
+.navigation-stack .navigation-list li > a {
+  display: block;
+  font-size: 1.6rem;
+  line-height: 4.2rem;
+  padding: 0 0 0 1.2rem;
+  text-decoration: none;
+}
+.navigation-stack .navigation-list li > a:hover {
+  background: #f4f5f6;
+  color: #d75969;
+}
+.panel .navigation-stack {
+  display: block;
+  margin: -1rem;
+}
+.panel .navigation-stack .navigation-list li:last-child {
+  border-bottom: 0;
+}
+.panel .navigation-stack .navigation-list li:last-child a {
+  border-radius: 0 0 0.6rem 0.6rem;
+}
+.panel .navigation-stack .navigation-list li:first-child a {
+  border-radius: 0.6rem 0.6rem 0 0;
 }
 .pagination ul.pagination-list {
   list-style: none;
@@ -2213,8 +2275,8 @@ button.special.button-outline[disabled]:hover,
 .button.special.button-outline[disabled]:hover {
   color: #009f8c;
 }
-#over-lay,
-#modal-container {
+.over-lay,
+.modal-container {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -2226,7 +2288,7 @@ button.special.button-outline[disabled]:hover,
   justify-content: center;
   align-items: center;
 }
-#modal-container {
+.modal-container {
   align-items: flex-start;
 }
 .wrap {
@@ -2254,7 +2316,7 @@ button.special.button-outline[disabled]:hover,
 }
 .over-lay .loading .block {
   transition: 0.6s all ease;
-  background-color: #f4f5f6;
+  background-color: #e1e1e1;
   height: 1.4rem;
   width: 1.2rem;
   margin: 0.6rem;
@@ -2274,11 +2336,11 @@ button.special.button-outline[disabled]:hover,
   min-height: 6rem;
   padding: 2rem;
   background-color: #fff;
-  border: 1px solid #f4f5f6;
+  border: 1px solid #e1e1e1;
   border-radius: 0.6rem;
-  box-shadow: 3px 6px 10px -3px #f4f5f6;
-  -moz-box-shadow: 3px 6px 10px -3px #f4f5f6;
-  -webkit-box-shadow: 3px 6px 10px -3px #f4f5f6;
+  box-shadow: 3px 6px 10px -3px #e1e1e1;
+  -moz-box-shadow: 3px 6px 10px -3px #e1e1e1;
+  -webkit-box-shadow: 3px 6px 10px -3px #e1e1e1;
   position: relative;
 }
 .modal h3 {
@@ -2311,14 +2373,14 @@ button.special.button-outline[disabled]:hover,
   transition: 0.3s background ease-in-out, 0.3s width ease-in-out, 0.3s border-top ease-in-out;
   position: absolute;
   bottom: -3px;
-  background: #f4f5f6;
+  background: #e1e1e1;
   height: 3px;
   width: 0;
   z-index: 100;
 }
 .indicator.light {
-  background: #e1e1e1;
-  border-top: 1px solid #f4f5f6;
+  background: #f4f5f6;
+  border-top: 1px solid #e1e1e1;
 }
 .indicator.primary {
   background: #d75969;
@@ -2347,4 +2409,19 @@ button.special.button-outline[disabled]:hover,
 .indicator.special {
   background: #35baab;
   border-top: 1px solid #009f8c;
+}
+.border-bottom {
+  border-bottom: 0.1rem #f4f5f6 solid;
+}
+.margin-top {
+  margin-top: 1.6rem;
+}
+.panel {
+  border: 0.1rem solid #f4f5f6;
+  margin: 1rem 0.2rem;
+  padding: 1rem;
+  border-radius: 0.6rem;
+}
+.panel form {
+  margin-bottom: 0;
 }

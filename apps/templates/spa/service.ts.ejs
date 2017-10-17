@@ -9,9 +9,11 @@ export class service extends app_service{
     public conditions = (req) : { where : sequelize.WhereLogic,limit:number,offset:number } =>{
         let search = this.search();
         search.query = req.query;
-        search.limit = 5;
+        search.limit = 10;
         search.page = req.params.page;
-        search.append("title",search.like("%{word}%"));
+        <%_ fields.forEach(function (field) { _%>
+        search.append("<%= field.name %>",search.like("%{word}%"));
+        <%_ }); _%>
         return search.build();
     }
 

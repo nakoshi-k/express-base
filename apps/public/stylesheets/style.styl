@@ -24,6 +24,16 @@
 @import "../../../node_modules/milligram-stylus/dist/_Code"
 @import "../../../node_modules/milligram-stylus/dist/_Divider"
 @import "../../../node_modules/milligram-stylus/dist/_Form"
+input[type='date']
+	appearance: none // Removes awkward default styles on some inputs for iOS
+	background-color: transparent
+	border: .1rem solid color-quaternary
+	border-radius: .4rem
+	box-shadow: none
+	box-sizing: inherit // Forced to replace inherit values of the normalize.css
+	height: 3.8rem
+	padding: .6rem 1.0rem // The .6rem vertically centers text on FF, ignored by Webkit
+	width: 100%
 
 input[type='email'].warning,
 input[type='number'].warning,
@@ -32,6 +42,7 @@ input[type='search'].warning,
 input[type='tel'].warning,
 input[type='text'].warning,
 input[type='url'].warning,
+input[type='date'].warning,
 textarea.warning,
 select.warning
     border-width 0.2rem 
@@ -44,6 +55,18 @@ select.warning
 @import "../../../node_modules/milligram-stylus/dist/_Spacing"
 @import "../../../node_modules/milligram-stylus/dist/_Table"
 @import "../../../node_modules/milligram-stylus/dist/_Typography"
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6
+	font-weight 300
+	letter-spacing -.1rem
+	margin-bottom 1.2rem
+	margin-top 1.2rem
+
 @import "../../../node_modules/milligram-stylus/dist/_Image"
 @import "../../../node_modules/milligram-stylus/dist/_Utility"
 
@@ -55,8 +78,8 @@ fieldset, input, select, textarea {
 @import "./pagination"
 @import "./button"
 
-#over-lay,
-#modal-container{
+.over-lay,
+.modal-container
     position fixed 
     width 100%
     height 100%
@@ -67,10 +90,10 @@ fieldset, input, select, textarea {
     display flex;          
     justify-content center
     align-items center
-}
-#modal-container{
+
+.modal-container
     align-items flex-start  
-}
+
 
 .wrap
      padding-top 7.5rem
@@ -95,21 +118,21 @@ fieldset, input, select, textarea {
     justify-content center
     align-items center
 
-.over-lay .loading .block
-    transition 0.6s all ease
-    background-color color-quaternary
-    height 1.4rem
-    width 1.2rem
-    margin 0.6rem
-    border-radius 0.4rem
+    .block
+        transition 0.6s all ease
+        background-color color-quaternary
+        height 1.4rem
+        width 1.2rem
+        margin 0.6rem
+        border-radius 0.4rem
 
-.over-lay .loading .block.pop
-    transition 0.3s all ease-in-out
-    background-color transparent 
-    margin-bottom -1.6rem;
+    .block.pop
+        transition 0.3s all ease-in-out
+        background-color transparent 
+        margin-bottom -1.6rem;
 
 .margin
-    margin :1rem
+    margin 1rem
 
 .modal
     margin-top 8rem
@@ -123,10 +146,9 @@ fieldset, input, select, textarea {
     -moz-box-shadow:3px 6px 10px -3px color-quaternary;
     -webkit-box-shadow:3px 6px 10px -3px color-quaternary;
     position relative
-.modal h3{
-    border-bottom 1px solid color-secondary
-    padding-bottom .9rem
-}
+    h3
+        border-bottom 1px solid color-secondary
+        padding-bottom .9rem
 
 .modal .close
     transition 0.3s color ease
@@ -192,3 +214,17 @@ fieldset, input, select, textarea {
 .indicator.special
     background color-special-light
     border-top 1px solid color-special
+
+.border-bottom
+    border-bottom 0.1rem color-quinary solid
+
+.margin-top
+    margin-top 1.6rem 
+
+.panel
+    border 0.1rem solid color-quinary
+    margin 1rem .2rem
+    padding 1rem
+    border-radius 0.6rem
+    form
+        margin-bottom 0

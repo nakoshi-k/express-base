@@ -2,6 +2,7 @@
 <div class="resource column column-75">
   <h2>Edit</h2>
   <form :action="action" method="post" v-on:submit.prevent="save">
+    <fieldset>
     <%_ fields.forEach(function (field) { _%>
       <%_
       if( ["updated_at", "created_at"].indexOf(field.name)  >= 0 ) {
@@ -32,6 +33,7 @@
       </div>
       <%_ } _%>
     <%_ }); _%>
+    </fieldset>
     <button type="submit" :class="validationClass(errors,'submit')">save</button>
   </form>
 </div>

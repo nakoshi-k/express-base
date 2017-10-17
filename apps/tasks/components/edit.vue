@@ -2,6 +2,7 @@
 <div class="resource column column-75">
   <h2>Edit</h2>
   <form :action="action" method="post" v-on:submit.prevent="save">
+    <fieldset>
       <input type="hidden" name="id" @change="change" :class="validationClass( errors , 'id')" :value="entity.id">
 
       <div class="form-item">
@@ -12,9 +13,10 @@
 
       <div class="form-item">
         <label for="priod">priod</label>
-        <input class="calendar" type="text" name="priod" @change="change" :class="validationClass( errors , 'priod')" :value="entity.priod" placeholder="priod">
+        <input class="calendar" type="date" name="priod" @change="change" :class="validationClass( errors , 'priod')" :value="entity.priod" placeholder="priod">
         <div class="errors" v-for="e in errors.priod"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
       </div>
+    </fieldset>
     <button type="submit" :class="validationClass(errors,'submit')">save</button>
   </form>
 </div>

@@ -2,6 +2,7 @@
 <div class="resource column column-75">
   <h2>Add</h2>
   <form :action="action" method="post" v-on:submit.prevent="save">
+    <fieldset>
 
       <div class="form-item">
         <label for="title">title</label>
@@ -11,9 +12,10 @@
 
       <div class="form-item">
         <label for="priod">priod</label>
-        <input class="calendar" type="text" name="priod" @change="change" :class="validationClass( errors , 'priod')" :value="entity.priod" placeholder="priod">
+        <input class="calendar" type="date" name="priod" @change="change" :class="validationClass( errors , 'priod')" :value="entity.priod" placeholder="priod">
         <div class="errors" v-for="e in errors.priod"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
       </div>
+    </fieldset>
     <button type="submit" :class="validationClass(errors , 'submit')">update</button>
   </form>
 </div>
@@ -122,17 +124,6 @@ export default class add extends Vue {
     });
     return false;
   }
-/*
-  validationClass(errors , name){
-    if(name === "submit"){
-       if( (Object.keys(errors).length > 0) ){
-         return "warning"
-       }
-    }
-    if(errors[name]){
-      return "warning"
-    }
-  }
-*/
+
 }
 </script>

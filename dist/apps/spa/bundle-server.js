@@ -1427,6 +1427,9 @@
                 }
                 let q = "";
                 Object.keys(prts).forEach(function (key) {
+                    if (!prts[key]) {
+                        return;
+                    }
                     q += `&${encodeURIComponent(key)}=${encodeURIComponent(prts[key])}`;
                 });
                 return q.replace("&", "?");
@@ -4524,6 +4527,7 @@
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(2);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(3);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__search_vue__ = __webpack_require__(84);
         var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
             var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
             if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
@@ -4551,7 +4555,8 @@
                 name: 'sub',
                 computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])('tasks', {
                     mount: ({ mount }) => mount
-                }))
+                })),
+                components: { "app-search": __WEBPACK_IMPORTED_MODULE_3__search_vue__["a" /* default */] }
             })
         ], sub);
         /* harmony default export */ __webpack_exports__["a"] = (sub);
@@ -4565,16 +4570,27 @@
             var _h = _vm.$createElement;
             var _c = _vm._self._c || _h;
             return _c("div", { staticClass: "column column-25" }, [
-                _vm._ssrNode("<ul>", "</ul>", [
-                    _vm._ssrNode("<li>", "</li>", [_c("router-link", { attrs: { to: _vm.mount } }, [_vm._v("Index")])], 1),
-                    _vm._ssrNode(" "),
-                    _vm._ssrNode("<li>", "</li>", [
-                        _c("router-link", { attrs: { to: _vm.mount + "/add" } }, [
-                            _vm._v("Add")
-                        ])
-                    ], 1)
-                ], 2)
-            ]);
+                _vm._ssrNode('<h4 class="margin">search</h4> '),
+                _vm._ssrNode('<div class="panel">', "</div>", [_c("app-search")], 1),
+                _vm._ssrNode(' <h4 class="margin">menu</h4> '),
+                _vm._ssrNode('<div class="panel">', "</div>", [
+                    _vm._ssrNode('<nav class="navigation-stack">', "</nav>", [
+                        _vm._ssrNode('<ul class="navigation-list">', "</ul>", [
+                            _vm._ssrNode("<li>", "</li>", [
+                                _c("router-link", { attrs: { to: _vm.mount } }, [
+                                    _vm._v("Index")
+                                ])
+                            ], 1),
+                            _vm._ssrNode(" "),
+                            _vm._ssrNode("<li>", "</li>", [
+                                _c("router-link", { attrs: { to: _vm.mount + "/add" } }, [
+                                    _vm._v("Add")
+                                ])
+                            ], 1)
+                        ], 2)
+                    ])
+                ])
+            ], 2);
         };
         var staticRenderFns = [];
         render._withStripped = true;
@@ -4758,7 +4774,7 @@
                                 : _vm._e()
                         ], 2)
                     ]),
-                    _vm._ssrNode(' <div class="text-right text-medium">' +
+                    _vm._ssrNode(' <div class="column text-right text-medium">' +
                         _vm._ssrEscape(" Page " +
                             _vm._s(_vm.pagination.currentPage) +
                             " / " +
@@ -4843,18 +4859,6 @@
                     this.updateEntity(kv);
                 };
                 this.errors = {};
-                /*
-                  validationClass(errors , name){
-                    if(name === "submit"){
-                       if( (Object.keys(errors).length > 0) ){
-                         return "warning"
-                       }
-                    }
-                    if(errors[name]){
-                      return "warning"
-                    }
-                  }
-                */
             }
             get action() {
                 return `${this.mount}`;
@@ -4912,7 +4916,7 @@
             return _c("div", { staticClass: "resource column column-75" }, [
                 _vm._ssrNode("<h2>Add</h2> <form" +
                     _vm._ssrAttr("action", _vm.action) +
-                    ' method="post"><div class="form-item"><label for="title">title</label> <input type="text" name="title" placeholder="title"' +
+                    ' method="post"><fieldset><div class="form-item"><label for="title">title</label> <input type="text" name="title" placeholder="title"' +
                     _vm._ssrAttr("value", _vm.entity.title) +
                     _vm._ssrClass(null, _vm.validationClass(_vm.errors, "title")) +
                     "> " +
@@ -4921,7 +4925,7 @@
                             _vm._ssrEscape(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")") +
                             "</div>");
                     }) +
-                    '</div> <div class="form-item"><label for="priod">priod</label> <input type="text" name="priod" placeholder="priod"' +
+                    '</div> <div class="form-item"><label for="priod">priod</label> <input type="date" name="priod" placeholder="priod"' +
                     _vm._ssrAttr("value", _vm.entity.priod) +
                     _vm._ssrClass("calendar", _vm.validationClass(_vm.errors, "priod")) +
                     "> " +
@@ -4930,7 +4934,7 @@
                             _vm._ssrEscape(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")") +
                             "</div>");
                     }) +
-                    '</div> <button type="submit"' +
+                    '</div></fieldset> <button type="submit"' +
                     _vm._ssrClass(null, _vm.validationClass(_vm.errors, "submit")) +
                     ">update</button></form>")
             ]);
@@ -5160,7 +5164,7 @@
             return _c("div", { staticClass: "resource column column-75" }, [
                 _vm._ssrNode("<h2>Edit</h2> <form" +
                     _vm._ssrAttr("action", _vm.action) +
-                    ' method="post"><input type="hidden" name="id"' +
+                    ' method="post"><fieldset><input type="hidden" name="id"' +
                     _vm._ssrAttr("value", _vm.entity.id) +
                     _vm._ssrClass(null, _vm.validationClass(_vm.errors, "id")) +
                     '> <div class="form-item"><label for="title">title</label> <input type="text" name="title" placeholder="title"' +
@@ -5172,7 +5176,7 @@
                             _vm._ssrEscape(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")") +
                             "</div>");
                     }) +
-                    '</div> <div class="form-item"><label for="priod">priod</label> <input type="text" name="priod" placeholder="priod"' +
+                    '</div> <div class="form-item"><label for="priod">priod</label> <input type="date" name="priod" placeholder="priod"' +
                     _vm._ssrAttr("value", _vm.entity.priod) +
                     _vm._ssrClass("calendar", _vm.validationClass(_vm.errors, "priod")) +
                     "> " +
@@ -5181,7 +5185,7 @@
                             _vm._ssrEscape(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")") +
                             "</div>");
                     }) +
-                    '</div> <button type="submit"' +
+                    '</div></fieldset> <button type="submit"' +
                     _vm._ssrClass(null, _vm.validationClass(_vm.errors, "submit")) +
                     ">save</button></form>")
             ]);
@@ -5264,9 +5268,7 @@
                     if (complate >= 100) {
                         indicator.prosess = false;
                         if (status === "success") {
-                            setTimeout(() => {
-                                indicator.status = "primary";
-                            }, 400);
+                            indicator.status = "primary";
                         }
                     }
                     else {
@@ -5974,36 +5976,171 @@
             var _c = _vm._self._c || _h;
             return _c("div", { staticClass: "resource column column-75" }, [
                 _vm._ssrNode("<h2>Index</h2> "),
-                _vm._ssrNode("<div>", "</div>", _vm._l(_vm.entities, function (entity) {
-                    return _vm._ssrNode("<div>", "</div>", [
-                        _vm._ssrNode("<h3>", "</h3>", [
-                            _c("router-link", { attrs: { to: _vm.view(entity.id) } }, [
-                                _vm._v(_vm._s(entity.title))
-                            ])
-                        ], 1),
-                        _vm._ssrNode(" "),
-                        _c("router-link", {
-                            staticClass: "button small",
-                            attrs: { to: _vm.edit(entity.id) }
-                        }, [
-                            _c("span", { staticClass: "typcn typcn-edit" }),
-                            _vm._v(" edit")
+                _c("pagination", {
+                    attrs: { pagination: _vm.pagination, mount: _vm.mount }
+                }),
+                _vm._ssrNode(" "),
+                _vm._l(_vm.entities, function (entity) {
+                    return _vm._ssrNode('<div class="row border-bottom margin-top">', "</div>", [
+                        _vm._ssrNode('<div class="column">', "</div>", [
+                            _vm._ssrNode("<h3>", "</h3>", [
+                                _c("router-link", { attrs: { to: _vm.view(entity.id) } }, [
+                                    _vm._v(_vm._s(entity.title))
+                                ])
+                            ], 1)
                         ]),
-                        _vm._ssrNode(' <button class="button small"><span class="typcn typcn-document-delete"></span> delete</button> '),
-                        _c("router-link", {
-                            staticClass: "button small",
-                            attrs: { to: _vm.copy(entity.id) }
-                        }, [
-                            _c("span", { staticClass: "typcn typcn-document-add" }),
-                            _vm._v(" copy")
-                        ])
+                        _vm._ssrNode(" "),
+                        _vm._ssrNode('<div class="column">', "</div>", [
+                            _c("router-link", {
+                                staticClass: "button small",
+                                attrs: { to: _vm.edit(entity.id) }
+                            }, [
+                                _c("span", { staticClass: "typcn typcn-edit" }),
+                                _vm._v(" edit")
+                            ]),
+                            _vm._ssrNode(" "),
+                            _c("router-link", {
+                                staticClass: "button small",
+                                attrs: { to: _vm.copy(entity.id) }
+                            }, [
+                                _c("span", { staticClass: "typcn typcn-document-add" }),
+                                _vm._v(" copy")
+                            ]),
+                            _vm._ssrNode(' <button class="button small"><span class="typcn typcn-document-delete"></span> delete</button>')
+                        ], 2)
                     ], 2);
-                })),
+                }),
                 _vm._ssrNode(" "),
                 _c("pagination", {
                     attrs: { pagination: _vm.pagination, mount: _vm.mount }
                 })
             ], 2);
+        };
+        var staticRenderFns = [];
+        render._withStripped = true;
+        var esExports = { render: render, staticRenderFns: staticRenderFns };
+        /* harmony default export */ __webpack_exports__["a"] = (esExports);
+        /***/ 
+    }),
+    /* 84 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue__ = __webpack_require__(85);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_4bf3d9a6_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_search_vue__ = __webpack_require__(86);
+        var normalizeComponent = __webpack_require__(1);
+        /* script */
+        /* template */
+        /* styles */
+        var __vue_styles__ = null;
+        /* scopeId */
+        var __vue_scopeId__ = null;
+        /* moduleIdentifier (server only) */
+        var __vue_module_identifier__ = "5da439c2";
+        var Component = normalizeComponent(__WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue__["a" /* default */], __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_4bf3d9a6_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_search_vue__["a" /* default */], __vue_styles__, __vue_scopeId__, __vue_module_identifier__);
+        Component.options.__file = "apps/tasks/components/search.vue";
+        if (Component.esModule && Object.keys(Component.esModule).some(function (key) { return key !== "default" && key.substr(0, 2) !== "__"; })) {
+            console.error("named exports are not supported in *.vue files.");
+        }
+        if (Component.options.functional) {
+            console.error("[vue-loader] search.vue: functional components are not supported with templates, they should use render functions.");
+        }
+        /* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+        /***/ 
+    }),
+    /* 85 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(2);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(3);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_flatpickr__ = __webpack_require__(12);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_flatpickr___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_flatpickr__);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__ = __webpack_require__(13);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__base_sideless_build_query__ = __webpack_require__(11);
+        var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+            var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+            if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+                r = Reflect.decorate(decorators, target, key, desc);
+            else
+                for (var i = decorators.length - 1; i >= 0; i--)
+                    if (d = decorators[i])
+                        r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+            return c > 3 && r && Object.defineProperty(target, key, r), r;
+        };
+        let bq = new __WEBPACK_IMPORTED_MODULE_5__base_sideless_build_query__["a" /* build_query */]();
+        __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
+            'beforeRouteEnter',
+            'beforeRouteLeave',
+            'asyncData',
+            'fetch',
+            'middleware',
+            'layout',
+            'transition',
+            'scrollToTop'
+        ]);
+        let search = class search extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
+            constructor() {
+                super(...arguments);
+                this.frm = {
+                    "id": "",
+                    "title": "",
+                    "priod": "",
+                    "created_at": "",
+                    "updated_at": "",
+                };
+            }
+            search() {
+                let q = bq.http(this.frm);
+                this.$router.push(`${this.mount}?${q}`);
+            }
+            get action() {
+                return this.mount;
+            }
+            mounted() {
+                if (window) {
+                    __WEBPACK_IMPORTED_MODULE_3_flatpickr__(".calendar", {
+                        "enableTime": true,
+                        "plugins": [__WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__({})]
+                    });
+                }
+            }
+        };
+        search = __decorate([
+            __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
+                name: 'find',
+                computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])('tasks', {
+                    mount: ({ mount }) => mount
+                }))
+            })
+        ], search);
+        /* harmony default export */ __webpack_exports__["a"] = (search);
+        /***/ 
+    }),
+    /* 86 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        var render = function () {
+            var _vm = this;
+            var _h = _vm.$createElement;
+            var _c = _vm._self._c || _h;
+            return _c("div", { staticClass: "search" }, [
+                _vm._ssrNode("<form" +
+                    _vm._ssrAttr("action", _vm.action) +
+                    ' method="get"><fieldset><label for="id">id</label> <input type="text" name="id" placeholder="id"' +
+                    _vm._ssrAttr("value", _vm.frm.id) +
+                    '> <label for="title">title</label> <input type="text" name="title" placeholder="title"' +
+                    _vm._ssrAttr("value", _vm.frm.title) +
+                    '> <label for="priod">priod</label> <input type="date" name="priod" placeholder="priod"' +
+                    _vm._ssrAttr("value", _vm.frm.priod) +
+                    ' class="calendar"> <label for="created_at">created_at</label> <input type="date" name="created_at" placeholder="created_at"' +
+                    _vm._ssrAttr("value", _vm.frm.created_at) +
+                    ' class="calendar"> <label for="updated_at">updated_at</label> <input type="date" name="updated_at" placeholder="updated_at"' +
+                    _vm._ssrAttr("value", _vm.frm.updated_at) +
+                    ' class="calendar"></fieldset> <div class="text-right"><button type="submit" class="small button"><span class="typcn typcn-zoom"></span> search</button></div></form>')
+            ]);
         };
         var staticRenderFns = [];
         render._withStripped = true;
