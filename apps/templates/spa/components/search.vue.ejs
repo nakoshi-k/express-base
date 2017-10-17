@@ -7,7 +7,7 @@
               field.attrString = 'type="text"';
             }
           _%>
-        <label for="<%= field.name %>"><%= field.name %></label>
+        <label for="<%= field.name %>"><%= inflection.humanize(field.name) %></label>
         <input <%- field.attrString %> name="<%- field.name %>" v-model="frm.<%= field.name %>" placeholder="<%= field.name %>">
         <%_ }); _%>
         </fieldset>
