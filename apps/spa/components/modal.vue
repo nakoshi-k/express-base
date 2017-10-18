@@ -1,5 +1,5 @@
 <template>
-<div id="modal-container" v-if="show" @click.self="close()">
+<div id="modal-container" class="modal-container" v-if="show" @click.self="close()">
   <div class="modal">
     <span @click="close()" class="close typcn typcn-delete large" :class="{disabled : isDisable }"></span>
     <div class="content">

@@ -2,11 +2,13 @@
 <div id="application">
   <router-view name="navi"></router-view>
   <div class="wrap container">
-    <div class="row">
-      <router-view name="sub"></router-view>
-      <router-view name="main"></router-view>
+    <div class="row row-md-reverse">
+    
+      <div class="column column-lg-75 column-md-60"><router-view name="main"></router-view></div>
+      <div class="column column-lg-25 column-md-40"><router-view name="sub"></router-view></div>
     </div>
   </div>
+  <app-offset></app-offset>
   <app-modal></app-modal>
   <app-overlay></app-overlay>
 </div>
@@ -16,6 +18,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import over_lay from './over_lay.vue';
 import modal from './modal'
+import offset from './offset'
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -32,9 +35,11 @@ Component.registerHooks([
   name: 'app',
   components:{
     "app-overlay":over_lay,
-    "app-modal":modal
+    "app-modal":modal,
+    "app-offset":offset
   }
 })
+
 export default class app extends Vue {
 
 }

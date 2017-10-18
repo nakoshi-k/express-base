@@ -1,9 +1,11 @@
 <template>
-<div class="column column-25">
-    <h4 class="margin">Search</h4>
-    <div class="panel"><app-search></app-search></div>
-    <h4 class="margin">Menu</h4>
+<div class="sub">
     <div class="panel">
+      <h4>Search</h4>
+      <app-search></app-search>
+    </div>
+    <div class="panel">
+      <h4>Menu</h4>
       <nav class="navigation-stack">
         <ul class="navigation-list">
             <li><router-link :to="mount">Index</router-link></li>
@@ -16,9 +18,9 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import {mapState} from "vuex";
+import {mapState} from "vuex"
 
-import search from './search.vue';
+import search from './search.vue'
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -41,7 +43,7 @@ Component.registerHooks([
   components:{"app-search" : search}
 })
 export default class sub extends Vue {
-  mount:string;
+  mount:string
 
 }
 </script>

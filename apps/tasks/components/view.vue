@@ -1,5 +1,5 @@
 <template>
-<div v-if="entity.id" class="resource column column-75">
+<div v-if="entity.id" class="view"> 
   <h2>View</h2>
   <h3>Id</h3>
   <div>{{entity.id}}</div>
@@ -47,7 +47,7 @@ export default class view extends Vue {
 
   
   asyncData ({ store, route }) {
-    return store.dispatch('tasks/fetchEntity' ,route);
+    return store.dispatch('tasks/fetchEntity' ,route)
   }
 
 

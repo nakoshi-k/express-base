@@ -1,5 +1,5 @@
 <template>
-<div class="resource column column-75">
+<div class="idx">
   <h2>Index</h2>
   <pagination :pagination="pagination" :mount="mount"></pagination>
   <div class="row border-bottom margin-top" v-for="entity in entities">
@@ -19,8 +19,8 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import pagination from '../../spa/components/pagination.vue';
-import {mapGetters,mapState,mapMutations,mapActions} from "vuex";
+import {pagination} from '../../spa/components/global'
+import {mapGetters,mapState,mapMutations,mapActions} from "vuex"
 Component.registerHooks([
   'beforeRouteEnter',
   'beforeRouteLeave',
@@ -56,25 +56,25 @@ Component.registerHooks([
 export default class idx extends Vue {
   
 
-  mount:string;
-  pagination:any;
-  fetchEntities : (route) => {};
+  mount:string
+  pagination:any
+  fetchEntities : (route) => {}
   asyncData ( {store,route} ) {
-    return store.dispatch("tasks/fetchEntities" ,route);
+    return store.dispatch("tasks/fetchEntities" ,route)
   }
 
  
   view(id){
-    return `${this.mount}/${id}`;
+    return `${this.mount}/${id}`
   }
 
   edit(id){
-    return `${this.mount}/${id}/edit`;
+    return `${this.mount}/${id}/edit`
   }
 
-  setModal:(modal) => {};
-  toggleModal:() => {};
-  openModal:() => {};
+  setModal:(modal) => {}
+  toggleModal:() => {}
+  openModal:() => {}
 
   destroy(id : string , title : string){
     let modal = { 
@@ -85,12 +85,12 @@ export default class idx extends Vue {
         mount : this.mount
       }
       }
-    this.setModal(modal);
-    this.openModal();
+    this.setModal(modal)
+    this.openModal()
   }
 
   copy(id:string){
-     return `${this.mount}/add?copy=${id}`;
+     return `${this.mount}/add?copy=${id}`
   }
 
   

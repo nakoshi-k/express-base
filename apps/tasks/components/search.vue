@@ -14,7 +14,8 @@
         <input class="calendar" type="date" name="updated_at" v-model="frm.updated_at" placeholder="updated_at">
         </fieldset>
         <div class="text-right">
-          <button type="submit" class="small button"><span class="typcn typcn-zoom"></span> search</button>
+          <button type="button" class="button small warning" @click="reset()"><span class="typcn typcn-minus"></span> clear</button>
+          <button type="submit" class="button small "><span class="typcn typcn-zoom"></span> search</button>
         </div>
       </form>
     </div>
@@ -23,11 +24,11 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import {mapState} from "vuex";
-import * as flatpickr from "flatpickr";
-import * as confirmDatePlugin from "../../../node_modules/flatpickr/src/plugins/confirmDate/confirmDate.js";
-import {build_query} from "../../../base/sideless/build_query";
-let bq = new build_query();
+import {mapState} from "vuex"
+import * as flatpickr from "flatpickr"
+import * as confirmDatePlugin from "../../../node_modules/flatpickr/src/plugins/confirmDate/confirmDate.js"
+import {build_query} from "../../../base/sideless/build_query"
+let bq = new build_query()
 Component.registerHooks([
   'beforeRouteEnter',
   'beforeRouteLeave',
@@ -48,7 +49,7 @@ Component.registerHooks([
 }
 })
 export default class search extends Vue {
-  mount:string;
+  mount:string
   
   frm = {
         "id" : "",
@@ -59,12 +60,17 @@ export default class search extends Vue {
   }
 
   search(){
-    let q = bq.http(this.frm);
-    this.$router.push(`${this.mount}?${q}`);
+    let q = bq.http(this.frm)
+    this.$router.push(`${this.mount}?${q}`)
   }
-
+  reset(){
+    let frm = this.frm;
+    for(let key in frm){
+      frm[key] = null
+    }
+  }
   get action(){
-    return this.mount;
+    return this.mount
   }
   
   mounted(){
@@ -72,7 +78,7 @@ export default class search extends Vue {
       flatpickr(".calendar" , {
         "enableTime": true,
         "plugins": [confirmDatePlugin({})]
-      });
+      })
     }
   }
 

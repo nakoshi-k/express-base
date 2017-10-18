@@ -1,79 +1,100 @@
+
 /*button extends*/
+button,
 .button
     transition 0.1s background-color ease, 0.1s border-color ease
-.button.small
-    height: 2.8rem
-    line-height: 2.8rem
-    padding: 0 1.0rem
-
-
-/* warning */
-button.warning,
-.button.warning
-    border-color: color-warning
-    background-color: color-warning;
     &:focus,
     &:hover
-        background-color: color-warning-light;
-        border-color: color-warning-light;
-    
+        border-color: color-primary-light
+        background-color: color-primary-light
+    .typcn
+        margin-right 0.6rem
+        &:before
+            font-size 1.8rem
+            margin 0
+    &.small
+        height 2.8rem
+        line-height 2.8rem
+        padding 0 1.0rem
+    &.mini
+        height 2.4rem
+        font-size 0.6rem
+        line-height 0
+        padding .2rem .4rem
+        .typcn
+            &:before
+                font-size 0.8rem
+                margin 0.1rem
 
-    &[disabled]
+/* warning */
+button,
+.button
+    &.warning
+        border-color: color-warning
+        background-color: color-warning
         &:focus,
-        &:hover 
+        &:hover
             background-color: color-warning-light;
             border-color: color-warning-light;
         
-    
-    &.button-outline
-        background-color: transparent
-        color: color-warning;
-        &:focus,
-        &:hover
-            border-color: color-warning-light;
-            color: color-warning-light;
-        
+
         &[disabled]
             &:focus,
-            &:hover
-                color: color-warning;
+            &:hover 
+                background-color: color-warning-light;
+                border-color: color-warning-light;
             
         
-    
+        &.button-outline
+            background-color: transparent
+            color: color-warning;
+            &:focus,
+            &:hover
+                border-color: color-warning-light;
+                color: color-warning-light;
+            
+            &[disabled]
+                &:focus,
+                &:hover
+                    color: color-warning;
+                
+            
+        
 
 
 /* succuses */
 
-button.success,
-.button.success
-    border-color: color-success
-    background-color: color-success;
-    &:focus,
-    &:hover
+button,
+.button
+    &.success
+        border-color: color-success
         background-color: color-success;
-        border-color: color-success;
-    
-
-    &[disabled]
-        &:focus,
-        &:hover 
-            background-color: color-success-light;
-            border-color: color-success-light;
-        
-    
-    &.button-outline
-        background-color: transparent
-        color: color-success;
         &:focus,
         &:hover
-            border-color: color-success-light;
-            color: color-success-light;
+            background-color: color-success;
+            border-color: color-success;
         
+
         &[disabled]
             &:focus,
-            &:hover
-                color: color-success;
+            &:hover 
+                background-color: color-success-light;
+                border-color: color-success-light;
             
+        
+        &.button-outline
+            background-color: transparent
+            color: color-success;
+            &:focus,
+            &:hover
+                border-color: color-success-light;
+                color: color-success-light;
+            
+            &[disabled]
+                &:focus,
+                &:hover
+                    color: color-success;
+                
         
     
 
@@ -81,72 +102,70 @@ button.success,
 
 /* info */
 
-button.info,
-.button.info
-    border-color: color-info
-    background-color: color-info;
-    &:focus,
-    &:hover
+button,
+.button
+    &.info
+        border-color: color-info
         background-color: color-info;
-        border-color: color-info;
-    
-
-    &[disabled]
-        &:focus,
-        &:hover 
-            background-color: color-info-light;
-            border-color: color-info-light;
-        
-    
-    &.button-outline
-        background-color: transparent
-        color: color-info;
         &:focus,
         &:hover
-            border-color: color-info-light;
-            color: color-info-light;
+            background-color: color-info;
+            border-color: color-info;
         
+
         &[disabled]
             &:focus,
-            &:hover
-                color: color-info;
+            &:hover 
+                background-color: color-info-light;
+                border-color: color-info-light;
             
         
-    
-
-
+        &.button-outline
+            background-color: transparent
+            color: color-info;
+            &:focus,
+            &:hover
+                border-color: color-info-light;
+                color: color-info-light;
+            
+            &[disabled]
+                &:focus,
+                &:hover
+                    color: color-info;
+                
 /* succuses */
 
-button.success,
-.button.success
-    border-color: color-success
-    background-color: color-success;
-    &:focus,
-    &:hover
+button,
+.button
+    &succuess
+        border-color: color-success
         background-color: color-success;
-        border-color: color-success;
-    
-
-    &[disabled]
-        &:focus,
-        &:hover 
-            background-color: color-success-light;
-            border-color: color-success-light;
-        
-    
-    &.button-outline
-        background-color: transparent
-        color: color-success;
         &:focus,
         &:hover
-            border-color: color-success-light;
-            color: color-success-light;
+            background-color: color-success;
+            border-color: color-success;
         
+
         &[disabled]
             &:focus,
-            &:hover
-                color: color-success;
+            &:hover 
+                background-color: color-success-light;
+                border-color: color-success-light;
             
+        
+        &.button-outline
+            background-color: transparent
+            color: color-success;
+            &:focus,
+            &:hover
+                border-color: color-success-light;
+                color: color-success-light;
+            
+            &[disabled]
+                &:focus,
+                &:hover
+                    color: color-success;
+                
         
     
 
@@ -154,37 +173,38 @@ button.success,
 
 /* special */
 
-button.special,
-.button.special
-    border-color: color-special
-    background-color: color-special;
-    &:focus,
-    &:hover
+button,
+.button
+    &special
+        border-color: color-special
         background-color: color-special;
-        border-color: color-special;
-    
-
-    &[disabled]
-        &:focus,
-        &:hover 
-            background-color: color-special-light;
-            border-color: color-special-light;
-        
-    
-    &.button-outline
-        background-color: transparent
-        color: color-special;
         &:focus,
         &:hover
-            border-color: color-special-light;
-            color: color-special-light;
+            background-color: color-special;
+            border-color: color-special;
         
+
         &[disabled]
             &:focus,
-            &:hover
-                color: color-special;
+            &:hover 
+                background-color: color-special-light;
+                border-color: color-special-light;
             
         
+        &.button-outline
+            background-color: transparent
+            color: color-special;
+            &:focus,
+            &:hover
+                border-color: color-special-light;
+                color: color-special-light;
+            
+            &[disabled]
+                &:focus,
+                &:hover
+                    color: color-special;
+                
+            
     
 
 

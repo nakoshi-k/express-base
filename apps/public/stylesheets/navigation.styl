@@ -1,5 +1,8 @@
-.navigation 
-    background #f4f5f6
+.navigation
+    background: rgb(252,255,254); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(252,255,254,1) 67%, rgba(244,247,247,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(252,255,254,1) 67%,rgba(244,247,247,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(252,255,254,1) 67%,rgba(244,247,247,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     border-bottom .1rem solid color-quaternary
     display block
     height 5.2rem
@@ -13,19 +16,23 @@
     
     .navigation-list
         list-style none
-    
-    .navigation-list li
-        float left
-        margin-bottom 0
-        margin-left 2.5rem
-        position relative
-    
-    .navigation-list li > a
-        display inline
-        font-size 1.6rem
-        line-height 5.2rem
+        display flex
+        margin 0
         padding 0
-        text-decoration none
+    
+        li
+            margin-bottom 0
+            margin-left 2.5rem
+        li:first-child
+            margin-bottom 0
+            margin-left 0
+        li > a
+            display inline
+            font-size 1.6rem
+            line-height 5.2rem
+            padding 0
+            text-decoration none
+            font-weight bold
     
 .navigation-stack 
     display block;
@@ -37,7 +44,7 @@
     
     .navigation-list li
         margin 0
-        border-bottom .1rem solid color-quinary
+        border-bottom .1rem solid color-primary-light
         padding 0
     
     .navigation-list li > a
@@ -48,8 +55,8 @@
         padding 0 0 0 1.2rem
         text-decoration none
     .navigation-list li > a:hover
-        background color-quinary
-        color color-secondary
+        background color-primary-light
+        color color-initial
 
 .panel .navigation-stack 
     display block
@@ -58,5 +65,10 @@
         border-bottom 0
     .navigation-list li:last-child a
         border-radius 0 0 0.6rem 0.6rem
-    .navigation-list li:first-child a
-        border-radius  0.6rem 0.6rem 0 0
+
+.navigation
+    h1
+        line-height 5.2rem
+        margin 0
+        padding 0
+        font-size 2.6rem

@@ -4,4 +4,4 @@ declare module "*.vue" {
   }
   declare module "BundleServer" {
     export function bs(context:any): Promise<any>;
-  }
+}
