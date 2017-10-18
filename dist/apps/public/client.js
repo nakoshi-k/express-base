@@ -16301,27 +16301,44 @@ var render = function() {
       { staticClass: "navigation column" },
       [
         _c("div", { staticClass: "container" }, [
-          _c("ul", { staticClass: "navigation-list" }, [
-            _c("li", [
+          _c("div", { staticClass: "row row-md-reverse" }, [
+            _c("div", { staticClass: "column text-right" }, [
               _c(
-                "a",
-                {
-                  staticClass: "offset-toggle",
-                  class: { active: _vm.show },
-                  attrs: { href: "#", title: "open offset menu" },
-                  on: { click: _vm.toggle }
-                },
-                [_c("span", { staticClass: "typcn typcn-th-menu" })]
+                "h1",
+                { staticClass: "hidden-md" },
+                [
+                  _c("router-link", { attrs: { to: "/tasks" } }, [
+                    _vm._v("Apprication")
+                  ])
+                ],
+                1
               )
             ]),
             _vm._v(" "),
-            _vm._m(0),
-            _vm._v(" "),
-            _vm._m(1),
-            _vm._v(" "),
-            _vm._m(2),
-            _vm._v(" "),
-            _vm._m(3)
+            _c("div", { staticClass: "column" }, [
+              _c("ul", { staticClass: "navigation-list" }, [
+                _c("li", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "offset-toggle",
+                      class: { active: _vm.show },
+                      attrs: { href: "#", title: "open offset menu" },
+                      on: { click: _vm.toggle }
+                    },
+                    [_c("span", { staticClass: "typcn typcn-th-menu" })]
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(0),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _vm._m(2),
+                _vm._v(" "),
+                _vm._m(3)
+              ])
+            ])
           ])
         ]),
         _vm._v(" "),

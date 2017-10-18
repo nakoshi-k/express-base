@@ -4531,9 +4531,21 @@
             var _c = _vm._self._c || _h;
             return _c("div", [
                 _vm._ssrNode('<nav class="navigation column">', "</nav>", [
-                    _vm._ssrNode('<div class="container"><ul class="navigation-list"><li><a href="#" title="open offset menu"' +
-                        _vm._ssrClass("offset-toggle", { active: _vm.show }) +
-                        '><span class="typcn typcn-th-menu"></span></a></li> <li><a href="/tasks/aaa" title="Home">Home </a></li> <li><a href="/tasks/aaa" title="Tasks">Tasks </a></li> <li><a href="/tasks/aaa" title="Tasks">Users </a></li> <li><a href="/tasks/aaa" title="Tasks">Products </a></li></ul></div> '),
+                    _vm._ssrNode('<div class="container">', "</div>", [
+                        _vm._ssrNode('<div class="row row-md-reverse">', "</div>", [
+                            _vm._ssrNode('<div class="column text-right">', "</div>", [
+                                _vm._ssrNode('<h1 class="hidden-md">', "</h1>", [
+                                    _c("router-link", { attrs: { to: "/tasks" } }, [
+                                        _vm._v("Apprication")
+                                    ])
+                                ], 1)
+                            ]),
+                            _vm._ssrNode(' <div class="column"><ul class="navigation-list"><li><a href="#" title="open offset menu"' +
+                                _vm._ssrClass("offset-toggle", { active: _vm.show }) +
+                                '><span class="typcn typcn-th-menu"></span></a></li> <li><a href="/tasks/aaa" title="Home">Home </a></li> <li><a href="/tasks/aaa" title="Tasks">Tasks </a></li> <li><a href="/tasks/aaa" title="Tasks">Users </a></li> <li><a href="/tasks/aaa" title="Tasks">Products </a></li></ul></div>')
+                        ], 2)
+                    ]),
+                    _vm._ssrNode(" "),
                     _c("app-indicater")
                 ], 2)
             ]);

@@ -2588,6 +2588,16 @@ img {
 .border-top {
   border-top: 0.1rem #e9eded solid;
 }
+.hidden-md,
+.hidden-lg,
+.hidden-xl {
+  display: none;
+}
+@media (min-width: 40rem) {
+  .hidden-md {
+    display: block;
+  }
+}
 .indicator {
   transition: 0.3s background ease-in-out, 0.3s width ease-in-out, 0.3s border-top ease-in-out;
   position: absolute;
@@ -2711,6 +2721,12 @@ img {
 }
 .panel .navigation-stack .navigation-list li:last-child a {
   border-radius: 0 0 0.6rem 0.6rem;
+}
+.navigation h1 {
+  line-height: 5.2rem;
+  margin: 0;
+  padding: 0;
+  font-size: 2.6rem;
 }
 .pagination ul.pagination-list {
   list-style: none;
@@ -2864,7 +2880,7 @@ img {
 }
 .offset-container .close {
   position: absolute;
-  top: 0.6rem;
+  top: 0.4rem;
   right: 3.6rem;
 }
 .offset-container ul {
@@ -2889,7 +2905,7 @@ img {
 .offset-container ul li > a {
   color: #f9fdfd;
   display: block;
-  padding: 1.2rem;
+  padding: 0.8rem 0.8rem 0.8rem 1.6rem;
   font-weight: bold;
 }
 .offset-container ul li > a:hover {
