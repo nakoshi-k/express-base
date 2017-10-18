@@ -4,8 +4,8 @@
   <div class="wrap container">
     <div class="row row-md-reverse">
     
-      <div class="column column-md-75"><router-view name="main"></router-view></div>
-      <div class="column column-md-25"><router-view name="sub"></router-view></div>
+      <div class="column column-lg-75 column-md-60"><router-view name="main"></router-view></div>
+      <div class="column column-lg-25 column-md-40"><router-view name="sub"></router-view></div>
     </div>
   </div>
   <app-offset></app-offset>

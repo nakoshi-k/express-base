@@ -1,13 +1,13 @@
 <template>
 <div v-if="show" id="offset-container" class="offset-container">
   <div class="offset">
-    <span class="close typcn typcn-delete large"></span>
+    <span @click="closeOffset()" class="close typcn typcn-delete large"></span>
     <div class="content">
       <ul>
-        <li><a href="#">aaa</a></li>
-        <li><a href="#">aaa</a></li>
-        <li><a href="#">aaa</a></li>
-        <li><a href="#">aaa</a></li>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Tasks</a></li>
+        <li><a href="#">Users</a></li>
+        <li><a href="#">Products</a></li>
       </ul>
     </div>
   </div>
@@ -43,7 +43,9 @@ Component.registerHooks([
     )
   },
   methods : {
-
+    ...mapMutations( "offset" , 
+      ["closeOffset"]
+    ),
   },
   components : {
 
@@ -53,16 +55,6 @@ Component.registerHooks([
 
 export default class offset extends Vue {
   show:boolean
-  _close:boolean;
-  close(){
-    
-    if(this._close){
-      
-    }
-
-  }
-
-
 
 }
 </script>

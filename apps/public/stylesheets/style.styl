@@ -89,7 +89,7 @@ a
     .close
         position absolute
         top 0.6rem
-        right 3rem
+        right 3.6rem
     ul
         list-style none
         margin 0 
@@ -111,6 +111,7 @@ a
             color color-initial
             display block
             padding 1.2rem
+            font-weight bold
             &:hover
                 background color-primary-light
     
@@ -126,16 +127,23 @@ a
 
 .navigation .navigation-list a.offset-toggle
     border .26rem solid color-primary
+    color color-primary
     border-radius .5rem
     padding .4rem
     display block
     line-height 1.4rem
-    margin-top 1.0rem
+    margin-top 1.1rem
     .typcn
         line-height .8
         &:before
             font-size 1.8rem
             margin .1rem .6rem .6rem .3rem
     &:hover,
-    &:focus
+    &:focus,
         border 0.26rem solid color-primary-light
+        color color-primary-light
+    &.active
+        border 0.26rem solid color-tertiary
+        color color-tertiary
+        margin-top 1.2rem
+        margin-left .2rem

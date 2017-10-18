@@ -4904,14 +4904,14 @@ var render = function() {
           "</div>",
           [
             _vm._ssrNode(
-              '<div class="column column-md-75">',
+              '<div class="column column-lg-75 column-md-60">',
               "</div>",
               [_c("router-view", { attrs: { name: "main" } })],
               1
             ),
             _vm._ssrNode(" "),
             _vm._ssrNode(
-              '<div class="column column-md-25">',
+              '<div class="column column-lg-25 column-md-40">',
               "</div>",
               [_c("router-view", { attrs: { name: "sub" } })],
               1
@@ -5030,6 +5030,9 @@ __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
     'scrollToTop'
 ]);
 let navi = class navi extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
+    toggle() {
+        this.toggleOffset();
+    }
 };
 navi = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
@@ -5039,7 +5042,10 @@ navi = __decorate([
         },
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])([
             'domain', 'token'
-        ])),
+        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])("offset", {
+            show: ({ show }) => show
+        })),
+        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("offset", ["toggleOffset"]))
     })
 ], navi);
 /* harmony default export */ __webpack_exports__["a"] = (navi);
@@ -5229,7 +5235,9 @@ var render = function() {
       "</nav>",
       [
         _vm._ssrNode(
-          '<div class="container"><ul class="navigation-list"><li><a href="#" title="open offset menu" class="offset-toggle"><span class="typcn typcn-th-menu"></span></a></li> <li><a href="/tasks/aaa" title="Home">Home </a></li> <li><a href="/tasks/aaa" title="Tasks">Tasks </a></li> <li><a href="/tasks/aaa" title="Tasks">Users </a></li> <li><a href="/tasks/aaa" title="Tasks">Products </a></li></ul></div> '
+          '<div class="container"><ul class="navigation-list"><li><a href="#" title="open offset menu"' +
+            _vm._ssrClass("offset-toggle", { active: _vm.show }) +
+            '><span class="typcn typcn-th-menu"></span></a></li> <li><a href="/tasks/aaa" title="Home">Home </a></li> <li><a href="/tasks/aaa" title="Tasks">Tasks </a></li> <li><a href="/tasks/aaa" title="Tasks">Users </a></li> <li><a href="/tasks/aaa" title="Tasks">Products </a></li></ul></div> '
         ),
         _c("app-indicater")
       ],
@@ -7293,10 +7301,6 @@ __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
     'scrollToTop'
 ]);
 let offset = class offset extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
-    close() {
-        if (this._close) {
-        }
-    }
 };
 offset = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
@@ -7307,7 +7311,7 @@ offset = __decorate([
             'show': ({ show }) => show,
             '_close': ({ close }) => close
         })),
-        methods: {},
+        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("offset", ["closeOffset"])),
         components: {}
     })
 ], offset);
@@ -7329,7 +7333,7 @@ var render = function() {
         { staticClass: "offset-container", attrs: { id: "offset-container" } },
         [
           _vm._ssrNode(
-            '<div class="offset"><span class="close typcn typcn-delete large"></span> <div class="content"><ul><li><a href="#">aaa</a></li> <li><a href="#">aaa</a></li> <li><a href="#">aaa</a></li> <li><a href="#">aaa</a></li></ul></div></div>'
+            '<div class="offset"><span class="close typcn typcn-delete large"></span> <div class="content"><ul><li><a href="#">Home</a></li> <li><a href="#">Tasks</a></li> <li><a href="#">Users</a></li> <li><a href="#">Products</a></li></ul></div></div>'
           )
         ]
       )

@@ -13366,14 +13366,14 @@ var render = function() {
         _c("div", { staticClass: "row row-md-reverse" }, [
           _c(
             "div",
-            { staticClass: "column column-md-75" },
+            { staticClass: "column column-lg-75 column-md-60" },
             [_c("router-view", { attrs: { name: "main" } })],
             1
           ),
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "column column-md-25" },
+            { staticClass: "column column-lg-25 column-md-40" },
             [_c("router-view", { attrs: { name: "sub" } })],
             1
           )
@@ -16035,6 +16035,9 @@ var navi = /** @class */ (function (_super) {
     function navi() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    navi.prototype.toggle = function () {
+        this.toggleOffset();
+    };
     navi = __decorate([
         vue_class_component_1.default({
             name: "navi",
@@ -16043,7 +16046,13 @@ var navi = /** @class */ (function (_super) {
             },
             computed: __assign({}, vuex_1.mapGetters([
                 'domain', 'token'
-            ])),
+            ]), vuex_1.mapState("offset", {
+                show: function (_a) {
+                    var show = _a.show;
+                    return show;
+                }
+            })),
+            methods: __assign({}, vuex_1.mapMutations("offset", ["toggleOffset"]))
         })
     ], navi);
     return navi;
@@ -16290,7 +16299,34 @@ var render = function() {
     _c(
       "nav",
       { staticClass: "navigation column" },
-      [_vm._m(0), _vm._v(" "), _c("app-indicater")],
+      [
+        _c("div", { staticClass: "container" }, [
+          _c("ul", { staticClass: "navigation-list" }, [
+            _c("li", [
+              _c(
+                "a",
+                {
+                  staticClass: "offset-toggle",
+                  class: { active: _vm.show },
+                  attrs: { href: "#", title: "open offset menu" },
+                  on: { click: _vm.toggle }
+                },
+                [_c("span", { staticClass: "typcn typcn-th-menu" })]
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(0),
+            _vm._v(" "),
+            _vm._m(1),
+            _vm._v(" "),
+            _vm._m(2),
+            _vm._v(" "),
+            _vm._m(3)
+          ])
+        ]),
+        _vm._v(" "),
+        _c("app-indicater")
+      ],
       1
     )
   ])
@@ -16300,42 +16336,39 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("ul", { staticClass: "navigation-list" }, [
-        _c("li", [
-          _c(
-            "a",
-            {
-              staticClass: "offset-toggle",
-              attrs: { href: "#", title: "open offset menu" }
-            },
-            [_c("span", { staticClass: "typcn typcn-th-menu" })]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("a", { attrs: { href: "/tasks/aaa", title: "Home" } }, [
-            _vm._v("Home ")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("a", { attrs: { href: "/tasks/aaa", title: "Tasks" } }, [
-            _vm._v("Tasks ")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("a", { attrs: { href: "/tasks/aaa", title: "Tasks" } }, [
-            _vm._v("Users ")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("a", { attrs: { href: "/tasks/aaa", title: "Tasks" } }, [
-            _vm._v("Products ")
-          ])
-        ])
+    return _c("li", [
+      _c("a", { attrs: { href: "/tasks/aaa", title: "Home" } }, [
+        _vm._v("Home ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "/tasks/aaa", title: "Tasks" } }, [
+        _vm._v("Tasks ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "/tasks/aaa", title: "Tasks" } }, [
+        _vm._v("Users ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "/tasks/aaa", title: "Tasks" } }, [
+        _vm._v("Products ")
       ])
     ])
   }
@@ -19198,10 +19231,6 @@ var offset = /** @class */ (function (_super) {
     function offset() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    offset.prototype.close = function () {
-        if (this._close) {
-        }
-    };
     offset = __decorate([
         vue_class_component_1.default({
             name: "offset",
@@ -19217,7 +19246,7 @@ var offset = /** @class */ (function (_super) {
                     return close;
                 }
             })),
-            methods: {},
+            methods: __assign({}, vuex_1.mapMutations("offset", ["closeOffset"])),
             components: {}
         })
     ], offset);
@@ -19239,7 +19268,20 @@ var render = function() {
     ? _c(
         "div",
         { staticClass: "offset-container", attrs: { id: "offset-container" } },
-        [_vm._m(0)]
+        [
+          _c("div", { staticClass: "offset" }, [
+            _c("span", {
+              staticClass: "close typcn typcn-delete large",
+              on: {
+                click: function($event) {
+                  _vm.closeOffset()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _vm._m(0)
+          ])
+        ]
       )
     : _vm._e()
 }
@@ -19248,19 +19290,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "offset" }, [
-      _c("span", { staticClass: "close typcn typcn-delete large" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "content" }, [
-        _c("ul", [
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("aaa")])]),
-          _vm._v(" "),
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("aaa")])]),
-          _vm._v(" "),
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("aaa")])]),
-          _vm._v(" "),
-          _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("aaa")])])
-        ])
+    return _c("div", { staticClass: "content" }, [
+      _c("ul", [
+        _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Home")])]),
+        _vm._v(" "),
+        _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Tasks")])]),
+        _vm._v(" "),
+        _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Users")])]),
+        _vm._v(" "),
+        _c("li", [_c("a", { attrs: { href: "#" } }, [_vm._v("Products")])])
       ])
     ])
   }

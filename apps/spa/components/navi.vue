@@ -4,7 +4,7 @@
         <div class="container">
             
             <ul class="navigation-list">
-                <li><a href="#" class="offset-toggle" title="open offset menu"><span class="typcn typcn-th-menu"></span></a></li>
+                <li><a href="#" class="offset-toggle" :class="{active : show}" @click="toggle" title="open offset menu"><span class="typcn typcn-th-menu"></span></a></li>
                 <li><a href="/tasks/aaa" title="Home">Home </a></li>
                 <li><a href="/tasks/aaa" title="Tasks">Tasks </a></li>
                 <li><a href="/tasks/aaa" title="Tasks">Users </a></li>
@@ -19,7 +19,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import {mapGetters,mapState} from 'vuex'
+import {mapGetters,mapState,mapMutations} from 'vuex'
 import indicater from './indicator'
 
 Component.registerHooks([
@@ -41,11 +41,24 @@ Component.registerHooks([
   computed : {
     ...mapGetters([
       'domain' , 'token'
-    ])
+    ]),
+    ...mapState("offset" , {
+      show : ({show}) => show
+    })
   },
+  methods : {
+    ...mapMutations( "offset" , 
+      ["toggleOffset"]
+    ),
+  }
 })
 
 export default class navi extends Vue {
+  show:boolean;
 
+  toggleOffset:() => {}
+  toggle(){
+    this.toggleOffset();
+  }
 }
 </script>
