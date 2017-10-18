@@ -3671,6 +3671,7 @@
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__over_lay_vue__ = __webpack_require__(19);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modal__ = __webpack_require__(28);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__offset__ = __webpack_require__(91);
         var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
             var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
             if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
@@ -3698,7 +3699,8 @@
                 name: 'app',
                 components: {
                     "app-overlay": __WEBPACK_IMPORTED_MODULE_2__over_lay_vue__["a" /* default */],
-                    "app-modal": __WEBPACK_IMPORTED_MODULE_3__modal__["a" /* default */]
+                    "app-modal": __WEBPACK_IMPORTED_MODULE_3__modal__["a" /* default */],
+                    "app-offset": __WEBPACK_IMPORTED_MODULE_4__offset__["a" /* default */]
                 }
             })
         ], app);
@@ -4255,6 +4257,8 @@
                     ], 2)
                 ]),
                 _vm._ssrNode(" "),
+                _c("app-offset"),
+                _vm._ssrNode(" "),
                 _c("app-modal"),
                 _vm._ssrNode(" "),
                 _c("app-overlay")
@@ -4521,7 +4525,7 @@
             var _c = _vm._self._c || _h;
             return _c("div", [
                 _vm._ssrNode('<nav class="navigation column">', "</nav>", [
-                    _vm._ssrNode('<div class="container"><div class="row"><ul class="navigation-list"><li><a href="/tasks/aaa">menu 1</a></li> <li><a href="/tasks/aaa">menu 2</a></li> <li><a href="/tasks/aaa">menu 3</a></li> <li><a href="/tasks/aaa">menu 4</a></li></ul></div></div> '),
+                    _vm._ssrNode('<div class="container"><ul class="navigation-list"><li><a href="#" title="open offset menu" class="offset-toggle"><span class="typcn typcn-th-menu"></span></a></li> <li><a href="/tasks/aaa" title="Home">Home </a></li> <li><a href="/tasks/aaa" title="Tasks">Tasks </a></li> <li><a href="/tasks/aaa" title="Tasks">Users </a></li> <li><a href="/tasks/aaa" title="Tasks">Products </a></li></ul></div> '),
                     _c("app-indicater")
                 ], 2)
             ]);
@@ -4608,10 +4612,10 @@
             var _h = _vm.$createElement;
             var _c = _vm._self._c || _h;
             return _c("div", { staticClass: "sub" }, [
-                _vm._ssrNode('<h4 class="margin">Search</h4> '),
-                _vm._ssrNode('<div class="panel">', "</div>", [_c("app-search")], 1),
-                _vm._ssrNode(' <h4 class="margin">Menu</h4> '),
+                _vm._ssrNode('<div class="panel">', "</div>", [_vm._ssrNode("<h4>Search</h4> "), _c("app-search")], 2),
+                _vm._ssrNode(" "),
                 _vm._ssrNode('<div class="panel">', "</div>", [
+                    _vm._ssrNode("<h4>Menu</h4> "),
                     _vm._ssrNode('<nav class="navigation-stack">', "</nav>", [
                         _vm._ssrNode('<ul class="navigation-list">', "</ul>", [
                             _vm._ssrNode("<li>", "</li>", [
@@ -4627,7 +4631,7 @@
                             ], 1)
                         ], 2)
                     ])
-                ])
+                ], 2)
             ], 2);
         };
         var staticRenderFns = [];
@@ -4812,7 +4816,7 @@
                                 : _vm._e()
                         ], 2)
                     ]),
-                    _vm._ssrNode(' <div class="column text-right text-medium">' +
+                    _vm._ssrNode(' <div class="column text-right text-md">' +
                         _vm._ssrEscape(" Page " +
                             _vm._s(_vm.pagination.currentPage) +
                             " / " +
@@ -4954,7 +4958,7 @@
             return _c("div", { staticClass: "add" }, [
                 _vm._ssrNode("<h2>Add</h2> <form" +
                     _vm._ssrAttr("action", _vm.action) +
-                    ' method="post"><fieldset><div class="form-item"><label for="title">title</label> <input type="text" name="title" placeholder="title"' +
+                    ' method="post"><fieldset><div class="form-item"><label for="title">Title</label> <input type="text" name="title" placeholder="title"' +
                     _vm._ssrAttr("value", _vm.entity.title) +
                     _vm._ssrClass(null, _vm.validationClass(_vm.errors, "title")) +
                     "> " +
@@ -4963,7 +4967,7 @@
                             _vm._ssrEscape(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")") +
                             "</div>");
                     }) +
-                    '</div> <div class="form-item"><label for="priod">priod</label> <input type="text" name="priod" placeholder="priod"' +
+                    '</div> <div class="form-item"><label for="priod">Priod</label> <input type="text" name="priod" placeholder="priod"' +
                     _vm._ssrAttr("value", _vm.entity.priod) +
                     _vm._ssrClass("calendar", _vm.validationClass(_vm.errors, "priod")) +
                     "> " +
@@ -4974,7 +4978,7 @@
                     }) +
                     '</div></fieldset> <button type="submit"' +
                     _vm._ssrClass(null, _vm.validationClass(_vm.errors, "submit")) +
-                    ">update</button></form>")
+                    ">add</button></form>")
             ]);
         };
         var staticRenderFns = [];
@@ -5205,7 +5209,7 @@
                     ' method="post"><fieldset><input type="hidden" name="id"' +
                     _vm._ssrAttr("value", _vm.entity.id) +
                     _vm._ssrClass(null, _vm.validationClass(_vm.errors, "id")) +
-                    '> <div class="form-item"><label for="title">title</label> <input type="text" name="title" placeholder="title"' +
+                    '> <div class="form-item"><label for="title">Title</label> <input type="text" name="title" placeholder="title"' +
                     _vm._ssrAttr("value", _vm.entity.title) +
                     _vm._ssrClass(null, _vm.validationClass(_vm.errors, "title")) +
                     "> " +
@@ -5214,7 +5218,7 @@
                             _vm._ssrEscape(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")") +
                             "</div>");
                     }) +
-                    '</div> <div class="form-item"><label for="priod">priod</label> <input type="text" name="priod" placeholder="priod"' +
+                    '</div> <div class="form-item"><label for="priod">Priod</label> <input type="text" name="priod" placeholder="priod"' +
                     _vm._ssrAttr("value", _vm.entity.priod) +
                     _vm._ssrClass("calendar", _vm.validationClass(_vm.errors, "priod")) +
                     "> " +
@@ -5225,7 +5229,7 @@
                     }) +
                     '</div></fieldset> <button type="submit"' +
                     _vm._ssrClass(null, _vm.validationClass(_vm.errors, "submit")) +
-                    ">save</button></form>")
+                    ">update</button></form>")
             ]);
         };
         var staticRenderFns = [];
@@ -5244,6 +5248,7 @@
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__store_loading_vue_module__ = __webpack_require__(64);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store_modal_vue_module__ = __webpack_require__(69);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store_crud_vue_module__ = __webpack_require__(74);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__store_offset_vue_module__ = __webpack_require__(94);
         __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
         function createStore(server) {
             let getters = {
@@ -5259,12 +5264,14 @@
             let tasks = new __WEBPACK_IMPORTED_MODULE_4__store_crud_vue_module__["a" /* vue_module */](Object.assign({ entities: "tasks", endPoint: "/tasks" }, server)).store();
             let loading = new __WEBPACK_IMPORTED_MODULE_2__store_loading_vue_module__["a" /* vue_module */]({ server }).store();
             let modal = new __WEBPACK_IMPORTED_MODULE_3__store_modal_vue_module__["a" /* vue_module */]({ server }).store();
+            let offset = new __WEBPACK_IMPORTED_MODULE_5__store_offset_vue_module__["a" /* vue_module */]({ server }).store();
             let vuex = {
                 getters: getters,
                 modules: {
                     "loading": loading,
                     "modal": modal,
-                    "tasks": tasks
+                    "tasks": tasks,
+                    "offset": offset
                 }
             };
             return new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store(vuex);
@@ -5894,7 +5901,7 @@
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(2);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__spa_components_pagination_vue__ = __webpack_require__(50);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__spa_components_global__ = __webpack_require__(90);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
         var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
             var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5953,7 +5960,7 @@
                     mount: ({ mount }) => mount
                 })),
                 methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["d" /* mapMutations */])("modal", ["setModal", "toggleModal", "openModal"]), Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapActions */])("tasks", ["fetchEntities"])),
-                components: { pagination: __WEBPACK_IMPORTED_MODULE_2__spa_components_pagination_vue__["a" /* default */] }
+                components: { pagination: __WEBPACK_IMPORTED_MODULE_2__spa_components_global__["b" /* pagination */] }
             })
         ], idx);
         /* harmony default export */ __webpack_exports__["a"] = (idx);
@@ -6088,6 +6095,12 @@
                 let q = bq.http(this.frm);
                 this.$router.push(`${this.mount}?${q}`);
             }
+            reset() {
+                let frm = this.frm;
+                for (let key in frm) {
+                    frm[key] = null;
+                }
+            }
             get action() {
                 return this.mount;
             }
@@ -6131,7 +6144,7 @@
                     _vm._ssrAttr("value", _vm.frm.created_at) +
                     ' class="calendar"> <label for="updated_at">Updated at</label> <input type="text" name="updated_at" placeholder="updated_at"' +
                     _vm._ssrAttr("value", _vm.frm.updated_at) +
-                    ' class="calendar"></fieldset> <div class="text-right"><button type="submit" class="small button"><span class="typcn typcn-zoom"></span> search</button></div></form>')
+                    ' class="calendar"></fieldset> <div class="text-right"><button type="button" class="button small warning"><span class="typcn typcn-minus"></span> clear</button> <button type="submit" class="button small "><span class="typcn typcn-zoom"></span> search</button></div></form>')
             ]);
         };
         var staticRenderFns = [];
@@ -6143,7 +6156,7 @@
     /* 87 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__spa_global_component__ = __webpack_require__(89);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__spa_components_global__ = __webpack_require__(90);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_sub_vue__ = __webpack_require__(45);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_idx_vue__ = __webpack_require__(81);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_add_vue__ = __webpack_require__(54);
@@ -6151,21 +6164,219 @@
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_edit_vue__ = __webpack_require__(60);
         let mount = "/tasks";
         /* harmony default export */ __webpack_exports__["a"] = ([
-            { name: "page", path: `${mount}/page/:page*`, components: { main: __WEBPACK_IMPORTED_MODULE_2__components_idx_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_0__spa_global_component__["a" /* navi */], sub: __WEBPACK_IMPORTED_MODULE_1__components_sub_vue__["a" /* default */] } },
+            { name: "page", path: `${mount}/page/:page*`, components: { main: __WEBPACK_IMPORTED_MODULE_2__components_idx_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_0__spa_components_global__["a" /* navi */], sub: __WEBPACK_IMPORTED_MODULE_1__components_sub_vue__["a" /* default */] } },
             { name: "index", path: `${mount}/page/1`, alias: `${mount}/` },
-            { name: "add", path: `${mount}/add`, components: { main: __WEBPACK_IMPORTED_MODULE_3__components_add_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_0__spa_global_component__["a" /* navi */], sub: __WEBPACK_IMPORTED_MODULE_1__components_sub_vue__["a" /* default */] } },
-            { name: "view", path: `${mount}/:id`, components: { main: __WEBPACK_IMPORTED_MODULE_4__components_view_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_0__spa_global_component__["a" /* navi */], sub: __WEBPACK_IMPORTED_MODULE_1__components_sub_vue__["a" /* default */] } },
-            { name: "edit", path: `${mount}/:id/edit`, components: { main: __WEBPACK_IMPORTED_MODULE_5__components_edit_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_0__spa_global_component__["a" /* navi */], sub: __WEBPACK_IMPORTED_MODULE_1__components_sub_vue__["a" /* default */] } },
+            { name: "add", path: `${mount}/add`, components: { main: __WEBPACK_IMPORTED_MODULE_3__components_add_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_0__spa_components_global__["a" /* navi */], sub: __WEBPACK_IMPORTED_MODULE_1__components_sub_vue__["a" /* default */] } },
+            { name: "view", path: `${mount}/:id`, components: { main: __WEBPACK_IMPORTED_MODULE_4__components_view_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_0__spa_components_global__["a" /* navi */], sub: __WEBPACK_IMPORTED_MODULE_1__components_sub_vue__["a" /* default */] } },
+            { name: "edit", path: `${mount}/:id/edit`, components: { main: __WEBPACK_IMPORTED_MODULE_5__components_edit_vue__["a" /* default */], navi: __WEBPACK_IMPORTED_MODULE_0__spa_components_global__["a" /* navi */], sub: __WEBPACK_IMPORTED_MODULE_1__components_sub_vue__["a" /* default */] } },
         ]);
         /***/ 
     }),
     /* 88 */ ,
-    /* 89 */
+    /* 89 */ ,
+    /* 90 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
         /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function () { return navi; });
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_navi_vue__ = __webpack_require__(37);
-        let navi = __WEBPACK_IMPORTED_MODULE_0__components_navi_vue__["a" /* default */];
+        /* unused harmony export indicator */
+        /* unused harmony export loading */
+        /* unused harmony export modal */
+        /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function () { return pagination; });
+        /* unused harmony export over_lay */
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__navi_vue__ = __webpack_require__(37);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__indicator_vue__ = __webpack_require__(39);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__loading_vue__ = __webpack_require__(21);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modal_vue__ = __webpack_require__(28);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pagination_vue__ = __webpack_require__(50);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__over_lay_vue__ = __webpack_require__(19);
+        let navi = __WEBPACK_IMPORTED_MODULE_0__navi_vue__["a" /* default */];
+        let indicator = __WEBPACK_IMPORTED_MODULE_1__indicator_vue__["a" /* default */];
+        let loading = __WEBPACK_IMPORTED_MODULE_2__loading_vue__["a" /* default */];
+        let modal = __WEBPACK_IMPORTED_MODULE_3__modal_vue__["a" /* default */];
+        let pagination = __WEBPACK_IMPORTED_MODULE_4__pagination_vue__["a" /* default */];
+        let over_lay = __WEBPACK_IMPORTED_MODULE_5__over_lay_vue__["a" /* default */];
+        /***/ 
+    }),
+    /* 91 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_offset_vue__ = __webpack_require__(92);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7d51b7b2_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_offset_vue__ = __webpack_require__(93);
+        var normalizeComponent = __webpack_require__(1);
+        /* script */
+        /* template */
+        /* styles */
+        var __vue_styles__ = null;
+        /* scopeId */
+        var __vue_scopeId__ = null;
+        /* moduleIdentifier (server only) */
+        var __vue_module_identifier__ = "7b719040";
+        var Component = normalizeComponent(__WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_offset_vue__["a" /* default */], __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7d51b7b2_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_offset_vue__["a" /* default */], __vue_styles__, __vue_scopeId__, __vue_module_identifier__);
+        Component.options.__file = "apps/spa/components/offset.vue";
+        if (Component.esModule && Object.keys(Component.esModule).some(function (key) { return key !== "default" && key.substr(0, 2) !== "__"; })) {
+            console.error("named exports are not supported in *.vue files.");
+        }
+        if (Component.options.functional) {
+            console.error("[vue-loader] offset.vue: functional components are not supported with templates, they should use render functions.");
+        }
+        /* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+        /***/ 
+    }),
+    /* 92 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(2);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(3);
+        var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+            var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+            if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+                r = Reflect.decorate(decorators, target, key, desc);
+            else
+                for (var i = decorators.length - 1; i >= 0; i--)
+                    if (d = decorators[i])
+                        r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+            return c > 3 && r && Object.defineProperty(target, key, r), r;
+        };
+        __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
+            'beforeRouteEnter',
+            'beforeRouteLeave',
+            'asyncData',
+            'fetch',
+            'middleware',
+            'layout',
+            'transition',
+            'scrollToTop'
+        ]);
+        let offset = class offset extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
+            close() {
+                if (this._close) {
+                }
+            }
+        };
+        offset = __decorate([
+            __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
+                name: "offset",
+                computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])([
+                    'domain', 'token'
+                ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])('offset', {
+                    'show': ({ show }) => show,
+                    '_close': ({ close }) => close
+                })),
+                methods: {},
+                components: {}
+            })
+        ], offset);
+        /* harmony default export */ __webpack_exports__["a"] = (offset);
+        /***/ 
+    }),
+    /* 93 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        var render = function () {
+            var _vm = this;
+            var _h = _vm.$createElement;
+            var _c = _vm._self._c || _h;
+            return _vm.show
+                ? _c("div", { staticClass: "offset-container", attrs: { id: "offset-container" } }, [
+                    _vm._ssrNode('<div class="offset"><span class="close typcn typcn-delete large"></span> <div class="content"><ul><li><a href="#">aaa</a></li> <li><a href="#">aaa</a></li> <li><a href="#">aaa</a></li> <li><a href="#">aaa</a></li></ul></div></div>')
+                ])
+                : _vm._e();
+        };
+        var staticRenderFns = [];
+        render._withStripped = true;
+        var esExports = { render: render, staticRenderFns: staticRenderFns };
+        /* harmony default export */ __webpack_exports__["a"] = (esExports);
+        /***/ 
+    }),
+    /* 94 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__vue_module__ = __webpack_require__(4);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__(95);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__(96);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__state__ = __webpack_require__(97);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__getters__ = __webpack_require__(98);
+        class vue_module extends __WEBPACK_IMPORTED_MODULE_0__vue_module__["a" /* vue_module */] {
+            constructor(options) {
+                super();
+                this.state = new __WEBPACK_IMPORTED_MODULE_3__state__["a" /* state */](options).map("all");
+                this.actions = new __WEBPACK_IMPORTED_MODULE_2__actions__["a" /* actions */](options).map("all");
+                this.mutations = new __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* mutations */](options).map("all");
+                this.getters = new __WEBPACK_IMPORTED_MODULE_4__getters__["a" /* getters */](options).map("all");
+            }
+        }
+        /* harmony export (immutable) */ __webpack_exports__["a"] = vue_module;
+        /***/ 
+    }),
+    /* 95 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mutations__ = __webpack_require__(5);
+        class mutations extends __WEBPACK_IMPORTED_MODULE_0__mutations__["a" /* mutations */] {
+            constructor(options) {
+                super();
+                this.setOffset = (state, { template, data, show }) => {
+                    state.template = template;
+                    state.data = data;
+                };
+                this.toggleOffset = (state) => {
+                    if (!state.show) {
+                        state.close = true;
+                    }
+                    state.show = (state.show) ? false : true;
+                };
+                this.closeOffset = (state) => {
+                    state.show = false;
+                };
+                this.openOffset = (state) => {
+                    state.close = true;
+                    state.show = true;
+                };
+            }
+        }
+        /* harmony export (immutable) */ __webpack_exports__["a"] = mutations;
+        /***/ 
+    }),
+    /* 96 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions__ = __webpack_require__(6);
+        class actions extends __WEBPACK_IMPORTED_MODULE_0__actions__["a" /* actions */] {
+            constructor(options) {
+                super();
+            }
+        }
+        /* harmony export (immutable) */ __webpack_exports__["a"] = actions;
+        /***/ 
+    }),
+    /* 97 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__state__ = __webpack_require__(7);
+        class state extends __WEBPACK_IMPORTED_MODULE_0__state__["a" /* state */] {
+            constructor(options) {
+                super();
+                this.close = false;
+                this.show = false;
+                this.template = "";
+            }
+        }
+        /* harmony export (immutable) */ __webpack_exports__["a"] = state;
+        /***/ 
+    }),
+    /* 98 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getters__ = __webpack_require__(8);
+        class getters extends __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* getters */] {
+            constructor(options) {
+                super();
+            }
+        }
+        /* harmony export (immutable) */ __webpack_exports__["a"] = getters;
         /***/ 
     })
     /******/ 

@@ -1,9 +1,11 @@
 <template>
 <div class="sub">
-    <h4 class="margin">Search</h4>
-    <div class="panel"><app-search></app-search></div>
-    <h4 class="margin">Menu</h4>
     <div class="panel">
+      <h4>Search</h4>
+      <app-search></app-search>
+    </div>
+    <div class="panel">
+      <h4>Menu</h4>
       <nav class="navigation-stack">
         <ul class="navigation-list">
             <li><router-link :to="mount">Index</router-link></li>

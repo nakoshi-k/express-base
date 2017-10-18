@@ -2,14 +2,14 @@
 <div>
     <nav class="navigation column">
         <div class="container">
-            <div class="row">
-                <ul class="navigation-list">
-                    <li><a href="/tasks/aaa">menu 1</a></li>
-                    <li><a href="/tasks/aaa">menu 2</a></li>
-                    <li><a href="/tasks/aaa">menu 3</a></li>
-                    <li><a href="/tasks/aaa">menu 4</a></li>
-                </ul>
-            </div>
+            
+            <ul class="navigation-list">
+                <li><a href="#" class="offset-toggle" title="open offset menu"><span class="typcn typcn-th-menu"></span></a></li>
+                <li><a href="/tasks/aaa" title="Home">Home </a></li>
+                <li><a href="/tasks/aaa" title="Tasks">Tasks </a></li>
+                <li><a href="/tasks/aaa" title="Tasks">Users </a></li>
+                <li><a href="/tasks/aaa" title="Tasks">Products </a></li>
+            </ul>
         </div>
         <app-indicater></app-indicater>
     </nav>

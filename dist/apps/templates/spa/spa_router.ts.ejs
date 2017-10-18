@@ -1,5 +1,5 @@
 import Router, { RouteConfig } from 'vue-router'
-import * as global from '../spa/global_component'
+import * as global from '../spa/components/global'
 import sub from './components/sub.vue'
 import idx from './components/idx.vue'
 import add from './components/add.vue'

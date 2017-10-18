@@ -6,6 +6,7 @@ vue_1.default.use(vuex_1.default);
 const vue_module_1 = require("./store/loading/vue_module");
 const vue_module_2 = require("./store/modal/vue_module");
 const vue_module_3 = require("./store/crud/vue_module");
+const vue_module_4 = require("./store/offset/vue_module");
 function createStore(server) {
     let getters = {
         token: (state) => {
@@ -20,12 +21,14 @@ function createStore(server) {
     let tasks = new vue_module_3.vue_module(Object.assign({ entities: "tasks", endPoint: "/tasks" }, server)).store();
     let loading = new vue_module_1.vue_module({ server }).store();
     let modal = new vue_module_2.vue_module({ server }).store();
+    let offset = new vue_module_4.vue_module({ server }).store();
     let vuex = {
         getters: getters,
         modules: {
             "loading": loading,
             "modal": modal,
-            "tasks": tasks
+            "tasks": tasks,
+            "offset": offset
         }
     };
     return new vuex_1.default.Store(vuex);

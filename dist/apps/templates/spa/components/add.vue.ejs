@@ -18,7 +18,7 @@
       if( field.tag === "input" ) {
       _%>
       <div class="form-item">
-        <label for="<%= field.name %>"><%= field.name %></label>
+        <label for="<%= field.name %>"><%= inflection.humanize(field.name) %></label>
         <input <%- field.attrString %> name="<%- field.name %>" @change="change" :class="validationClass( errors , '<%= field.name %>')" :value="entity.<%= field.name %>" placeholder="<%= field.name %>">
         <div class="errors" v-for="e in errors.<%- field.name %>"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
       </div>
@@ -27,14 +27,14 @@
       if( field.tag === "textarea" ) {
       _%>
       <div class="form-item">
-        <label for="<%= field.name %>"><%= field.name %></label>
+        <label for="<%= field.name %>"><%= inflection.humanize(field.name) %></label>
         <textarea <%- field.attrString %> name="<%- field.name %>" @change="change" :class="validationClass( errors , '<%= field.name %>')" :value="entity.<%= field.name %>" placeholder="<%= field.name %>"></textarea>
         <div class="errors" v-for="e in errors.<%- field.name %>"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
       </div>
       <%_ } _%>
     <%_ }); _%>
     </fieldset>
-    <button type="submit" :class="validationClass(errors , 'submit')">update</button>
+    <button type="submit" :class="validationClass(errors , 'submit')">add</button>
   </form>
 </div>
 </template>

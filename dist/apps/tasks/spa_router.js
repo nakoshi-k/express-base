@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const global = require("../spa/global_component");
+const global = require("../spa/components/global");
 const sub_vue_1 = require("./components/sub.vue");
 const idx_vue_1 = require("./components/idx.vue");
 const add_vue_1 = require("./components/add.vue");

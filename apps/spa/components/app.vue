@@ -8,6 +8,7 @@
       <div class="column column-md-25"><router-view name="sub"></router-view></div>
     </div>
   </div>
+  <app-offset></app-offset>
   <app-modal></app-modal>
   <app-overlay></app-overlay>
 </div>
@@ -17,6 +18,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import over_lay from './over_lay.vue';
 import modal from './modal'
+import offset from './offset'
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -33,9 +35,11 @@ Component.registerHooks([
   name: 'app',
   components:{
     "app-overlay":over_lay,
-    "app-modal":modal
+    "app-modal":modal,
+    "app-offset":offset
   }
 })
+
 export default class app extends Vue {
 
 }

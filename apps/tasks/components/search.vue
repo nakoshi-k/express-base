@@ -14,7 +14,8 @@
         <input class="calendar" type="text" name="updated_at" v-model="frm.updated_at" placeholder="updated_at">
         </fieldset>
         <div class="text-right">
-          <button type="submit" class="small button"><span class="typcn typcn-zoom"></span> search</button>
+          <button type="button" class="button small warning" @click="reset()"><span class="typcn typcn-minus"></span> clear</button>
+          <button type="submit" class="button small "><span class="typcn typcn-zoom"></span> search</button>
         </div>
       </form>
     </div>
@@ -62,7 +63,12 @@ export default class search extends Vue {
     let q = bq.http(this.frm)
     this.$router.push(`${this.mount}?${q}`)
   }
-
+  reset(){
+    let frm = this.frm;
+    for(let key in frm){
+      frm[key] = null
+    }
+  }
   get action(){
     return this.mount
   }

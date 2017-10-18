@@ -9,7 +9,7 @@
     <li v-if="special.prev"><router-link :to="last.link" :class="last.css">Last &raquo;</router-link></li>
     </ul>
   </nav>
-  <div class="column text-right text-medium"> Page {{pagination.currentPage}} / {{pagination.totalPage}} </div>
+  <div class="column text-right text-md"> Page {{pagination.currentPage}} / {{pagination.totalPage}} </div>
 </div>
 </template>
 

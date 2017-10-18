@@ -19,7 +19,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import pagination from '../../spa/components/pagination.vue'
+import {pagination} from '../../spa/components/global'
 import {mapGetters,mapState,mapMutations,mapActions} from "vuex"
 Component.registerHooks([
   'beforeRouteEnter',
