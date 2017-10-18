@@ -1,8 +1,8 @@
 <template>
 <div class="column column-25">
-    <h4 class="margin">search</h4>
+    <h4 class="margin">Search</h4>
     <div class="panel"><app-search></app-search></div>
-    <h4 class="margin">menu</h4>
+    <h4 class="margin">Menu</h4>
     <div class="panel">
       <nav class="navigation-stack">
         <ul class="navigation-list">

@@ -2,15 +2,15 @@
     <div class="search">
       <form :action="action" method="get" v-on:submit.prevent="search()">
         <fieldset>
-        <label for="id">id</label>
+        <label for="id">Id</label>
         <input type="text" name="id" v-model="frm.id" placeholder="id">
-        <label for="title">title</label>
+        <label for="title">Title</label>
         <input type="text" name="title" v-model="frm.title" placeholder="title">
-        <label for="priod">priod</label>
+        <label for="priod">Priod</label>
         <input class="calendar" type="date" name="priod" v-model="frm.priod" placeholder="priod">
-        <label for="created_at">created_at</label>
+        <label for="created_at">Created at</label>
         <input class="calendar" type="date" name="created_at" v-model="frm.created_at" placeholder="created_at">
-        <label for="updated_at">updated_at</label>
+        <label for="updated_at">Updated at</label>
         <input class="calendar" type="date" name="updated_at" v-model="frm.updated_at" placeholder="updated_at">
         </fieldset>
         <div class="text-right">

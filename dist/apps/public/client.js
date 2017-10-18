@@ -16410,11 +16410,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "column column-25" }, [
-    _c("h4", { staticClass: "margin" }, [_vm._v("search")]),
+    _c("h4", { staticClass: "margin" }, [_vm._v("Search")]),
     _vm._v(" "),
     _c("div", { staticClass: "panel" }, [_c("app-search")], 1),
     _vm._v(" "),
-    _c("h4", { staticClass: "margin" }, [_vm._v("menu")]),
+    _c("h4", { staticClass: "margin" }, [_vm._v("Menu")]),
     _vm._v(" "),
     _c("div", { staticClass: "panel" }, [
       _c("nav", { staticClass: "navigation-stack" }, [
@@ -18855,7 +18855,7 @@ var render = function() {
       },
       [
         _c("fieldset", [
-          _c("label", { attrs: { for: "id" } }, [_vm._v("id")]),
+          _c("label", { attrs: { for: "id" } }, [_vm._v("Id")]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -18878,7 +18878,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("label", { attrs: { for: "title" } }, [_vm._v("title")]),
+          _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -18901,7 +18901,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("label", { attrs: { for: "priod" } }, [_vm._v("priod")]),
+          _c("label", { attrs: { for: "priod" } }, [_vm._v("Priod")]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -18925,7 +18925,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("label", { attrs: { for: "created_at" } }, [_vm._v("created_at")]),
+          _c("label", { attrs: { for: "created_at" } }, [_vm._v("Created at")]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -18953,7 +18953,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("label", { attrs: { for: "updated_at" } }, [_vm._v("updated_at")]),
+          _c("label", { attrs: { for: "updated_at" } }, [_vm._v("Updated at")]),
           _vm._v(" "),
           _c("input", {
             directives: [

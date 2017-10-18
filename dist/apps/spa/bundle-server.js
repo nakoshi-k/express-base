@@ -4570,9 +4570,9 @@
             var _h = _vm.$createElement;
             var _c = _vm._self._c || _h;
             return _c("div", { staticClass: "column column-25" }, [
-                _vm._ssrNode('<h4 class="margin">search</h4> '),
+                _vm._ssrNode('<h4 class="margin">Search</h4> '),
                 _vm._ssrNode('<div class="panel">', "</div>", [_c("app-search")], 1),
-                _vm._ssrNode(' <h4 class="margin">menu</h4> '),
+                _vm._ssrNode(' <h4 class="margin">Menu</h4> '),
                 _vm._ssrNode('<div class="panel">', "</div>", [
                     _vm._ssrNode('<nav class="navigation-stack">', "</nav>", [
                         _vm._ssrNode('<ul class="navigation-list">', "</ul>", [
@@ -6129,15 +6129,15 @@
             return _c("div", { staticClass: "search" }, [
                 _vm._ssrNode("<form" +
                     _vm._ssrAttr("action", _vm.action) +
-                    ' method="get"><fieldset><label for="id">id</label> <input type="text" name="id" placeholder="id"' +
+                    ' method="get"><fieldset><label for="id">Id</label> <input type="text" name="id" placeholder="id"' +
                     _vm._ssrAttr("value", _vm.frm.id) +
-                    '> <label for="title">title</label> <input type="text" name="title" placeholder="title"' +
+                    '> <label for="title">Title</label> <input type="text" name="title" placeholder="title"' +
                     _vm._ssrAttr("value", _vm.frm.title) +
-                    '> <label for="priod">priod</label> <input type="date" name="priod" placeholder="priod"' +
+                    '> <label for="priod">Priod</label> <input type="date" name="priod" placeholder="priod"' +
                     _vm._ssrAttr("value", _vm.frm.priod) +
-                    ' class="calendar"> <label for="created_at">created_at</label> <input type="date" name="created_at" placeholder="created_at"' +
+                    ' class="calendar"> <label for="created_at">Created at</label> <input type="date" name="created_at" placeholder="created_at"' +
                     _vm._ssrAttr("value", _vm.frm.created_at) +
-                    ' class="calendar"> <label for="updated_at">updated_at</label> <input type="date" name="updated_at" placeholder="updated_at"' +
+                    ' class="calendar"> <label for="updated_at">Updated at</label> <input type="date" name="updated_at" placeholder="updated_at"' +
                     _vm._ssrAttr("value", _vm.frm.updated_at) +
                     ' class="calendar"></fieldset> <div class="text-right"><button type="submit" class="small button"><span class="typcn typcn-zoom"></span> search</button></div></form>')
             ]);
