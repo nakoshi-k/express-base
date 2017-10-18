@@ -2,9 +2,10 @@
 <div id="application">
   <router-view name="navi"></router-view>
   <div class="wrap container">
-    <div class="row">
-      <router-view name="sub"></router-view>
-      <router-view name="main"></router-view>
+    <div class="row row-md-reverse">
+    
+      <div class="column column-md-75"><router-view name="main"></router-view></div>
+      <div class="column column-md-25"><router-view name="sub"></router-view></div>
     </div>
   </div>
   <app-modal></app-modal>

@@ -1,0 +1,34 @@
+input[type='date']
+    appearance none // Removes awkward default styles on some inputs for iOS
+    background-color transparent
+    border .1rem solid color-quaternary
+    border-radius .4rem
+    box-shadow none
+    box-sizing inherit // Forced to replace inherit values of the normalize.css
+    height 3.8rem
+    padding .6rem 1.0rem // The .6rem vertically centers text on FF, ignored by Webkit
+    width 100%
+
+input[type='email'],
+input[type='number'],
+input[type='password'],
+input[type='search'],
+input[type='tel'],
+input[type='text'],
+input[type='url'],
+input[type='date'],
+textarea,
+select
+    &.warning
+        border-width 0.2rem 
+        border-color color-warning
+
+fieldset,
+input,
+select,
+textarea 
+    margin-bottom: 0.6rem
+form
+    input
+        transition 0.6s border-color ease
+

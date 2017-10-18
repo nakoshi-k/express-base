@@ -1,5 +1,5 @@
 <template>
-<div class="resource column column-75">
+<div class="edit">
   <h2>Edit</h2>
   <form :action="action" method="post" v-on:submit.prevent="save">
     <fieldset>
@@ -13,7 +13,7 @@
 
       <div class="form-item">
         <label for="priod">priod</label>
-        <input class="calendar" type="date" name="priod" @change="change" :class="validationClass( errors , 'priod')" :value="entity.priod" placeholder="priod">
+        <input class="calendar" type="text" name="priod" @change="change" :class="validationClass( errors , 'priod')" :value="entity.priod" placeholder="priod">
         <div class="errors" v-for="e in errors.priod"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
       </div>
     </fieldset>
@@ -26,9 +26,9 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import {mapGetters,mapState,mapActions,mapMutations} from 'vuex'
-import * as flatpickr from "flatpickr";
-import * as confirmDatePlugin from "../../../node_modules/flatpickr/src/plugins/confirmDate/confirmDate.js";
-import form_validation from "../../spa/utility/validation";
+import * as flatpickr from "flatpickr"
+import * as confirmDatePlugin from "../../../node_modules/flatpickr/src/plugins/confirmDate/confirmDate.js"
+import form_validation from "../../spa/utility/validation"
 
 
 Component.registerHooks([
@@ -69,26 +69,26 @@ Component.registerHooks([
 })
 
 export default class edit extends Vue {
-  mount:string;
+  mount:string
   entity:{
     id : string,
     title : string,
     priod : string,
   }
   asyncData ({ store, route }) {
-    return store.dispatch('tasks/fetchEntity' , route );
+    return store.dispatch('tasks/fetchEntity' , route )
   }
  
   get action(){
     return `${this.mount}/${this.entity.id}`
 
   }
-  updateEntity:(kv) => {};
+  updateEntity:(kv) => {}
   change = (e) => {
     let kv = {}
-    kv["key"] = e.target.name;
-    kv["value"] = e.target.value;
-    this.updateEntity(kv);
+    kv["key"] = e.target.name
+    kv["value"] = e.target.value
+    this.updateEntity(kv)
   }
 
   mounted(){
@@ -96,23 +96,23 @@ export default class edit extends Vue {
       flatpickr(".calendar" , {
         "enableTime": true,
         "plugins": [confirmDatePlugin({})]
-      });
+      })
     }
   }
-  token : string;
-  saveEntity:(token : string) => Promise<string>;
-  loading : () => {};
-  endLoading: (status) => {};
-  errors = {};
+  token : string
+  saveEntity:(token : string) => Promise<string>
+  loading : () => {}
+  endLoading: (status) => {}
+  errors = {}
   save(){
-    this.loading();
+    this.loading()
     this.saveEntity(this.token).then(r => {
-      this.errors = {};
-      this.endLoading("success");
+      this.errors = {}
+      this.endLoading("success")
     }).catch(e => {
-      this.errors = e;
-      this.endLoading("warning");
-    });
+      this.errors = e
+      this.endLoading("warning")
+    })
   }
   
 

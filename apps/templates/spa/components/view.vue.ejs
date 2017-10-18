@@ -1,5 +1,5 @@
 <template>
-<div v-if="entity.id" class="resource column column-75">
+<div v-if="entity.id" class="view"> 
   <h2>View</h2>
   <%_ fields.forEach(function (field) { _%>
   <h3><%= inflection.humanize(field.name) %></h3>
@@ -41,7 +41,7 @@ export default class view extends Vue {
 
   
   asyncData ({ store, route }) {
-    return store.dispatch('<%- names %>/fetchEntity' ,route);
+    return store.dispatch('<%- names %>/fetchEntity' ,route)
   }
 
 

@@ -1,5 +1,5 @@
 <template>
-<div class="resource column column-75">
+<div class="add">
   <h2>Add</h2>
   <form :action="action" method="post" v-on:submit.prevent="save">
     <fieldset>
@@ -12,7 +12,7 @@
 
       <div class="form-item">
         <label for="priod">priod</label>
-        <input class="calendar" type="date" name="priod" @change="change" :class="validationClass( errors , 'priod')" :value="entity.priod" placeholder="priod">
+        <input class="calendar" type="text" name="priod" @change="change" :class="validationClass( errors , 'priod')" :value="entity.priod" placeholder="priod">
         <div class="errors" v-for="e in errors.priod"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
       </div>
     </fieldset>
@@ -25,9 +25,9 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import {mapGetters,mapState,mapActions,mapMutations} from 'vuex'
-import * as flatpickr from "flatpickr";
-import * as confirmDatePlugin from "../../../node_modules/flatpickr/src/plugins/confirmDate/confirmDate.js";
-import form_validation from "../../spa/utility/validation";
+import * as flatpickr from "flatpickr"
+import * as confirmDatePlugin from "../../../node_modules/flatpickr/src/plugins/confirmDate/confirmDate.js"
+import form_validation from "../../spa/utility/validation"
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -69,9 +69,9 @@ export default class add extends Vue {
   /*from mutations */
   updateEntity:(kv) => {}//from mutations
   insertEntity:any;//from mutations
-  loading:() => {};
-  endLoading:(status:string) => {};
-  token : string;
+  loading:() => {}
+  endLoading:(status:string) => {}
+  token : string
   mount : string
   clearEntity:() => {}
   
@@ -87,42 +87,42 @@ export default class add extends Vue {
    
   change = (e) => {
     let kv = {}
-    kv["key"] = e.target.name;
-    kv["value"] = e.target.value;
-    this.updateEntity(kv);
+    kv["key"] = e.target.name
+    kv["value"] = e.target.value
+    this.updateEntity(kv)
   }
 
-  copyEntity:(any) => {};
+  copyEntity:(any) => {}
   mounted(){
     if(window){
       flatpickr(".calendar" , {
         "enableTime": true,
         "plugins": [confirmDatePlugin({})]
-      });
+      })
     }
-    this.clearEntity();
-    let query = this.$store.state.route.query;
+    this.clearEntity()
+    let query = this.$store.state.route.query
     if(query["copy"]){
-      this.copyEntity({ id : query["copy"] , mount : this.mount });
+      this.copyEntity({ id : query["copy"] , mount : this.mount })
     }
   }
 
   beforeDestroy(){
-    this.clearEntity();
+    this.clearEntity()
   }
   
-  errors = {};
+  errors = {}
 
   save(){
-    this.loading();
+    this.loading()
     this.insertEntity(this.token).then(r => {
-      this.endLoading("success");
+      this.endLoading("success")
       this.$router.push({path : this.mount})
     }).catch( e => {
-      this.errors = e;
-      this.endLoading("warning");
-    });
-    return false;
+      this.errors = e
+      this.endLoading("warning")
+    })
+    return false
   }
 
 }
