@@ -2,14 +2,22 @@
     <div class="search">
       <form :action="action" method="get" v-on:submit.prevent="search()">
         <fieldset>
-        <%_ fields.forEach(function (field) { 
-            if( field.name === "id" ){
-              field.attrString = 'type="text"'
-            }
-          _%>
-        <label for="<%= field.name %>"><%= inflection.humanize(field.name) %></label>
-        <input <%- field.attrString %> name="<%- field.name %>" v-model="frm.<%= field.name %>" placeholder="<%= field.name %>">
-        <%_ }); _%>
+        <label for="id">Id</label>
+        <input type="text" name="id" v-model="frm.id" placeholder="id">
+        <label for="name">Name</label>
+        <input type="text" name="name" v-model="frm.name" placeholder="name">
+        <label for="password">Password</label>
+        <input type="text" name="password" v-model="frm.password" placeholder="password">
+        <label for="group_id">Group</label>
+        <input type="text" name="group_id" v-model="frm.group_id" placeholder="group_id">
+        <label for="access_token">Access token</label>
+        <input type="text" name="access_token" v-model="frm.access_token" placeholder="access_token">
+        <label for="refresh_token">Refresh token</label>
+        <input type="text" name="refresh_token" v-model="frm.refresh_token" placeholder="refresh_token">
+        <label for="created_at">Created at</label>
+        <input class="calendar" type="date" name="created_at" v-model="frm.created_at" placeholder="created_at">
+        <label for="updated_at">Updated at</label>
+        <input class="calendar" type="date" name="updated_at" v-model="frm.updated_at" placeholder="updated_at">
         </fieldset>
         <div class="text-right">
           <button type="button" class="button small warning" @click="reset()"><span class="typcn typcn-minus"></span> clear</button>
@@ -41,7 +49,7 @@ Component.registerHooks([
 @Component({
   name: 'find',
   computed : {
-  ...mapState( '<%- names %>' , {
+  ...mapState( 'users' , {
     mount : ({mount}) => mount 
   }),
 }
@@ -50,9 +58,14 @@ export default class search extends Vue {
   mount:string
   
   frm = {
-    <%_ fields.forEach(function (field) { _%>
-        "<%- field.name %>" : "",
-    <%_ }); _%>
+        "id" : "",
+        "name" : "",
+        "password" : "",
+        "group_id" : "",
+        "access_token" : "",
+        "refresh_token" : "",
+        "created_at" : "",
+        "updated_at" : "",
   }
 
   search(){

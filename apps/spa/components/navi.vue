@@ -9,10 +9,9 @@
               <div class="column">
                 <ul class="navigation-list">
                     <li><a href="#" class="offset-toggle" :class="{active : show}" @click="toggle" title="open offset menu"><span class="typcn typcn-th-menu"></span></a></li>
-                    <li><a href="/tasks/aaa" title="Home">Home </a></li>
-                    <li><a href="/tasks/aaa" title="Tasks">Tasks </a></li>
-                    <li><a href="/tasks/aaa" title="Tasks">Users </a></li>
-                    <li><a href="/tasks/aaa" title="Tasks">Products </a></li>
+                    <li><router-link to="/tasks" title="Home">Home </router-link></li>
+                    <li><router-link to="/tasks" title="Tasks">Tasks</router-link></li>
+                    <li><router-link to="/users" title="Users">Users</router-link></li>
                 </ul>
               </div>
             </div>

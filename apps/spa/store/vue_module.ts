@@ -15,19 +15,11 @@ export class vue_module{
     set mutations(mutations:{key?:Dispatch}){
         this._mutations = mutations 
     }
-    set getters(getters:{key?:Getter<any,any>}){
+    set getters(getters:any){
         this._getters = getters 
     }
     
-    create(){
-        return {
-           namespaced : true,
-           state : this._state,
-           actions : this._actions,
-           mutations : this._mutations,
-           getters : this._getters,
-        }
-    }
+
 
     store(){
         return {

@@ -7,9 +7,9 @@ import view from './components/view.vue'
 import edit from './components/edit.vue'
 let mount = "/tasks"
 export default [
-    { name : "page" ,path: `${mount}/page/:page*`, components: { main : idx , navi : global.navi ,sub : sub } } as RouteConfig,
-    { name : "index" ,path: `${mount}/page/1` , alias : `${mount}/` } as RouteConfig,
-    { name : "add" , path: `${mount}/add`, components: { main : add , navi : global.navi ,sub : sub } } as RouteConfig,
-    { name : "view" , path: `${mount}/:id`, components: { main : view , navi : global.navi ,sub : sub } } as RouteConfig,
-    { name : "edit" , path: `${mount}/:id/edit`, components: { main : edit , navi : global.navi ,sub : sub } } as RouteConfig,
+    { name : "tasks_page" ,path: `${mount}/page/:page*`, components: { main : idx , navi : global.navi ,sub : sub } } as RouteConfig,
+    { name : "tasks_index" ,path: `${mount}/page/1` , alias : `${mount}/` } as RouteConfig,
+    { name : "tasks_add" , path: `${mount}/add`, components: { main : add , navi : global.navi ,sub : sub } } as RouteConfig,
+    { name : "tasks_view" , path: `${mount}/:id`, components: { main : view , navi : global.navi ,sub : sub } } as RouteConfig,
+    { name : "tasks_edit" , path: `${mount}/:id/edit`, components: { main : edit , navi : global.navi ,sub : sub } } as RouteConfig,
 ]

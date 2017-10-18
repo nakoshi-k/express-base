@@ -7,7 +7,7 @@ import {vue_module as loading_module } from './store/loading/vue_module';
 import {vue_module as modal_module } from './store/modal/vue_module';
 import {vue_module as crud_module } from './store/crud/vue_module';
 import {vue_module as offset_module } from './store/offset/vue_module';
-
+import {internal} from "./api/internal"
 export function createStore(server){ 
   let getters = {
     token : (state) => {
@@ -21,6 +21,8 @@ export function createStore(server){
   }
 
   let tasks = new crud_module({ entities : "tasks" , endPoint : "/tasks" , ...server} ).store();
+  let users = new crud_module({ entities : "users" , endPoint : "/users" , ...server} ).store();
+  
   let loading = new loading_module({server}).store();
   let modal = new modal_module({server}).store();
   let offset = new offset_module({server}).store();
@@ -31,6 +33,7 @@ export function createStore(server){
       "loading" : loading,
       "modal" : modal,
       "tasks" : tasks,
+      "users" : users,
       "offset" : offset
     }
   }

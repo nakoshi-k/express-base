@@ -19,6 +19,7 @@ function createStore(server) {
         }
     };
     let tasks = new vue_module_3.vue_module(Object.assign({ entities: "tasks", endPoint: "/tasks" }, server)).store();
+    let users = new vue_module_3.vue_module(Object.assign({ entities: "users", endPoint: "/users" }, server)).store();
     let loading = new vue_module_1.vue_module({ server }).store();
     let modal = new vue_module_2.vue_module({ server }).store();
     let offset = new vue_module_4.vue_module({ server }).store();
@@ -28,6 +29,7 @@ function createStore(server) {
             "loading": loading,
             "modal": modal,
             "tasks": tasks,
+            "users": users,
             "offset": offset
         }
     };

@@ -4,10 +4,9 @@
     <span @click="closeOffset()" class="close typcn typcn-delete large"></span>
     <div class="content">
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Tasks</a></li>
-        <li><a href="#">Users</a></li>
-        <li><a href="#">Products</a></li>
+        <li><router-link to="/tasks" title="Home">Home </router-link></li>
+        <li><router-link to="/tasks" title="Tasks">Tasks</router-link></li>
+        <li><router-link to="/users" title="Users">Users</router-link></li>
       </ul>
     </div>
   </div>

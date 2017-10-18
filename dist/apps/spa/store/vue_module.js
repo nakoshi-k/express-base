@@ -13,15 +13,6 @@ class vue_module {
     set getters(getters) {
         this._getters = getters;
     }
-    create() {
-        return {
-            namespaced: true,
-            state: this._state,
-            actions: this._actions,
-            mutations: this._mutations,
-            getters: this._getters,
-        };
-    }
     store() {
         return {
             namespaced: true,

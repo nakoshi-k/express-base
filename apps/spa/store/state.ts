@@ -1,4 +1,5 @@
 export class state{
+
     map = ( call : any ) => {
         if(call === "all" ){
             call = Object.keys(this);

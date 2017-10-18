@@ -1,29 +1,26 @@
 import {actions as core_actions} from "../actions"
 import {internal} from "../../api/internal"
-let api;
+
 export class actions extends core_actions{
     constructor(options){
         super();
-        api = new internal( {
-            host: options.host,
-            endPoint : options.endPoint,
-            request:options.request ,
-            service:options.service 
-          } );
-    }
+   }
 
-    fetchEntities  = ( {commit},route) => {
+    fetchEntities  = ( {commit , getters},route) => {
+        let api = getters.api;
         return api.paginate(route).then((paginate) => {
             commit("setEntities",paginate);
         })
     }
       
-    fetchEntity = ( {commit} ,route) => {
-        return  api.entity(route).then((entity) => {
+    fetchEntity = ( {commit,getters} ,route) => {
+        let api = getters.api;
+        return api.entity(route).then((entity) => {
             commit("setEntity",entity);
         })
     }
-    copyEntity = ( {commit} , copy ) => {
+    copyEntity = ( {commit ,getters} , copy ) => {
+        let api = getters.api;
         let route = {
             params :{
                 id : copy.id,
@@ -40,20 +37,22 @@ export class actions extends core_actions{
         })
     }
 
-    insertEntity = ( {state, commit } , token : string ) => {
+    insertEntity = ( { state, commit ,getters } , token : string ) => {
+        let api = getters.api;
         return api.insert(state.entity , state.mount , token);
     }
 
-    saveEntity = ( {state,commit}, token) => {
+    saveEntity = ( {state,commit ,getters}, token) => {
+        let api = getters.api;
         return  api.update(state.entity, state.mount ,token)
     }
     
-    deleteEntity = ( {state,commit}, delObj ) => {
+    deleteEntity = ( {state,commit,getters}, delObj ) => {
+        let api = getters.api;
         return  api.delete( delObj.id , delObj.mount ,delObj.token)
     }
 
     clearEntity = ({commit}) => {
         return Promise.resolve(commit("setClearEntity"));
-
     }
 }

@@ -41,7 +41,7 @@ Component.registerHooks([
 @Component({
   name: 'find',
   computed : {
-  ...mapState( 'tasks' , {
+  ...mapState( '<%- names %>' , {
     mount : ({mount}) => mount 
   }),
 }

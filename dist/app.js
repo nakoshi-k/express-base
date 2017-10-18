@@ -19,6 +19,7 @@ const methodOverride = require("method-override");
  * router loading
  */
 const router_1 = require("./apps/tasks/router");
+const router_2 = require("./apps/users/router");
 /**
  * main
  */
@@ -32,7 +33,7 @@ class main {
         };
         this.router = (app) => {
             app.use("/tasks", new router_1.router("/tasks"));
-            //app.use("/users" , new users_router().create() );
+            app.use("/users", new router_2.router("/users"));
         };
         this.overrideForm = (req, res) => {
             if (req.body && typeof req.body === 'object' && '_method' in req.body) {
