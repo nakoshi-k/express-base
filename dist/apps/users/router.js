@@ -46,6 +46,7 @@ class router extends router_1.router {
             });
         };
         this.search = (req, res, next) => {
+            console.log(req["user"]["group_id"]);
             if (!this.isXhr(req)) {
                 this.spa(req, res, next);
                 return;

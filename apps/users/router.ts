@@ -81,7 +81,7 @@ export class router extends app_router {
     }
 
     private search = (req : express.Request,res: express.Response, next : express.NextFunction) => {
-
+        console.log(req["user"]["group_id"])
         if(!this.isXhr(req)){
             this.spa( req , res , next )
             return; 

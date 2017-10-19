@@ -2,10 +2,8 @@ import { router as core_router} from "../base/core";
 import {service as app_service} from "./service"
 import { system } from "../base/core";
 import * as helpers from "../base/helper";
-
 import * as passport from "passport";
 import * as passportLocal from "passport-local";
-
 
 export class router extends core_router{
     public name = "router"
@@ -76,8 +74,6 @@ export class router extends core_router{
     constructor (mount){
         super(mount)
         this.auth()
-
-
         this.views = {
             common : __dirname + system.ds + "views",
             typical: __dirname 
