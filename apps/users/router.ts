@@ -81,7 +81,7 @@ export class router extends app_router {
     }
 
     private search = (req : express.Request,res: express.Response, next : express.NextFunction) => {
-        console.log(req["user"]["group_id"])
+        console.log(req.user);
         if(!this.isXhr(req)){
             this.spa( req , res , next )
             return; 
@@ -218,7 +218,8 @@ export class router extends app_router {
     public bind  = (router : express.Router) : express.Router => {
         let csrfProtection = this.csrfProtection
         let auth = this.isAuthenticated;
-        let map = [ auth , csrfProtection ]
+        let map = [  csrfProtection ]
+
         router.get("/", ...map , this.search)
         router.get("/page/:page", ...map , this.search)
         router.get("/login", csrfProtection ,this.spa);

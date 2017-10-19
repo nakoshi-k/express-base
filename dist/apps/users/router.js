@@ -46,7 +46,7 @@ class router extends router_1.router {
             });
         };
         this.search = (req, res, next) => {
-            console.log(req["user"]["group_id"]);
+            console.log(req.user);
             if (!this.isXhr(req)) {
                 this.spa(req, res, next);
                 return;
@@ -173,7 +173,7 @@ class router extends router_1.router {
         this.bind = (router) => {
             let csrfProtection = this.csrfProtection;
             let auth = this.isAuthenticated;
-            let map = [auth, csrfProtection];
+            let map = [csrfProtection];
             router.get("/", ...map, this.search);
             router.get("/page/:page", ...map, this.search);
             router.get("/login", csrfProtection, this.spa);
