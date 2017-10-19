@@ -21426,7 +21426,8 @@ var login = /** @class */ (function (_super) {
         };
         return _this;
     }
-    login.prototype.actions = function () {
+    login.prototype.action = function () {
+        return "";
     };
     login.prototype.login = function () {
     };
@@ -21462,47 +21463,38 @@ var render = function() {
         _vm._v(" "),
         _c("h2", [_vm._v("Login")]),
         _vm._v(" "),
-        _c(
-          "form",
-          {
-            attrs: { action: _vm.action, method: "post" },
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                _vm.login($event)
-              }
-            }
-          },
-          [
-            _c("fieldset", [
-              _c("div", { staticClass: "form-item" }, [
-                _c("label", { attrs: { for: "name" } }, [_vm._v("User Name")]),
-                _vm._v(" "),
-                _c("input", {
-                  attrs: { type: "text", name: "name", placeholder: "name" },
-                  domProps: { value: _vm.entity.name }
-                })
-              ]),
+        _c("form", { attrs: { action: "", method: "post" } }, [
+          _c("fieldset", [
+            _c("input", {
+              attrs: { type: "hidden", name: "_csrf" },
+              domProps: { value: _vm.token }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-item" }, [
+              _c("label", { attrs: { for: "name" } }, [_vm._v("User Name")]),
               _vm._v(" "),
-              _c("div", { staticClass: "form-item" }, [
-                _c("label", { attrs: { for: "password" } }, [
-                  _vm._v("Password")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  attrs: {
-                    type: "password",
-                    name: "password",
-                    placeholder: "password"
-                  },
-                  domProps: { value: _vm.entity.password }
-                })
-              ])
+              _c("input", {
+                attrs: { type: "text", name: "name", placeholder: "name" },
+                domProps: { value: _vm.entity.name }
+              })
             ]),
             _vm._v(" "),
-            _c("button", { attrs: { type: "submit" } }, [_vm._v("Login")])
-          ]
-        )
+            _c("div", { staticClass: "form-item" }, [
+              _c("label", { attrs: { for: "password" } }, [_vm._v("Password")]),
+              _vm._v(" "),
+              _c("input", {
+                attrs: {
+                  type: "password",
+                  name: "password",
+                  placeholder: "password"
+                },
+                domProps: { value: _vm.entity.password }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("button", { attrs: { type: "submit" } }, [_vm._v("Login")])
+        ])
       ])
     ]
   )

@@ -49,6 +49,7 @@
     "node-fetch": "^1.7.3",
     "node-uuid": "^1.4.8",
     "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.10",
     "remodal": "^1.1.1",
     "riot": "^3.7.0",

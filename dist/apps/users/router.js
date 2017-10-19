@@ -136,10 +136,17 @@ class router extends router_1.router {
                 res.json(err);
             });
         };
+        this.login = () => {
+            return this.passport.authenticate('local', { failureRedirect: '/login' }),
+                function (req, res) {
+                    res.redirect('/');
+                };
+        };
         this.bind = (router) => {
             let csrfProtection = this.csrfProtection;
             router.get("/", csrfProtection, this.search);
             router.get("/page/:page", csrfProtection, this.search);
+            router.post("/login", csrfProtection, this.login());
             router.get("/:id", csrfProtection, this.entity);
             router.get("/*", csrfProtection, this.spa);
             router.post("/", csrfProtection, this.insert);

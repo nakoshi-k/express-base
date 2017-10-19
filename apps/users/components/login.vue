@@ -3,8 +3,9 @@
   <div class="panel">
   <h1 class="text-center">Application</h1>
   <h2>Login</h2>
-  <form :action="action" method="post" v-on:submit.prevent="login">
+  <form action="" method="post">
     <fieldset>
+      <input type="hidden" name="_csrf" :value="token">
       <div class="form-item">
         <label for="name">User Name</label>
         <input type="text" name="name"  :value="entity.name" placeholder="name">
@@ -55,9 +56,11 @@ export default class login extends Vue {
     name : "",
     password : ""
   }
-  actions(){
-
+  
+  action(){
+    return "";
   }
+
   login(){
 
   }

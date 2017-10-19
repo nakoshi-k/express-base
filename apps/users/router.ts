@@ -184,10 +184,21 @@ export class router extends app_router {
         })
     }
 
+    public login = () => {
+        return this.passport.authenticate('local', { failureRedirect: '/login' }),
+        function(req, res) {
+        
+          res.redirect('/');
+        };
+    }
+
     public bind  = (router : express.Router) : express.Router => {
         let csrfProtection = this.csrfProtection
         router.get("/", csrfProtection , this.search)
         router.get("/page/:page", csrfProtection , this.search)
+        
+        router.post("/login",  csrfProtection , this.login())
+
         router.get("/:id", csrfProtection , this.entity)
         router.get("/*", csrfProtection , this.spa)
         router.post("/",  csrfProtection , this.insert)

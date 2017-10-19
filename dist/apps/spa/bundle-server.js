@@ -7386,7 +7386,8 @@
                     password: ""
                 };
             }
-            actions() {
+            action() {
+                return "";
             }
             login() {
             }
@@ -7411,9 +7412,9 @@
             var _h = _vm.$createElement;
             var _c = _vm._self._c || _h;
             return _c("div", { staticClass: "login column column-md-50 column-md-offset-25" }, [
-                _vm._ssrNode('<div class="panel"><h1 class="text-center">Application</h1> <h2>Login</h2> <form' +
-                    _vm._ssrAttr("action", _vm.action) +
-                    ' method="post"><fieldset><div class="form-item"><label for="name">User Name</label> <input type="text" name="name" placeholder="name"' +
+                _vm._ssrNode('<div class="panel"><h1 class="text-center">Application</h1> <h2>Login</h2> <form action method="post"><fieldset><input type="hidden" name="_csrf"' +
+                    _vm._ssrAttr("value", _vm.token) +
+                    '> <div class="form-item"><label for="name">User Name</label> <input type="text" name="name" placeholder="name"' +
                     _vm._ssrAttr("value", _vm.entity.name) +
                     '></div> <div class="form-item"><label for="password">Password</label> <input type="password" name="password" placeholder="password"' +
                     _vm._ssrAttr("value", _vm.entity.password) +

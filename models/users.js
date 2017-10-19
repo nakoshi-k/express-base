@@ -52,13 +52,16 @@ module.exports = function(sequelize, DataTypes) {
     },
     instanceMethods: {
       authenticate: function(password, callback) {
-        bcrypt.compare(password, this.password, function(err, isValid) {
-          if (err) {
-            return callback(err);
-          } else {
-            return callback(null, isValid);
-          }
-        });
+        let auth = (resolve,reject) =>  {
+          bcrypt.compare(password, this.password, (err, isValid) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(isVaild);
+            }
+          });
+        }
+        return new Promise(auth)
       },
     },
     /* model validation */
