@@ -6,18 +6,18 @@
         <input type="text" name="id" v-model="frm.id" placeholder="id">
         <label for="name">Name</label>
         <input type="text" name="name" v-model="frm.name" placeholder="name">
-        <label for="password">Password</label>
-        <input type="text" name="password" v-model="frm.password" placeholder="password">
+        <label for="mail">Mail</label>
+        <input type="email" name="mail" v-model="frm.mail" placeholder="mail">
         <label for="group_id">Group</label>
         <input type="text" name="group_id" v-model="frm.group_id" placeholder="group_id">
-        <label for="access_token">Access token</label>
-        <input type="text" name="access_token" v-model="frm.access_token" placeholder="access_token">
-        <label for="refresh_token">Refresh token</label>
-        <input type="text" name="refresh_token" v-model="frm.refresh_token" placeholder="refresh_token">
+        <label for="new_password">New password</label>
+        <input type="password" name="new_password" v-model="frm.new_password" placeholder="new_password">
+        <label for="confirm_password">Confirm password</label>
+        <input type="password" name="confirm_password" v-model="frm.confirm_password" placeholder="confirm_password">
         <label for="created_at">Created at</label>
-        <input class="calendar" type="date" name="created_at" v-model="frm.created_at" placeholder="created_at">
+        <input class="calendar" type="datetime-local" name="created_at" v-model="frm.created_at" placeholder="created_at">
         <label for="updated_at">Updated at</label>
-        <input class="calendar" type="date" name="updated_at" v-model="frm.updated_at" placeholder="updated_at">
+        <input class="calendar" type="datetime-local" name="updated_at" v-model="frm.updated_at" placeholder="updated_at">
         </fieldset>
         <div class="text-right">
           <button type="button" class="button small warning" @click="reset()"><span class="typcn typcn-minus"></span> clear</button>
@@ -60,10 +60,10 @@ export default class search extends Vue {
   frm = {
         "id" : "",
         "name" : "",
-        "password" : "",
+        "mail" : "",
         "group_id" : "",
-        "access_token" : "",
-        "refresh_token" : "",
+        "new_password" : "",
+        "confirm_password" : "",
         "created_at" : "",
         "updated_at" : "",
   }

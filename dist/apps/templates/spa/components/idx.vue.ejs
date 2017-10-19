@@ -4,7 +4,13 @@
   <pagination :pagination="pagination" :mount="mount"></pagination>
   <div class="row border-bottom margin-top" v-for="entity in entities">
     <div class="column">
+      <%_ if(filedsIndex.indexOf("title") > -1){ _%>
       <h3><router-link :to="view(entity.id)">{{ entity.title }}</router-link></h3>
+      <%_ }else if(filedsIndex.indexOf("name") > -1){ _%>
+      <h3><router-link :to="view(entity.id)">{{ entity.name }}</router-link></h3>
+      <%_ }else {_%>
+      <h3><router-link :to="view(entity.id)">{{ entity.id }}</router-link></h3>
+      <%_ }_%>
     </div>
     <div class="column">
       <router-link :to="edit(entity.id)" class="button small"> <span class="typcn typcn-edit"></span> edit</router-link>

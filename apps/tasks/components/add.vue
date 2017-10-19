@@ -12,7 +12,7 @@
 
       <div class="form-item">
         <label for="priod">Priod</label>
-        <input class="calendar" type="date" name="priod" @change="change" :class="validationClass( errors , 'priod')" :value="entity.priod" placeholder="priod">
+        <input class="calendar" type="datetime-local" name="priod" @change="change" :class="validationClass( errors , 'priod')" :value="entity.priod" placeholder="priod">
         <div class="errors" v-for="e in errors.priod"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
       </div>
     </fieldset>

@@ -7,11 +7,11 @@
         <label for="title">Title</label>
         <input type="text" name="title" v-model="frm.title" placeholder="title">
         <label for="priod">Priod</label>
-        <input class="calendar" type="date" name="priod" v-model="frm.priod" placeholder="priod">
+        <input class="calendar" type="datetime-local" name="priod" v-model="frm.priod" placeholder="priod">
         <label for="created_at">Created at</label>
-        <input class="calendar" type="date" name="created_at" v-model="frm.created_at" placeholder="created_at">
+        <input class="calendar" type="datetime-local" name="created_at" v-model="frm.created_at" placeholder="created_at">
         <label for="updated_at">Updated at</label>
-        <input class="calendar" type="date" name="updated_at" v-model="frm.updated_at" placeholder="updated_at">
+        <input class="calendar" type="datetime-local" name="updated_at" v-model="frm.updated_at" placeholder="updated_at">
         </fieldset>
         <div class="text-right">
           <button type="button" class="button small warning" @click="reset()"><span class="typcn typcn-minus"></span> clear</button>

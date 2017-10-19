@@ -1351,8 +1351,28 @@ body {
   letter-spacing: 0.01em;
   line-height: 1.6;
 }
+@font-face {
+  font-family: 'Noto Sans Japanese';
+  font-style: normal;
+  font-weight: 500;
+  src: url("//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Medium.woff2") format('woff2'), url("//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Medium.woff") format('woff'), url("//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Medium.otf") format('opentype');
+}
+@font-face {
+  font-family: 'Noto Sans Japanese';
+  font-style: normal;
+  font-weight: 700;
+  src: url("//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Bold.woff2") format('woff2'), url("//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Bold.woff") format('woff'), url("//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Bold.otf") format('opentype');
+}
+@font-face {
+  font-family: 'Noto Sans Japanese';
+  font-style: normal;
+  font-weight: 900;
+  src: url("//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Black.woff2") format('woff2'), url("//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Black.woff") format('woff'), url("//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Black.otf") format('opentype');
+}
 body {
   background: #f9fdfd;
+  font-family: 'Noto Sans Japanese';
+  font-weight: 500;
   color: #db553e;
 }
 /*
@@ -1783,7 +1803,6 @@ input[type='search'],
 input[type='tel'],
 input[type='text'],
 input[type='url'],
-input[type='date'],
 textarea,
 select {
   appearance: none;
@@ -1803,7 +1822,6 @@ input[type='search']:focus,
 input[type='tel']:focus,
 input[type='text']:focus,
 input[type='url']:focus,
-input[type='date']:focus,
 textarea:focus,
 select:focus {
   border-color: #db553e;

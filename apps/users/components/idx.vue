@@ -4,7 +4,7 @@
   <pagination :pagination="pagination" :mount="mount"></pagination>
   <div class="row border-bottom margin-top" v-for="entity in entities">
     <div class="column">
-      <h3><router-link :to="view(entity.id)">{{ entity.title }}</router-link></h3>
+      <h3><router-link :to="view(entity.id)">{{ entity.name }}</router-link></h3>
     </div>
     <div class="column">
       <router-link :to="edit(entity.id)" class="button small"> <span class="typcn typcn-edit"></span> edit</router-link>

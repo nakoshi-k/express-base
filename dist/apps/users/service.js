@@ -12,10 +12,10 @@ class service extends service_1.service {
             search.page = req.params.page;
             search.append("id", search.like("%{word}%"));
             search.append("name", search.like("%{word}%"));
-            search.append("password", search.like("%{word}%"));
+            search.append("mail", search.like("%{word}%"));
             search.append("group_id", search.like("%{word}%"));
-            search.append("access_token", search.like("%{word}%"));
-            search.append("refresh_token", search.like("%{word}%"));
+            search.append("new_password", search.like("%{word}%"));
+            search.append("confirm_password", search.like("%{word}%"));
             search.append("created_at", search.like("%{word}%"));
             search.append("updated_at", search.like("%{word}%"));
             return search.build();

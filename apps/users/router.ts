@@ -174,6 +174,7 @@ export class router extends app_router {
                 res.status(201)
                 res.json(result)
             }).catch((err) => {
+                console.log(this.service.validationError(err));
                 res.status(400)
                 res.json(this.service.validationError(err))
             })

@@ -5,6 +5,7 @@
             <div class="row row-md-reverse">
               <div class="column text-right">
                 <h1 class="hidden-md"><router-link to="/tasks">Apprication</router-link></h1>
+                <router-link to="/users/login" title="Login">Login</router-link>
               </div>
               <div class="column">
                 <ul class="navigation-list">
