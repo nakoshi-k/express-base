@@ -69,6 +69,7 @@ export class router extends app_router {
             this.setData( {ssr : ssr} )
             this.render( req , res ,viewDir)
         }).catch(err => {
+            console.log(err);
             if ( err.code == 404){
                 res.status(404)
             }
@@ -184,26 +185,50 @@ export class router extends app_router {
         })
     }
 
-    public login = () => {
-        return this.passport.authenticate('local', { failureRedirect: '/login' }),
-        function(req, res) {
-        
-          res.redirect('/');
-        };
+    public login = ( req:express.Request,res:express.Response,next:express.NextFunction ) => {
+        const passport = this.passport;
+        passport.authenticate('local', (err, user, info) => {
+            if (err) { return next(err);}
+            if (!user) { return next(err); }
+            req["logIn"](user, (err) => {
+                if (err) {return next(err)}
+                if(!this.isXhr(req)){
+                    return res.redirect('/users/')
+                }
+            });
+        })(req, res, next);
     }
+
+    public failedLoginAction = ( err ,req:express.Request,res:express.Response,next:express.NextFunction ) => {
+        if(!this.isXhr(req)){
+            res.redirect('/users/login');
+        }
+    }
+
+    public logout = ( req:express.Request,res:express.Response,next:express.NextFunction ) => {
+        req["logOut"]();
+        if(!this.isXhr(req)){
+            res.redirect('/users');
+            this.spa( req , res , next )
+            return; 
+        }
+    }
+
 
     public bind  = (router : express.Router) : express.Router => {
         let csrfProtection = this.csrfProtection
-        router.get("/", csrfProtection , this.search)
-        router.get("/page/:page", csrfProtection , this.search)
-        
-        router.post("/login",  csrfProtection , this.login())
-
-        router.get("/:id", csrfProtection , this.entity)
-        router.get("/*", csrfProtection , this.spa)
-        router.post("/",  csrfProtection , this.insert)
-        router.put("/:id",csrfProtection,this.update)
-        router.delete("/:id", csrfProtection , this.delete)
+        let auth = this.isAuthenticated;
+        let map = [ auth , csrfProtection ]
+        router.get("/", ...map , this.search)
+        router.get("/page/:page", ...map , this.search)
+        router.get("/login", csrfProtection ,this.spa);
+        router.post("/login", csrfProtection , this.login , this.failedLoginAction);
+        router.get("/logout", ...map , this.logout);
+        router.get("/:id", ...map , this.entity)
+        router.get("/*", ...map , this.spa)
+        router.post("/",  ...map , this.insert)
+        router.put("/:id",...map ,this.update)
+        router.delete("/:id", ...map , this.delete)
         return router
     }
 

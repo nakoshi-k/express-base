@@ -6,6 +6,7 @@ import * as cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
 import * as session from 'express-session';
 import * as methodOverride from 'method-override';
+import * as passport from 'passport';
 
 /**
  * router loading
@@ -59,6 +60,9 @@ export class main{
     this.app = express();  
     let app = this.app;
     app.use( session(this.session));
+    app.use(passport.initialize());
+    app.use(passport.session());
+    
     app.set("views",this.views);    
     app.set("view engine",this.view_engine);
     // uncomment after placing your favicon in /public

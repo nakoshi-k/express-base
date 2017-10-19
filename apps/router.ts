@@ -4,7 +4,7 @@ import { system } from "../base/core";
 import * as helpers from "../base/helper";
 
 import * as passport from "passport";
-import * as LocalStrategy from "passport-local";
+import * as passportLocal from "passport-local";
 
 
 export class router extends core_router{
@@ -14,30 +14,60 @@ export class router extends core_router{
     public passport
     public passport_strategy
 
+    isAuthenticated = (req, res, next) =>{
+        if (req.isAuthenticated()) {  // 認証済
+            return next();
+        }
+        else {  // 認証されていない
+            res.redirect('/users/login');  // ログイン画面に遷移
+        }
+    }
+
     auth = () =>  {
+        const LocalStrategy = passportLocal.Strategy;
         let service = new app_service("users");
         let users = service.model;
         this.passport = passport;
-        passport.use(new LocalStrategy(
+
+        this.passport.serializeUser(function(user, done) {
+            done(null, user.id);
+          });
+          
+        this.passport.deserializeUser(function(id, done) {
+            users.findById(id).then(user => {
+                done(null,user)
+            }).catch(e => {
+                done(e)
+            })
+          });
+
+        this.passport.use(new LocalStrategy(
             {
-                usernameField: 'name',
+                usernameField: 'account',
                 passwordField: 'password',
                 session: true
             },
-            (username, password, done) => {
-              users.findOne({ where :{ name : username } }).then(user => {
-                
-                if (!user) {
-                    return done(user);
+            function(username, password, done) {
+                let where : any = { name : username };
+                if(/@/gi.test(username)){
+                    where = { mail : username };
                 }
+                users.findOne({ where : where }).then(user => {
+                    if (!user) {
+                        done("invalid user", false , {"message" : "invalid user"} );
+                        return;
+                    }
+                    user.authenticate(password).then(r => {
+                        done(null,user)
+                        return
+                    }).catch( e => {
+                        done(e, false , {"message" : "invalid password" });
+                        return
+                    });
 
-                user.authenticate(password).then(r => {
-                    return done(null,r)
                 }).catch(e => {
-                    return done(null, false);
-                });
-
-              })
+                    return done(e ,false , {"message" : "can't access storage" })
+                })
 
             }
         ));

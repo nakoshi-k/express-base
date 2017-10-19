@@ -8,7 +8,7 @@
       <input type="hidden" name="_csrf" :value="token">
       <div class="form-item">
         <label for="name">User Name</label>
-        <input type="text" name="name"  :value="entity.name" placeholder="name">
+        <input type="text" name="account"  :value="entity.account" placeholder="name">
       </div>
       <div class="form-item">
         <label for="password">Password</label>
@@ -53,7 +53,7 @@ Component.registerHooks([
 
 export default class login extends Vue {
   entity = {
-    name : "",
+    account : "",
     password : ""
   }
   

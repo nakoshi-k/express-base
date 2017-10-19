@@ -185,13 +185,15 @@ export class router extends app_router {
 
     public bind  = (router : express.Router) : express.Router => {
         let csrfProtection = this.csrfProtection
-        router.get("/", csrfProtection , this.search)
-        router.get("/page/:page", csrfProtection , this.search)
-        router.get("/:id", csrfProtection , this.entity)
-        router.get("/*", csrfProtection , this.spa)
-        router.post("/",  csrfProtection , this.insert)
-        router.put("/:id",csrfProtection,this.update)
-        router.delete("/:id", csrfProtection , this.delete)
+        let auth = this.isAuthenticated;
+        let map = [ auth , csrfProtection ]
+        router.get("/", ...map , this.search)
+        router.get("/page/:page", ...map , this.search)
+        router.get("/:id", ...map , this.entity)
+        router.get("/*", ...map , this.spa)
+        router.post("/", ...map , this.insert)
+        router.put("/:id", ...map ,this.update)
+        router.delete("/:id", ...map , this.delete)
         return router
     }
 

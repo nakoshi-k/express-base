@@ -15,6 +15,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const methodOverride = require("method-override");
+const passport = require("passport");
 /**
  * router loading
  */
@@ -46,6 +47,8 @@ class main {
         this.app = express();
         let app = this.app;
         app.use(session(this.session));
+        app.use(passport.initialize());
+        app.use(passport.session());
         app.set("views", this.views);
         app.set("view engine", this.view_engine);
         // uncomment after placing your favicon in /public
