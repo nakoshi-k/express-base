@@ -12,7 +12,7 @@ import * as passport from 'passport';
  * router loading
  */
 import { router as spa_router} from "./apps/spa/server_router";
-//import { router as tasks_router} from "./apps/api/tasks/router";
+import { router as tasks_router} from "./apps/api/tasks/router";
 
 /**
  * main
@@ -79,7 +79,7 @@ export class main{
   }
   
   private router = (app) => {
-    //app.use("/api/tasks" , new tasks_router("/api/tasks") );
+    app.use("/api/tasks" , new tasks_router("/api/tasks") );
     app.use("/" , new spa_router("/") );
   }
   

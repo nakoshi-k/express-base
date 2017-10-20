@@ -20,7 +20,7 @@ const passport = require("passport");
  * router loading
  */
 const server_router_1 = require("./apps/spa/server_router");
-//import { router as tasks_router} from "./apps/api/tasks/router";
+const router_1 = require("./apps/api/tasks/router");
 /**
  * main
  */
@@ -33,7 +33,7 @@ class main {
             return this.app;
         };
         this.router = (app) => {
-            //app.use("/api/tasks" , new tasks_router("/api/tasks") );
+            app.use("/api/tasks", new router_1.router("/api/tasks"));
             app.use("/", new server_router_1.router("/"));
         };
         this.overrideForm = (req, res) => {

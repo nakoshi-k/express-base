@@ -87,7 +87,7 @@ class router extends apps_router_1.router {
         this.bind = (router) => {
             let csrfProtection = this.csrfProtection;
             let auth = this.isAuthenticated;
-            let map = [auth, csrfProtection];
+            let map = [csrfProtection];
             router.get("/", ...map, this.search);
             router.get("/page/:page", ...map, this.search);
             router.get("/:id", ...map, this.entity);

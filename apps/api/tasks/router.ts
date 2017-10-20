@@ -2,12 +2,8 @@ import * as express from "express"
 import * as path from "path"
 import {router as apps_router} from "../../apps_router"
 import {service} from "./service"
-import * as helpers  from "../../../base/helper"
 import {input_error} from "../../../base/core"
-import * as Vue from "vue"
-import * as Router from "vue-router"
-import * as Request from "request"
-import * as serialize from "serialize-javascript"
+
 
 export class router extends apps_router {
     public name = "tasks"
@@ -25,12 +21,10 @@ export class router extends apps_router {
     }
 
     private search = (req : express.Request,res: express.Response, next : express.NextFunction) => {
-
         let pagination = this.service.pagination()
         let conditions = this.service.conditions( req )
         let entities = pagination.find( conditions , req.query)
         let data = {}
-        
         entities.then( (result : {rows : any, count :number,pagination:any}) => {
             data[this.entities_name] = result.rows
             data["page"] = result.pagination
@@ -45,7 +39,6 @@ export class router extends apps_router {
     }
    
     private entity = (req:express.Request,res:express.Response,next:express.NextFunction) => {
-
         let model = this.model
         let data = {}
         model.findById( req.params.id ).then((result) => {
@@ -80,7 +73,6 @@ export class router extends apps_router {
     }
 
     private insert = (req: express.Request,res:express.Response,next:express.NextFunction) => {
-
         let entity = this.model.build(req.body)
         entity.save().then( (result) => {
             res.status(201)
@@ -92,7 +84,6 @@ export class router extends apps_router {
     }
 
     private update = (req:express.Request,res:express.Response,next:express.NextFunction) => {
-
         let model = this.model
         model.findById( req.params.id ).then((entity) => {
             entity.update(req.body).then( (result) => {
@@ -111,7 +102,7 @@ export class router extends apps_router {
     public bind  = (router : express.Router) : express.Router => {
         let csrfProtection = this.csrfProtection
         let auth = this.isAuthenticated;
-        let map = [ auth , csrfProtection ]
+        let map = [ csrfProtection ]
         router.get("/", ...map , this.search)
         router.get("/page/:page", ...map , this.search)
         router.get("/:id", ...map , this.entity)

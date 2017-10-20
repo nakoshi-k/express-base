@@ -71,21 +71,18 @@ export class router extends core_router{
             }
         }
         this.ssr(context).then(ssr => {
-            let viewDir = path.resolve(__dirname + '/../views/')
             this.setData( {ssr : ssr} )
-            this.render( req , res ,viewDir)
+            this.render( req , res ,"view")
         }).catch(err => {
-            console.log(err);
             if ( err.code == 404){
                 res.status(404)
             }
             res.render('error', {
                 message: err.code,
                 error: {}
-              })
+            })
         })
     }
-
 
 
     public bind  = (router : express.Router) : express.Router => {

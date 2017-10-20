@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const apps_router_1 = require("../apps_router");
-const path = require("path");
 const Vue = require("vue");
 const Router = require("vue-router");
 Vue.use(Router);
@@ -58,11 +57,9 @@ class router extends apps_router_1.router {
                 }
             };
             this.ssr(context).then(ssr => {
-                let viewDir = path.resolve(__dirname + '/../views/');
                 this.setData({ ssr: ssr });
-                this.render(req, res, viewDir);
+                this.render(req, res, "view");
             }).catch(err => {
-                console.log(err);
                 if (err.code == 404) {
                     res.status(404);
                 }

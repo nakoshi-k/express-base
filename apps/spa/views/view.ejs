@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <%- include('./tile/head') %> 
+  </head>
+  <body data-csrf-token="<%= csrf %>">
+    <%- ssr %>
+    <script src="/client.js"></script>
+  </body>
+</html>
+
