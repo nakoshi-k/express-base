@@ -16,7 +16,6 @@ vue_1.default.mixin({
                     this.$store.commit("loading/endLoading", "success");
                 }, 240);
             }).catch(err => {
-                let domain = this.$store.state["domain"];
                 this.$router.push({ path: `/tasks` });
             });
             this["dataPromise"] = ad;
@@ -41,9 +40,9 @@ vue_1.default.mixin({
         }
     }
 });
-function createApp(server) {
+function createApp(feeds) {
     const router = client_router_1.createRouter();
-    const store = store_1.createStore(server);
+    const store = store_1.createStore(feeds);
     vuex_router_sync_1.sync(store, router);
     const app = new vue_1.default({
         router,

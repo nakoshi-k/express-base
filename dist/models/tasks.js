@@ -1,4 +1,5 @@
 'use strict';
+let moment = require("moment");
 module.exports = function(sequelize, DataTypes) {
   var tasks = sequelize.define('tasks', {
     id: {
@@ -18,6 +19,9 @@ module.exports = function(sequelize, DataTypes) {
      priod: {
       type : DataTypes.DATE,
       validate : {
+      },
+      get : function(value){
+        return moment(this.getDataValue(value)).format("YYYY-MM-DD HH:mm:ss");
       }
     }
   }, {

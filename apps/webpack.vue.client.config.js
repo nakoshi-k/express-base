@@ -1,5 +1,5 @@
 let path =require("path");
-let outdir = path.resolve( __dirname + "/../../dist/apps/public/");
+let outdir = path.resolve( __dirname + "/../dist/apps/public/");
 
 module.exports  = {
             entry: __dirname + "/spa/client_pack.ts",

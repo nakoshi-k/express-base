@@ -12,7 +12,6 @@ class internal {
             }
         };
         this.endPoint = "";
-        this.host = "";
         this.client = (url, options) => {
             let base = this.options;
             if (options.headers) {
@@ -42,10 +41,10 @@ class internal {
         };
         this.serverPagination = (route) => {
             let serverPagination = (resolve, reject) => {
-                let pagination = this.service.pagination();
-                let conditions = this.service.conditions(route);
+                let pagination = this.feeds.pagination(this.resource);
+                let conditions = this.feeds.conditions(route);
                 let entities = pagination.find(conditions, route.query);
-                let name = this.service.name;
+                let name = this.resource;
                 let data = {};
                 entities.then((result) => {
                     if (result.rows.length === 0) {
@@ -64,9 +63,8 @@ class internal {
             return serverPagination;
         };
         this.serverEntity = (route) => {
-            let entity = this.service.model;
             let serverEntity = (resolve, reject) => {
-                let model = this.service.model;
+                let model = this.feeds.model(this.resource);
                 let data = {};
                 model.findById(route.params.id).then((result) => {
                     if (!result) {
@@ -81,7 +79,6 @@ class internal {
             return serverEntity;
         };
         this.server = (type, route) => {
-            let req = this.request;
             let server;
             if (type === "paginate") {
                 server = this.serverPagination(route);
@@ -107,9 +104,9 @@ class internal {
             }
             return this.client(URI, {});
         };
-        this.insert = (entity, mount, token) => {
+        this.insert = (entity, token) => {
             entity = JSON.stringify(entity);
-            let URI = mount;
+            let URI = this.endPoint;
             let insert = (resolve, reject) => {
                 this.client(URI, {
                     body: entity,
@@ -125,8 +122,8 @@ class internal {
             };
             return new Promise(insert);
         };
-        this.update = (entity, mount, token) => {
-            let URI = mount + "/" + entity.id;
+        this.update = (entity, token) => {
+            let URI = this.endPoint + "/" + entity.id;
             entity = JSON.stringify(entity);
             let insert = (resolve, reject) => {
                 this.client(URI, {
@@ -143,8 +140,8 @@ class internal {
             };
             return new Promise(insert);
         };
-        this.delete = (id, mount, token) => {
-            let URI = mount + "/" + id;
+        this.delete = (id, token) => {
+            let URI = this.endPoint + "/" + id;
             let del = (resolve, reject) => {
                 this.client(URI, {
                     method: "delete",
@@ -160,9 +157,8 @@ class internal {
             return new Promise(del);
         };
         this.endPoint = options.endPoint;
-        this.host = options.host;
-        this.request = options.request;
-        this.service = options.service;
+        this.resource = options.resource;
+        this.feeds = options.feeds;
     }
     get options() {
         return Object.create(this._options);

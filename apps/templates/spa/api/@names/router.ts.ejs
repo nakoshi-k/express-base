@@ -1,20 +1,11 @@
 import * as express from "express"
 import * as path from "path"
-import {router as app_router} from "../router"
+import {router as apps_router} from "../../apps_router"
 import {service} from "./service"
-import * as helpers  from "../../base/helper"
-import {input_error} from "../../base/core"
-import * as Vue from "vue"
-import * as Router from "vue-router"
-import * as Request from "request"
-import * as serialize from "serialize-javascript"
+import {input_error} from "../../../base/core"
 
-Vue.use(Router)
 
-import * as VueRender from "vue-server-renderer"
-import {default as BundleServer}  from "../spa/bundle-server"
-
-export class router extends app_router {
+export class router extends apps_router {
     public name = "<%- names %>"
     public service:service
     
@@ -26,71 +17,14 @@ export class router extends app_router {
     }
     
     protected beforeRender = (req,res) => {
-        this.helper("form" ,new helpers.form())
-        this.helper("pagination" , new helpers.pagination() )
         this.csrfReady(req)
     }
 
-
-    private ssr(context){
-        const renderer = VueRender.createRenderer()
-        let server : any = BundleServer
-        let ssr = (resolve,reject) => {
-            server( context ).then( (app : Vue) => {
-                let stateTag =`<script>window.__INITIAL_STATE__=${ serialize(app.$store.state, { isJSON: true }) }</script>` 
-                renderer.renderToString( app , (err:any,html)  => {
-                    console.log(err)
-                    if (err) {
-                        if (err.code === 404) {
-                          reject(404)
-                        } 
-                       reject(500)
-                       return
-                    }
-                    resolve( html + stateTag)
-              })
-            });
-        }
-        return new Promise(ssr)
-    }
-
-    private spa = (req : express.Request,res: express.Response, next : express.NextFunction) => {
-        const context = {
-            url: `${this.mount}${req.url}`,
-            server : {
-                host : req.protocol + '://' + req.headers.host ,
-                request : Request,
-                service : this.service,
-                mount : this.mount
-            }
-        }
-        this.ssr(context).then(ssr => {
-            let viewDir = path.resolve(__dirname + '/../views/spa')
-            this.setData( {ssr : ssr} )
-            this.render( req , res ,viewDir)
-        }).catch(err => {
-            if ( err.code == 404){
-                res.status(404)
-            }
-            res.render('error', {
-                message: err.code,
-                error: {}
-              })
-        })
-    }
-
     private search = (req : express.Request,res: express.Response, next : express.NextFunction) => {
-
-        if(!this.isXhr(req)){
-            this.spa( req , res , next )
-            return; 
-        }
-
         let pagination = this.service.pagination()
         let conditions = this.service.conditions( req )
         let entities = pagination.find( conditions , req.query)
         let data = {}
-        
         entities.then( (result : {rows : any, count :number,pagination:any}) => {
             data[this.entities_name] = result.rows
             data["page"] = result.pagination
@@ -105,12 +39,6 @@ export class router extends app_router {
     }
    
     private entity = (req:express.Request,res:express.Response,next:express.NextFunction) => {
-        
-        if(!this.isXhr(req)){
-            this.spa( req , res , next )
-            return; 
-        }
-
         let model = this.model
         let data = {}
         model.findById( req.params.id ).then((result) => {
@@ -145,12 +73,6 @@ export class router extends app_router {
     }
 
     private insert = (req: express.Request,res:express.Response,next:express.NextFunction) => {
-
-        if(!this.isXhr(req)){
-            this.spa( req , res , next )
-            return; 
-        }
-
         let entity = this.model.build(req.body)
         entity.save().then( (result) => {
             res.status(201)
@@ -162,12 +84,6 @@ export class router extends app_router {
     }
 
     private update = (req:express.Request,res:express.Response,next:express.NextFunction) => {
-
-        if(!this.isXhr(req)){
-            this.spa( req , res , next )
-            return; 
-        }
-
         let model = this.model
         model.findById( req.params.id ).then((entity) => {
             entity.update(req.body).then( (result) => {
@@ -185,13 +101,14 @@ export class router extends app_router {
 
     public bind  = (router : express.Router) : express.Router => {
         let csrfProtection = this.csrfProtection
-        router.get("/", csrfProtection , this.search)
-        router.get("/page/:page", csrfProtection , this.search)
-        router.get("/:id", csrfProtection , this.entity)
-        router.get("/*", csrfProtection , this.spa)
-        router.post("/",  csrfProtection , this.insert)
-        router.put("/:id",csrfProtection,this.update)
-        router.delete("/:id", csrfProtection , this.delete)
+        let auth = this.isAuthenticated;
+        let map = [ csrfProtection ]
+        router.get("/", ...map , this.search)
+        router.get("/page/:page", ...map , this.search)
+        router.get("/:id", ...map , this.entity)
+        router.post("/", ...map , this.insert)
+        router.put("/:id", ...map ,this.update)
+        router.delete("/:id", ...map , this.delete)
         return router
     }
 

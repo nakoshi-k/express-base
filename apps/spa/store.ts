@@ -2,17 +2,16 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
-/*
-import {createOptionsInterFace,createOptions} from "./interface/interface";
-import {vue_module as loading_module } from './store/loading/vue_module';
-import {vue_module as modal_module } from './store/modal/vue_module';
-import {vue_module as crud_module } from './store/crud/vue_module';
-import {vue_module as offset_module } from './store/offset/vue_module';
-*/
+import {store_module as loading_module } from './loading/store_module';
+import {store_module as modal_module } from './modal/store_module';
+import {store_module as offset_module } from './offset/store_module';
+
 
 import {store_module as tasks_module } from './tasks/store_module'
+import {store_module as users_module } from './users/store_module'
+import {store_module as auth_module} from './auth/store_module'
 
-export function createStore(server){ 
+export function createStore( feeds ){ 
   let getters = {
     token : (state) => {
       if(typeof window === "undefined"){
@@ -24,25 +23,23 @@ export function createStore(server){
     }
   }
 
-  let tasks = new tasks_module({ entities : "tasks" , endPoint : "/tasks" , ...server} ).store()
+  let tasks = new tasks_module({ entities : "tasks" , endPoint : "/tasks" , ...feeds} ).store()
+  let users = new users_module({ entities : "users" , endPoint : "/users" , ...feeds} ).store();
+  let auth = new auth_module({ ...feeds} ).store();
 
-/*
-let users = new crud_module({ entities : "users" , endPoint : "/users" , ...server} ).store();
-let loading = new loading_module({server}).store();
-let modal = new modal_module({server}).store();
-let offset = new offset_module({server}).store();
-*/  
+  let loading = new loading_module({...feeds}).store();
+  let modal = new modal_module({...feeds}).store();
+  let offset = new offset_module({...feeds}).store();
 
 let vuex : Vuex.StoreOptions<any> =  {
     getters: getters,
     modules:{
       "tasks" : tasks,
-      /*
       "loading" : loading,
       "modal" : modal,
       "users" : users,
+      "auth" : auth,
       "offset" : offset
-      */
     }
   }
 

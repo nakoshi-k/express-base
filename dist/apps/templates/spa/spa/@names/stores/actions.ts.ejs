@@ -1,33 +1,32 @@
 import {actions as core_actions} from "../../../../base/spa/stores/actions"
-import {internal} from "../../../resources/internal"
 
 export class actions extends core_actions{
-    constructor(options){
+    constructor(feeds){
         super();
    }
 
-    fetchEntities  = ( {commit , getters},route) => {
-        let api = getters.api;
-        return api.paginate(route).then((paginate) => {
+    fetchEntities  = ( {commit , getters , state },route) => {
+        let crud = getters.crud;
+        return crud.paginate(route).then((paginate) => {
             commit("setEntities",paginate);
         })
     }
       
-    fetchEntity = ( {commit,getters} ,route) => {
-        let api = getters.api;
-        return api.entity(route).then((entity) => {
+    fetchEntity = ( {commit,getters ,state} ,route) => {
+        let crud = getters.crud;
+        return crud.entity(route).then((entity) => {
             commit("setEntity",entity);
         })
     }
-    copyEntity = ( {commit ,getters} , copy ) => {
-        let api = getters.api;
+    copyEntity = ( {commit ,getters , state} , copy ) => {
         let route = {
             params :{
                 id : copy.id,
             },
             path : copy.mount + "/" + copy.id,
         }
-        return  api.entity(route).then((entity) => {
+        let crud = getters.crud;
+        return  crud.entity(route).then((entity) => {
             for(let key in entity){
                 if(key === "id" || key === "updated_at" || key === "created_at"){
                     delete entity[key];
@@ -38,21 +37,22 @@ export class actions extends core_actions{
     }
 
     insertEntity = ( { state, commit ,getters } , token : string ) => {
-        let api = getters.api;
-        return api.insert(state.entity , state.mount , token);
+        let crud = getters.crud;
+        return crud.insert(state.entity,token);
     }
 
     saveEntity = ( {state,commit ,getters}, token) => {
-        let api = getters.api;
-        return  api.update(state.entity, state.mount ,token)
+        let crud = getters.crud;
+        return  crud.update(state.entity,token)
     }
     
     deleteEntity = ( {state,commit,getters}, delObj ) => {
-        let api = getters.api;
-        return  api.delete( delObj.id , delObj.mount ,delObj.token)
+        let crud = getters.crud;
+        return  crud.delete( delObj.id , delObj.token)
     }
 
     clearEntity = ({commit}) => {
         return Promise.resolve(commit("setClearEntity"));
     }
+
 }

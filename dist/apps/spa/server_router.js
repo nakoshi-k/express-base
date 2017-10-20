@@ -9,12 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const apps_router_1 = require("../apps_router");
+const path = require("path");
 const Vue = require("vue");
 const Router = require("vue-router");
 Vue.use(Router);
 const VueRender = require("vue-server-renderer");
-const Request = require("request");
 const serialize = require("serialize-javascript");
+const feeds_1 = require("../resources/feeds");
 const bundle_server_1 = require("./bundle-server");
 class router extends apps_router_1.router {
     constructor(mount) {
@@ -48,17 +49,13 @@ class router extends apps_router_1.router {
         };
         this.view = (req, res, next) => {
             const context = {
-                url: `${this.mount}${req.url}`,
-                server: {
-                    host: req.protocol + '://' + req.headers.host,
-                    request: Request,
-                    service: this.service,
-                    mount: this.mount
-                }
+                url: req.url,
+                feeds: new feeds_1.feeds()
             };
             this.ssr(context).then(ssr => {
                 this.setData({ ssr: ssr });
-                this.render(req, res, "view");
+                let d = path.resolve(__dirname + path.sep + ".." + path.sep + "views");
+                this.render(req, res, d + path.sep + "view");
             }).catch(err => {
                 if (err.code == 404) {
                     res.status(404);
@@ -68,6 +65,9 @@ class router extends apps_router_1.router {
                     error: {}
                 });
             });
+        };
+        this.beforeRender = (req, res) => {
+            this.csrfReady(req);
         };
         this.bind = (router) => {
             let csrfProtection = this.csrfProtection;

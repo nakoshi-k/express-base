@@ -1,5 +1,5 @@
 import Router, { RouteConfig } from 'vue-router'
-import * as global from '../spa/components/global'
+import navigation from '../navigation/components/navigation.vue'
 import sub from './components/sub.vue'
 import idx from './components/idx.vue'
 import add from './components/add.vue'
@@ -7,9 +7,9 @@ import view from './components/view.vue'
 import edit from './components/edit.vue'
 let mount = "/<%- names %>"
 export default [
-    { name : "<%- names %>_page" ,path: `${mount}/page/:page*`, components: { main : idx , navi : global.navi ,sub : sub } } as RouteConfig,
+    { name : "<%- names %>_page" ,path: `${mount}/page/:page*`, components: { main : idx , navi : navigation,sub : sub } } as RouteConfig,
     { name : "<%- names %>_index" ,path: `${mount}/page/1` , alias : `${mount}/` } as RouteConfig,
-    { name : "<%- names %>_add" , path: `${mount}/add`, components: { main : add , navi : global.navi ,sub : sub } } as RouteConfig,
-    { name : "<%- names %>_view" , path: `${mount}/:id`, components: { main : view , navi : global.navi ,sub : sub } } as RouteConfig,
-    { name : "<%- names %>_edit" , path: `${mount}/:id/edit`, components: { main : edit , navi : global.navi ,sub : sub } } as RouteConfig,
+    { name : "<%- names %>_add" , path: `${mount}/add`, components: { main : add , navi : navigation ,sub : sub } } as RouteConfig,
+    { name : "<%- names %>_view" , path: `${mount}/:id`, components: { main : view , navi : navigation ,sub : sub } } as RouteConfig,
+    { name : "<%- names %>_edit" , path: `${mount}/:id/edit`, components: { main : edit , navi : navigation ,sub : sub } } as RouteConfig,
 ]

@@ -5,7 +5,7 @@ import {state} from "./stores/state"
 import {getters} from "./stores/getters"
 
 
-export class vue_module extends core_module{
+export class store_module extends core_module{
     
     constructor(options){
         super();

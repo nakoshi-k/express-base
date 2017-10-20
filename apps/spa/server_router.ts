@@ -11,6 +11,7 @@ Vue.use(Router)
 import * as VueRender from "vue-server-renderer"
 import * as Request from "request"
 import * as serialize from "serialize-javascript"
+import {feeds as resources_feeds} from "../resources/feeds"
 import {default as BundleServer}  from "./bundle-server"
 
 export class router extends core_router{
@@ -23,6 +24,8 @@ export class router extends core_router{
         this.mount = mount
         return this.create()
     }
+
+
 
     private app : (context) => Promise<Vue> = (context) => {
         let server : any = BundleServer
@@ -62,17 +65,13 @@ export class router extends core_router{
 
     private view = (req : express.Request,res: express.Response, next : express.NextFunction) => {
         const context = {
-            url: `${this.mount}${req.url}`,
-            server : {
-                host : req.protocol + '://' + req.headers.host ,
-                request : Request,
-                service : this.service,
-                mount : this.mount
-            }
+            url: req.url,
+            feeds : new resources_feeds()
         }
         this.ssr(context).then(ssr => {
             this.setData( {ssr : ssr} )
-            this.render( req , res ,"view")
+            let d = path.resolve( __dirname + path.sep + ".." + path.sep + "views"  )
+            this.render( req , res , d +  path.sep + "view")
         }).catch(err => {
             if ( err.code == 404){
                 res.status(404)
@@ -84,6 +83,9 @@ export class router extends core_router{
         })
     }
 
+    protected beforeRender = (req,res) => {
+        this.csrfReady(req)
+    }
 
     public bind  = (router : express.Router) : express.Router => {
         let csrfProtection = this.csrfProtection

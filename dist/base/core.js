@@ -16,3 +16,5 @@ var search_1 = require("./core/search");
 exports.search = search_1.search;
 var service_1 = require("./core/service");
 exports.service = service_1.service;
+var validation_1 = require("./core/validation");
+exports.validation_error = validation_1.validation_error;

@@ -3,14 +3,14 @@ import Vue from "vue";
 
 export default context => {
   let server = (resolve,reject) => {
-    let server = context.server;
-    const {app, router,store} = createApp(server);
+    let feeds = context.feeds;
+    const {app, router,store} = createApp(feeds);
     router.push(context.url);
+
     router.onReady(() => {
       const matchedComponents = router.getMatchedComponents();
-      
       if(!matchedComponents.length){
-        resolve(app)
+        reject(app)
         return
       }
 
@@ -36,7 +36,6 @@ export default context => {
         context.state = store.state;
         resolve(app);
       }).catch(e => {
-        router.push({ path : context.mount });
         resolve(app);
       })
 

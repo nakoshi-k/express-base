@@ -6,13 +6,13 @@ export class store_module{
     protected _getters:{key?:Getter<any,any>};
     
     
-    set state(state:{key?:any}){
+    set state(state:{}){
         this._state = state
     }
-    set actions(actions:{key?:Action<any,any>}){
+    set actions(actions:{}){
         this._actions = actions
     }
-    set mutations(mutations:{key?:Dispatch}){
+    set mutations(mutations:{}){
         this._mutations = mutations 
     }
     set getters(getters:any){

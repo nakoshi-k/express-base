@@ -4,16 +4,25 @@ import {actions} from "./stores/actions"
 import {state} from "./stores/state"
 import {getters} from "./stores/getters"
 
+import {internal} from "../../resources/internal"
+
 export class store_module extends core_module{
     
-    constructor( options ){
+    constructor( feeds ){
         super();
-        this.state = new state( options ).map("all");
-        this.actions = new actions( options ).map("all");
-        this.mutations = new mutations( options ).map("all");
-        this.getters = new getters( options ).map("all");
+        this.state = new state( feeds ).map("all")
+        this.actions = new actions( feeds ).map("all");
+        this.mutations = new mutations( feeds ).map("all");
+        let local_getters = new getters( feeds ).map("all");
+        let crud = () => {
+            return new internal({
+                endPoint : "/api/<%- names %>",
+                resource : "<%- names %>",
+                feeds:feeds 
+            });
+        }
+        this.getters = { ...local_getters , crud : crud };
     }
-
 }
 
 

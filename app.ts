@@ -13,6 +13,7 @@ import * as passport from 'passport';
  */
 import { router as spa_router} from "./apps/spa/server_router";
 import { router as tasks_router} from "./apps/api/tasks/router";
+import { router as users_router} from "./apps/api/users/router";
 
 /**
  * main
@@ -80,6 +81,7 @@ export class main{
   
   private router = (app) => {
     app.use("/api/tasks" , new tasks_router("/api/tasks") );
+    app.use("/api/users" , new users_router("/api/users") );
     app.use("/" , new spa_router("/") );
   }
   

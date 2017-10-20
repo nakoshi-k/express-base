@@ -5,7 +5,7 @@ const mutations_1 = require("./stores/mutations");
 const actions_1 = require("./stores/actions");
 const state_1 = require("./stores/state");
 const getters_1 = require("./stores/getters");
-class vue_module extends store_module_1.store_module {
+class store_module extends store_module_1.store_module {
     constructor(options) {
         super();
         this.state = new state_1.state(options).map("all");
@@ -14,4 +14,4 @@ class vue_module extends store_module_1.store_module {
         this.getters = new getters_1.getters(options).map("all");
     }
 }
-exports.vue_module = vue_module;
+exports.store_module = store_module;

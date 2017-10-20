@@ -5,7 +5,7 @@
     <fieldset>
     <%_ fields.forEach(function (field) { _%>
       <%_
-      if( ["updated_at", "created_at"].indexOf(field.name)  >= 0 ) {
+      if( ["updated_at", "created_at" , "password"].indexOf(field.name)  >= 0 ) {
         return
         }
       if( /"type" : "hidden"/.test(field.attr) ) { _%>
@@ -44,8 +44,8 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import {mapGetters,mapState,mapActions,mapMutations} from 'vuex'
 import * as flatpickr from "flatpickr"
-import * as confirmDatePlugin from "../../../node_modules/flatpickr/src/plugins/confirmDate/confirmDate.js"
-import form_validation from "../../spa/utility/validation"
+import * as confirmDatePlugin from "../../../../node_modules/flatpickr/src/plugins/confirmDate/confirmDate.js"
+import form_validation from "../../../utilities/validation"
 
 
 Component.registerHooks([

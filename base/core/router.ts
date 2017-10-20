@@ -41,7 +41,7 @@ export abstract class router{
     protected csrfReady = (req , form = "form") => {
         let csrf = req.csrfToken();
         this.vars["csrf"] = csrf;
-        this.vars.hlp[form].bind = {"csrf" : csrf};
+        //this.vars.hlp[form].bind = {"csrf" : csrf};
     }
 
     protected bind = (router:express.Router) : express.Router => {
@@ -96,13 +96,12 @@ export abstract class router{
         this.beforeRender(req,res);
         let loading = this.loading();
         loading.then( (result) => {
-            let f = view.substring(1,1);
+            let f = view.substring(0,1);
             let ds :string = system.ds;
             
             if(f !== "." && f !== ds ){
                let dir =  [this.views.typical , this.name , "views"].join(ds);
                req.app.set('views', dir);
-               view = view;
             }
             res.render( view ,this.vars , (err,html) => {
                 if(!err){

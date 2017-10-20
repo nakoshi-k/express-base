@@ -16,15 +16,13 @@ export class internal{
         return Object.create(this._options);
     }
     private endPoint = "";
-    private host = "";
-    private request:Request;
-    private service:any;
+    private feeds:any;
+    private resource:any;
 
     constructor( options ){
         this.endPoint = options.endPoint;
-        this.host = options.host;
-        this.request = options.request;
-        this.service = options.service
+        this.resource = options.resource;
+        this.feeds = options.feeds
     }
     
     private client = (url :string ,options :any ) =>{
@@ -59,10 +57,10 @@ export class internal{
     
     private serverPagination = (route) => {
        let serverPagination = (resolve,reject) => {
-            let pagination = this.service.pagination();
-            let conditions = this.service.conditions( route );
+            let pagination = this.feeds.pagination(this.resource);
+            let conditions = this.feeds.conditions( route );
             let entities = pagination.find( conditions ,route.query);
-            let name = this.service.name;
+            let name = this.resource;
             let data = {};
             entities.then( (result : {rows : any, count :number,pagination:any}) => {
                 if(result.rows.length  === 0){
@@ -81,9 +79,8 @@ export class internal{
     }
 
     private serverEntity = (route) => {
-        let entity = this.service.model;
         let serverEntity = (resolve,reject) => {
-            let model = this.service.model;
+            let model = this.feeds.model(this.resource);
             let data = {};
             model.findById( route.params.id ).then((result) => {
                 if(!result){
@@ -99,7 +96,6 @@ export class internal{
    }     
     
     private server = ( type : string ,route) =>{
-        let req : any = this.request;
         let server:any;
         if(type === "paginate"){
            server = this.serverPagination(route);
@@ -137,9 +133,9 @@ export class internal{
         return this.client(URI ,{});
     }
 
-    public insert = (entity,mount:string,token:string) => {
+    public insert = (entity,token:string) => {
         entity = JSON.stringify(entity);
-        let URI = mount;
+        let URI = this.endPoint;
         let insert = (resolve,reject) => {
             this.client( URI , {
                 body : entity,
@@ -156,8 +152,8 @@ export class internal{
         return new Promise(insert);
     }
 
-    public update = (entity,mount:string,token:string) => {
-        let URI = mount + "/" + entity.id;
+    public update = (entity,token:string) => {
+        let URI = this.endPoint + "/" + entity.id;
         entity = JSON.stringify(entity);
         let insert = (resolve,reject) => {
             this.client( URI , {
@@ -175,8 +171,8 @@ export class internal{
         return new Promise(insert);
     }
 
-    public delete = (id , mount, token ) => {
-        let URI = mount + "/" + id;
+    public delete = (id , token ) => {
+        let URI = this.endPoint + "/" + id;
         let del = (resolve,reject) => {
             this.client( URI , {
                 method : "delete",
