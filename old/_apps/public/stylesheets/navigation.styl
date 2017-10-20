@@ -1,0 +1,74 @@
+.navigation
+    background: rgb(252,255,254); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(252,255,254,1) 67%, rgba(244,247,247,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(252,255,254,1) 67%,rgba(244,247,247,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(252,255,254,1) 67%,rgba(244,247,247,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    border-bottom .1rem solid color-quaternary
+    display block
+    height 5.2rem
+    lef 0
+    max-width 100%
+    position fixed
+    right 0
+    top 0
+    width 100%
+    z-index: 1
+    
+    .navigation-list
+        list-style none
+        display flex
+        margin 0
+        padding 0
+    
+        li
+            margin-bottom 0
+            margin-left 2.5rem
+        li:first-child
+            margin-bottom 0
+            margin-left 0
+        li > a
+            display inline
+            font-size 1.6rem
+            line-height 5.2rem
+            padding 0
+            text-decoration none
+            font-weight bold
+    
+.navigation-stack 
+    display block;
+    
+    .navigation-list
+        list-style none;
+        margin 0
+        padding 0
+    
+    .navigation-list li
+        margin 0
+        border-bottom .1rem solid color-primary-light
+        padding 0
+    
+    .navigation-list li > a
+        transition 0.3s background-color ease, 0.3s color ease
+        display block 
+        font-size 1.6rem
+        line-height 4.2rem
+        padding 0 0 0 1.2rem
+        text-decoration none
+    .navigation-list li > a:hover
+        background color-primary-light
+        color color-initial
+
+.panel .navigation-stack 
+    display block
+    margin -1rem
+    .navigation-list li:last-child
+        border-bottom 0
+    .navigation-list li:last-child a
+        border-radius 0 0 0.6rem 0.6rem
+
+.navigation
+    h1
+        line-height 5.2rem
+        margin 0
+        padding 0
+        font-size 2.6rem

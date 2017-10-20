@@ -12,7 +12,8 @@
         "allowSyntheticDefaultImports": true,
         "baseUrl": "./",
         "paths": {
-            "@flat" : [ "node_modules/flatpickr/dist/plugins"]
+            "@flat" : [ "node_modules/flatpickr/dist/plugins"],
+            "@spa": ["apps/spa"]
         }
     },
     "include": [
@@ -21,6 +22,7 @@
     "exclude": [
         "./node_modules",
         "./ignore",
+        "./old",
         "./apps/public/scripts/*",
         "./apps/*/public/*"
     ]

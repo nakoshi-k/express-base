@@ -1802,7 +1802,6 @@ input[type='search'],
 input[type='tel'],
 input[type='text'],
 input[type='url'],
-input[type='date'],
 textarea,
 select {
   appearance: none;
@@ -1822,7 +1821,6 @@ input[type='search']:focus,
 input[type='tel']:focus,
 input[type='text']:focus,
 input[type='url']:focus,
-input[type='date']:focus,
 textarea:focus,
 select:focus {
   border-color: #db553e;

@@ -11,8 +11,8 @@ import * as passport from 'passport';
 /**
  * router loading
  */
-import { router as tasks_router} from "./apps/tasks/router";
-import { router as users_router} from "./apps/users/router";
+import { router as spa_router} from "./apps/spa/server_router";
+//import { router as tasks_router} from "./apps/api/tasks/router";
 
 /**
  * main
@@ -79,8 +79,8 @@ export class main{
   }
   
   private router = (app) => {
-    app.use("/tasks" , new tasks_router("/tasks") );
-    app.use("/users" , new users_router("/users") );
+    //app.use("/api/tasks" , new tasks_router("/api/tasks") );
+    app.use("/" , new spa_router("/") );
   }
   
   private status404(app:express.Application){

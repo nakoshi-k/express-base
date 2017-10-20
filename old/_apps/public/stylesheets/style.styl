@@ -1,0 +1,172 @@
+/*
+    flat-picker css
+*/
+
+@require "../../../node_modules/flatpickr/dist/flatpickr.min.css"
+@require "../../../node_modules/flatpickr/dist/themes/light.css"
+@require "../../../node_modules/flatpickr/dist/plugins/confirmDate/confirmDate.css"
+
+@require "/var/www/node/express-base/node_modules/remodal/dist/remodal.css"
+@require "/var/www/node/express-base/node_modules/remodal/dist/remodal-default-theme.css"
+
+.remodal-close
+    background-color :transparent;
+    &:hover,
+    &:focus{
+        background-color :transparent;
+    }
+
+@import "./color"
+
+
+@import "../../../node_modules/milligram-stylus/dist/_Base"
+
+ 
+@font-face {
+   font-family: 'Noto Sans Japanese';
+   font-style: normal;
+   font-weight: 500;
+   src: url(//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Medium.woff2) format('woff2'), url(//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Medium.woff) format('woff'), url(//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Medium.otf) format('opentype');
+ }
+ 
+@font-face {
+   font-family: 'Noto Sans Japanese';
+   font-style: normal;
+   font-weight: 700;
+   src: url(//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Bold.woff2) format('woff2'), url(//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Bold.woff) format('woff'), url(//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Bold.otf) format('opentype');
+ }
+ 
+@font-face {
+   font-family: 'Noto Sans Japanese';
+   font-style: normal;
+   font-weight: 900;
+   src: url(//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Black.woff2) format('woff2'), url(//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Black.woff) format('woff'), url(//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-Black.otf) format('opentype');
+ }
+
+body
+    background color-initial
+    font-family 'Noto Sans Japanese'
+    color color-primary
+    
+
+
+@import "../../../node_modules/milligram-stylus/dist/_Blockquote"
+
+/*button*/
+@import "../../../node_modules/milligram-stylus/dist/_Button"
+@import "./button"
+
+@import "../../../node_modules/milligram-stylus/dist/_Code"
+@import "../../../node_modules/milligram-stylus/dist/_Divider"
+
+/*form*/
+@import "../../../node_modules/milligram-stylus/dist/_Form"
+@import "./form"
+
+/*grid*/
+@import "../../../node_modules/milligram-stylus/dist/_Grid"
+@import "./grid"
+
+
+@import "../../../node_modules/milligram-stylus/dist/_Link"
+
+a
+    &:hover,
+    &:focus    
+        color color-primary-light
+
+@import "../../../node_modules/milligram-stylus/dist/_List"
+@import "../../../node_modules/milligram-stylus/dist/_Spacing"
+@import "../../../node_modules/milligram-stylus/dist/_Table"
+
+@import "../../../node_modules/milligram-stylus/dist/_Typography"
+@import "./typography"
+
+@import "../../../node_modules/milligram-stylus/dist/_Image"
+@import "../../../node_modules/milligram-stylus/dist/_Utility"
+
+
+@import "./layout"
+@import "./indicator"
+@import "./icon"
+@import "./navigation"
+@import "./pagination"
+@import "./overlay_modal"
+@import "./panel"
+
+.offset-container
+    background color-primary
+    color color-initial
+    position fixed
+    top 0
+    left 0
+    z-index 2
+    width 92%
+    height 100%
+    box-shadow:2px 0px 16px 5px color-quinary
+    -moz-box-shadow:2px 0px 16px 5px color-quinary
+    -webkit-box-shadow:2px 0px 16px 5px color-quinary
+    border-right 0.1rem solid color-primary-shadow
+    .content
+        margin 6rem 0.01rem 0.01rem 0.01rem
+    .close
+        position absolute
+        top 0.4rem
+        right 3.6rem
+    ul
+        list-style none
+        margin 0 
+        padding 0
+        border-bottom 0.1rem solid color-primary-shadow
+        margin 0
+        padding 0
+        box-shadow:0px 5px 1px -5px color-primary-light
+        -moz-box-shadow:0px 5px 1px -5px color-primary-light
+        -webkit-box-shadow:0px 5px 1px -5px color-primary-light
+        li
+            border-top 0.1rem solid color-primary-shadow
+            margin 0
+            padding 0
+            box-shadow:0px 5px 1px -5px color-primary-light inset
+            -moz-box-shadow:0px 5px 1px -5px color-primary-light inset
+            -webkit-box-shadow:0px 5px 1px -5px color-primary-light inset
+        li > a
+            color color-initial
+            display block
+            padding 0.8rem 0.8rem 0.8rem 1.6rem
+            font-weight bold
+            &:hover
+                background color-primary-light
+    
+@media (min-width: 40.0rem)
+    .offset-container
+        width 36%;
+@media (min-width: 80.0rem)
+    .offset-container
+        width 26%;
+@media (min-width: 120.0rem)
+    .offset-container
+        width 16%;
+
+.navigation .navigation-list a.offset-toggle
+    border .26rem solid color-primary
+    color color-primary
+    border-radius .5rem
+    padding .4rem
+    display block
+    line-height 1.4rem
+    margin-top 1.1rem
+    .typcn
+        line-height .8
+        &:before
+            font-size 1.8rem
+            margin .1rem .6rem .6rem .3rem
+    &:hover,
+    &:focus,
+        border 0.26rem solid color-primary-light
+        color color-primary-light
+    &.active
+        border 0.26rem solid color-tertiary
+        color color-tertiary
+        margin-top 1.2rem
+        margin-left .2rem
