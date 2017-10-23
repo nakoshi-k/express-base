@@ -11,11 +11,15 @@ export abstract class router{
 
 
     mapping = {
-
+        "" : ""
     }
+
     middleWare = []
+
     create = () => {
-        let router = express.Router()
+        let router = express.Router();
+        
+        
     }
 
 
