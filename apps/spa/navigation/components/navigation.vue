@@ -3,9 +3,11 @@
     <nav class="navigation column">
         <div class="container">
             <div class="row row-md-reverse">
-              <div class="column text-right">
-                <h1 class="hidden-md"><router-link to="/tasks">Apprication</router-link></h1>
-                <router-link to="/users/login" title="Login">Login</router-link>
+              <div class="hidden-md column text-right">
+                <ul class="navigation-list navigation-list-reverse">
+                  <li class="show-lg show-xl show-md"><h1><router-link to="/tasks">Apprication</router-link></h1></li>
+                  <li class="show-lg show-xl show-md"><router-link to="/users/login" title="Login">Login</router-link></li>
+                </ul>
               </div>
               <div class="column">
                 <ul class="navigation-list">
@@ -13,6 +15,7 @@
                     <li><router-link to="/tasks" title="Home">Home </router-link></li>
                     <li><router-link to="/tasks" title="Tasks">Tasks</router-link></li>
                     <li><router-link to="/users" title="Users">Users</router-link></li>
+                    <li class="show-sm"><router-link to="/users/login" title="Login">Login</router-link></li>
                 </ul>
               </div>
             </div>

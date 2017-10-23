@@ -2602,13 +2602,29 @@ img {
 .border-top {
   border-top: 0.1rem #e9eded solid;
 }
-.hidden-md,
-.hidden-lg,
-.hidden-xl {
+.show-sm,
+.show-md,
+.show-lg,
+.show-xl {
   display: none;
 }
-@media (min-width: 40rem) {
-  .hidden-md {
+@media (min-width: 0rem) and (max-width: 40rem) {
+  .show-sm {
+    display: block;
+  }
+}
+@media (min-width: 40.1rem) and (max-width: 80rem) {
+  .show-md {
+    display: block;
+  }
+}
+@media (min-width: 80.1rem) and (max-width: 120rem) {
+  .show-lg {
+    display: block;
+  }
+}
+@media (min-width: 120rem) {
+  .show-xl {
     display: block;
   }
 }
@@ -2700,6 +2716,9 @@ img {
   padding: 0;
   text-decoration: none;
   font-weight: bold;
+}
+.navigation .navigation-list.navigation-list-reverse {
+  justify-content: flex-end;
 }
 .navigation-stack {
   display: block;

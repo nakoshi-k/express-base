@@ -20,7 +20,6 @@ class router {
         this.csrfReady = (req, form = "form") => {
             let csrf = req.csrfToken();
             this.vars["csrf"] = csrf;
-            //this.vars.hlp[form].bind = {"csrf" : csrf};
         };
         this.bind = (router) => {
             return router;

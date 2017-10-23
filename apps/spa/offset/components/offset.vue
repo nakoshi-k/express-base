@@ -3,6 +3,7 @@
   <div class="offset">
     <span @click="closeOffset()" class="close typcn typcn-delete large"></span>
     <div class="content">
+      <login-user></login-user>
       <ul>
         <li><router-link to="/tasks" title="Home">Home </router-link></li>
         <li><router-link to="/tasks" title="Tasks">Tasks</router-link></li>
@@ -17,6 +18,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { mapGetters , mapState , mapMutations} from 'vuex'
+import login_user from '../../auth/components/login_user'
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -47,7 +49,7 @@ Component.registerHooks([
     ),
   },
   components : {
-
+      "login-user" : login_user
   }
 
 })

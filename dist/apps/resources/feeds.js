@@ -7,6 +7,10 @@ class feeds {
         this.model = (name) => {
             return this.models[name];
         };
+        this._service = {};
+        this.service = (name) => {
+            return this._service[name];
+        };
         this.search = (query = {}) => {
             return new core_1.search(query);
         };

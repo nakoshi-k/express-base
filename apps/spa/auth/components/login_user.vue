@@ -1,7 +1,13 @@
 <template>
-<div>
-  <div class="login-user">
-    ログインユーザー
+<div class="margin">
+  <div class="login-user row">
+    <div class="column column-25">avatar</div>
+    <div class="column column-75 text-sm">
+      <div class="text-md">ユーザー名</div>
+      <div>Last login : 最終ログイン</div>
+      <div>Mail : example@example.com</div>
+    </div>
+
   </div>
 </div>
 </template>
@@ -10,7 +16,6 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import {mapGetters,mapState} from 'vuex'
-import loading from './loading'
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -24,9 +29,8 @@ Component.registerHooks([
 ])
 
 @Component({
-  name : "orver_lay",
+  name : "login_user",
   components : {
-    "app-loading" : loading,
   },
   computed : {
     ...mapGetters([

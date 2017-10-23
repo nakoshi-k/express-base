@@ -22,6 +22,8 @@ class service extends apps_service_1.service {
             search.append("updated_at", search.like("%{word}%"));
             return search.build();
         };
+        this.login = () => {
+        };
     }
 }
 exports.service = service;

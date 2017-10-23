@@ -25,7 +25,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import {mapGetters,mapState,mapActions,mapMutations} from 'vuex'
-import form_validation from "../../spa/utility/validation"
+import form_validation from "../../../utilities/validation"
 
 Component.registerHooks([
   'beforeRouteEnter',

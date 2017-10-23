@@ -59,11 +59,25 @@ base-space ?= 1.2
 .border-top
     border-top 0.1rem color-secondary solid
 
-.hidden-md,
-.hidden-lg,
-.hidden-xl
+
+.show-sm,
+.show-md,
+.show-lg,
+.show-xl
     display none
-@media (min-width: 40.0rem)
-    .hidden-md 
+
+@media (min-width: 0rem) and (max-width: 40rem) 
+    .show-sm
         display block
 
+@media (min-width: 40.1rem) and (max-width: 80rem) 
+    .show-md
+        display block
+
+@media (min-width: 80.1rem) and (max-width: 120rem )
+    .show-lg
+        display block
+
+@media (min-width: 120.0rem)
+    .show-xl
+        display block

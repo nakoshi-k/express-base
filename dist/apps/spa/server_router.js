@@ -32,7 +32,7 @@ class router extends apps_router_1.router {
         };
         this.appRender = (app) => {
             const renderer = VueRender.createRenderer();
-            let stateTag = `<script>window.__INITIAL_STATE__=${serialize(app.$store.state, { isJSON: true })}</script>`;
+            let state = `<script>window.__INITIAL_STATE__=${serialize(app.$store.state, { isJSON: true })}</script>`;
             let appRender = (resolve, reject) => {
                 renderer.renderToString(app, (err, html) => {
                     if (err) {
@@ -42,7 +42,14 @@ class router extends apps_router_1.router {
                         reject(500);
                         return;
                     }
-                    resolve(html + stateTag);
+                    let response = {
+                        html: html + state,
+                        state: state,
+                        title: "title",
+                        meta: "",
+                        description: ""
+                    };
+                    resolve(response);
                 });
             };
             return new Promise(appRender);
@@ -52,11 +59,17 @@ class router extends apps_router_1.router {
                 url: req.url,
                 feeds: new feeds_1.feeds()
             };
-            this.ssr(context).then(ssr => {
-                this.setData({ ssr: ssr });
+            this.ssr(context).then(ssrr => {
+                this.setData({
+                    title: ssrr.title,
+                    meta: ssrr.meta,
+                    description: ssrr.description,
+                    ssr: ssrr.html
+                });
                 let d = path.resolve(__dirname + path.sep + ".." + path.sep + "views");
                 this.render(req, res, d + path.sep + "view");
             }).catch(err => {
+                console.log(err);
                 if (err.code == 404) {
                     res.status(404);
                 }

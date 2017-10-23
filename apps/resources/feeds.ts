@@ -5,12 +5,24 @@ import * as sequelize from "sequelize";
 
 export class feeds{
 
+    constructor(){
+
+    }
+
     get models(){
         return models;
     }
+
     model = (name:string) =>{
         return this.models[name];
     }
+
+    private _service = {}
+
+    service = (name : string) =>{
+        return this._service[name];
+    }
+    
     public search = (query = {}) => {
         return new search(query);
     }

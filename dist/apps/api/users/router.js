@@ -85,7 +85,7 @@ class router extends apps_router_1.router {
             });
         };
         this.login = (req, res, next) => {
-            const passport = this.passport;
+            const passport = this.service.passport;
             passport.authenticate('local', (err, user, info) => {
                 if (err) {
                     res.status(401);

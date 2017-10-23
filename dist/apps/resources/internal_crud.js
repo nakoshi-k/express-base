@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const build_query_1 = require("../../base/sideless/build_query");
 const client_fetch_1 = require("./client_fetch");
-const route_parse_1 = require("./route_parse");
+const route_parse_1 = require("../utilities/route_parse");
 let client = new client_fetch_1.client_fetch();
-class internal {
+class internal_crud {
     constructor(options) {
         this.endPoint = "";
         this.client = (url, options) => {
@@ -132,4 +132,4 @@ class internal {
         this.feeds = options.feeds;
     }
 }
-exports.internal = internal;
+exports.internal_crud = internal_crud;

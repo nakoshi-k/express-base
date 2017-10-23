@@ -41,7 +41,6 @@ export abstract class router{
     protected csrfReady = (req , form = "form") => {
         let csrf = req.csrfToken();
         this.vars["csrf"] = csrf;
-        //this.vars.hlp[form].bind = {"csrf" : csrf};
     }
 
     protected bind = (router:express.Router) : express.Router => {

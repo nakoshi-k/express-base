@@ -100,7 +100,7 @@ export class router extends apps_router {
     }
     
     public login = ( req:express.Request,res:express.Response,next:express.NextFunction ) => {
-        const passport = this.passport;
+        const passport = this.service.passport;
         passport.authenticate('local', (err, user, info) => {
             if (err) {
                 res.status(401)

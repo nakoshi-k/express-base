@@ -13,7 +13,12 @@ import * as Request from "request"
 import * as serialize from "serialize-javascript"
 import {feeds as resources_feeds} from "../resources/feeds"
 import {default as BundleServer}  from "./bundle-server"
-
+interface ssr_response {
+    html : string,
+    title : string,
+    meta : string,
+    description : string
+}
 export class router extends core_router{
     public name = "spa"
     public parent = {}
@@ -39,9 +44,9 @@ export class router extends core_router{
         return new Promise(app);
     }
 
-    private appRender = (app:Vue) => {
+    private appRender : (app) => Promise<ssr_response> = (app:Vue) => {
         const renderer = VueRender.createRenderer()
-        let stateTag =`<script>window.__INITIAL_STATE__=${ serialize(app.$store.state, { isJSON: true }) }</script>` 
+        let state =`<script>window.__INITIAL_STATE__=${ serialize(app.$store.state, { isJSON: true }) }</script>` 
         let appRender = (resolve,reject) => {
             renderer.renderToString( app , (err:any,html)  => {
                 if (err) {
@@ -51,7 +56,14 @@ export class router extends core_router{
                    reject(500)
                    return
                 }
-                resolve( html + stateTag)
+                let response = {
+                    html : html + state,
+                    state : state,
+                    title : "title",
+                    meta : "",
+                    description : ""
+                }
+                resolve( response )
           })
         }
         return new Promise(appRender);
@@ -68,11 +80,17 @@ export class router extends core_router{
             url: req.url,
             feeds : new resources_feeds()
         }
-        this.ssr(context).then(ssr => {
-            this.setData( {ssr : ssr} )
+        this.ssr(context).then(ssrr => {
+            this.setData( {
+                title : ssrr.title,
+                meta : ssrr.meta,
+                description: ssrr.description,
+                ssr : ssrr.html
+            } )
             let d = path.resolve( __dirname + path.sep + ".." + path.sep + "views"  )
             this.render( req , res , d +  path.sep + "view")
         }).catch(err => {
+            console.log(err);
             if ( err.code == 404){
                 res.status(404)
             }

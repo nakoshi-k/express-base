@@ -1,20 +1,12 @@
 import {createOptionsInterFace,createOptions} from "../interfaces/interface";
 import {build_query} from "../../base/sideless/build_query";
 import {app_error,input_error,response_error} from "../../base/core";
+import {client_fetch} from "./client_fetch";
+import route_parse from "../utilities/route_parse";
+let client = new client_fetch();
 
-export class internal{
-    
-    private _options = {
-        credentials : 'same-origin',
-        method: "get",
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest' ,
-            'Content-Type': 'application/json'
-        }
-    }
-    get options(){
-        return Object.create(this._options);
-    }
+export class internal_crud{
+   
     private endPoint = "";
     private feeds:any;
     private resource:any;
@@ -26,34 +18,8 @@ export class internal{
     }
     
     private client = (url :string ,options :any ) =>{
-        let base:any = this.options;
-        if(options.headers){
-            options.headers = Object.assign( base.headers, options.headers);
-        }
-        options = Object.assign(base,options);
-        let client = (resolve,reject) => {
-            fetch( url , options )
-            .then((response) => {
-                //deleted
-                if( response.status === 204 ){
-                    resolve(response.status);
-                    return;
-                }
-                response.json().then(r => {
-                    if(response.status < 200 || response.status > 300  ){
-                        reject(r);
-                        return;
-                    }
-                    resolve(r);
-                });
-            }).catch((err) => {
-                reject(err);
-            });
-        }
-        return new Promise(client);
+        return client.fetch(url,options)
     }
-
-
     
     private serverPagination = (route) => {
        let serverPagination = (resolve,reject) => {
@@ -106,18 +72,9 @@ export class internal{
         return new Promise(server);
     }
 
-    public routeParse(route){
-        let params = route.params;
-        let paramsStr = "";
-        for(let key in params){
-            paramsStr = `${key}/${params[key]}`
-        }
-        return paramsStr;
-    }
-
     public paginate = (route) => {
         let bq = new build_query();
-        let URI = `${this.endPoint}/${this.routeParse(route)}${bq.http(route.query)}`;
+        let URI = `${this.endPoint}/${route_parse.parse(route)}${bq.http(route.query)}`;
         if(typeof window === "undefined"){
             return this.server("paginate",route);
         }
