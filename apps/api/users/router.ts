@@ -1,6 +1,6 @@
 import * as express from "express"
 import * as path from "path"
-import {router as apps_router} from "../../apps_router"
+import {router as apps_router,routing_map,request,response,next} from "../../apps_router"
 import {service} from "./service"
 import {input_error} from "../../../base/core"
 
@@ -8,108 +8,117 @@ import {input_error} from "../../../base/core"
 export class router extends apps_router {
     public name = "users"
     public service:service
-    
-    constructor(mount){
-        super(mount)
-        this.mount = mount
-        this.service = new service(this.name)
-        return this.create()
-    }
-    
-    protected beforeRender = (req,res) => {
-        this.csrfReady(req)
+
+    protected _mapping :  { [propName: string]: routing_map }= {
+        idx : { type : "get", mount : "/", component : "search" , middle_ware : null } ,
+        page: { type : "get", mount : "/page/:page", component : "search" , middle_ware : null } ,
+        entity : { type : "get", mount : "/:id", component : "entity" , middle_ware : null} ,
+        insert : { type : "post", mount : "/", component : "insert" , middle_ware : null} ,
+        update : { type : "put", mount : "/:id", component : "update" , middle_ware : null } ,
+        delete : { type : "delete", mount : "/:id", component : "delete" , middle_ware : null } 
     }
 
-    private search = (req : express.Request,res: express.Response, next : express.NextFunction) => {
+    constructor(){
+        super()
+        this.service = new service(this.name)
+    }
+
+    private search = (req : request,res: response, next : next) => {
         let pagination = this.service.pagination()
         let conditions = this.service.conditions( req )
         let entities = pagination.find( conditions , req.query)
         let data = {}
+        let rend = this.renderer.create(res);
         entities.then( (result : {rows : any, count :number,pagination:any}) => {
             data[this.entities_name] = result.rows
             data["page"] = result.pagination
-            res.status(201)
-            res.json(data)
+            rend.status(201)
+            rend.json(data)
         }).catch((error) => { 
             data[this.entities_name] = {}
             data["page"] = {}
-            res.status(400)
-            res.json(data)
+            rend.status(400)
+            rend.json(data)
         })
     }
    
-    private entity = (req:express.Request,res:express.Response,next:express.NextFunction) => {
+    private entity = (req:request,res:response,next:next) => {
         let model = this.model
         let data = {}
+        let rend = this.renderer.create(res);
         model.findById( req.params.id ).then((result) => {
             if(!result){
                 throw Error
             }
-            res.status(201)
-            res.json(result)
+            rend.status(201)
+            rend.json(result)
         }).catch((err) => {
             data[this.entities_name] = {}
-            res.status(401)
-            res.json(data)
+            rend.status(401)
+            rend.json(data)
         })        
     }
    
-    private delete = (req:express.Request,res:express.Response) => {
+    private delete = (req:request,res:response) => {
         let model = this.model
+        let rend = this.renderer.create(res);
         model.findById( req.params.id ).then((result) => {
             if(result){
                 result.destroy().then( () => {
-                    res.status(204)
-                    res.json( {} )
+                    rend.status(204)
+                    rend.json( {} )
                 }).catch(e => {
-                   res.status(500)
-                   res.json({})
+                   rend.status(500)
+                   rend.json({})
                 })
             }else{
-                res.status(500)
-                res.json({})
+                rend.status(500)
+                rend.json({})
             }
         })
     }
 
-    private insert = (req: express.Request,res:express.Response,next:express.NextFunction) => {
+    private insert = (req: request,res:response,next:next) => {
         let entity = this.model.build(req.body)
+        let rend = this.renderer.create(res)
         entity.save().then( (result) => {
-            res.status(201)
-            res.json(entity.dataValues)
+            rend.status(201)
+            rend.json(entity.dataValues)
         }).catch((err) => {
-            res.status(400)
-            res.json(this.service.validationError(err))
+            rend.status(400)
+            rend.json(this.service.validationError(err))
         })
     }
 
-    private update = (req:express.Request,res:express.Response,next:express.NextFunction) => {
+    private update = (req:request,res:response,next:next) => {
         let model = this.model
+        let rend = this.renderer.create(res)
         model.findById( req.params.id ).then((entity) => {
             entity.update(req.body).then( (result) => {
-                res.status(201)
-                res.json(result)
+                rend.status(201)
+                rend.json(result)
             }).catch((err) => {
-                res.status(400)
-                res.json(this.service.validationError(err))
+                rend.status(400)
+                rend.json(this.service.validationError(err))
             })
         }).catch((err) => {
-            res.status(400)
-            res.json(err)
+            rend.status(400)
+            rend.json(err)
         })
     }
     
-    public login = ( req:express.Request,res:express.Response,next:express.NextFunction ) => {
+    public login = ( req:request,res:response,next:next ) => {
         const passport = this.service.passport;
+        let rend = this.renderer.create(res)
         passport.authenticate('local', (err, user, info) => {
             if (err) {
-                res.status(401)
-                res.json({})
+                rend.status(401)
+                rend.json({})
                 return 
             }
             if (!user) {
-                res.status(401)
-                res.json({})
+                rend.status(401)
+                rend.json({})
                 return
             }
             req.logIn(user, (err) => {
@@ -118,29 +127,18 @@ export class router extends apps_router {
                     res.json({})
                     return
                 }
-                res.status(201)
-                res.json(user);
+                rend.status(201)
+                rend.json(user);
             });
         })(req, res, next);
     }
 
-    public logout = ( req:express.Request,res:express.Response,next:express.NextFunction ) => {
+    
+    public logout = ( req:request,res:response,next:next) => {
         req.logOut();
         res.send(201)
     }
 
-    public bind  = (router : express.Router) : express.Router => {
-        let csrfProtection = this.csrfProtection
-        let auth = this.isAuthenticated;
-        let map = [ csrfProtection ]
-        router.post("/login", csrfProtection , this.login);
-        router.get("/", ...map , this.search)
-        router.get("/page/:page", ...map , this.search)
-        router.get("/:id", ...map , this.entity)
-        router.post("/", ...map , this.insert)
-        router.put("/:id", ...map ,this.update)
-        router.delete("/:id", ...map , this.delete)
-        return router
-    }
+
 
 }

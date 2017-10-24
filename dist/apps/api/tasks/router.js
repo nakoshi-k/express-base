@@ -3,102 +3,99 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const apps_router_1 = require("../../apps_router");
 const service_1 = require("./service");
 class router extends apps_router_1.router {
-    constructor(mount) {
-        super(mount);
+    constructor() {
+        super();
         this.name = "tasks";
-        this.beforeRender = (req, res) => {
-            this.csrfReady(req);
+        this._mapping = {
+            idx: { type: "get", mount: "/", component: "search", middle_ware: null },
+            page: { type: "get", mount: "/page/:page", component: "search", middle_ware: null },
+            entity: { type: "get", mount: "/:id", component: "entity", middle_ware: null },
+            insert: { type: "post", mount: "/", component: "insert", middle_ware: null },
+            update: { type: "put", mount: "/:id", component: "update", middle_ware: null },
+            delete: { type: "delete", mount: "/:id", component: "delete", middle_ware: null }
         };
         this.search = (req, res, next) => {
             let pagination = this.service.pagination();
             let conditions = this.service.conditions(req);
             let entities = pagination.find(conditions, req.query);
             let data = {};
+            let rend = this.renderer.create(res);
             entities.then((result) => {
                 data[this.entities_name] = result.rows;
                 data["page"] = result.pagination;
-                res.status(201);
-                res.json(data);
+                rend.status(201);
+                rend.json(data);
             }).catch((error) => {
                 data[this.entities_name] = {};
                 data["page"] = {};
-                res.status(400);
-                res.json(data);
+                rend.status(400);
+                rend.json(data);
             });
         };
         this.entity = (req, res, next) => {
             let model = this.model;
             let data = {};
+            let rend = this.renderer.create(res);
             model.findById(req.params.id).then((result) => {
                 if (!result) {
                     throw Error;
                 }
-                res.status(201);
-                res.json(result);
+                rend.status(201);
+                rend.json(result);
             }).catch((err) => {
                 data[this.entities_name] = {};
-                res.status(401);
-                res.json(data);
+                rend.status(401);
+                rend.json(data);
             });
         };
         this.delete = (req, res) => {
             let model = this.model;
+            let rend = this.renderer.create(res);
             model.findById(req.params.id).then((result) => {
                 if (result) {
                     result.destroy().then(() => {
-                        res.status(204);
-                        res.json({});
+                        rend.status(204);
+                        rend.json({});
                     }).catch(e => {
-                        res.status(500);
-                        res.json({});
+                        rend.status(500);
+                        rend.json({});
                     });
                 }
                 else {
-                    res.status(500);
-                    res.json({});
+                    rend.status(500);
+                    rend.json({});
                 }
             });
         };
         this.insert = (req, res, next) => {
             let entity = this.model.build(req.body);
+            let rend = this.renderer.create(res);
             entity.save().then((result) => {
-                res.status(201);
-                res.json(entity.dataValues);
+                rend.status(201);
+                rend.json(entity.dataValues);
             }).catch((err) => {
-                res.status(400);
-                res.json(this.service.validationError(err));
+                rend.status(400);
+                rend.json(this.service.validationError(err));
             });
         };
         this.update = (req, res, next) => {
             let model = this.model;
+            let rend = this.renderer.create(res);
             model.findById(req.params.id).then((entity) => {
                 entity.update(req.body).then((result) => {
-                    res.status(201);
-                    res.json(result);
+                    rend.status(201);
+                    rend.json(result);
                 }).catch((err) => {
-                    res.status(400);
-                    res.json(this.service.validationError(err));
+                    rend.status(400);
+                    rend.json(this.service.validationError(err));
                 });
             }).catch((err) => {
-                res.status(400);
-                res.json(err);
+                rend.status(400);
+                rend.json(err);
             });
         };
-        this.bind = (router) => {
-            let csrfProtection = this.csrfProtection;
-            let auth = this.isAuthenticated;
-            let map = [csrfProtection];
-            router.get("/", ...map, this.search);
-            router.get("/page/:page", ...map, this.search);
-            router.get("/:id", ...map, this.entity);
-            router.post("/", ...map, this.insert);
-            router.put("/:id", ...map, this.update);
-            router.delete("/:id", ...map, this.delete);
-            return router;
-        };
-        this.mount = mount;
         this.service = new service_1.service(this.name);
-        return this.create();
+        //
     }
 }
 exports.router = router;

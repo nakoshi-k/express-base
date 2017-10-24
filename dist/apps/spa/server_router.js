@@ -1,12 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const apps_router_1 = require("../apps_router");
 const path = require("path");
@@ -18,11 +10,14 @@ const serialize = require("serialize-javascript");
 const feeds_1 = require("../resources/feeds");
 const bundle_server_1 = require("./bundle-server");
 class router extends apps_router_1.router {
-    constructor(mount) {
-        super(mount);
+    constructor() {
+        super();
         this.name = "spa";
         this.parent = {};
         this.mount = "/";
+        this._mapping = {
+            idx: { type: "get", mount: "/*", component: "view", middle_ware: null },
+        };
         this.app = (context) => {
             let server = bundle_server_1.default;
             let app = (resolve, reject) => {
@@ -60,16 +55,16 @@ class router extends apps_router_1.router {
                 feeds: new feeds_1.feeds()
             };
             this.ssr(context).then(ssrr => {
-                this.setData({
+                let rend = this.renderer.create(res);
+                rend.set_vars({
                     title: ssrr.title,
                     meta: ssrr.meta,
                     description: ssrr.description,
-                    ssr: ssrr.html
+                    ssr: ssrr.html,
                 });
-                let d = path.resolve(__dirname + path.sep + ".." + path.sep + "views");
-                this.render(req, res, d + path.sep + "view");
+                let dir = path.resolve([__dirname, "..", "views", "view"].join(path.sep));
+                rend.render(dir);
             }).catch(err => {
-                console.log(err);
                 if (err.code == 404) {
                     res.status(404);
                 }
@@ -79,25 +74,11 @@ class router extends apps_router_1.router {
                 });
             });
         };
-        this.beforeRender = (req, res) => {
-            this.csrfReady(req);
-        };
-        this.bind = (router) => {
-            let csrfProtection = this.csrfProtection;
-            let auth = this.isAuthenticated;
-            let map = [csrfProtection];
-            router.get("*", ...map, this.view);
-            return router;
-        };
-        this.mount = mount;
-        return this.create();
     }
-    ssr(context) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let app = yield this.app(context);
-            let render = yield this.appRender(app);
-            return render;
-        });
+    async ssr(context) {
+        let app = await this.app(context);
+        let render = await this.appRender(app);
+        return render;
     }
 }
 exports.router = router;

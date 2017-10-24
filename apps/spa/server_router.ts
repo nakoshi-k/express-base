@@ -1,8 +1,8 @@
 import * as express from "express"
-import { router as core_router} from "../apps_router";
+import { router as core_router,routing_map} from "../apps_router"
 import {service as apps_service} from "../apps_service"
-import { system } from "../../base/core";
-import * as path from "path";
+import { system } from "../../base/core"
+import * as path from "path"
 
 import * as Vue from "vue"
 import * as Router from "vue-router"
@@ -13,24 +13,26 @@ import * as Request from "request"
 import * as serialize from "serialize-javascript"
 import {feeds as resources_feeds} from "../resources/feeds"
 import {default as BundleServer}  from "./bundle-server"
+
 interface ssr_response {
     html : string,
     title : string,
     meta : string,
     description : string
 }
+
 export class router extends core_router{
     public name = "spa"
     public parent = {}
     public mount = "/"
 
-    constructor(mount){
-        super(mount)
-        this.mount = mount
-        return this.create()
+    constructor(){
+        super();
     }
 
-
+    protected _mapping :  { [propName: string]: routing_map }= {
+        idx : { type : "get", mount : "/*", component : "view" , middle_ware : null } ,
+    }
 
     private app : (context) => Promise<Vue> = (context) => {
         let server : any = BundleServer
@@ -80,17 +82,19 @@ export class router extends core_router{
             url: req.url,
             feeds : new resources_feeds()
         }
+
         this.ssr(context).then(ssrr => {
-            this.setData( {
+            let rend = this.renderer.create(res);
+            rend.set_vars( {
                 title : ssrr.title,
                 meta : ssrr.meta,
                 description: ssrr.description,
-                ssr : ssrr.html
-            } )
-            let d = path.resolve( __dirname + path.sep + ".." + path.sep + "views"  )
-            this.render( req , res , d +  path.sep + "view")
+                ssr : ssrr.html,
+                //csrf : ""
+            })
+            let dir = path.resolve([ __dirname , ".." , "views" , "view"].join(path.sep) )
+            rend.render(dir)
         }).catch(err => {
-            console.log(err);
             if ( err.code == 404){
                 res.status(404)
             }
@@ -100,18 +104,5 @@ export class router extends core_router{
             })
         })
     }
-
-    protected beforeRender = (req,res) => {
-        this.csrfReady(req)
-    }
-
-    public bind  = (router : express.Router) : express.Router => {
-        let csrfProtection = this.csrfProtection
-        let auth = this.isAuthenticated;
-        let map = [ csrfProtection ]
-        router.get("*", ...map , this.view )
-        return router
-    }
-    
 
 }

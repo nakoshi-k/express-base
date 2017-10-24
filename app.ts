@@ -80,9 +80,9 @@ export class main{
   }
   
   private router = (app) => {
-    app.use("/api/tasks" , new tasks_router("/api/tasks") );
-    app.use("/api/users" , new users_router("/api/users") );
-    app.use("/" , new spa_router("/") );
+    app.use("/api/tasks" ,new tasks_router().map());
+    app.use("/api/users" , new users_router().map() );
+    app.use("/" , new spa_router().map() );
   }
   
   private status404(app:express.Application){

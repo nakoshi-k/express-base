@@ -4,6 +4,7 @@ export class service extends apps_service{
     name = "tasks"
     constructor(name:string){
         super(name)
+        this.name = name;
     }
 
     public conditions = (req) : { where : sequelize.WhereLogic,limit:number,offset:number } =>{

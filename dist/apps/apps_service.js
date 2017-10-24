@@ -25,7 +25,7 @@ class service extends core_1.service {
                 usernameField: 'account',
                 passwordField: 'password',
                 session: true
-            }, function (username, password, done) {
+            }, (username, password, done) => {
                 let where = { name: username };
                 if (/@/gi.test(username)) {
                     where = { mail: username };

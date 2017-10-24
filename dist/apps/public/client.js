@@ -12387,7 +12387,150 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 18 */,
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var build_query_1 = __webpack_require__(12);
+var client_fetch_1 = __webpack_require__(119);
+var route_parse_1 = __webpack_require__(120);
+var client = new client_fetch_1.client_fetch();
+var internal_crud = /** @class */ (function () {
+    function internal_crud(options) {
+        var _this = this;
+        this.endPoint = "";
+        this.client = function (url, options) {
+            return client.fetch(url, options);
+        };
+        this.serverPagination = function (route) {
+            var serverPagination = function (resolve, reject) {
+                var pagination = _this.feeds.pagination(_this.resource);
+                var conditions = _this.feeds.conditions(route);
+                var entities = pagination.find(conditions, route.query);
+                var name = _this.resource;
+                var data = {};
+                entities.then(function (result) {
+                    if (result.rows.length === 0) {
+                        reject(false);
+                    }
+                    ;
+                    data[name] = result.rows;
+                    data["page"] = result.pagination;
+                    resolve(data);
+                }).catch(function (error) {
+                    data[name] = {};
+                    data["page"] = {};
+                    reject(error);
+                });
+            };
+            return serverPagination;
+        };
+        this.serverEntity = function (route) {
+            var serverEntity = function (resolve, reject) {
+                var model = _this.feeds.model(_this.resource);
+                var data = {};
+                model.findById(route.params.id).then(function (result) {
+                    if (!result) {
+                        reject();
+                        throw Error;
+                    }
+                    resolve(result);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            };
+            return serverEntity;
+        };
+        this.server = function (type, route) {
+            var server;
+            if (type === "paginate") {
+                server = _this.serverPagination(route);
+            }
+            if (type === "entity") {
+                server = _this.serverEntity(route);
+            }
+            return new Promise(server);
+        };
+        this.paginate = function (route) {
+            var bq = new build_query_1.build_query();
+            var URI = _this.endPoint + "/" + route_parse_1.default.parse(route) + bq.http(route.query);
+            if (typeof window === "undefined") {
+                return _this.server("paginate", route);
+            }
+            return _this.client(URI, {});
+        };
+        this.entity = function (route) {
+            var id = route.params.id;
+            var URI = _this.endPoint + "/" + id;
+            if (typeof window === "undefined") {
+                return _this.server("entity", route);
+            }
+            return _this.client(URI, {});
+        };
+        this.insert = function (entity, token) {
+            entity = JSON.stringify(entity);
+            var URI = _this.endPoint;
+            var insert = function (resolve, reject) {
+                _this.client(URI, {
+                    body: entity,
+                    method: "post",
+                    headers: {
+                        'X-XSRF-Token': token
+                    }
+                }).then(function (r) {
+                    resolve(r);
+                }).catch(function (e) {
+                    reject(e);
+                });
+            };
+            return new Promise(insert);
+        };
+        this.update = function (entity, token) {
+            var URI = _this.endPoint + "/" + entity.id;
+            entity = JSON.stringify(entity);
+            var insert = function (resolve, reject) {
+                _this.client(URI, {
+                    body: entity,
+                    method: "put",
+                    headers: {
+                        'X-XSRF-Token': token
+                    }
+                }).then(function (r) {
+                    resolve(r);
+                }).catch(function (e) {
+                    reject(e);
+                });
+            };
+            return new Promise(insert);
+        };
+        this.delete = function (id, token) {
+            var URI = _this.endPoint + "/" + id;
+            var del = function (resolve, reject) {
+                _this.client(URI, {
+                    method: "delete",
+                    headers: {
+                        'X-XSRF-Token': token
+                    }
+                }).then(function (r) {
+                    resolve("api delete ok");
+                }).catch(function (e) {
+                    reject("api delete error");
+                });
+            };
+            return new Promise(del);
+        };
+        this.endPoint = options.endPoint;
+        this.resource = options.resource;
+        this.feeds = options.feeds;
+    }
+    return internal_crud;
+}());
+exports.internal_crud = internal_crud;
+
+
+/***/ }),
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12413,7 +12556,7 @@ var vue_1 = __webpack_require__(0);
 var app_vue_1 = __webpack_require__(22);
 var client_router_1 = __webpack_require__(46);
 var store_1 = __webpack_require__(98);
-var vuex_router_sync_1 = __webpack_require__(129);
+var vuex_router_sync_1 = __webpack_require__(131);
 vue_1.default.mixin({
     beforeMount: function () {
         var _this = this;
@@ -20751,8 +20894,8 @@ var store_module_1 = __webpack_require__(99);
 var store_module_2 = __webpack_require__(104);
 var store_module_3 = __webpack_require__(109);
 var store_module_4 = __webpack_require__(114);
-var store_module_5 = __webpack_require__(119);
-var store_module_6 = __webpack_require__(124);
+var store_module_5 = __webpack_require__(121);
+var store_module_6 = __webpack_require__(126);
 function createStore(feeds) {
     var getters = {
         token: function (state) {
@@ -21350,7 +21493,7 @@ var mutations_1 = __webpack_require__(115);
 var actions_1 = __webpack_require__(116);
 var state_1 = __webpack_require__(117);
 var getters_1 = __webpack_require__(118);
-var internal_crud_1 = __webpack_require__(132);
+var internal_crud_1 = __webpack_require__(18);
 var store_module = /** @class */ (function (_super) {
     __extends(store_module, _super);
     function store_module(feeds) {
@@ -21582,6 +21725,87 @@ exports.getters = getters;
 
 "use strict";
 
+Object.defineProperty(exports, "__esModule", { value: true });
+var client_fetch = /** @class */ (function () {
+    function client_fetch() {
+        var _this = this;
+        this._options = {
+            credentials: 'same-origin',
+            method: "get",
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/json'
+            }
+        };
+        this.fetch = function (url, options) {
+            var base = _this.options;
+            if (options.headers) {
+                options.headers = Object.assign(base.headers, options.headers);
+            }
+            options = Object.assign(base, options);
+            var client = function (resolve, reject) {
+                fetch(url, options)
+                    .then(function (response) {
+                    //deleted
+                    if (response.status === 204) {
+                        resolve(response.status);
+                        return;
+                    }
+                    response.json().then(function (r) {
+                        if (response.status < 200 || response.status > 300) {
+                            reject(r);
+                            return;
+                        }
+                        resolve(r);
+                    });
+                }).catch(function (err) {
+                    reject(err);
+                });
+            };
+            return new Promise(client);
+        };
+    }
+    Object.defineProperty(client_fetch.prototype, "options", {
+        get: function () {
+            return Object.create(this._options);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return client_fetch;
+}());
+exports.client_fetch = client_fetch;
+
+
+/***/ }),
+/* 120 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var route_parse = /** @class */ (function () {
+    function route_parse() {
+    }
+    route_parse.prototype.parse = function (route) {
+        var params = route.params;
+        var paramsStr = "";
+        for (var key in params) {
+            paramsStr = key + "/" + params[key];
+        }
+        return paramsStr;
+    };
+    return route_parse;
+}());
+exports.default = new route_parse();
+
+
+/***/ }),
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -21602,11 +21826,11 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_module_1 = __webpack_require__(6);
-var mutations_1 = __webpack_require__(120);
-var actions_1 = __webpack_require__(121);
-var state_1 = __webpack_require__(122);
-var getters_1 = __webpack_require__(123);
-var internal_crud_1 = __webpack_require__(132);
+var mutations_1 = __webpack_require__(122);
+var actions_1 = __webpack_require__(123);
+var state_1 = __webpack_require__(124);
+var getters_1 = __webpack_require__(125);
+var internal_crud_1 = __webpack_require__(18);
 var store_module = /** @class */ (function (_super) {
     __extends(store_module, _super);
     function store_module(feeds) {
@@ -21631,7 +21855,7 @@ exports.store_module = store_module;
 
 
 /***/ }),
-/* 120 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21687,7 +21911,7 @@ exports.mutations = mutations;
 
 
 /***/ }),
-/* 121 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21767,7 +21991,7 @@ exports.actions = actions;
 
 
 /***/ }),
-/* 122 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21805,7 +22029,7 @@ exports.state = state;
 
 
 /***/ }),
-/* 123 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21833,7 +22057,7 @@ exports.getters = getters;
 
 
 /***/ }),
-/* 124 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21850,10 +22074,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var store_module_1 = __webpack_require__(6);
-var mutations_1 = __webpack_require__(125);
-var actions_1 = __webpack_require__(126);
-var state_1 = __webpack_require__(127);
-var getters_1 = __webpack_require__(128);
+var mutations_1 = __webpack_require__(127);
+var actions_1 = __webpack_require__(128);
+var state_1 = __webpack_require__(129);
+var getters_1 = __webpack_require__(130);
 var store_module = /** @class */ (function (_super) {
     __extends(store_module, _super);
     function store_module(options) {
@@ -21870,7 +22094,7 @@ exports.store_module = store_module;
 
 
 /***/ }),
-/* 125 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21898,7 +22122,7 @@ exports.mutations = mutations;
 
 
 /***/ }),
-/* 126 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21926,7 +22150,7 @@ exports.actions = actions;
 
 
 /***/ }),
-/* 127 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21958,7 +22182,7 @@ exports.state = state;
 
 
 /***/ }),
-/* 128 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21986,7 +22210,7 @@ exports.getters = getters;
 
 
 /***/ }),
-/* 129 */
+/* 131 */
 /***/ (function(module, exports) {
 
 exports.sync = function (store, router, options) {
@@ -22064,232 +22288,6 @@ function cloneRoute (to, from) {
   return Object.freeze(clone)
 }
 
-
-
-/***/ }),
-/* 130 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var client_fetch = /** @class */ (function () {
-    function client_fetch() {
-        var _this = this;
-        this._options = {
-            credentials: 'same-origin',
-            method: "get",
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Content-Type': 'application/json'
-            }
-        };
-        this.fetch = function (url, options) {
-            var base = _this.options;
-            if (options.headers) {
-                options.headers = Object.assign(base.headers, options.headers);
-            }
-            options = Object.assign(base, options);
-            var client = function (resolve, reject) {
-                fetch(url, options)
-                    .then(function (response) {
-                    //deleted
-                    if (response.status === 204) {
-                        resolve(response.status);
-                        return;
-                    }
-                    response.json().then(function (r) {
-                        if (response.status < 200 || response.status > 300) {
-                            reject(r);
-                            return;
-                        }
-                        resolve(r);
-                    });
-                }).catch(function (err) {
-                    reject(err);
-                });
-            };
-            return new Promise(client);
-        };
-    }
-    Object.defineProperty(client_fetch.prototype, "options", {
-        get: function () {
-            return Object.create(this._options);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return client_fetch;
-}());
-exports.client_fetch = client_fetch;
-
-
-/***/ }),
-/* 131 */,
-/* 132 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var build_query_1 = __webpack_require__(12);
-var client_fetch_1 = __webpack_require__(130);
-var route_parse_1 = __webpack_require__(133);
-var client = new client_fetch_1.client_fetch();
-var internal_crud = /** @class */ (function () {
-    function internal_crud(options) {
-        var _this = this;
-        this.endPoint = "";
-        this.client = function (url, options) {
-            return client.fetch(url, options);
-        };
-        this.serverPagination = function (route) {
-            var serverPagination = function (resolve, reject) {
-                var pagination = _this.feeds.pagination(_this.resource);
-                var conditions = _this.feeds.conditions(route);
-                var entities = pagination.find(conditions, route.query);
-                var name = _this.resource;
-                var data = {};
-                entities.then(function (result) {
-                    if (result.rows.length === 0) {
-                        reject(false);
-                    }
-                    ;
-                    data[name] = result.rows;
-                    data["page"] = result.pagination;
-                    resolve(data);
-                }).catch(function (error) {
-                    data[name] = {};
-                    data["page"] = {};
-                    reject(error);
-                });
-            };
-            return serverPagination;
-        };
-        this.serverEntity = function (route) {
-            var serverEntity = function (resolve, reject) {
-                var model = _this.feeds.model(_this.resource);
-                var data = {};
-                model.findById(route.params.id).then(function (result) {
-                    if (!result) {
-                        reject();
-                        throw Error;
-                    }
-                    resolve(result);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            };
-            return serverEntity;
-        };
-        this.server = function (type, route) {
-            var server;
-            if (type === "paginate") {
-                server = _this.serverPagination(route);
-            }
-            if (type === "entity") {
-                server = _this.serverEntity(route);
-            }
-            return new Promise(server);
-        };
-        this.paginate = function (route) {
-            var bq = new build_query_1.build_query();
-            var URI = _this.endPoint + "/" + route_parse_1.default.parse(route) + bq.http(route.query);
-            if (typeof window === "undefined") {
-                return _this.server("paginate", route);
-            }
-            return _this.client(URI, {});
-        };
-        this.entity = function (route) {
-            var id = route.params.id;
-            var URI = _this.endPoint + "/" + id;
-            if (typeof window === "undefined") {
-                return _this.server("entity", route);
-            }
-            return _this.client(URI, {});
-        };
-        this.insert = function (entity, token) {
-            entity = JSON.stringify(entity);
-            var URI = _this.endPoint;
-            var insert = function (resolve, reject) {
-                _this.client(URI, {
-                    body: entity,
-                    method: "post",
-                    headers: {
-                        'X-XSRF-Token': token
-                    }
-                }).then(function (r) {
-                    resolve(r);
-                }).catch(function (e) {
-                    reject(e);
-                });
-            };
-            return new Promise(insert);
-        };
-        this.update = function (entity, token) {
-            var URI = _this.endPoint + "/" + entity.id;
-            entity = JSON.stringify(entity);
-            var insert = function (resolve, reject) {
-                _this.client(URI, {
-                    body: entity,
-                    method: "put",
-                    headers: {
-                        'X-XSRF-Token': token
-                    }
-                }).then(function (r) {
-                    resolve(r);
-                }).catch(function (e) {
-                    reject(e);
-                });
-            };
-            return new Promise(insert);
-        };
-        this.delete = function (id, token) {
-            var URI = _this.endPoint + "/" + id;
-            var del = function (resolve, reject) {
-                _this.client(URI, {
-                    method: "delete",
-                    headers: {
-                        'X-XSRF-Token': token
-                    }
-                }).then(function (r) {
-                    resolve("api delete ok");
-                }).catch(function (e) {
-                    reject("api delete error");
-                });
-            };
-            return new Promise(del);
-        };
-        this.endPoint = options.endPoint;
-        this.resource = options.resource;
-        this.feeds = options.feeds;
-    }
-    return internal_crud;
-}());
-exports.internal_crud = internal_crud;
-
-
-/***/ }),
-/* 133 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var route_parse = /** @class */ (function () {
-    function route_parse() {
-    }
-    route_parse.prototype.parse = function (route) {
-        var params = route.params;
-        var paramsStr = "";
-        for (var key in params) {
-            paramsStr = key + "/" + params[key];
-        }
-        return paramsStr;
-    };
-    return route_parse;
-}());
-exports.default = new route_parse();
 
 
 /***/ })

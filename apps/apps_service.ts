@@ -30,7 +30,7 @@ export class service extends core_service{
                 passwordField: 'password',
                 session: true
             },
-            function(username, password, done) {
+            (username, password, done) => {
                 let where : any = { name : username };
                 if(/@/gi.test(username)){
                     where = { mail : username };
@@ -55,4 +55,7 @@ export class service extends core_service{
             }
         ));
     }
+
+
+
 }

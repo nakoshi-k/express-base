@@ -1,12 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const path = require("path");
@@ -27,16 +19,16 @@ const router_2 = require("./apps/api/users/router");
  */
 class main {
     constructor() {
-        this.ready = () => __awaiter(this, void 0, void 0, function* () {
+        this.ready = async () => {
             return this.app;
-        });
+        };
         this.create = () => {
             return this.app;
         };
         this.router = (app) => {
-            app.use("/api/tasks", new router_1.router("/api/tasks"));
-            app.use("/api/users", new router_2.router("/api/users"));
-            app.use("/", new server_router_1.router("/"));
+            app.use("/api/tasks", new router_1.router().map());
+            app.use("/api/users", new router_2.router().map());
+            app.use("/", new server_router_1.router().map());
         };
         this.overrideForm = (req, res) => {
             if (req.body && typeof req.body === 'object' && '_method' in req.body) {
