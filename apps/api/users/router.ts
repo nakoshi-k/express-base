@@ -1,4 +1,3 @@
-import * as express from "express"
 import * as path from "path"
 import {router as apps_router,routing_map,request,response,next} from "../../apps_router"
 import {service} from "./service"
@@ -108,7 +107,7 @@ export class router extends apps_router {
     }
     
     public login = ( req:request,res:response,next:next ) => {
-        const passport = this.service.passport;
+        const passport = this.service.passport
         let rend = this.renderer.create(res)
         passport.authenticate('local', (err, user, info) => {
             if (err) {

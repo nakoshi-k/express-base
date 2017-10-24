@@ -7,13 +7,16 @@ const csurf = require("csurf");
     middle ware
 */
 let body_csrf = (req, res, next) => {
+    console.log("body_csrf");
     res.locals["csrf"] = req.csrfToken();
     next();
 };
 let is_authenticated = (req, res, next) => {
+    console.log("auth");
     next();
 };
 let rbac = (req, res, next) => {
+    console.log("rbac");
     next();
 };
 class router extends new_router_1.router {

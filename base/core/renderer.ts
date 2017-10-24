@@ -17,7 +17,7 @@ export interface routing_map{
 export interface view_vars{
     title : string,
     csrf: string,
-    hlp : {[prop : string] : object},
+    hlp : { [prop : string] : object},
     [prop: string] : any
 }
 
@@ -34,6 +34,10 @@ export class renderer{
     }
 
     _before = [ (res,self) => Promise.resolve() ];
+    
+    before_regist = ( before : (res,self) => Promise<void> ) => {
+        this._before.push(before);
+    }
     
     set_vars = (data = {}) => {
         let locals = this._response.locals;

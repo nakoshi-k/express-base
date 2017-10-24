@@ -28,15 +28,18 @@ export interface next extends e.NextFunction{
 */
 
 let body_csrf = (req:request,res :response ,next:next) => {
+    console.log("body_csrf");
     res.locals["csrf"] = req.csrfToken();
     next();
 }
 
 let is_authenticated = (req:request,res :response ,next:next) => {
+    console.log("auth");
     next();
 }
 
 let rbac = (req:request,res :response ,next:next) => {
+    console.log("rbac");
     next();
 }
 
@@ -56,6 +59,7 @@ export class router extends core_router{
         this.mw_regist( "body_csrf" , body_csrf );
         this.mw_regist( "is_authenticated" , is_authenticated );
         this.mw_regist( "rbac", rbac );
+        
     }
 
 }

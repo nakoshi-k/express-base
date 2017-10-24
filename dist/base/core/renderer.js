@@ -5,6 +5,9 @@ class renderer {
     constructor() {
         this._name = "renderer";
         this._before = [(res, self) => Promise.resolve()];
+        this.before_regist = (before) => {
+            this._before.push(before);
+        };
         this.set_vars = (data = {}) => {
             let locals = this._response.locals;
             Object.assign(locals, data);
