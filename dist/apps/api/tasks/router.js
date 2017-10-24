@@ -95,7 +95,6 @@ class router extends apps_router_1.router {
             });
         };
         this.service = new service_1.service(this.name);
-        //
     }
 }
 exports.router = router;

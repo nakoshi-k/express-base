@@ -60,7 +60,7 @@ class router extends apps_router_1.router {
                     title: ssrr.title,
                     meta: ssrr.meta,
                     description: ssrr.description,
-                    ssr: ssrr.html,
+                    ssr: ssrr.html
                 });
                 let dir = path.resolve([__dirname, "..", "views", "view"].join(path.sep));
                 rend.render(dir);

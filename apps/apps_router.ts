@@ -23,9 +23,6 @@ export interface next extends e.NextFunction{
 
 }
 
-/*
-    middle ware
-*/
 
 let body_csrf = (req:request,res :response ,next:next) => {
     console.log("body_csrf");
@@ -59,7 +56,7 @@ export class router extends core_router{
         this.mw_regist( "body_csrf" , body_csrf );
         this.mw_regist( "is_authenticated" , is_authenticated );
         this.mw_regist( "rbac", rbac );
-        
+
     }
 
 }

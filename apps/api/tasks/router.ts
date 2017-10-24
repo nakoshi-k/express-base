@@ -8,7 +8,7 @@ export class router extends apps_router {
     public name = "tasks"
     public service:service
 
-    protected _mapping :  { [propName: string]: routing_map }= {
+    protected _mapping :  { [propName: string] : routing_map }= {
         idx : { type : "get", mount : "/", component : "search" , middle_ware : null } ,
         page: { type : "get", mount : "/page/:page", component : "search" , middle_ware : null } ,
         entity : { type : "get", mount : "/:id", component : "entity" , middle_ware : null} ,
@@ -20,7 +20,6 @@ export class router extends apps_router {
     constructor(){
         super();
         this.service = new service(this.name);
-        //
     }
 
     private search = (req : request ,res: response, next : next ) => {

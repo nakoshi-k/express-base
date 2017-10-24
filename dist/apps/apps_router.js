@@ -3,9 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const new_router_1 = require("../base/core/new_router");
 const core_1 = require("../base/core");
 const csurf = require("csurf");
-/*
-    middle ware
-*/
 let body_csrf = (req, res, next) => {
     console.log("body_csrf");
     res.locals["csrf"] = req.csrfToken();

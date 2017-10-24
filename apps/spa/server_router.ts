@@ -89,8 +89,7 @@ export class router extends core_router{
                 title : ssrr.title,
                 meta : ssrr.meta,
                 description: ssrr.description,
-                ssr : ssrr.html,
-                //csrf : ""
+                ssr : ssrr.html
             })
             let dir = path.resolve([ __dirname , ".." , "views" , "view"].join(path.sep) )
             rend.render(dir)
