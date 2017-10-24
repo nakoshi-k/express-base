@@ -83,8 +83,8 @@ export class router extends core_router{
             feeds : new resources_feeds()
         }
 
+        let rend = this.renderer.create(res);
         this.ssr(context).then(ssrr => {
-            let rend = this.renderer.create(res);
             rend.set_vars( {
                 title : ssrr.title,
                 meta : ssrr.meta,
@@ -96,12 +96,13 @@ export class router extends core_router{
             rend.render(dir)
         }).catch(err => {
             if ( err.code == 404){
-                res.status(404)
+                rend.status(404)
             }
-            res.render('error', {
+            rend.set_vars({
                 message: err.code,
                 error: {}
-            })
+            });
+            rend.render('error');
         })
     }
 

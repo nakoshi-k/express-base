@@ -21,6 +21,9 @@ module.exports = function(sequelize, DataTypes) {
       validate : {
       },
       get : function(value){
+        if(!this.getDataValue(value)){
+          return null;
+        }
         return moment(this.getDataValue(value)).format("YYYY-MM-DD HH:mm:ss");
       }
     }
