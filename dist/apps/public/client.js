@@ -16751,6 +16751,10 @@ var navi = /** @class */ (function (_super) {
     navi.prototype.toggle = function () {
         this.toggleOffset();
     };
+    navi.prototype.h_logout = function () {
+        this.logout();
+        return false;
+    };
     navi = __decorate([
         vue_class_component_1.default({
             name: "navi",
@@ -17050,10 +17054,10 @@ var render = function() {
                         [
                           _c(
                             "router-link",
-                            { attrs: { to: "/users/login", title: "Login" } },
+                            { attrs: { to: "/users/login", title: "login" } },
                             [
                               _c("span", { staticClass: "typcn typcn-key" }),
-                              _vm._v("  Login")
+                              _vm._v(" Login")
                             ]
                           )
                         ],
@@ -17063,10 +17067,21 @@ var render = function() {
                   _vm._v(" "),
                   _vm.auth_status
                     ? _c("li", { staticClass: "show-lg show-xl show-md" }, [
-                        _c("a", { on: { click: _vm.logout } }, [
-                          _c("span", { staticClass: "typcn typcn-export" }),
-                          _vm._v(" Logout")
-                        ])
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#logout", title: "logout" },
+                            on: {
+                              click: function($event) {
+                                _vm.h_logout()
+                              }
+                            }
+                          },
+                          [
+                            _c("span", { staticClass: "typcn typcn-export" }),
+                            _vm._v(" Logout")
+                          ]
+                        )
                       ])
                     : _vm._e()
                 ]
@@ -17131,10 +17146,10 @@ var render = function() {
                       [
                         _c(
                           "router-link",
-                          { attrs: { to: "/users/login", title: "Login" } },
+                          { attrs: { to: "/users/login", title: "login" } },
                           [
                             _c("span", { staticClass: "typcn typcn-key" }),
-                            _vm._v("  Login")
+                            _vm._v(" Login")
                           ]
                         )
                       ],
@@ -17144,10 +17159,21 @@ var render = function() {
                 _vm._v(" "),
                 _vm.auth_status
                   ? _c("li", { staticClass: "show-sm" }, [
-                      _c("a", { on: { click: _vm.logout } }, [
-                        _c("span", { staticClass: "typcn typcn-export" }),
-                        _vm._v(" Logout")
-                      ])
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: "#logout", title: "logout" },
+                          on: {
+                            click: function($event) {
+                              _vm.h_logout()
+                            }
+                          }
+                        },
+                        [
+                          _c("span", { staticClass: "typcn typcn-export" }),
+                          _vm._v(" Logout")
+                        ]
+                      )
                     ])
                   : _vm._e()
               ])

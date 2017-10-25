@@ -4844,6 +4844,10 @@
             toggle() {
                 this.toggleOffset();
             }
+            h_logout() {
+                this.logout();
+                return false;
+            }
         };
         navi = __decorate([
             __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
@@ -5042,18 +5046,18 @@
                                     !_vm.auth_status
                                         ? _vm._ssrNode('<li class="show-lg show-xl show-md">', "</li>", [
                                             _c("router-link", {
-                                                attrs: { to: "/users/login", title: "Login" }
+                                                attrs: { to: "/users/login", title: "login" }
                                             }, [
                                                 _c("span", {
                                                     staticClass: "typcn typcn-key"
                                                 }),
-                                                _vm._v("  Login")
+                                                _vm._v(" Login")
                                             ])
                                         ], 1)
                                         : _vm._e(),
                                     _vm._ssrNode(" " +
                                         (_vm.auth_status
-                                            ? '<li class="show-lg show-xl show-md"><a><span class="typcn typcn-export"></span> Logout</a></li>'
+                                            ? '<li class="show-lg show-xl show-md"><a href="#logout" title="logout"><span class="typcn typcn-export"></span> Logout</a></li>'
                                             : "<!---->"))
                                 ], 2)
                             ]),
@@ -5077,15 +5081,15 @@
                                     _vm._ssrNode(" "),
                                     !_vm.auth_status
                                         ? _vm._ssrNode('<li class="show-sm">', "</li>", [
-                                            _c("router-link", { attrs: { to: "/users/login", title: "Login" } }, [
+                                            _c("router-link", { attrs: { to: "/users/login", title: "login" } }, [
                                                 _c("span", { staticClass: "typcn typcn-key" }),
-                                                _vm._v("  Login")
+                                                _vm._v(" Login")
                                             ])
                                         ], 1)
                                         : _vm._e(),
                                     _vm._ssrNode(" " +
                                         (_vm.auth_status
-                                            ? '<li class="show-sm"><a><span class="typcn typcn-export"></span> Logout</a></li>'
+                                            ? '<li class="show-sm"><a href="#logout" title="logout"><span class="typcn typcn-export"></span> Logout</a></li>'
                                             : "<!---->"))
                                 ], 2)
                             ])

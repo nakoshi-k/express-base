@@ -1529,6 +1529,7 @@ input[type='submit'].button-clear[disabled]:hover {
 button,
 .button {
   transition: 0.1s background-color ease, 0.1s border-color ease;
+  letter-spacing: 0.05rem;
 }
 button:focus,
 .button:focus,
@@ -2711,7 +2712,8 @@ img {
   margin-bottom: 0;
   margin-left: 0;
 }
-.navigation .navigation-list li > a {
+.navigation .navigation-list li > a,
+.navigation .navigation-list li > button {
   display: inline;
   font-size: 1.6rem;
   line-height: 5.2rem;
@@ -2735,7 +2737,8 @@ img {
   border-bottom: 0.1rem solid #ea9586;
   padding: 0;
 }
-.navigation-stack .navigation-list li > a {
+.navigation-stack .navigation-list li > a,
+.navigation-stack .navigation-list li > button {
   transition: 0.3s background-color ease, 0.3s color ease;
   display: block;
   font-size: 1.6rem;
