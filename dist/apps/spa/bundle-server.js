@@ -3573,144 +3573,7 @@
         /* harmony default export */ __webpack_exports__["a"] = (Component.exports);
         /***/ 
     }),
-    /* 17 */
-    /***/ (function (module, __webpack_exports__, __webpack_require__) {
-        "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_sideless_build_query__ = __webpack_require__(11);
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__client_fetch__ = __webpack_require__(117);
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_route_parse__ = __webpack_require__(118);
-        let client = new __WEBPACK_IMPORTED_MODULE_1__client_fetch__["a" /* client_fetch */]();
-        class internal_crud {
-            constructor(options) {
-                this.endPoint = "";
-                this.client = (url, options) => {
-                    return client.fetch(url, options);
-                };
-                this.serverPagination = (route) => {
-                    let serverPagination = (resolve, reject) => {
-                        let pagination = this.feeds.pagination(this.resource);
-                        let conditions = this.feeds.conditions(route);
-                        let entities = pagination.find(conditions, route.query);
-                        let name = this.resource;
-                        let data = {};
-                        entities.then((result) => {
-                            if (result.rows.length === 0) {
-                                reject(false);
-                            }
-                            ;
-                            data[name] = result.rows;
-                            data["page"] = result.pagination;
-                            resolve(data);
-                        }).catch((error) => {
-                            data[name] = {};
-                            data["page"] = {};
-                            reject(error);
-                        });
-                    };
-                    return serverPagination;
-                };
-                this.serverEntity = (route) => {
-                    let serverEntity = (resolve, reject) => {
-                        let model = this.feeds.model(this.resource);
-                        let data = {};
-                        model.findById(route.params.id).then((result) => {
-                            if (!result) {
-                                reject();
-                                throw Error;
-                            }
-                            resolve(result);
-                        }).catch((err) => {
-                            reject(err);
-                        });
-                    };
-                    return serverEntity;
-                };
-                this.server = (type, route) => {
-                    let server;
-                    if (type === "paginate") {
-                        server = this.serverPagination(route);
-                    }
-                    if (type === "entity") {
-                        server = this.serverEntity(route);
-                    }
-                    return new Promise(server);
-                };
-                this.paginate = (route) => {
-                    let bq = new __WEBPACK_IMPORTED_MODULE_0__base_sideless_build_query__["a" /* build_query */]();
-                    let URI = `${this.endPoint}/${__WEBPACK_IMPORTED_MODULE_2__utilities_route_parse__["a" /* default */].parse(route)}${bq.http(route.query)}`;
-                    if (typeof window === "undefined") {
-                        return this.server("paginate", route);
-                    }
-                    return this.client(URI, {});
-                };
-                this.entity = (route) => {
-                    let id = route.params.id;
-                    let URI = `${this.endPoint}/${id}`;
-                    if (typeof window === "undefined") {
-                        return this.server("entity", route);
-                    }
-                    return this.client(URI, {});
-                };
-                this.insert = (entity, token) => {
-                    entity = JSON.stringify(entity);
-                    let URI = this.endPoint;
-                    let insert = (resolve, reject) => {
-                        this.client(URI, {
-                            body: entity,
-                            method: "post",
-                            headers: {
-                                'X-XSRF-Token': token
-                            }
-                        }).then(r => {
-                            resolve(r);
-                        }).catch(e => {
-                            reject(e);
-                        });
-                    };
-                    return new Promise(insert);
-                };
-                this.update = (entity, token) => {
-                    let URI = this.endPoint + "/" + entity.id;
-                    entity = JSON.stringify(entity);
-                    let insert = (resolve, reject) => {
-                        this.client(URI, {
-                            body: entity,
-                            method: "put",
-                            headers: {
-                                'X-XSRF-Token': token
-                            }
-                        }).then(r => {
-                            resolve(r);
-                        }).catch(e => {
-                            reject(e);
-                        });
-                    };
-                    return new Promise(insert);
-                };
-                this.delete = (id, token) => {
-                    let URI = this.endPoint + "/" + id;
-                    let del = (resolve, reject) => {
-                        this.client(URI, {
-                            method: "delete",
-                            headers: {
-                                'X-XSRF-Token': token
-                            }
-                        }).then(r => {
-                            resolve("api delete ok");
-                        }).catch(e => {
-                            reject("api delete error");
-                        });
-                    };
-                    return new Promise(del);
-                };
-                this.endPoint = options.endPoint;
-                this.resource = options.resource;
-                this.feeds = options.feeds;
-            }
-        }
-        /* harmony export (immutable) */ __webpack_exports__["a"] = internal_crud;
-        /***/ 
-    }),
+    /* 17 */ ,
     /* 18 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
@@ -3765,7 +3628,7 @@
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_vue__ = __webpack_require__(20);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__client_router__ = __webpack_require__(44);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(96);
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex_router_sync__ = __webpack_require__(129);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex_router_sync__ = __webpack_require__(127);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex_router_sync___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vuex_router_sync__);
         __WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin({
             beforeMount() {
@@ -6956,8 +6819,8 @@
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modal_store_module__ = __webpack_require__(102);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__offset_store_module__ = __webpack_require__(107);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__tasks_store_module__ = __webpack_require__(112);
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__users_store_module__ = __webpack_require__(119);
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__auth_store_module__ = __webpack_require__(124);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__users_store_module__ = __webpack_require__(117);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__auth_store_module__ = __webpack_require__(122);
         __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
         function createStore(feeds) {
             let getters = {
@@ -7280,7 +7143,7 @@
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(114);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(115);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(116);
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__ = __webpack_require__(17);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__ = __webpack_require__(130);
         class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__["a" /* store_module */] {
             constructor(feeds) {
                 super();
@@ -7432,76 +7295,12 @@
     /* 117 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        class client_fetch {
-            constructor() {
-                this._options = {
-                    credentials: 'same-origin',
-                    method: "get",
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Content-Type': 'application/json'
-                    }
-                };
-                this.fetch = (url, options) => {
-                    let base = this.options;
-                    if (options.headers) {
-                        options.headers = Object.assign(base.headers, options.headers);
-                    }
-                    options = Object.assign(base, options);
-                    let client = (resolve, reject) => {
-                        fetch(url, options)
-                            .then((response) => {
-                            //deleted
-                            if (response.status === 204) {
-                                resolve(response.status);
-                                return;
-                            }
-                            response.json().then(r => {
-                                if (response.status < 200 || response.status > 300) {
-                                    reject(r);
-                                    return;
-                                }
-                                resolve(r);
-                            });
-                        }).catch((err) => {
-                            reject(err);
-                        });
-                    };
-                    return new Promise(client);
-                };
-            }
-            get options() {
-                return Object.create(this._options);
-            }
-        }
-        /* harmony export (immutable) */ __webpack_exports__["a"] = client_fetch;
-        /***/ 
-    }),
-    /* 118 */
-    /***/ (function (module, __webpack_exports__, __webpack_require__) {
-        "use strict";
-        class route_parse {
-            parse(route) {
-                let params = route.params;
-                let paramsStr = "";
-                for (let key in params) {
-                    paramsStr = `${key}/${params[key]}`;
-                }
-                return paramsStr;
-            }
-        }
-        /* harmony default export */ __webpack_exports__["a"] = (new route_parse());
-        /***/ 
-    }),
-    /* 119 */
-    /***/ (function (module, __webpack_exports__, __webpack_require__) {
-        "use strict";
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(6);
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(120);
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(121);
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(122);
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(123);
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__ = __webpack_require__(17);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(118);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(119);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(120);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(121);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__ = __webpack_require__(130);
         class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__["a" /* store_module */] {
             constructor(feeds) {
                 super();
@@ -7522,7 +7321,7 @@
         /* harmony export (immutable) */ __webpack_exports__["a"] = store_module;
         /***/ 
     }),
-    /* 120 */
+    /* 118 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(7);
@@ -7561,7 +7360,7 @@
         /* harmony export (immutable) */ __webpack_exports__["a"] = mutations;
         /***/ 
     }),
-    /* 121 */
+    /* 119 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(8);
@@ -7617,7 +7416,7 @@
         /* harmony export (immutable) */ __webpack_exports__["a"] = actions;
         /***/ 
     }),
-    /* 122 */
+    /* 120 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(9);
@@ -7638,7 +7437,7 @@
         /* harmony export (immutable) */ __webpack_exports__["a"] = state;
         /***/ 
     }),
-    /* 123 */
+    /* 121 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(10);
@@ -7650,14 +7449,14 @@
         /* harmony export (immutable) */ __webpack_exports__["a"] = getters;
         /***/ 
     }),
-    /* 124 */
+    /* 122 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(6);
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(125);
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(126);
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(127);
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(128);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(123);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(124);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(125);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(126);
         class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__["a" /* store_module */] {
             constructor(options) {
                 super();
@@ -7670,7 +7469,7 @@
         /* harmony export (immutable) */ __webpack_exports__["a"] = store_module;
         /***/ 
     }),
-    /* 125 */
+    /* 123 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(7);
@@ -7682,7 +7481,7 @@
         /* harmony export (immutable) */ __webpack_exports__["a"] = mutations;
         /***/ 
     }),
-    /* 126 */
+    /* 124 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(8);
@@ -7694,7 +7493,7 @@
         /* harmony export (immutable) */ __webpack_exports__["a"] = actions;
         /***/ 
     }),
-    /* 127 */
+    /* 125 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(9);
@@ -7709,7 +7508,7 @@
         /* harmony export (immutable) */ __webpack_exports__["a"] = state;
         /***/ 
     }),
-    /* 128 */
+    /* 126 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(10);
@@ -7721,7 +7520,7 @@
         /* harmony export (immutable) */ __webpack_exports__["a"] = getters;
         /***/ 
     }),
-    /* 129 */
+    /* 127 */
     /***/ (function (module, exports) {
         exports.sync = function (store, router, options) {
             var moduleName = (options || {}).moduleName || 'route';
@@ -7785,6 +7584,209 @@
             }
             return Object.freeze(clone);
         }
+        /***/ 
+    }),
+    /* 128 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        class client_fetch {
+            constructor() {
+                this._options = {
+                    credentials: 'same-origin',
+                    method: "get",
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Content-Type': 'application/json'
+                    }
+                };
+                this.fetch = (url, options) => {
+                    let base = this.options;
+                    if (options.headers) {
+                        options.headers = Object.assign(base.headers, options.headers);
+                    }
+                    options = Object.assign(base, options);
+                    let client = (resolve, reject) => {
+                        fetch(url, options)
+                            .then((response) => {
+                            //deleted
+                            if (response.status === 204) {
+                                resolve(response.status);
+                                return;
+                            }
+                            response.json().then(r => {
+                                if (response.status < 200 || response.status > 300) {
+                                    reject(r);
+                                    return;
+                                }
+                                resolve(r);
+                            });
+                        }).catch((err) => {
+                            reject(err);
+                        });
+                    };
+                    return new Promise(client);
+                };
+            }
+            get options() {
+                return Object.create(this._options);
+            }
+        }
+        /* harmony export (immutable) */ __webpack_exports__["a"] = client_fetch;
+        /***/ 
+    }),
+    /* 129 */ ,
+    /* 130 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_sideless_build_query__ = __webpack_require__(11);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__client_fetch__ = __webpack_require__(128);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_route_parse__ = __webpack_require__(131);
+        let client = new __WEBPACK_IMPORTED_MODULE_1__client_fetch__["a" /* client_fetch */]();
+        class internal_crud {
+            constructor(options) {
+                this.endPoint = "";
+                this.client = (url, options) => {
+                    return client.fetch(url, options);
+                };
+                this.serverPagination = (route) => {
+                    let serverPagination = (resolve, reject) => {
+                        let pagination = this.feeds.pagination(this.resource);
+                        let conditions = this.feeds.conditions(route);
+                        let entities = pagination.find(conditions, route.query);
+                        let name = this.resource;
+                        let data = {};
+                        entities.then((result) => {
+                            if (result.rows.length === 0) {
+                                reject(false);
+                            }
+                            ;
+                            data[name] = result.rows;
+                            data["page"] = result.pagination;
+                            resolve(data);
+                        }).catch((error) => {
+                            data[name] = {};
+                            data["page"] = {};
+                            reject(error);
+                        });
+                    };
+                    return serverPagination;
+                };
+                this.serverEntity = (route) => {
+                    let serverEntity = (resolve, reject) => {
+                        let model = this.feeds.model(this.resource);
+                        let data = {};
+                        model.findById(route.params.id).then((result) => {
+                            if (!result) {
+                                reject();
+                                throw Error;
+                            }
+                            resolve(result);
+                        }).catch((err) => {
+                            reject(err);
+                        });
+                    };
+                    return serverEntity;
+                };
+                this.server = (type, route) => {
+                    let server;
+                    if (type === "paginate") {
+                        server = this.serverPagination(route);
+                    }
+                    if (type === "entity") {
+                        server = this.serverEntity(route);
+                    }
+                    return new Promise(server);
+                };
+                this.paginate = (route) => {
+                    let bq = new __WEBPACK_IMPORTED_MODULE_0__base_sideless_build_query__["a" /* build_query */]();
+                    let URI = `${this.endPoint}/${__WEBPACK_IMPORTED_MODULE_2__utilities_route_parse__["a" /* default */].parse(route)}${bq.http(route.query)}`;
+                    if (typeof window === "undefined") {
+                        return this.server("paginate", route);
+                    }
+                    return this.client(URI, {});
+                };
+                this.entity = (route) => {
+                    let id = route.params.id;
+                    let URI = `${this.endPoint}/${id}`;
+                    if (typeof window === "undefined") {
+                        return this.server("entity", route);
+                    }
+                    return this.client(URI, {});
+                };
+                this.insert = (entity, token) => {
+                    entity = JSON.stringify(entity);
+                    let URI = this.endPoint;
+                    let insert = (resolve, reject) => {
+                        this.client(URI, {
+                            body: entity,
+                            method: "post",
+                            headers: {
+                                'X-XSRF-Token': token
+                            }
+                        }).then(r => {
+                            resolve(r);
+                        }).catch(e => {
+                            reject(e);
+                        });
+                    };
+                    return new Promise(insert);
+                };
+                this.update = (entity, token) => {
+                    let URI = this.endPoint + "/" + entity.id;
+                    entity = JSON.stringify(entity);
+                    let insert = (resolve, reject) => {
+                        this.client(URI, {
+                            body: entity,
+                            method: "put",
+                            headers: {
+                                'X-XSRF-Token': token
+                            }
+                        }).then(r => {
+                            resolve(r);
+                        }).catch(e => {
+                            reject(e);
+                        });
+                    };
+                    return new Promise(insert);
+                };
+                this.delete = (id, token) => {
+                    let URI = this.endPoint + "/" + id;
+                    let del = (resolve, reject) => {
+                        this.client(URI, {
+                            method: "delete",
+                            headers: {
+                                'X-XSRF-Token': token
+                            }
+                        }).then(r => {
+                            resolve("api delete ok");
+                        }).catch(e => {
+                            reject("api delete error");
+                        });
+                    };
+                    return new Promise(del);
+                };
+                this.endPoint = options.endPoint;
+                this.resource = options.resource;
+                this.feeds = options.feeds;
+            }
+        }
+        /* harmony export (immutable) */ __webpack_exports__["a"] = internal_crud;
+        /***/ 
+    }),
+    /* 131 */
+    /***/ (function (module, __webpack_exports__, __webpack_require__) {
+        "use strict";
+        class route_parse {
+            parse(route) {
+                let params = route.params;
+                let paramsStr = "";
+                for (let key in params) {
+                    paramsStr = `${key}/${params[key]}`;
+                }
+                return paramsStr;
+            }
+        }
+        /* harmony default export */ __webpack_exports__["a"] = (new route_parse());
         /***/ 
     })
     /******/ 
