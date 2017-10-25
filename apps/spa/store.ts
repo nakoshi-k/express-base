@@ -26,7 +26,6 @@ export function createStore( feeds ){
   let tasks = new tasks_module({ entities : "tasks" , endPoint : "/tasks" , ...feeds} ).store()
   let users = new users_module({ entities : "users" , endPoint : "/users" , ...feeds} ).store();
   let auth = new auth_module({ ...feeds} ).store();
-
   let loading = new loading_module({...feeds}).store();
   let modal = new modal_module({...feeds}).store();
   let offset = new offset_module({...feeds}).store();

@@ -1,22 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const new_router_1 = require("../base/core/new_router");
+const router_1 = require("../base/core/router");
 const core_1 = require("../base/core");
 const csurf = require("csurf");
 let body_csrf = (req, res, next) => {
-    console.log("body_csrf");
     res.locals["csrf"] = req.csrfToken();
     next();
 };
 let is_authenticated = (req, res, next) => {
-    console.log("auth");
     next();
 };
 let rbac = (req, res, next) => {
-    console.log("rbac");
     next();
 };
-class router extends new_router_1.router {
+class router extends router_1.router {
     constructor() {
         super();
         this.parent = {};

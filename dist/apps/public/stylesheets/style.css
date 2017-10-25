@@ -1529,6 +1529,7 @@ input[type='submit'].button-clear[disabled]:hover {
 button,
 .button {
   transition: 0.1s background-color ease, 0.1s border-color ease;
+  letter-spacing: 0.05rem;
 }
 button:focus,
 .button:focus,
@@ -1774,6 +1775,10 @@ pre > code {
   display: block;
   padding: 1rem 1.5rem;
   white-space: pre;
+}
+pre {
+  padding: 1.2rem;
+  background-color: #e9eded;
 }
 /*
  * Milligram-stylus v1.3.0
@@ -2716,6 +2721,7 @@ img {
   padding: 0;
   text-decoration: none;
   font-weight: bold;
+  cursor: pointer;
 }
 .navigation .navigation-list.navigation-list-reverse {
   justify-content: flex-end;
@@ -2837,7 +2843,7 @@ img {
   min-height: 6rem;
   padding: 2rem;
   background-color: #f9fdfd;
-  border: 1px solid #c9cdcd;
+  border: 1px solid #e9eded;
   border-radius: 0.6rem;
   box-shadow: 3px 6px 10px -3px #c9cdcd;
   -moz-box-shadow: 3px 6px 10px -3px #c9cdcd;

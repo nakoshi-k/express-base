@@ -19,7 +19,9 @@ module.exports = function(sequelize, DataTypes) {
     },
     name: DataTypes.STRING,
     mail: DataTypes.STRING,
-    password: DataTypes.STRING,
+    password: { 
+      type : DataTypes.STRING
+    },
     group_id: DataTypes.STRING,
     access_token: DataTypes.STRING,
     refresh_token: DataTypes.STRING,

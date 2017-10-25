@@ -1,7 +1,5 @@
 <template>
-  <div class="login column column-md-50 column-md-offset-25">
-  <div class="panel">
-  <h1 class="text-center">Application</h1>
+  <div v-if="show">
   <h2>Login</h2>
   <form :action="action" method="post" v-on:submit.prevent="login">
     <fieldset>
@@ -20,15 +18,14 @@
     <button type="submit" :class="validationClass(errors,'submit')">Login</button>
   </form>
   </div>
-  </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import {mapGetters,mapState,mapActions,mapMutations} from 'vuex'
-import form_validation from "../../../utilities/validation"
-import {auth as auth_api} from "../../../resources/auth"
+import form_validation from "../../../../utilities/validation"
+import {auth as auth_api} from "../../../../resources/auth"
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -42,20 +39,44 @@ Component.registerHooks([
 ])
 
 @Component({
-  name : "login",
+  name : "login_modal",
   computed : {
     ...mapGetters([
       'domain' , 'token'
     ]),
-
+    ...mapState('modal' , { 
+      'close' : ({close}) => close,
+      'data' : ({data}) => data,
+      'template' : ({template}) => template,
+    })
   },
   methods : {
-        ...form_validation.map(["validationClass"])
+     ...mapMutations('modal' , [ "setModal" , "toggleModal", "closeModal"]),
+     ...mapMutations('auth' , [ "setAuthUser"]),
+     ...form_validation.map(["validationClass"])
   }
 })
 
-export default class login extends Vue {
+export default class login_modal extends Vue {
+  name = "login_modal"
+  setModal:(modal) => {};
 
+  template:string
+  close : boolean
+  data : {
+    id : string,
+    name : string,
+    mount : string
+  };
+
+  button = {
+    done : true,
+    cancel : true
+  }
+  
+  get show(){
+      return this.template === this.name
+  }
 
   user = {
     account : "",
@@ -68,17 +89,17 @@ export default class login extends Vue {
   }
   
   token:string
-
+  closeModal:() => void
+  setAuthUser:(user) => void
   login(){
-     let auth = new auth_api();
-     auth.login( this.user , this.token ).then(r => {
-       this.errors = {};
-       this.$router.push("/tasks")
-     }).catch(e => {
-       console.log(e);
-       this.errors = e;
-       console.log("login failed")
-     })
+    let auth = new auth_api();
+    auth.login( this.user , this.token ).then(r => {
+      this.errors = {};
+      this.setAuthUser(r)
+      this.closeModal()
+    }).catch(e => {
+      this.errors = e;
+    })
   } 
 }
 </script>

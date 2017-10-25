@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "browsersync": "browser-sync start --proxy localhost:4000 --files=\"dist/**/*.*\" ",
-    "start": "nodemon ./dist/bin/www.js -d 1",
+    "start": "nodemon ./dist/bin/www.js -d 1 --ignore ./sessions",
     "build:view": "cpx \"{apps,base,models,config,public}/**/*.{ejs,js,json,jpg,jpeg,png,gif,ico,css,eot,svg,ttf,woff}\" dist",
     "build:stylus": "stylus apps/public/stylesheets/style.styl -o dist/apps/public/stylesheets/style.css --include-css",
     "build:scripts": "webpack --config apps/public/scripts/webpack.config.js",
@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@types/deep-assign": "^0.1.0",
+    "@types/express": "^4.0.38",
     "@types/inflection": "^1.5.28",
     "@types/passport": "^0.3.4",
     "bcrypt": "^1.0.3",
@@ -59,6 +60,7 @@
     "sequelize-cli": "^2.8.0",
     "serialize-javascript": "^1.4.0",
     "serve-favicon": "^2.3.2",
+    "session-file-store": "^1.1.2",
     "ts-loader": "^2.3.7",
     "typescript": "^2.5.2",
     "typescript-simple": "^8.0.4",

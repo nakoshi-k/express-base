@@ -5,6 +5,10 @@ import * as logger from 'morgan';
 import * as cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
 import * as session from 'express-session';
+import * as session_file_store from 'session-file-store';
+
+let FileStore = session_file_store(session);
+
 import * as methodOverride from 'method-override';
 import * as passport from 'passport';
 
@@ -36,6 +40,7 @@ export class main{
 
   get session () {
     return {
+      store :  new FileStore(),
       secret: 'u59y7hfv8szg0e6t0rf35fr40gva7gzvdtf6',
       resave: false,
       saveUninitialized: false,
@@ -74,6 +79,8 @@ export class main{
     app.use(express.static( this.webroot ));
     app.use(methodOverride('X-HTTP-Method-Override'));
     app.use(methodOverride(this.overrideForm));
+
+
     this.router(app);
     this.status404(app); 
     this.errorHandler(app);

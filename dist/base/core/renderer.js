@@ -27,7 +27,7 @@ class renderer {
             let f = view.substring(0, 1);
             let ds = core_1.system.ds;
             if (f !== "." && f !== ds) {
-                let dir = [this.views.typical, this.name, "views"].join(ds);
+                let dir = this.views.typical;
                 this._response.app.set('views', dir);
                 return view;
             }
@@ -47,10 +47,10 @@ class renderer {
                     res.app.set('views', this.views.common);
                     res.status = err.status;
                     if (res.app.get('env') === 'development') {
-                        res.render("error", { "message": err.message, "error": err });
+                        res.render("error", { code: "", "message": err.message, "error": err });
                         return;
                     }
-                    res.render("error", { "message": err.message, "error": {} });
+                    res.render("error", { "code": "", "message": err.message, "error": {} });
                 });
             };
             return new Promise(resRender);

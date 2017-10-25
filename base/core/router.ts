@@ -1,28 +1,23 @@
-import * as express from "express";
-import * as sequelize from "sequelize";
+import * as e from "express";
 import * as service from "./service";
-import * as bodyParser from "body-parser";
-import * as csurf from "csurf";
+import { renderer ,routing_map} from "./renderer";
+export { routing_map } from "./renderer";
 import * as inflection from "inflection";
-
 import {system,helper} from "../core";
+export {system,helper} from "../core";
 
 export abstract class router{
-    abstract name = "router";
-    abstract mount = "router";
-    protected parseForm;
-    protected csrfProtection;
-    protected useModel = true;
-    public vars = { "title" : "Application", "csrf" : "" , "hlp" : {} };
+    protected name = "router"
     protected service:service.service;
 
-    get models(){
-        return this.service.models;
-    }
-    get model(){
-        return this.service.model;
+    public renderer : renderer;
+    
+    constructor(){
+        this.renderer = new renderer();
     }
 
+    protected _mapping :  { [propName: string]: routing_map };
+    
     get entity_name(){
         return inflection.singularize(this.name);
     }
@@ -31,119 +26,57 @@ export abstract class router{
         return inflection.pluralize(this.name);
     }
 
-    constructor(mount){
-        this.mount = mount;
-        let csrf = csurf;
-        let csrfProtection = csrf({ cookie: true });
-        this.csrfProtection = csrfProtection;
+    get models(){
+        return this.service.models;
+    }
+    get model(){
+        return this.service.model;
     }
 
-    protected csrfReady = (req , form = "form") => {
-        let csrf = req.csrfToken();
-        this.vars["csrf"] = csrf;
-    }
+    private _middle_ware = {};
 
-    protected bind = (router:express.Router) : express.Router => {
-        return router;
-    }
 
-    public create = () => {
-        const express = require("express");
-        let router = express.Router();
-        this.bind(router); 
-        return router;
-    }
-    
-    protected beforeRender = (req,res) => {
-    
-    }
-    
-    public loaders  = [Promise.resolve];
-
-    public loading = async () =>  {
-        // helper loading
-        let helpers = this.vars.hlp;
-        for(var key in helpers){
-            await helpers[key].loading();
+    private strip_object_key = (obj:object) =>{
+        let ary = [];
+        for(let k in obj){
+            ary.push(obj[k]);
         }
-        
-        //loaders loading;
-        let loaders = this.loaders;
-        for(var key in loaders){
-            await loaders[key];
+        return ary;
+    }
+    
+    public middle_ware = (md:string[] = [] ) => {
+        if(!md){
+            return this.strip_object_key(this._middle_ware);
         }
-        return true;
-    }
-    
-    protected _views = {
-        common : "",
-        typical : ""   
-    }
-    
-    get views() {
-        return this._views;
-    }
-    
-    set views(paths:{common:string,typical:string}){
-        this._views.common = paths.common;
-        this._views.typical = paths.typical;
-    }
+        if(md.length === 0){
+            return this.strip_object_key(this._middle_ware);
+        }
 
-    public render = ( req , res , view : string = "",vars = {}) => {
-        
-        this.setData(vars);
-        this.beforeRender(req,res);
-        let loading = this.loading();
-        loading.then( (result) => {
-            let f = view.substring(0,1);
-            let ds :string = system.ds;
-            
-            if(f !== "." && f !== ds ){
-               let dir =  [this.views.typical , this.name , "views"].join(ds);
-               req.app.set('views', dir);
-            }
-            res.render( view ,this.vars , (err,html) => {
-                if(!err){
-                    res.send(html);
-                    return;
-                }
-                req.app.set('views', this.views.common );
-                res.status = err.status;
-                if(res.app.get('env') === 'development') {
-                    res.render("error", {"message" : err.message , "error" :err });
-                    return;
-                }
-                res.render("error", {"message" : err.message , "error" : {} });
-            });
-        }).catch((err) => {
-            res.status(500);
-            res.send("error" ,{error : err});
+        let midware = [];
+        md.forEach((name) => {
+            midware.push( this[name] );
         })
-        
-    } 
-    
-    public send = (req,res,content:string) => {
-        res.send(content);
-    }
-
-    /**
-     * view に渡す変数に追加
-     */
-        
-    public setData = (vars:{}) =>{
-        this.vars = Object.assign(this.vars, vars);
-    }
-
-    /*
-        ajax 判定
-    */
-
-    public isXhr(res){
-        return res.xhr === true;
+        return midware;
     }
     
-    public helper( name :string , helper:helper ){
-        this.vars.hlp[name] = helper;
+    public mw_regist = (key :string ,mw : (req,res,next) => void ) => {
+        this._middle_ware[key] = mw;
+    }
+    
+    map : (included?  : string[]) => e.Router = (included = []) => {
+        let router = e.Router();
+        let middle_ware = this.middle_ware
+        let map = this._mapping;
+        if(included.length === 0 ){
+            included = Object.keys(this._mapping);
+        }
+
+        included.forEach((key) => {
+            let m = map[key];
+            router[ m.type ]( m.mount , ...middle_ware( m.middle_ware ) , this[m.component] );
+        })
+
+        return router;
     }
 
 }

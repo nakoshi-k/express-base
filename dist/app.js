@@ -6,6 +6,8 @@ const logger = require("morgan");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const session = require("express-session");
+const session_file_store = require("session-file-store");
+let FileStore = session_file_store(session);
 const methodOverride = require("method-override");
 const passport = require("passport");
 /**
@@ -68,6 +70,7 @@ class main {
     }
     get session() {
         return {
+            store: new FileStore(),
             secret: 'u59y7hfv8szg0e6t0rf35fr40gva7gzvdtf6',
             resave: false,
             saveUninitialized: false,

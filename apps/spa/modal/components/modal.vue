@@ -4,6 +4,7 @@
     <span @click="close()" class="close typcn typcn-delete large" :class="{disabled : isDisable }"></span>
     <div class="content">
       <modal-destroy></modal-destroy>
+      <modal-login></modal-login>
     </div>
   </div>
 </div>
@@ -14,6 +15,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { mapGetters , mapState , mapMutations} from 'vuex'
 import destroy from './inner/destroy.vue'
+import login_modal from './inner/login_modal.vue'
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -41,8 +43,9 @@ Component.registerHooks([
   methods : {
     ...mapMutations( "modal" , ["closeModal"])
   },
-  components : {
-    "modal-destroy" : destroy
+components : {
+    "modal-destroy" : destroy,
+    "modal-login" : login_modal 
   }
 
 })

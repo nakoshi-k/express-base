@@ -1,95 +1,52 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const csurf = require("csurf");
+const e = require("express");
+const renderer_1 = require("./renderer");
 const inflection = require("inflection");
-const core_1 = require("../core");
+var core_1 = require("../core");
+exports.system = core_1.system;
+exports.helper = core_1.helper;
 class router {
-    constructor(mount) {
+    constructor() {
         this.name = "router";
-        this.mount = "router";
-        this.useModel = true;
-        this.vars = { "title": "Application", "csrf": "", "hlp": {} };
-        this.csrfReady = (req, form = "form") => {
-            let csrf = req.csrfToken();
-            this.vars["csrf"] = csrf;
-        };
-        this.bind = (router) => {
-            return router;
-        };
-        this.create = () => {
-            const express = require("express");
-            let router = express.Router();
-            this.bind(router);
-            return router;
-        };
-        this.beforeRender = (req, res) => {
-        };
-        this.loaders = [Promise.resolve];
-        this.loading = async () => {
-            // helper loading
-            let helpers = this.vars.hlp;
-            for (var key in helpers) {
-                await helpers[key].loading();
+        this._middle_ware = {};
+        this.strip_object_key = (obj) => {
+            let ary = [];
+            for (let k in obj) {
+                ary.push(obj[k]);
             }
-            //loaders loading;
-            let loaders = this.loaders;
-            for (var key in loaders) {
-                await loaders[key];
+            return ary;
+        };
+        this.middle_ware = (md = []) => {
+            if (!md) {
+                return this.strip_object_key(this._middle_ware);
             }
-            return true;
-        };
-        this._views = {
-            common: "",
-            typical: ""
-        };
-        this.render = (req, res, view = "", vars = {}) => {
-            this.setData(vars);
-            this.beforeRender(req, res);
-            let loading = this.loading();
-            loading.then((result) => {
-                let f = view.substring(0, 1);
-                let ds = core_1.system.ds;
-                if (f !== "." && f !== ds) {
-                    let dir = [this.views.typical, this.name, "views"].join(ds);
-                    req.app.set('views', dir);
-                }
-                res.render(view, this.vars, (err, html) => {
-                    if (!err) {
-                        res.send(html);
-                        return;
-                    }
-                    req.app.set('views', this.views.common);
-                    res.status = err.status;
-                    if (res.app.get('env') === 'development') {
-                        res.render("error", { "message": err.message, "error": err });
-                        return;
-                    }
-                    res.render("error", { "message": err.message, "error": {} });
-                });
-            }).catch((err) => {
-                res.status(500);
-                res.send("error", { error: err });
+            if (md.length === 0) {
+                return this.strip_object_key(this._middle_ware);
+            }
+            let midware = [];
+            md.forEach((name) => {
+                midware.push(this[name]);
             });
+            return midware;
         };
-        this.send = (req, res, content) => {
-            res.send(content);
+        this.mw_regist = (key, mw) => {
+            this._middle_ware[key] = mw;
         };
-        /**
-         * view に渡す変数に追加
-         */
-        this.setData = (vars) => {
-            this.vars = Object.assign(this.vars, vars);
+        this.map = (included = []) => {
+            let router = e.Router();
+            let middle_ware = this.middle_ware;
+            let map = this._mapping;
+            if (included.length === 0) {
+                included = Object.keys(this._mapping);
+            }
+            included.forEach((key) => {
+                let m = map[key];
+                router[m.type](m.mount, ...middle_ware(m.middle_ware), this[m.component]);
+            });
+            return router;
         };
-        this.mount = mount;
-        let csrf = csurf;
-        let csrfProtection = csrf({ cookie: true });
-        this.csrfProtection = csrfProtection;
-    }
-    get models() {
-        return this.service.models;
-    }
-    get model() {
-        return this.service.model;
+        this.renderer = new renderer_1.renderer();
     }
     get entity_name() {
         return inflection.singularize(this.name);
@@ -97,21 +54,11 @@ class router {
     get entities_name() {
         return inflection.pluralize(this.name);
     }
-    get views() {
-        return this._views;
+    get models() {
+        return this.service.models;
     }
-    set views(paths) {
-        this._views.common = paths.common;
-        this._views.typical = paths.typical;
-    }
-    /*
-        ajax 判定
-    */
-    isXhr(res) {
-        return res.xhr === true;
-    }
-    helper(name, helper) {
-        this.vars.hlp[name] = helper;
+    get model() {
+        return this.service.model;
     }
 }
 exports.router = router;

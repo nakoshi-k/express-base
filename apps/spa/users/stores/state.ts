@@ -14,5 +14,5 @@ export class state extends core_state{
         currentPage: 1,
         queryPrams: {} 
     }
-    
+
 }

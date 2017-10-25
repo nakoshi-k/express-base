@@ -54,5 +54,6 @@ export class actions extends core_actions{
     clearEntity = ({commit}) => {
         return Promise.resolve(commit("setClearEntity"));
     }
-
+    
+  
 }

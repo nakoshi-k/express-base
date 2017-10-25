@@ -6,6 +6,16 @@ export class mutations extends core_mutations{
       super();
   }
 
+  setAuthUser = ( state , user ) => {
+    state.auth_status = true
+    state.user = user
   
+  }
+  restAuthUser = (state) => {
+    state.auth_status = false
+    for(let k in state.user){
+      state.user[k] = null
+    }
+  }
 
 }

@@ -4,8 +4,11 @@ const state_1 = require("../../../../base/spa/stores/state");
 class state extends state_1.state {
     constructor(options) {
         super();
+        this.auth_status = false;
         this.user = {
-            name: "login yet"
+            id: "",
+            name: "",
+            mail: ""
         };
     }
 }

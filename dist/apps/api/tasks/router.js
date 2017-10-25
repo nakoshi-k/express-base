@@ -2,18 +2,18 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const apps_router_1 = require("../../apps_router");
 const service_1 = require("./service");
+exports.mapping = {
+    idx: { type: "get", mount: "/", component: "search", middle_ware: null },
+    page: { type: "get", mount: "/page/:page", component: "search", middle_ware: null },
+    entity: { type: "get", mount: "/:id", component: "entity", middle_ware: null },
+    insert: { type: "post", mount: "/", component: "insert", middle_ware: null },
+    update: { type: "put", mount: "/:id", component: "update", middle_ware: null },
+    delete: { type: "delete", mount: "/:id", component: "delete", middle_ware: null }
+};
 class router extends apps_router_1.router {
     constructor() {
         super();
         this.name = "tasks";
-        this._mapping = {
-            idx: { type: "get", mount: "/", component: "search", middle_ware: null },
-            page: { type: "get", mount: "/page/:page", component: "search", middle_ware: null },
-            entity: { type: "get", mount: "/:id", component: "entity", middle_ware: null },
-            insert: { type: "post", mount: "/", component: "insert", middle_ware: null },
-            update: { type: "put", mount: "/:id", component: "update", middle_ware: null },
-            delete: { type: "delete", mount: "/:id", component: "delete", middle_ware: null }
-        };
         this.search = (req, res, next) => {
             let pagination = this.service.pagination();
             let conditions = this.service.conditions(req);
@@ -95,6 +95,9 @@ class router extends apps_router_1.router {
             });
         };
         this.service = new service_1.service(this.name);
+    }
+    get _mapping() {
+        return exports.mapping;
     }
 }
 exports.router = router;
