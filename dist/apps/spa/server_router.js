@@ -54,6 +54,8 @@ class router extends apps_router_1.router {
                 url: req.url,
                 feeds: new feeds_1.feeds()
             };
+            let dir = path.resolve([__dirname, "..", "views"].join(path.sep));
+            this.renderer.views = { common: dir, typical: dir };
             let rend = this.renderer.create(res);
             this.ssr(context).then(ssrr => {
                 rend.set_vars({
@@ -62,15 +64,23 @@ class router extends apps_router_1.router {
                     description: ssrr.description,
                     ssr: ssrr.html
                 });
-                let dir = path.resolve([__dirname, "..", "views", "view"].join(path.sep));
-                rend.render(dir);
+                rend.render("view");
             }).catch(err => {
                 if (err.code == 404) {
                     rend.status(404);
                 }
+                if (res.app.get('env') === 'development') {
+                    rend.set_vars({
+                        code: err.code,
+                        message: err.message,
+                        error: err
+                    });
+                    rend.render('error');
+                    return;
+                }
                 rend.set_vars({
-                    message: err.code,
-                    error: {}
+                    message: err.code + " " + err.message,
+                    error: null
                 });
                 rend.render('error');
             });

@@ -9,7 +9,9 @@ exports.default = context => {
         router.onReady(() => {
             const matchedComponents = router.getMatchedComponents();
             if (!matchedComponents.length) {
-                reject(app);
+                let err = new Error("Not Found (( ；ﾟДﾟ))");
+                err["code"] = 404;
+                reject(err);
                 return;
             }
             Promise.all(matchedComponents.map((Component) => {
