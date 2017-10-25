@@ -10,11 +10,13 @@
   <div class="container">
     <div class="row">
       <div class="column">
-        <h1><%= message %></h1>
-        <h2><%= error.status %></h2>
+        <h1><%= code %></h1>
+        <h2><%= message %></h2>
         
-        <pre><%= error.stack  %></pre>
-
+        
+        <% if(error.stack) { %>
+        <pre><%= error.stack %></pre>
+        <% } %>
       </div>
     </div>
   </div>

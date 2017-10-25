@@ -6,7 +6,8 @@
               <div class="hidden-md column text-right">
                 <ul class="navigation-list navigation-list-reverse">
                   <li class="show-lg show-xl show-md"><h1><router-link to="/tasks">Apprication</router-link></h1></li>
-                  <li class="show-lg show-xl show-md"><router-link to="/users/login" title="Login">Login</router-link></li>
+                  <li v-if="!auth_status" class="show-lg show-xl show-md"><router-link to="/users/login" title="login"> <span class="typcn typcn-key"></span> Login</router-link></li>
+                  <li v-if="auth_status" class="show-lg show-xl show-md"><a @click="h_logout()" href="#logout" title="logout" ><span class="typcn typcn-export"></span> Logout</a></li>
                 </ul>
               </div>
               <div class="column">
@@ -15,7 +16,8 @@
                     <li><router-link to="/tasks" title="Home">Home </router-link></li>
                     <li><router-link to="/tasks" title="Tasks">Tasks</router-link></li>
                     <li><router-link to="/users" title="Users">Users</router-link></li>
-                    <li class="show-sm"><router-link to="/users/login" title="Login">Login</router-link></li>
+                    <li v-if="!auth_status" class="show-sm"><router-link to="/users/login" title="login"><span class="typcn typcn-key"></span> Login</router-link></li>
+                    <li v-if="auth_status" class="show-sm"><a @click="h_logout()" href="#logout" title="logout"><span class="typcn typcn-export"></span> Logout</a></li>
                 </ul>
               </div>
             </div>
@@ -28,7 +30,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import {mapGetters,mapState,mapMutations} from 'vuex'
+import {mapGetters,mapState,mapMutations,mapActions} from 'vuex'
 import indicater from '../../loading/components/indicator'
 
 Component.registerHooks([
@@ -53,21 +55,39 @@ Component.registerHooks([
     ]),
     ...mapState("offset" , {
       show : ({show}) => show
+    }),
+    ...mapState("auth" , {
+      auth_user : ({user}) => user,
+      auth_status :({auth_status}) => auth_status
     })
   },
   methods : {
     ...mapMutations( "offset" , 
       ["toggleOffset"]
     ),
+    ...mapActions("auth" , [
+      "logout"
+    ])
   }
 })
 
 export default class navi extends Vue {
   show:boolean;
+  logout : () => void;
+  asyncData ({ store, route }) {
+    return store.dispatch('auth/fetchAuthUser')
+  }
 
   toggleOffset:() => {}
+
   toggle(){
     this.toggleOffset();
   }
+  
+  h_logout(){
+    this.logout();
+    return false;
+  }
+
 }
 </script>

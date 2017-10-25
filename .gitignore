@@ -4,3 +4,4 @@ public/components/*
 dist/config/*
 config/*
 ignore/*
+sessions/*

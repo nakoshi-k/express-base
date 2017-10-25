@@ -3,20 +3,25 @@ import {router as apps_router,routing_map,request,response,next} from "../../app
 import {service} from "./service"
 import {input_error} from "../../../base/core"
 
+export const mapping :  { [propName: string]: routing_map } = {
+    idx : { type : "get", mount : "/", component : "search" , middle_ware : null } ,
+    login : { type : "post", mount : "/login", component : "login" , middle_ware : null } ,
+    logout : { type : "get", mount : "/logout", component : "logout" , middle_ware : null } ,
+    auth : { type : "get", mount : "/auth", component : "auth" , middle_ware : null },
+    page: { type : "get", mount : "/page/:page", component : "search" , middle_ware : null } ,
+    entity : { type : "get", mount : "/:id", component : "entity" , middle_ware : null} ,
+    insert : { type : "post", mount : "/", component : "insert" , middle_ware : null} ,
+    update : { type : "put", mount : "/:id", component : "update" , middle_ware : null } ,
+    delete : { type : "delete", mount : "/:id", component : "delete" , middle_ware : null },
+}
 
 export class router extends apps_router {
     public name = "users"
     public service:service
 
-    protected _mapping :  { [propName: string]: routing_map }= {
-        idx : { type : "get", mount : "/", component : "search" , middle_ware : null } ,
-        page: { type : "get", mount : "/page/:page", component : "search" , middle_ware : null } ,
-        entity : { type : "get", mount : "/:id", component : "entity" , middle_ware : null} ,
-        insert : { type : "post", mount : "/", component : "insert" , middle_ware : null} ,
-        update : { type : "put", mount : "/:id", component : "update" , middle_ware : null } ,
-        delete : { type : "delete", mount : "/:id", component : "delete" , middle_ware : null } 
+    get _mapping(){
+        return mapping;
     }
-
     constructor(){
         super()
         this.service = new service(this.name)
@@ -107,23 +112,25 @@ export class router extends apps_router {
     }
     
     public login = ( req:request,res:response,next:next ) => {
-        const passport = this.service.passport
+        const passport = this.service.auth.passport
         let rend = this.renderer.create(res)
         passport.authenticate('local', (err, user, info) => {
             if (err) {
                 rend.status(401)
-                rend.json({})
+                rend.json({password : [ { type : "invalid" , message : "invalid password"} ] })
                 return 
             }
+
             if (!user) {
                 rend.status(401)
-                rend.json({})
+                rend.json({account : [ { type : "invalid" , message : "invalid account"} ] })
                 return
             }
-            req.logIn(user, (err) => {
-                if (err) {
-                    res.status(401)
-                    res.json({})
+
+            req.logIn(user, (login_err) => {
+                if (login_err) {
+                    rend.status(500)
+                    rend.json({internal : [ { type : "error" , message : "internal error"} ] })
                     return
                 }
                 rend.status(201)
@@ -131,13 +138,28 @@ export class router extends apps_router {
             });
         })(req, res, next);
     }
-
     
     public logout = ( req:request,res:response,next:next) => {
-        req.logOut();
-        res.send(201)
+        let rend = this.renderer.create(res)
+        try{
+            req.logOut();
+            rend.status(201)
+            rend.json({message : "log out"})
+        }catch(e){
+            rend.status(404)
+            rend.json({})
+        }
     }
 
-
+    public auth = (req:request,res:response,next:next) => {
+        let rend = this.renderer.create(res)
+        if(!req.user){
+            rend.status(401);
+            rend.json({});
+            return;
+        }
+        let user = req.user;
+        rend.json(user);
+    }
 
 }

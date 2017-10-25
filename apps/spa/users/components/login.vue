@@ -3,19 +3,21 @@
   <div class="panel">
   <h1 class="text-center">Application</h1>
   <h2>Login</h2>
-  <form action="" method="post">
+  <form :action="action" method="post" v-on:submit.prevent="login">
     <fieldset>
-      <input type="hidden" name="_csrf" :value="token">
+      <input type="hidden" name="_csrf" :value="token" >
       <div class="form-item">
-        <label for="name">User Name</label>
-        <input type="text" name="account"  :value="entity.account" placeholder="name">
+        <label for="name">user name or e-mail </label>
+        <input type="text" name="account"  v-model="user.account" :class="validationClass( errors , 'account')"  placeholder="user name or e-mail">
+        <div class="errors" v-for="e in errors.account"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
       </div>
       <div class="form-item">
         <label for="password">Password</label>
-        <input type="password" name="password":value="entity.password" placeholder="password">
+        <input type="password" name="password" v-model="user.password" :class="validationClass( errors , 'password')" placeholder="password">
+        <div class="errors" v-for="e in errors.password"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
       </div>
     </fieldset>
-    <button type="submit">Login</button>
+    <button type="submit" :class="validationClass(errors,'submit')">Login</button>
   </form>
   </div>
   </div>
@@ -26,6 +28,7 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import {mapGetters,mapState,mapActions,mapMutations} from 'vuex'
 import form_validation from "../../../utilities/validation"
+import {auth as auth_api} from "../../../resources/auth"
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -47,22 +50,35 @@ Component.registerHooks([
 
   },
   methods : {
-   
+        ...form_validation.map(["validationClass"])
   }
 })
 
 export default class login extends Vue {
-  entity = {
+
+
+  user = {
     account : "",
     password : ""
   }
-  
-  action(){
-    return "";
+  errors = {}
+
+  get action(){
+    return "/api/users/login";
   }
+  
+  token:string
 
   login(){
-
-  }
+     let auth = new auth_api();
+     auth.login( this.user , this.token ).then(r => {
+       this.errors = {};
+       this.$router.push("/tasks")
+     }).catch(e => {
+       console.log(e);
+       this.errors = e;
+       console.log("login failed")
+     })
+  } 
 }
 </script>
