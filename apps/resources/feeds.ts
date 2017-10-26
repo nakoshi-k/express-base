@@ -2,6 +2,13 @@
 import  * as models from "../../models";
 import {pagination , validation_error ,search } from "../../base/core";
 import * as sequelize from "sequelize";
+import {service as tasks_service } from "../api/tasks/service"
+import {service as users_service } from "../api/users/service"
+
+let service = {
+    tasks : new tasks_service("tasks"),
+    users : new users_service("users")
+}
 
 export class feeds{
 
@@ -17,10 +24,8 @@ export class feeds{
         return this.models[name];
     }
 
-    private _service = {}
-
     service = (name : string) =>{
-        return this._service[name];
+        return service[name]
     }
     
     public search = (query = {}) => {

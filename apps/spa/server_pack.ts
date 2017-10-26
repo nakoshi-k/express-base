@@ -13,7 +13,6 @@ export default context => {
         let err = new Error("Not Found (( ；ﾟДﾟ))");
         err["code"] = 404;
         reject(err)
-
         return;
       }
 
@@ -39,6 +38,8 @@ export default context => {
         context.state = store.state;
         resolve(app);
       }).catch(e => {
+        console.log("----err------")
+        console.log(e)
         resolve(app);
       })
 

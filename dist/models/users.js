@@ -58,6 +58,7 @@ module.exports = function(sequelize, DataTypes) {
           bcrypt.compare(password, this.password, function(err,same){
             if (err) {
               reject(err);
+              return;
             }
             if(same){
               resolve(true);

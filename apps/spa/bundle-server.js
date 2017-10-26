@@ -2,6 +2,12 @@
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
+/******/ 	// object to store loaded chunks
+/******/ 	// "0" means "already loaded"
+/******/ 	var installedChunks = {
+/******/ 		0: 0
+/******/ 	};
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/
@@ -26,6 +32,21 @@
 /******/ 		return module.exports;
 /******/ 	}
 /******/
+/******/ 	// This file contains only the entry chunk.
+/******/ 	// The chunk loading function for additional chunks
+/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
+/******/ 		// "0" is the signal for "already loaded"
+/******/ 		if(installedChunks[chunkId] !== 0) {
+/******/ 			var chunk = require("./" + chunkId + ".bundle-server.js");
+/******/ 			var moreModules = chunk.modules, chunkIds = chunk.ids;
+/******/ 			for(var moduleId in moreModules) {
+/******/ 				modules[moduleId] = moreModules[moduleId];
+/******/ 			}
+/******/ 			for(var i = 0; i < chunkIds.length; i++)
+/******/ 				installedChunks[chunkIds[i]] = 0;
+/******/ 		}
+/******/ 		return Promise.resolve();
+/******/ 	};
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
@@ -58,6 +79,13 @@
 /******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// uncatched error handler for webpack runtime
+/******/ 	__webpack_require__.oe = function(err) {
+/******/ 		process.nextTick(function() {
+/******/ 			throw err; // catch this error by using System.import().catch()
+/******/ 		});
+/******/ 	};
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 20);
@@ -4264,8 +4292,9 @@ class internal_crud {
         };
         this.serverPagination = (route) => {
             let serverPagination = (resolve, reject) => {
+                let service = this.feeds.service(this.resource);
                 let pagination = this.feeds.pagination(this.resource);
-                let conditions = this.feeds.conditions(route);
+                let conditions = service.conditions(route);
                 let entities = pagination.find(conditions, route.query);
                 let name = this.resource;
                 let data = {};
@@ -4430,6 +4459,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 context.state = store.state;
                 resolve(app);
             }).catch(e => {
+                console.log("----err------");
+                console.log(e);
                 resolve(app);
             });
         }, reject);
@@ -5116,7 +5147,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.show
-    ? _c("div", [
+    ? _c("div", { staticClass: "content" }, [
         _vm._ssrNode(
           "<h3>" +
             _vm._ssrEscape("Delete #" + _vm._s(_vm.data.id)) +
@@ -5226,14 +5257,19 @@ let login_modal = class login_modal extends __WEBPACK_IMPORTED_MODULE_0_vue___de
         return "/api/users/login";
     }
     login() {
+        this.errors = {};
         let auth = new __WEBPACK_IMPORTED_MODULE_4__resources_auth__["a" /* auth */]();
         auth.login(this.user, this.token).then(r => {
-            this.errors = {};
             this.setAuthUser(r);
             this.closeModal();
         }).catch(e => {
             this.errors = e;
         });
+    }
+    get reject() {
+        for (let k in this.errors) {
+            return "reject";
+        }
     }
 };
 login_modal = __decorate([
@@ -5262,7 +5298,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.show
-    ? _c("div", [
+    ? _c("div", { staticClass: "content animation", class: _vm.reject }, [
         _vm._ssrNode(
           "<h2>Login</h2> <form" +
             _vm._ssrAttr("action", _vm.action) +
@@ -5275,9 +5311,7 @@ var render = function() {
             _vm._ssrList(_vm.errors.account, function(e) {
               return (
                 '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-                _vm._ssrEscape(
-                  " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-                ) +
+                _vm._ssrEscape(" " + _vm._s(e.message)) +
                 "</div>"
               )
             }) +
@@ -5288,13 +5322,19 @@ var render = function() {
             _vm._ssrList(_vm.errors.password, function(e) {
               return (
                 '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-                _vm._ssrEscape(
-                  " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-                ) +
+                _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
                 "</div>"
               )
             }) +
-            '</div></fieldset> <button type="submit"' +
+            "</div> " +
+            _vm._ssrList(_vm.errors.internal, function(e) {
+              return (
+                '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+                _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
+                "</div>"
+              )
+            }) +
+            '</fieldset> <button type="submit"' +
             _vm._ssrClass(null, _vm.validationClass(_vm.errors, "submit")) +
             ">Login</button></form>"
         )
@@ -5335,18 +5375,15 @@ var render = function() {
             '<div class="modal">',
             "</div>",
             [
+              _c("modal-destroy"),
+              _vm._ssrNode(" "),
+              _c("modal-login"),
               _vm._ssrNode(
-                "<span" +
+                " <span" +
                   _vm._ssrClass("close typcn typcn-delete large", {
                     disabled: _vm.isDisable
                   }) +
-                  "></span> "
-              ),
-              _vm._ssrNode(
-                '<div class="content">',
-                "</div>",
-                [_c("modal-destroy"), _vm._ssrNode(" "), _c("modal-login")],
-                2
+                  "></span>"
               )
             ],
             2
@@ -5521,7 +5558,7 @@ login_user = __decorate([
         }), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])([
             'domain', 'token'
         ])),
-        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])("auth", ["fetchAuthUser"]))
+        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])("auth", ["fetchAuthUser", "logout"]))
     })
 ], login_user);
 /* harmony default export */ __webpack_exports__["a"] = (login_user);
@@ -5536,15 +5573,23 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "margin" }, [
-    _vm._ssrNode(
-      '<div class="login-user row"><div class="column column-25">avatar</div> <div class="column column-75 text-sm"><div class="text-md">' +
-        _vm._ssrEscape(_vm._s(_vm.user.name)) +
-        "</div> <div>Last login : 最終ログイン</div> <div>" +
-        _vm._ssrEscape("Mail : " + _vm._s(_vm.user.mail)) +
-        "</div></div></div>"
-    )
-  ])
+  return _vm.auth_status
+    ? _c("div", { staticClass: "margin" }, [
+        _vm._ssrNode(
+          '<div class="login-user row padding"><div class="column column-25">avatar</div> <div class="column column-75 text-sm"><div class="text-md">' +
+            _vm._ssrEscape(_vm._s(_vm.user.name)) +
+            "</div> <div>" +
+            _vm._ssrEscape("Mail : " + _vm._s(_vm.user.mail)) +
+            "</div> <div>" +
+            _vm._ssrEscape("Last login : " + _vm._s(_vm.user.last_login)) +
+            "</div> " +
+            (_vm.auth_status
+              ? '<div><a title="logout"><span class="typcn typcn-export"></span> Logout</a></div>'
+              : "<!---->") +
+            "</div></div>"
+        )
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -5773,14 +5818,12 @@ let mount = "/tasks";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__loading_components_indicator__ = __webpack_require__(53);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
 
 
 
@@ -5795,9 +5838,6 @@ __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
     'scrollToTop'
 ]);
 let navi = class navi extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
-    asyncData({ store, route }) {
-        return store.dispatch('auth/fetchAuthUser');
-    }
     toggle() {
         this.toggleOffset();
     }
@@ -5814,7 +5854,7 @@ navi = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
         name: "navi",
         components: {
-            "app-indicater": __WEBPACK_IMPORTED_MODULE_3__loading_components_indicator__["a" /* default */],
+            "app-indicater": () => __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 53)),
         },
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])([
             'domain', 'token'
@@ -5833,175 +5873,11 @@ navi = __decorate([
 
 
 /***/ }),
-/* 53 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_indicator_vue__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7b90319e_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_indicator_vue__ = __webpack_require__(57);
-function injectStyle (ssrContext) {
-var i
-;(i=__webpack_require__(54),i.__inject__&&i.__inject__(ssrContext),i)
-}
-var normalizeComponent = __webpack_require__(1)
-/* script */
-
-/* template */
-
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = "4346c045"
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_indicator_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7b90319e_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_indicator_vue__["a" /* default */],
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "apps/spa/loading/components/indicator.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] indicator.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
-
-
-/***/ }),
-/* 54 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(55);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to SSR context
-var add = __webpack_require__(15)
-module.exports.__inject__ = function (context) {
-  add("54bc1cb2", content, false, context)
-};
-
-/***/ }),
-/* 55 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(14)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/***/ }),
-/* 56 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(3);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-__WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
-    'beforeRouteEnter',
-    'beforeRouteLeave',
-    'asyncData',
-    'fetch',
-    'middleware',
-    'layout',
-    'transition',
-    'scrollToTop'
-]);
-let indicator = class indicator extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
-    constructor() {
-        super(...arguments);
-        this.light = true;
-        this.beat = (self) => {
-            let i = 0;
-            self._beat = () => {
-                let prosess = self.indicator.prosess;
-                if (prosess === true) {
-                    self.light = (self.light) ? false : true;
-                    setTimeout(self._beat, 2000);
-                    return;
-                }
-                if (prosess === false && self.light === false) {
-                    self.light = true;
-                }
-                setTimeout(self._beat, 2000);
-            };
-            self._beat();
-        };
-    }
-    get width() {
-        return this.indicator.complate;
-    }
-    get css() {
-        let css = { light: false };
-        css[this.indicator.status] = true;
-        css.light = this.light;
-        return css;
-    }
-    mounted() {
-        let self = this;
-        this.beat(self);
-    }
-};
-indicator = __decorate([
-    __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
-        name: "indicator",
-        computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])([
-            'domain', 'token'
-        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])("loading", {
-            indicator: (state) => state.indicator
-        })),
-    })
-], indicator);
-/* harmony default export */ __webpack_exports__["a"] = (indicator);
-
-
-/***/ }),
-/* 57 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm.indicator.show
-    ? _c(
-        "div",
-        {
-          staticClass: "indicator",
-          class: _vm.css,
-          style: { width: _vm.width + "%" }
-        },
-        []
-      )
-    : _vm._e()
-}
-var staticRenderFns = []
-render._withStripped = true
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
-
-/***/ }),
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
 /* 58 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -6987,9 +6863,7 @@ var render = function() {
         _vm._ssrList(_vm.errors.title, function(e) {
           return (
             '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(
-              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-            ) +
+            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
             "</div>"
           )
         }) +
@@ -7000,9 +6874,7 @@ var render = function() {
         _vm._ssrList(_vm.errors.priod, function(e) {
           return (
             '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(
-              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-            ) +
+            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
             "</div>"
           )
         }) +
@@ -7271,9 +7143,7 @@ var render = function() {
         _vm._ssrList(_vm.errors.title, function(e) {
           return (
             '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(
-              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-            ) +
+            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
             "</div>"
           )
         }) +
@@ -7284,9 +7154,7 @@ var render = function() {
         _vm._ssrList(_vm.errors.priod, function(e) {
           return (
             '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(
-              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-            ) +
+            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
             "</div>"
           )
         }) +
@@ -7548,14 +7416,6 @@ var render = function() {
         _vm._ssrAttr("value", _vm.frm.mail) +
         '> <label for="group_id">Group</label> <input type="text" name="group_id" placeholder="group_id"' +
         _vm._ssrAttr("value", _vm.frm.group_id) +
-        '> <label for="access_token">Access token</label> <input type="text" name="access_token" placeholder="access_token"' +
-        _vm._ssrAttr("value", _vm.frm.access_token) +
-        '> <label for="refresh_token">Refresh token</label> <input type="text" name="refresh_token" placeholder="refresh_token"' +
-        _vm._ssrAttr("value", _vm.frm.refresh_token) +
-        '> <label for="new_password">New password</label> <input type="password" name="new_password" placeholder="new_password"' +
-        _vm._ssrAttr("value", _vm.frm.new_password) +
-        '> <label for="confirm_password">Confirm password</label> <input type="password" name="confirm_password" placeholder="confirm_password"' +
-        _vm._ssrAttr("value", _vm.frm.confirm_password) +
         '> <label for="created_at">Created at</label> <input type="datetime-local" name="created_at" placeholder="created_at"' +
         _vm._ssrAttr("value", _vm.frm.created_at) +
         ' class="calendar"> <label for="updated_at">Updated at</label> <input type="datetime-local" name="updated_at" placeholder="updated_at"' +
@@ -7974,9 +7834,7 @@ var render = function() {
         _vm._ssrList(_vm.errors.name, function(e) {
           return (
             '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(
-              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-            ) +
+            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
             "</div>"
           )
         }) +
@@ -7987,9 +7845,7 @@ var render = function() {
         _vm._ssrList(_vm.errors.mail, function(e) {
           return (
             '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(
-              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-            ) +
+            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
             "</div>"
           )
         }) +
@@ -8000,48 +7856,18 @@ var render = function() {
         _vm._ssrList(_vm.errors.group_id, function(e) {
           return (
             '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(
-              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-            ) +
+            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
             "</div>"
           )
         }) +
-        '</div> <div class="form-item"><label for="access_token">Access token</label> <input type="text" name="access_token" placeholder="access_token"' +
-        _vm._ssrAttr("value", _vm.entity.access_token) +
-        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "access_token")) +
-        "> " +
-        _vm._ssrList(_vm.errors.access_token, function(e) {
-          return (
-            '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(
-              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-            ) +
-            "</div>"
-          )
-        }) +
-        '</div> <div class="form-item"><label for="refresh_token">Refresh token</label> <input type="text" name="refresh_token" placeholder="refresh_token"' +
-        _vm._ssrAttr("value", _vm.entity.refresh_token) +
-        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "refresh_token")) +
-        "> " +
-        _vm._ssrList(_vm.errors.refresh_token, function(e) {
-          return (
-            '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(
-              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-            ) +
-            "</div>"
-          )
-        }) +
-        '</div> <div class="form-item"><label for="new_password">New password</label> <input type="password" name="new_password" placeholder="new_password"' +
+        '</div> <div class="form-item"><label for="new_password">Password</label> <input type="password" name="new_password" placeholder="new_password"' +
         _vm._ssrAttr("value", _vm.entity.new_password) +
         _vm._ssrClass(null, _vm.validationClass(_vm.errors, "new_password")) +
         "> " +
         _vm._ssrList(_vm.errors.new_password, function(e) {
           return (
             '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(
-              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-            ) +
+            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
             "</div>"
           )
         }) +
@@ -8055,9 +7881,7 @@ var render = function() {
         _vm._ssrList(_vm.errors.confirm_password, function(e) {
           return (
             '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(
-              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-            ) +
+            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
             "</div>"
           )
         }) +
@@ -8171,14 +7995,6 @@ var render = function() {
             _vm._ssrEscape(_vm._s(_vm.entity.mail)) +
             "</div> <h3>Group</h3> <div>" +
             _vm._ssrEscape(_vm._s(_vm.entity.group_id)) +
-            "</div> <h3>Access token</h3> <div>" +
-            _vm._ssrEscape(_vm._s(_vm.entity.access_token)) +
-            "</div> <h3>Refresh token</h3> <div>" +
-            _vm._ssrEscape(_vm._s(_vm.entity.refresh_token)) +
-            "</div> <h3>New password</h3> <div>" +
-            _vm._ssrEscape(_vm._s(_vm.entity.new_password)) +
-            "</div> <h3>Confirm password</h3> <div>" +
-            _vm._ssrEscape(_vm._s(_vm.entity.confirm_password)) +
             "</div> <h3>Created at</h3> <div>" +
             _vm._ssrEscape(_vm._s(_vm.entity.created_at)) +
             "</div> <h3>Updated at</h3> <div>" +
@@ -8336,9 +8152,7 @@ var render = function() {
         _vm._ssrList(_vm.errors.name, function(e) {
           return (
             '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(
-              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-            ) +
+            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
             "</div>"
           )
         }) +
@@ -8349,9 +8163,7 @@ var render = function() {
         _vm._ssrList(_vm.errors.mail, function(e) {
           return (
             '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(
-              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-            ) +
+            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
             "</div>"
           )
         }) +
@@ -8362,35 +8174,7 @@ var render = function() {
         _vm._ssrList(_vm.errors.group_id, function(e) {
           return (
             '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(
-              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-            ) +
-            "</div>"
-          )
-        }) +
-        '</div> <div class="form-item"><label for="access_token">Access token</label> <input type="text" name="access_token" placeholder="access_token"' +
-        _vm._ssrAttr("value", _vm.entity.access_token) +
-        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "access_token")) +
-        "> " +
-        _vm._ssrList(_vm.errors.access_token, function(e) {
-          return (
-            '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(
-              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-            ) +
-            "</div>"
-          )
-        }) +
-        '</div> <div class="form-item"><label for="refresh_token">Refresh token</label> <input type="text" name="refresh_token" placeholder="refresh_token"' +
-        _vm._ssrAttr("value", _vm.entity.refresh_token) +
-        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "refresh_token")) +
-        "> " +
-        _vm._ssrList(_vm.errors.refresh_token, function(e) {
-          return (
-            '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(
-              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-            ) +
+            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
             "</div>"
           )
         }) +
@@ -8401,9 +8185,7 @@ var render = function() {
         _vm._ssrList(_vm.errors.new_password, function(e) {
           return (
             '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(
-              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-            ) +
+            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
             "</div>"
           )
         }) +
@@ -8417,9 +8199,7 @@ var render = function() {
         _vm._ssrList(_vm.errors.confirm_password, function(e) {
           return (
             '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(
-              " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-            ) +
+            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
             "</div>"
           )
         }) +
@@ -8560,9 +8340,7 @@ var render = function() {
           _vm._ssrList(_vm.errors.account, function(e) {
             return (
               '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-              _vm._ssrEscape(
-                " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-              ) +
+              _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
               "</div>"
             )
           }) +
@@ -8573,9 +8351,7 @@ var render = function() {
           _vm._ssrList(_vm.errors.password, function(e) {
             return (
               '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-              _vm._ssrEscape(
-                " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-              ) +
+              _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
               "</div>"
             )
           }) +
@@ -9398,12 +9174,12 @@ class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a"
 
 
 class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__["a" /* store_module */] {
-    constructor(options) {
+    constructor(feeds) {
         super();
-        this.state = new __WEBPACK_IMPORTED_MODULE_3__stores_state__["a" /* state */](options).map("all");
-        this.actions = new __WEBPACK_IMPORTED_MODULE_2__stores_actions__["a" /* actions */](options).map("all");
-        this.mutations = new __WEBPACK_IMPORTED_MODULE_1__stores_mutations__["a" /* mutations */](options).map("all");
-        this.getters = new __WEBPACK_IMPORTED_MODULE_4__stores_getters__["a" /* getters */](options).map("all");
+        this.state = new __WEBPACK_IMPORTED_MODULE_3__stores_state__["a" /* state */](feeds).map("all");
+        this.actions = new __WEBPACK_IMPORTED_MODULE_2__stores_actions__["a" /* actions */](feeds).map("all");
+        this.mutations = new __WEBPACK_IMPORTED_MODULE_1__stores_mutations__["a" /* mutations */](feeds).map("all");
+        this.getters = new __WEBPACK_IMPORTED_MODULE_4__stores_getters__["a" /* getters */](feeds).map("all");
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = store_module;

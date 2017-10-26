@@ -1,11 +1,9 @@
 <template>
 <div id="modal-container" class="modal-container" v-if="show" @click.self="close()">
   <div class="modal">
+    <modal-destroy></modal-destroy>
+    <modal-login></modal-login>
     <span @click="close()" class="close typcn typcn-delete large" :class="{disabled : isDisable }"></span>
-    <div class="content">
-      <modal-destroy></modal-destroy>
-      <modal-login></modal-login>
-    </div>
   </div>
 </div>
 </template>

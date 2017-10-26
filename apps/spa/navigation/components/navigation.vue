@@ -47,7 +47,7 @@ Component.registerHooks([
 @Component({
   name : "navi",
   components : {
-    "app-indicater" : indicater,
+    "app-indicater" : () => import ("../../loading/components/indicator"),
   },
   computed : {
     ...mapGetters([
@@ -75,10 +75,11 @@ Component.registerHooks([
 export default class navi extends Vue {
   show:boolean;
   logout : () => void;
+  /*
   asyncData ({ store, route }) {
     return store.dispatch('auth/fetchAuthUser')
   }
-
+  */
   toggleOffset:() => {}
 
   toggle(){

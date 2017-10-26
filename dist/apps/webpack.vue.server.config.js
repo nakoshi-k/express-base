@@ -27,7 +27,7 @@ module.exports  = {
                           appendTsSuffixTo: [/\.vue$/],
                           compilerOptions : {
                             "module": "es2015",
-                            "lib" : ["dom", "es2015",  "es5"],
+                            "lib" : ["dom", "es2015", "es5"],
                             "target": "es2015",
                             "noImplicitAny": false,
                             "sourceMap": false,

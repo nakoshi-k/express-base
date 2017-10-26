@@ -1,11 +1,12 @@
 <template>
-<div class="margin">
-  <div class="login-user row">
+<div v-if="auth_status" class="margin">
+  <div class="login-user row padding">
     <div class="column column-25">avatar</div>
     <div class="column column-75 text-sm">
       <div class="text-md">{{user.name}}</div>
-      <div>Last login : 最終ログイン</div>
       <div>Mail : {{user.mail}}</div>
+      <div>Last login : {{user.last_login}}</div>
+      <div v-if="auth_status"><a @click="logout()" title="logout"><span class="typcn typcn-export"></span> Logout</a></div>
     </div>
 
   </div>
@@ -43,7 +44,7 @@ Component.registerHooks([
   },
   methods : {
     ...mapActions( "auth" , 
-      ["fetchAuthUser"]
+      ["fetchAuthUser","logout"]
     ),
   }
 })

@@ -24,9 +24,5 @@ export class service extends apps_service{
         return search.build()
     }
 
-    public login = () => {
-
-    }
-
 }
 

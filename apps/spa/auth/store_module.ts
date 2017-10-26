@@ -6,12 +6,12 @@ import {getters} from "./stores/getters"
 
 export class store_module extends core_module{
     
-    constructor( options ){
+    constructor( feeds ){
         super();
-        this.state = new state( options ).map("all");
-        this.actions = new actions( options ).map("all");
-        this.mutations = new mutations( options ).map("all");
-        this.getters = new getters( options ).map("all");
+        this.state = new state( feeds ).map("all");
+        this.actions = new actions( feeds ).map("all");
+        this.mutations = new mutations( feeds ).map("all");
+        this.getters = new getters( feeds ).map("all");
     }
 
 }

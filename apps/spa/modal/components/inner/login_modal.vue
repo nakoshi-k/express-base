@@ -1,5 +1,5 @@
 <template>
-  <div v-if="show">
+  <div v-if="show" class="content animation" :class="reject">
   <h2>Login</h2>
   <form :action="action" method="post" v-on:submit.prevent="login">
     <fieldset>
@@ -7,13 +7,14 @@
       <div class="form-item">
         <label for="name">user name or e-mail </label>
         <input type="text" name="account"  v-model="user.account" :class="validationClass( errors , 'account')"  placeholder="user name or e-mail">
-        <div class="errors" v-for="e in errors.account"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
+        <div class="errors" v-for="e in errors.account"> <span class="typcn typcn-warning-outline"></span> {{e.message}}</div>
       </div>
       <div class="form-item">
         <label for="password">Password</label>
         <input type="password" name="password" v-model="user.password" :class="validationClass( errors , 'password')" placeholder="password">
-        <div class="errors" v-for="e in errors.password"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
+        <div class="errors" v-for="e in errors.password"> <span class="typcn typcn-warning-outline"></span> {{e.message}} </div>
       </div>
+      <div class="errors" v-for="e in errors.internal"> <span class="typcn typcn-warning-outline"></span> {{e.message}} </div>
     </fieldset>
     <button type="submit" :class="validationClass(errors,'submit')">Login</button>
   </form>
@@ -74,6 +75,8 @@ export default class login_modal extends Vue {
     cancel : true
   }
   
+
+  
   get show(){
       return this.template === this.name
   }
@@ -92,14 +95,20 @@ export default class login_modal extends Vue {
   closeModal:() => void
   setAuthUser:(user) => void
   login(){
+    this.errors = {};
     let auth = new auth_api();
     auth.login( this.user , this.token ).then(r => {
-      this.errors = {};
       this.setAuthUser(r)
       this.closeModal()
     }).catch(e => {
+
       this.errors = e;
     })
-  } 
+  }
+  get reject(){
+    for(let k in this.errors){
+      return "reject"
+    }
+  }
 }
 </script>

@@ -3,23 +3,26 @@ import {router as apps_router,routing_map,request,response,next} from "../../app
 import {service} from "./service"
 import {input_error} from "../../../base/core"
 
+export const mapping :  { [propName: string]: routing_map } = {
+    idx : { type : "get", mount : "/", component : "search" , middle_ware : null } ,
+    page: { type : "get", mount : "/page/:page", component : "search" , middle_ware : null } ,
+    entity : { type : "get", mount : "/:id", component : "entity" , middle_ware : null} ,
+    insert : { type : "post", mount : "/", component : "insert" , middle_ware : null} ,
+    update : { type : "put", mount : "/:id", component : "update" , middle_ware : null } ,
+    delete : { type : "delete", mount : "/:id", component : "delete" , middle_ware : null } 
+}
 
 export class router extends apps_router {
     public name = "<%- names %>"
     public service:service
 
-    protected _mapping :  { [propName: string]: routing_map }= {
-        idx : { type : "get", mount : "/", component : "search" , middle_ware : null } ,
-        page: { type : "get", mount : "/page/:page", component : "search" , middle_ware : null } ,
-        entity : { type : "get", mount : "/:id", component : "entity" , middle_ware : null} ,
-        insert : { type : "post", mount : "/", component : "insert" , middle_ware : null} ,
-        update : { type : "put", mount : "/:id", component : "update" , middle_ware : null } ,
-        delete : { type : "delete", mount : "/:id", component : "delete" , middle_ware : null } 
+    get _mapping(){
+        return mapping
     }
 
     constructor(){
         super();
-        this.service = new service(this.name);
+        this.service = new service(this.name)
     }
 
     private search = (req : request ,res: response, next : next ) => {

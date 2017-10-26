@@ -11424,10 +11424,9 @@ var index_esm = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var form_validation_class = /** @class */ (function () {
-    function form_validation_class() {
-        var _this = this;
-        this.validationClass = function (errors, name) {
+class form_validation_class {
+    constructor() {
+        this.validationClass = (errors, name) => {
             if (name === "submit") {
                 if ((Object.keys(errors).length > 0)) {
                     return "warning";
@@ -11437,13 +11436,13 @@ var form_validation_class = /** @class */ (function () {
                 return "warning";
             }
         };
-        this.map = function (call) {
+        this.map = (call) => {
             if (call === "all") {
-                call = Object.keys(_this);
+                call = Object.keys(this);
             }
-            var map = {};
-            for (var idx in call) {
-                if (typeof _this[call[idx]] === 'undefined') {
+            let map = {};
+            for (let idx in call) {
+                if (typeof this[call[idx]] === 'undefined') {
                     continue;
                 }
                 if (call[idx].charAt(0) === '_') {
@@ -11456,16 +11455,15 @@ var form_validation_class = /** @class */ (function () {
                     continue;
                 }
                 if (typeof idx === 'number') {
-                    map[call[String(idx)]] = _this[call[String(idx)]];
+                    map[call[String(idx)]] = this[call[String(idx)]];
                     continue;
                 }
-                map[call[idx]] = _this[call[idx]];
+                map[call[idx]] = this[call[idx]];
             }
             return map;
         };
     }
-    return form_validation_class;
-}());
+}
 exports.default = new form_validation_class();
 
 
@@ -11549,38 +11547,20 @@ if (true)
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_module = /** @class */ (function () {
-    function store_module() {
+class store_module {
+    set state(state) {
+        this._state = state;
     }
-    Object.defineProperty(store_module.prototype, "state", {
-        set: function (state) {
-            this._state = state;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(store_module.prototype, "actions", {
-        set: function (actions) {
-            this._actions = actions;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(store_module.prototype, "mutations", {
-        set: function (mutations) {
-            this._mutations = mutations;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(store_module.prototype, "getters", {
-        set: function (getters) {
-            this._getters = getters;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    store_module.prototype.store = function () {
+    set actions(actions) {
+        this._actions = actions;
+    }
+    set mutations(mutations) {
+        this._mutations = mutations;
+    }
+    set getters(getters) {
+        this._getters = getters;
+    }
+    store() {
         return {
             namespaced: true,
             state: this._state,
@@ -11588,9 +11568,8 @@ var store_module = /** @class */ (function () {
             mutations: this._mutations,
             getters: this._getters,
         };
-    };
-    return store_module;
-}());
+    }
+}
 exports.store_module = store_module;
 
 
@@ -11601,16 +11580,15 @@ exports.store_module = store_module;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var mutations = /** @class */ (function () {
-    function mutations() {
-        var _this = this;
-        this.map = function (call) {
+class mutations {
+    constructor() {
+        this.map = (call) => {
             if (call === "all") {
-                call = Object.keys(_this);
+                call = Object.keys(this);
             }
-            var map = {};
-            for (var idx in call) {
-                if (typeof _this[call[idx]] === 'undefined') {
+            let map = {};
+            for (let idx in call) {
+                if (typeof this[call[idx]] === 'undefined') {
                     continue;
                 }
                 if (call[idx].charAt(0) === '_') {
@@ -11623,16 +11601,15 @@ var mutations = /** @class */ (function () {
                     continue;
                 }
                 if (typeof idx === 'number') {
-                    map[call[String(idx)]] = _this[call[String(idx)]];
+                    map[call[String(idx)]] = this[call[String(idx)]];
                     continue;
                 }
-                map[call[idx]] = _this[call[idx]];
+                map[call[idx]] = this[call[idx]];
             }
             return map;
         };
     }
-    return mutations;
-}());
+}
 exports.mutations = mutations;
 
 
@@ -11643,16 +11620,15 @@ exports.mutations = mutations;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var actions = /** @class */ (function () {
-    function actions() {
-        var _this = this;
-        this.map = function (call) {
+class actions {
+    constructor() {
+        this.map = (call) => {
             if (call === "all") {
-                call = Object.keys(_this);
+                call = Object.keys(this);
             }
-            var map = {};
-            for (var idx in call) {
-                if (typeof _this[call[idx]] === 'undefined') {
+            let map = {};
+            for (let idx in call) {
+                if (typeof this[call[idx]] === 'undefined') {
                     continue;
                 }
                 if (call[idx].charAt(0) === '_') {
@@ -11665,16 +11641,15 @@ var actions = /** @class */ (function () {
                     continue;
                 }
                 if (typeof idx === 'number') {
-                    map[call[String(idx)]] = _this[call[String(idx)]];
+                    map[call[String(idx)]] = this[call[String(idx)]];
                     continue;
                 }
-                map[call[idx]] = _this[call[idx]];
+                map[call[idx]] = this[call[idx]];
             }
             return map;
         };
     }
-    return actions;
-}());
+}
 exports.actions = actions;
 
 
@@ -11685,16 +11660,15 @@ exports.actions = actions;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var state = /** @class */ (function () {
-    function state() {
-        var _this = this;
-        this.map = function (call) {
+class state {
+    constructor() {
+        this.map = (call) => {
             if (call === "all") {
-                call = Object.keys(_this);
+                call = Object.keys(this);
             }
-            var map = {};
-            for (var idx in call) {
-                if (typeof _this[call[idx]] === 'undefined') {
+            let map = {};
+            for (let idx in call) {
+                if (typeof this[call[idx]] === 'undefined') {
                     continue;
                 }
                 if (call[idx].charAt(0) === '_') {
@@ -11707,16 +11681,15 @@ var state = /** @class */ (function () {
                     continue;
                 }
                 if (typeof idx === 'number') {
-                    map[call[String(idx)]] = _this[call[String(idx)]];
+                    map[call[String(idx)]] = this[call[String(idx)]];
                     continue;
                 }
-                map[call[idx]] = _this[call[idx]];
+                map[call[idx]] = this[call[idx]];
             }
             return map;
         };
     }
-    return state;
-}());
+}
 exports.state = state;
 
 
@@ -11727,16 +11700,15 @@ exports.state = state;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var getters = /** @class */ (function () {
-    function getters() {
-        var _this = this;
-        this.map = function (call) {
+class getters {
+    constructor() {
+        this.map = (call) => {
             if (call === "all") {
-                call = Object.keys(_this);
+                call = Object.keys(this);
             }
-            var map = {};
-            for (var idx in call) {
-                if (typeof _this[call[idx]] === 'undefined') {
+            let map = {};
+            for (let idx in call) {
+                if (typeof this[call[idx]] === 'undefined') {
                     continue;
                 }
                 if (call[idx].charAt(0) === '_') {
@@ -11749,16 +11721,15 @@ var getters = /** @class */ (function () {
                     continue;
                 }
                 if (typeof idx === 'number') {
-                    map[call[String(idx)]] = _this[call[String(idx)]];
+                    map[call[String(idx)]] = this[call[String(idx)]];
                     continue;
                 }
-                map[call[idx]] = _this[call[idx]];
+                map[call[idx]] = this[call[idx]];
             }
             return map;
         };
     }
-    return getters;
-}());
+}
 exports.getters = getters;
 
 
@@ -11959,25 +11930,22 @@ process.umask = function() { return 0; };
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var build_query = /** @class */ (function () {
-    function build_query() {
-    }
-    build_query.prototype.http = function (query) {
-        var prts = query;
+class build_query {
+    http(query) {
+        let prts = query;
         if (prts.length === 0) {
             return "";
         }
-        var q = "";
+        let q = "";
         Object.keys(prts).forEach(function (key) {
             if (!prts[key]) {
                 return;
             }
-            q += "&" + encodeURIComponent(key) + "=" + encodeURIComponent(prts[key]);
+            q += `&${encodeURIComponent(key)}=${encodeURIComponent(prts[key])}`;
         });
         return q.replace("&", "?");
-    };
-    return build_query;
-}());
+    }
+}
 exports.build_query = build_query;
 
 
@@ -11988,55 +11956,53 @@ exports.build_query = build_query;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var client_fetch_1 = __webpack_require__(17);
-var client = new client_fetch_1.client_fetch();
-var auth = /** @class */ (function () {
-    function auth() {
-        var _this = this;
+const client_fetch_1 = __webpack_require__(17);
+let client = new client_fetch_1.client_fetch();
+class auth {
+    constructor() {
         this.end_point = "/api/users";
-        this.login = function (user, token) {
-            var login = function (resolve, reject) {
-                var url = _this.end_point + "/login";
-                var opt = {
+        this.login = (user, token) => {
+            let login = (resolve, reject) => {
+                let url = this.end_point + "/login";
+                let opt = {
                     body: JSON.stringify(user),
                     method: "post",
                     headers: {
                         "X-XSRF-Token": token
                     }
                 };
-                client.fetch(url, opt).then(function (r) {
+                client.fetch(url, opt).then(r => {
                     resolve(r);
-                }).catch(function (e) {
+                }).catch(e => {
                     reject(e);
                 });
             };
             return new Promise(login);
         };
-        this.user = function () {
-            var user = function (resolve, reject) {
-                var url = _this.end_point + "/auth";
-                client.fetch(url, {}).then(function (r) {
+        this.user = () => {
+            let user = (resolve, reject) => {
+                let url = this.end_point + "/auth";
+                client.fetch(url, {}).then(r => {
                     resolve(r);
-                }).catch(function (e) {
+                }).catch(e => {
                     reject(e);
                 });
             };
             return new Promise(user);
         };
-        this.logout = function () {
-            var logout = function (resolve, reject) {
-                var url = _this.end_point + "/logout";
-                client.fetch(url, {}).then(function (r) {
+        this.logout = () => {
+            let logout = (resolve, reject) => {
+                let url = this.end_point + "/logout";
+                client.fetch(url, {}).then(r => {
                     resolve(r);
-                }).catch(function (e) {
+                }).catch(e => {
                     reject(e);
                 });
             };
             return new Promise(logout);
         };
     }
-    return auth;
-}());
+}
 exports.auth = auth;
 
 
@@ -12350,9 +12316,8 @@ function applyToTag (styleElement, obj) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var client_fetch = /** @class */ (function () {
-    function client_fetch() {
-        var _this = this;
+class client_fetch {
+    constructor() {
         this._options = {
             credentials: 'same-origin',
             method: "get",
@@ -12361,43 +12326,38 @@ var client_fetch = /** @class */ (function () {
                 'Content-Type': 'application/json'
             }
         };
-        this.fetch = function (url, options) {
-            var base = _this.options;
+        this.fetch = (url, options) => {
+            let base = this.options;
             if (options.headers) {
                 options.headers = Object.assign(base.headers, options.headers);
             }
             options = Object.assign(base, options);
-            var client = function (resolve, reject) {
+            let client = (resolve, reject) => {
                 fetch(url, options)
-                    .then(function (response) {
+                    .then((response) => {
                     //deleted
                     if (response.status === 204) {
                         resolve(response.status);
                         return;
                     }
-                    response.json().then(function (r) {
+                    response.json().then(r => {
                         if (response.status < 200 || response.status > 300) {
                             reject(r);
                             return;
                         }
                         resolve(r);
                     });
-                }).catch(function (err) {
+                }).catch((err) => {
                     reject(err);
                 });
             };
             return new Promise(client);
         };
     }
-    Object.defineProperty(client_fetch.prototype, "options", {
-        get: function () {
-            return Object.create(this._options);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return client_fetch;
-}());
+    get options() {
+        return Object.create(this._options);
+    }
+}
 exports.client_fetch = client_fetch;
 
 
@@ -12510,25 +12470,25 @@ if (false) {(function () {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var build_query_1 = __webpack_require__(13);
-var client_fetch_1 = __webpack_require__(17);
-var route_parse_1 = __webpack_require__(124);
-var client = new client_fetch_1.client_fetch();
-var internal_crud = /** @class */ (function () {
-    function internal_crud(options) {
-        var _this = this;
+const build_query_1 = __webpack_require__(13);
+const client_fetch_1 = __webpack_require__(17);
+const route_parse_1 = __webpack_require__(124);
+let client = new client_fetch_1.client_fetch();
+class internal_crud {
+    constructor(options) {
         this.endPoint = "";
-        this.client = function (url, options) {
+        this.client = (url, options) => {
             return client.fetch(url, options);
         };
-        this.serverPagination = function (route) {
-            var serverPagination = function (resolve, reject) {
-                var pagination = _this.feeds.pagination(_this.resource);
-                var conditions = _this.feeds.conditions(route);
-                var entities = pagination.find(conditions, route.query);
-                var name = _this.resource;
-                var data = {};
-                entities.then(function (result) {
+        this.serverPagination = (route) => {
+            let serverPagination = (resolve, reject) => {
+                let service = this.feeds.service(this.resource);
+                let pagination = this.feeds.pagination(this.resource);
+                let conditions = service.conditions(route);
+                let entities = pagination.find(conditions, route.query);
+                let name = this.resource;
+                let data = {};
+                entities.then((result) => {
                     if (result.rows.length === 0) {
                         reject(false);
                     }
@@ -12536,7 +12496,7 @@ var internal_crud = /** @class */ (function () {
                     data[name] = result.rows;
                     data["page"] = result.pagination;
                     resolve(data);
-                }).catch(function (error) {
+                }).catch((error) => {
                     data[name] = {};
                     data["page"] = {};
                     reject(error);
@@ -12544,95 +12504,95 @@ var internal_crud = /** @class */ (function () {
             };
             return serverPagination;
         };
-        this.serverEntity = function (route) {
-            var serverEntity = function (resolve, reject) {
-                var model = _this.feeds.model(_this.resource);
-                var data = {};
-                model.findById(route.params.id).then(function (result) {
+        this.serverEntity = (route) => {
+            let serverEntity = (resolve, reject) => {
+                let model = this.feeds.model(this.resource);
+                let data = {};
+                model.findById(route.params.id).then((result) => {
                     if (!result) {
                         reject();
                         throw Error;
                     }
                     resolve(result);
-                }).catch(function (err) {
+                }).catch((err) => {
                     reject(err);
                 });
             };
             return serverEntity;
         };
-        this.server = function (type, route) {
-            var server;
+        this.server = (type, route) => {
+            let server;
             if (type === "paginate") {
-                server = _this.serverPagination(route);
+                server = this.serverPagination(route);
             }
             if (type === "entity") {
-                server = _this.serverEntity(route);
+                server = this.serverEntity(route);
             }
             return new Promise(server);
         };
-        this.paginate = function (route) {
-            var bq = new build_query_1.build_query();
-            var URI = _this.endPoint + "/" + route_parse_1.default.parse(route) + bq.http(route.query);
+        this.paginate = (route) => {
+            let bq = new build_query_1.build_query();
+            let URI = `${this.endPoint}/${route_parse_1.default.parse(route)}${bq.http(route.query)}`;
             if (typeof window === "undefined") {
-                return _this.server("paginate", route);
+                return this.server("paginate", route);
             }
-            return _this.client(URI, {});
+            return this.client(URI, {});
         };
-        this.entity = function (route) {
-            var id = route.params.id;
-            var URI = _this.endPoint + "/" + id;
+        this.entity = (route) => {
+            let id = route.params.id;
+            let URI = `${this.endPoint}/${id}`;
             if (typeof window === "undefined") {
-                return _this.server("entity", route);
+                return this.server("entity", route);
             }
-            return _this.client(URI, {});
+            return this.client(URI, {});
         };
-        this.insert = function (entity, token) {
+        this.insert = (entity, token) => {
             entity = JSON.stringify(entity);
-            var URI = _this.endPoint;
-            var insert = function (resolve, reject) {
-                _this.client(URI, {
+            let URI = this.endPoint;
+            let insert = (resolve, reject) => {
+                this.client(URI, {
                     body: entity,
                     method: "post",
                     headers: {
                         'X-XSRF-Token': token
                     }
-                }).then(function (r) {
+                }).then(r => {
                     resolve(r);
-                }).catch(function (e) {
+                }).catch(e => {
                     reject(e);
                 });
             };
             return new Promise(insert);
         };
-        this.update = function (entity, token) {
-            var URI = _this.endPoint + "/" + entity.id;
+        this.update = (entity, token) => {
+            let URI = this.endPoint + "/" + entity.id;
             entity = JSON.stringify(entity);
-            var insert = function (resolve, reject) {
-                _this.client(URI, {
+            let insert = (resolve, reject) => {
+                this.client(URI, {
                     body: entity,
                     method: "put",
                     headers: {
                         'X-XSRF-Token': token
                     }
-                }).then(function (r) {
+                }).then(r => {
                     resolve(r);
-                }).catch(function (e) {
+                }).catch(e => {
                     reject(e);
                 });
             };
             return new Promise(insert);
         };
-        this.delete = function (id, token) {
-            var URI = _this.endPoint + "/" + id;
-            var del = function (resolve, reject) {
-                _this.client(URI, {
+        this.delete = (id, token) => {
+            let URI = this.endPoint + "/" + id;
+            let del = (resolve, reject) => {
+                this.client(URI, {
                     method: "delete",
                     headers: {
                         'X-XSRF-Token': token
                     }
-                }).then(function (r) {
+                }).then(r => {
                     resolve("api delete ok");
-                }).catch(function (e) {
+                }).catch(e => {
                     reject("api delete error");
                 });
             };
@@ -12642,8 +12602,7 @@ var internal_crud = /** @class */ (function () {
         this.resource = options.resource;
         this.feeds = options.feeds;
     }
-    return internal_crud;
-}());
+}
 exports.internal_crud = internal_crud;
 
 
@@ -12654,8 +12613,8 @@ exports.internal_crud = internal_crud;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var application_1 = __webpack_require__(22);
-var _a = application_1.createApp({ host: "", request: {} }), app = _a.app, router = _a.router, store = _a.store;
+const application_1 = __webpack_require__(22);
+const { app, router, store } = application_1.createApp({ host: "", request: {} });
 if (window["__INITIAL_STATE__"]) {
     store.replaceState(window["__INITIAL_STATE__"]);
 }
@@ -12669,39 +12628,37 @@ app.$mount("#application");
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var app_vue_1 = __webpack_require__(24);
-var client_router_1 = __webpack_require__(51);
-var store_1 = __webpack_require__(103);
-var vuex_router_sync_1 = __webpack_require__(135);
+const vue_1 = __webpack_require__(0);
+const app_vue_1 = __webpack_require__(24);
+const client_router_1 = __webpack_require__(51);
+const store_1 = __webpack_require__(103);
+const vuex_router_sync_1 = __webpack_require__(135);
 vue_1.default.mixin({
-    beforeMount: function () {
-        var _this = this;
-        var asyncData = this.$options["asyncData"];
+    beforeMount() {
+        const asyncData = this.$options["asyncData"];
         if (asyncData) {
-            var ad = Promise.resolve(this.$store.commit("loading/loading", "success"));
-            ad.then(function () { return asyncData({ store: _this.$store, route: _this.$route }); })
-                .then(function (res) {
-                setTimeout(function () {
-                    _this.$store.commit("loading/endLoading", "success");
+            let ad = Promise.resolve(this.$store.commit("loading/loading", "success"));
+            ad.then(() => asyncData({ store: this.$store, route: this.$route }))
+                .then(res => {
+                setTimeout(() => {
+                    this.$store.commit("loading/endLoading", "success");
                 }, 240);
-            }).catch(function (err) {
-                _this.$router.push({ path: "/tasks" });
+            }).catch(err => {
+                this.$router.push({ path: `/tasks` });
             });
             this["dataPromise"] = ad;
         }
     },
-    beforeRouteUpdate: function (to, from, next) {
-        var _this = this;
-        var asyncData = this.$options.asyncData;
+    beforeRouteUpdate(to, from, next) {
+        const { asyncData } = this.$options;
         if (asyncData) {
             this.$store.commit("loading/loading", "success");
             asyncData({
                 store: this.$store,
                 route: to
-            }).then(function () {
-                setTimeout(function () {
-                    _this.$store.commit("loading/endLoading", "success");
+            }).then(() => {
+                setTimeout(() => {
+                    this.$store.commit("loading/endLoading", "success");
                 }, 240);
                 next();
             }).catch(next);
@@ -12712,15 +12669,15 @@ vue_1.default.mixin({
     }
 });
 function createApp(feeds) {
-    var router = client_router_1.createRouter();
-    var store = store_1.createStore(feeds);
+    const router = client_router_1.createRouter();
+    const store = store_1.createStore(feeds);
     vuex_router_sync_1.sync(store, router);
-    var app = new vue_1.default({
-        router: router,
-        store: store,
-        render: function (h) { return h(app_vue_1.default); }
+    const app = new vue_1.default({
+        router,
+        store,
+        render: h => h(app_vue_1.default)
     });
-    return { app: app, router: router, store: store };
+    return { app, router, store };
 }
 exports.createApp = createApp;
 
@@ -12809,16 +12766,6 @@ if (false) {(function () {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -12826,11 +12773,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var over_lay_vue_1 = __webpack_require__(26);
-var modal_vue_1 = __webpack_require__(35);
-var offset_vue_1 = __webpack_require__(44);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const over_lay_vue_1 = __webpack_require__(26);
+const modal_vue_1 = __webpack_require__(35);
+const offset_vue_1 = __webpack_require__(44);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -12841,23 +12788,18 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var app = /** @class */ (function (_super) {
-    __extends(app, _super);
-    function app() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    app = __decorate([
-        vue_class_component_1.default({
-            name: 'app',
-            components: {
-                "app-overlay": over_lay_vue_1.default,
-                "app-modal": modal_vue_1.default,
-                "app-offset": offset_vue_1.default
-            }
-        })
-    ], app);
-    return app;
-}(vue_1.default));
+let app = class app extends vue_1.default {
+};
+app = __decorate([
+    vue_class_component_1.default({
+        name: 'app',
+        components: {
+            "app-overlay": over_lay_vue_1.default,
+            "app-modal": modal_vue_1.default,
+            "app-offset": offset_vue_1.default
+        }
+    })
+], app);
 exports.default = app;
 
 
@@ -12918,24 +12860,6 @@ if (false) {(function () {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -12943,10 +12867,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var vuex_1 = __webpack_require__(3);
-var loading_1 = __webpack_require__(28);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const vuex_1 = __webpack_require__(3);
+const loading_1 = __webpack_require__(28);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -12957,29 +12881,21 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var over_lay = /** @class */ (function (_super) {
-    __extends(over_lay, _super);
-    function over_lay() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    over_lay = __decorate([
-        vue_class_component_1.default({
-            name: "orver_lay",
-            components: {
-                "app-loading": loading_1.default,
-            },
-            computed: __assign({}, vuex_1.mapGetters([
-                'domain', 'token'
-            ]), vuex_1.mapState("loading", {
-                overLay: function (_a) {
-                    var overLay = _a.overLay;
-                    return overLay;
-                },
-            })),
-        })
-    ], over_lay);
-    return over_lay;
-}(vue_1.default));
+let over_lay = class over_lay extends vue_1.default {
+};
+over_lay = __decorate([
+    vue_class_component_1.default({
+        name: "orver_lay",
+        components: {
+            "app-loading": loading_1.default,
+        },
+        computed: Object.assign({}, vuex_1.mapGetters([
+            'domain', 'token'
+        ]), vuex_1.mapState("loading", {
+            overLay: ({ overLay }) => overLay,
+        })),
+    })
+], over_lay);
 exports.default = over_lay;
 
 
@@ -13117,24 +13033,6 @@ module.exports = function listToStyles (parentId, list) {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -13142,9 +13040,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var vuex_1 = __webpack_require__(3);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const vuex_1 = __webpack_require__(3);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -13155,28 +13053,27 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var loading = /** @class */ (function (_super) {
-    __extends(loading, _super);
-    function loading() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.blockNum = 5;
-        _this.blocks = [];
-        _this.entry = function () {
-            var e = function (resolve, reject) {
-                var l = _this.blockNum;
-                var blocks = _this.blocks;
-                for (var i = 0; i <= l; i++) {
+let loading = class loading extends vue_1.default {
+    constructor() {
+        super(...arguments);
+        this.blockNum = 5;
+        this.blocks = [];
+        this.entry = () => {
+            let e = (resolve, reject) => {
+                let l = this.blockNum;
+                let blocks = this.blocks;
+                for (let i = 0; i <= l; i++) {
                     blocks.push({ class: "" });
                 }
                 resolve(true);
             };
             return new Promise(e);
         };
-        _this.animate = function () {
-            var l = _this.blockNum;
-            var blocks = _this.blocks;
-            var i = 0;
-            var loading = function () {
+        this.animate = () => {
+            let l = this.blockNum;
+            let blocks = this.blocks;
+            let i = 0;
+            let loading = () => {
                 blocks[i].class = (blocks[i].class === "pop") ? "" : "pop";
                 i++;
                 if (i === l) {
@@ -13186,31 +13083,22 @@ var loading = /** @class */ (function (_super) {
             };
             loading();
         };
-        return _this;
     }
-    loading.prototype.mounted = function () {
-        var _this = this;
-        this.entry().then(function (r) { return _this.animate(); });
-    };
-    loading = __decorate([
-        vue_class_component_1.default({
-            name: "loading",
-            computed: __assign({}, vuex_1.mapGetters([
-                'domain', 'token'
-            ]), vuex_1.mapState("loading", {
-                loading: function (_a) {
-                    var loading = _a.loading;
-                    return loading;
-                },
-                overLay: function (_a) {
-                    var overLay = _a.overLay;
-                    return overLay;
-                }
-            })),
-        })
-    ], loading);
-    return loading;
-}(vue_1.default));
+    mounted() {
+        this.entry().then(r => this.animate());
+    }
+};
+loading = __decorate([
+    vue_class_component_1.default({
+        name: "loading",
+        computed: Object.assign({}, vuex_1.mapGetters([
+            'domain', 'token'
+        ]), vuex_1.mapState("loading", {
+            loading: ({ loading }) => loading,
+            overLay: ({ overLay }) => overLay
+        })),
+    })
+], loading);
 exports.default = loading;
 
 
@@ -13338,24 +13226,6 @@ if (false) {(function () {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -13363,11 +13233,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var vuex_1 = __webpack_require__(3);
-var destroy_vue_1 = __webpack_require__(37);
-var login_modal_vue_1 = __webpack_require__(40);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const vuex_1 = __webpack_require__(3);
+const destroy_vue_1 = __webpack_require__(37);
+const login_modal_vue_1 = __webpack_require__(40);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -13378,47 +13248,32 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var modal = /** @class */ (function (_super) {
-    __extends(modal, _super);
-    function modal() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    modal.prototype.close = function () {
+let modal = class modal extends vue_1.default {
+    close() {
         if (this._close) {
             this.closeModal();
         }
-    };
-    Object.defineProperty(modal.prototype, "isDisable", {
-        get: function () {
-            return !this.close;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    modal = __decorate([
-        vue_class_component_1.default({
-            name: "modal",
-            computed: __assign({}, vuex_1.mapGetters([
-                'domain', 'token'
-            ]), vuex_1.mapState('modal', {
-                'show': function (_a) {
-                    var show = _a.show;
-                    return show;
-                },
-                '_close': function (_a) {
-                    var close = _a.close;
-                    return close;
-                }
-            })),
-            methods: __assign({}, vuex_1.mapMutations("modal", ["closeModal"])),
-            components: {
-                "modal-destroy": destroy_vue_1.default,
-                "modal-login": login_modal_vue_1.default
-            }
-        })
-    ], modal);
-    return modal;
-}(vue_1.default));
+    }
+    get isDisable() {
+        return !this.close;
+    }
+};
+modal = __decorate([
+    vue_class_component_1.default({
+        name: "modal",
+        computed: Object.assign({}, vuex_1.mapGetters([
+            'domain', 'token'
+        ]), vuex_1.mapState('modal', {
+            'show': ({ show }) => show,
+            '_close': ({ close }) => close
+        })),
+        methods: Object.assign({}, vuex_1.mapMutations("modal", ["closeModal"])),
+        components: {
+            "modal-destroy": destroy_vue_1.default,
+            "modal-login": login_modal_vue_1.default
+        }
+    })
+], modal);
 exports.default = modal;
 
 
@@ -13479,24 +13334,6 @@ if (false) {(function () {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -13504,9 +13341,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var vuex_1 = __webpack_require__(3);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const vuex_1 = __webpack_require__(3);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -13517,75 +13354,57 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var Destroy = /** @class */ (function (_super) {
-    __extends(Destroy, _super);
-    function Destroy() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.button = {
+let Destroy = class Destroy extends vue_1.default {
+    constructor() {
+        super(...arguments);
+        this.button = {
             done: true,
             cancel: true
         };
-        _this.name = "Destroy";
-        return _this;
+        this.name = "Destroy";
     }
-    Object.defineProperty(Destroy.prototype, "show", {
-        get: function () {
-            return this.template === this.name;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Destroy.prototype.disable = function () {
-        var disable = function (resolve, reject) {
+    get show() {
+        return this.template === this.name;
+    }
+    disable() {
+        let disable = (resolve, reject) => {
             resolve(true);
         };
         return new Promise(disable);
-    };
-    Destroy.prototype.destroy = function () {
-        var _this = this;
-        var data = this.data;
+    }
+    destroy() {
+        let data = this.data;
         data["token"] = this.token;
         this.loading();
-        var names = data.mount.replace("/", "");
-        this.$store.dispatch(names + "/deleteEntity", data).then(function (r) {
-            _this.closeModal();
-            _this.$store.dispatch(names + "/fetchEntities", _this.$store.state.route);
-            _this.endLoading("success");
-        }).catch(function (e) {
-            _this.endLoading("warning");
+        let names = data.mount.replace("/", "");
+        this.$store.dispatch(`${names}/deleteEntity`, data).then(r => {
+            this.closeModal();
+            this.$store.dispatch(`${names}/fetchEntities`, this.$store.state.route);
+            this.endLoading("success");
+        }).catch(e => {
+            this.endLoading("warning");
         });
-    };
-    Destroy.prototype.cancel = function () {
-        var _this = this;
-        var plot = this.disable();
-        plot.then(function (res) {
-            _this.closeModal();
+    }
+    cancel() {
+        let plot = this.disable();
+        plot.then(res => {
+            this.closeModal();
         });
-    };
-    Destroy = __decorate([
-        vue_class_component_1.default({
-            name: "destroy",
-            computed: __assign({}, vuex_1.mapGetters([
-                'domain', 'token'
-            ]), vuex_1.mapState('modal', {
-                'close': function (_a) {
-                    var close = _a.close;
-                    return close;
-                },
-                'data': function (_a) {
-                    var data = _a.data;
-                    return data;
-                },
-                'template': function (_a) {
-                    var template = _a.template;
-                    return template;
-                },
-            })),
-            methods: __assign({}, vuex_1.mapMutations('modal', ["setModal", "toggleModal", "closeModal", "deleteEntity"]), vuex_1.mapMutations("loading", ["loading", "endLoading"]))
-        })
-    ], Destroy);
-    return Destroy;
-}(vue_1.default));
+    }
+};
+Destroy = __decorate([
+    vue_class_component_1.default({
+        name: "destroy",
+        computed: Object.assign({}, vuex_1.mapGetters([
+            'domain', 'token'
+        ]), vuex_1.mapState('modal', {
+            'close': ({ close }) => close,
+            'data': ({ data }) => data,
+            'template': ({ template }) => template,
+        })),
+        methods: Object.assign({}, vuex_1.mapMutations('modal', ["setModal", "toggleModal", "closeModal", "deleteEntity"]), vuex_1.mapMutations("loading", ["loading", "endLoading"]))
+    })
+], Destroy);
 exports.default = Destroy;
 
 
@@ -13599,7 +13418,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.show
-    ? _c("div", [
+    ? _c("div", { staticClass: "content" }, [
         _c("h3", [_vm._v("Delete #" + _vm._s(_vm.data.id))]),
         _vm._v(
           '\n  "' +
@@ -13706,24 +13525,6 @@ if (false) {(function () {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -13731,11 +13532,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var vuex_1 = __webpack_require__(3);
-var validation_1 = __webpack_require__(4);
-var auth_1 = __webpack_require__(14);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const vuex_1 = __webpack_require__(3);
+const validation_1 = __webpack_require__(4);
+const auth_1 = __webpack_require__(14);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -13746,71 +13547,55 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var login_modal = /** @class */ (function (_super) {
-    __extends(login_modal, _super);
-    function login_modal() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.name = "login_modal";
-        _this.button = {
+let login_modal = class login_modal extends vue_1.default {
+    constructor() {
+        super(...arguments);
+        this.name = "login_modal";
+        this.button = {
             done: true,
             cancel: true
         };
-        _this.user = {
+        this.user = {
             account: "",
             password: ""
         };
-        _this.errors = {};
-        return _this;
+        this.errors = {};
     }
-    Object.defineProperty(login_modal.prototype, "show", {
-        get: function () {
-            return this.template === this.name;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(login_modal.prototype, "action", {
-        get: function () {
-            return "/api/users/login";
-        },
-        enumerable: true,
-        configurable: true
-    });
-    login_modal.prototype.login = function () {
-        var _this = this;
-        var auth = new auth_1.auth();
-        auth.login(this.user, this.token).then(function (r) {
-            _this.errors = {};
-            _this.setAuthUser(r);
-            _this.closeModal();
-        }).catch(function (e) {
-            _this.errors = e;
+    get show() {
+        return this.template === this.name;
+    }
+    get action() {
+        return "/api/users/login";
+    }
+    login() {
+        this.errors = {};
+        let auth = new auth_1.auth();
+        auth.login(this.user, this.token).then(r => {
+            this.setAuthUser(r);
+            this.closeModal();
+        }).catch(e => {
+            this.errors = e;
         });
-    };
-    login_modal = __decorate([
-        vue_class_component_1.default({
-            name: "login_modal",
-            computed: __assign({}, vuex_1.mapGetters([
-                'domain', 'token'
-            ]), vuex_1.mapState('modal', {
-                'close': function (_a) {
-                    var close = _a.close;
-                    return close;
-                },
-                'data': function (_a) {
-                    var data = _a.data;
-                    return data;
-                },
-                'template': function (_a) {
-                    var template = _a.template;
-                    return template;
-                },
-            })),
-            methods: __assign({}, vuex_1.mapMutations('modal', ["setModal", "toggleModal", "closeModal"]), vuex_1.mapMutations('auth', ["setAuthUser"]), validation_1.default.map(["validationClass"]))
-        })
-    ], login_modal);
-    return login_modal;
-}(vue_1.default));
+    }
+    get reject() {
+        for (let k in this.errors) {
+            return "reject";
+        }
+    }
+};
+login_modal = __decorate([
+    vue_class_component_1.default({
+        name: "login_modal",
+        computed: Object.assign({}, vuex_1.mapGetters([
+            'domain', 'token'
+        ]), vuex_1.mapState('modal', {
+            'close': ({ close }) => close,
+            'data': ({ data }) => data,
+            'template': ({ template }) => template,
+        })),
+        methods: Object.assign({}, vuex_1.mapMutations('modal', ["setModal", "toggleModal", "closeModal"]), vuex_1.mapMutations('auth', ["setAuthUser"]), validation_1.default.map(["validationClass"]))
+    })
+], login_modal);
 exports.default = login_modal;
 
 
@@ -13824,7 +13609,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.show
-    ? _c("div", [
+    ? _c("div", { staticClass: "content animation", class: _vm.reject }, [
         _c("h2", [_vm._v("Login")]),
         _vm._v(" "),
         _c(
@@ -13839,108 +13624,115 @@ var render = function() {
             }
           },
           [
-            _c("fieldset", [
-              _c("input", {
-                attrs: { type: "hidden", name: "_csrf" },
-                domProps: { value: _vm.token }
-              }),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "form-item" },
-                [
-                  _c("label", { attrs: { for: "name" } }, [
-                    _vm._v("user name or e-mail ")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.user.account,
-                        expression: "user.account"
-                      }
-                    ],
-                    class: _vm.validationClass(_vm.errors, "account"),
-                    attrs: {
-                      type: "text",
-                      name: "account",
-                      placeholder: "user name or e-mail"
-                    },
-                    domProps: { value: _vm.user.account },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+            _c(
+              "fieldset",
+              [
+                _c("input", {
+                  attrs: { type: "hidden", name: "_csrf" },
+                  domProps: { value: _vm.token }
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-item" },
+                  [
+                    _c("label", { attrs: { for: "name" } }, [
+                      _vm._v("user name or e-mail ")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.user.account,
+                          expression: "user.account"
                         }
-                        _vm.user.account = $event.target.value
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm._l(_vm.errors.account, function(e) {
-                    return _c("div", { staticClass: "errors" }, [
-                      _c("span", {
-                        staticClass: "typcn typcn-warning-outline"
-                      }),
-                      _vm._v(
-                        " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-                      )
-                    ])
-                  })
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "form-item" },
-                [
-                  _c("label", { attrs: { for: "password" } }, [
-                    _vm._v("Password")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.user.password,
-                        expression: "user.password"
-                      }
-                    ],
-                    class: _vm.validationClass(_vm.errors, "password"),
-                    attrs: {
-                      type: "password",
-                      name: "password",
-                      placeholder: "password"
-                    },
-                    domProps: { value: _vm.user.password },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                      ],
+                      class: _vm.validationClass(_vm.errors, "account"),
+                      attrs: {
+                        type: "text",
+                        name: "account",
+                        placeholder: "user name or e-mail"
+                      },
+                      domProps: { value: _vm.user.account },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.user.account = $event.target.value
                         }
-                        _vm.user.password = $event.target.value
                       }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm._l(_vm.errors.password, function(e) {
-                    return _c("div", { staticClass: "errors" }, [
-                      _c("span", {
-                        staticClass: "typcn typcn-warning-outline"
-                      }),
-                      _vm._v(
-                        " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-                      )
-                    ])
-                  })
-                ],
-                2
-              )
-            ]),
+                    }),
+                    _vm._v(" "),
+                    _vm._l(_vm.errors.account, function(e) {
+                      return _c("div", { staticClass: "errors" }, [
+                        _c("span", {
+                          staticClass: "typcn typcn-warning-outline"
+                        }),
+                        _vm._v(" " + _vm._s(e.message))
+                      ])
+                    })
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-item" },
+                  [
+                    _c("label", { attrs: { for: "password" } }, [
+                      _vm._v("Password")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.user.password,
+                          expression: "user.password"
+                        }
+                      ],
+                      class: _vm.validationClass(_vm.errors, "password"),
+                      attrs: {
+                        type: "password",
+                        name: "password",
+                        placeholder: "password"
+                      },
+                      domProps: { value: _vm.user.password },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.user.password = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm._l(_vm.errors.password, function(e) {
+                      return _c("div", { staticClass: "errors" }, [
+                        _c("span", {
+                          staticClass: "typcn typcn-warning-outline"
+                        }),
+                        _vm._v(" " + _vm._s(e.message) + " ")
+                      ])
+                    })
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _vm._l(_vm.errors.internal, function(e) {
+                  return _c("div", { staticClass: "errors" }, [
+                    _c("span", { staticClass: "typcn typcn-warning-outline" }),
+                    _vm._v(" " + _vm._s(e.message) + " ")
+                  ])
+                })
+              ],
+              2
+            ),
             _vm._v(" "),
             _c(
               "button",
@@ -13991,24 +13783,26 @@ var render = function() {
           }
         },
         [
-          _c("div", { staticClass: "modal" }, [
-            _c("span", {
-              staticClass: "close typcn typcn-delete large",
-              class: { disabled: _vm.isDisable },
-              on: {
-                click: function($event) {
-                  _vm.close()
+          _c(
+            "div",
+            { staticClass: "modal" },
+            [
+              _c("modal-destroy"),
+              _vm._v(" "),
+              _c("modal-login"),
+              _vm._v(" "),
+              _c("span", {
+                staticClass: "close typcn typcn-delete large",
+                class: { disabled: _vm.isDisable },
+                on: {
+                  click: function($event) {
+                    _vm.close()
+                  }
                 }
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "content" },
-              [_c("modal-destroy"), _vm._v(" "), _c("modal-login")],
-              1
-            )
-          ])
+              })
+            ],
+            1
+          )
         ]
       )
     : _vm._e()
@@ -14081,24 +13875,6 @@ if (false) {(function () {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -14106,10 +13882,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var vuex_1 = __webpack_require__(3);
-var login_user_1 = __webpack_require__(46);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const vuex_1 = __webpack_require__(3);
+const login_user_1 = __webpack_require__(46);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -14120,34 +13896,23 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var offset = /** @class */ (function (_super) {
-    __extends(offset, _super);
-    function offset() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    offset = __decorate([
-        vue_class_component_1.default({
-            name: "offset",
-            computed: __assign({}, vuex_1.mapGetters([
-                'domain', 'token'
-            ]), vuex_1.mapState('offset', {
-                'show': function (_a) {
-                    var show = _a.show;
-                    return show;
-                },
-                '_close': function (_a) {
-                    var close = _a.close;
-                    return close;
-                }
-            })),
-            methods: __assign({}, vuex_1.mapMutations("offset", ["closeOffset"])),
-            components: {
-                "login-user": login_user_1.default
-            }
-        })
-    ], offset);
-    return offset;
-}(vue_1.default));
+let offset = class offset extends vue_1.default {
+};
+offset = __decorate([
+    vue_class_component_1.default({
+        name: "offset",
+        computed: Object.assign({}, vuex_1.mapGetters([
+            'domain', 'token'
+        ]), vuex_1.mapState('offset', {
+            'show': ({ show }) => show,
+            '_close': ({ close }) => close
+        })),
+        methods: Object.assign({}, vuex_1.mapMutations("offset", ["closeOffset"])),
+        components: {
+            "login-user": login_user_1.default
+        }
+    })
+], offset);
 exports.default = offset;
 
 
@@ -14208,24 +13973,6 @@ if (false) {(function () {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -14233,9 +13980,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var vuex_1 = __webpack_require__(3);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const vuex_1 = __webpack_require__(3);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -14246,37 +13993,26 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var login_user = /** @class */ (function (_super) {
-    __extends(login_user, _super);
-    function login_user() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    login_user.prototype.mounted = function () {
+let login_user = class login_user extends vue_1.default {
+    mounted() {
         if (!this.auth_status) {
             this.fetchAuthUser();
         }
-    };
-    login_user = __decorate([
-        vue_class_component_1.default({
-            name: "login_user",
-            components: {},
-            computed: __assign({}, vuex_1.mapState("auth", {
-                user: function (_a) {
-                    var user = _a.user;
-                    return user;
-                },
-                auth_status: function (_a) {
-                    var auth_status = _a.auth_status;
-                    return auth_status;
-                },
-            }), vuex_1.mapGetters([
-                'domain', 'token'
-            ])),
-            methods: __assign({}, vuex_1.mapActions("auth", ["fetchAuthUser"]))
-        })
-    ], login_user);
-    return login_user;
-}(vue_1.default));
+    }
+};
+login_user = __decorate([
+    vue_class_component_1.default({
+        name: "login_user",
+        components: {},
+        computed: Object.assign({}, vuex_1.mapState("auth", {
+            user: ({ user }) => user,
+            auth_status: ({ auth_status }) => auth_status,
+        }), vuex_1.mapGetters([
+            'domain', 'token'
+        ])),
+        methods: Object.assign({}, vuex_1.mapActions("auth", ["fetchAuthUser", "logout"]))
+    })
+], login_user);
 exports.default = login_user;
 
 
@@ -14289,19 +14025,43 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "margin" }, [
-    _c("div", { staticClass: "login-user row" }, [
-      _c("div", { staticClass: "column column-25" }, [_vm._v("avatar")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "column column-75 text-sm" }, [
-        _c("div", { staticClass: "text-md" }, [_vm._v(_vm._s(_vm.user.name))]),
-        _vm._v(" "),
-        _c("div", [_vm._v("Last login : 最終ログイン")]),
-        _vm._v(" "),
-        _c("div", [_vm._v("Mail : " + _vm._s(_vm.user.mail))])
+  return _vm.auth_status
+    ? _c("div", { staticClass: "margin" }, [
+        _c("div", { staticClass: "login-user row padding" }, [
+          _c("div", { staticClass: "column column-25" }, [_vm._v("avatar")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "column column-75 text-sm" }, [
+            _c("div", { staticClass: "text-md" }, [
+              _vm._v(_vm._s(_vm.user.name))
+            ]),
+            _vm._v(" "),
+            _c("div", [_vm._v("Mail : " + _vm._s(_vm.user.mail))]),
+            _vm._v(" "),
+            _c("div", [_vm._v("Last login : " + _vm._s(_vm.user.last_login))]),
+            _vm._v(" "),
+            _vm.auth_status
+              ? _c("div", [
+                  _c(
+                    "a",
+                    {
+                      attrs: { title: "logout" },
+                      on: {
+                        click: function($event) {
+                          _vm.logout()
+                        }
+                      }
+                    },
+                    [
+                      _c("span", { staticClass: "typcn typcn-export" }),
+                      _vm._v(" Logout")
+                    ]
+                  )
+                ])
+              : _vm._e()
+          ])
+        ])
       ])
-    ])
-  ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -14467,15 +14227,18 @@ if (false) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_router_1 = __webpack_require__(52);
+const vue_1 = __webpack_require__(0);
+const vue_router_1 = __webpack_require__(52);
 vue_1.default.use(vue_router_1.default);
-var spa_router_1 = __webpack_require__(53);
-var spa_router_2 = __webpack_require__(81);
+const spa_router_1 = __webpack_require__(53);
+const spa_router_2 = __webpack_require__(81);
 function createRouter() {
     return new vue_router_1.default({
         mode: 'history',
-        routes: spa_router_1.default.concat(spa_router_2.default)
+        routes: [
+            ...spa_router_1.default,
+            ...spa_router_2.default
+        ]
     });
 }
 exports.createRouter = createRouter;
@@ -17002,19 +16765,19 @@ if (inBrowser && window.Vue) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var navigation_vue_1 = __webpack_require__(18);
-var sub_vue_1 = __webpack_require__(61);
-var idx_vue_1 = __webpack_require__(67);
-var add_vue_1 = __webpack_require__(72);
-var view_vue_1 = __webpack_require__(75);
-var edit_vue_1 = __webpack_require__(78);
-var mount = "/tasks";
+const navigation_vue_1 = __webpack_require__(18);
+const sub_vue_1 = __webpack_require__(61);
+const idx_vue_1 = __webpack_require__(67);
+const add_vue_1 = __webpack_require__(72);
+const view_vue_1 = __webpack_require__(75);
+const edit_vue_1 = __webpack_require__(78);
+let mount = "/tasks";
 exports.default = [
-    { name: "tasks_page", path: mount + "/page/:page*", components: { main: idx_vue_1.default, navi: navigation_vue_1.default, sub: sub_vue_1.default } },
-    { name: "tasks_index", path: mount + "/page/1", alias: mount + "/" },
-    { name: "tasks_add", path: mount + "/add", components: { main: add_vue_1.default, navi: navigation_vue_1.default, sub: sub_vue_1.default } },
-    { name: "tasks_view", path: mount + "/:id", components: { main: view_vue_1.default, navi: navigation_vue_1.default, sub: sub_vue_1.default } },
-    { name: "tasks_edit", path: mount + "/:id/edit", components: { main: edit_vue_1.default, navi: navigation_vue_1.default, sub: sub_vue_1.default } },
+    { name: "tasks_page", path: `${mount}/page/:page*`, components: { main: idx_vue_1.default, navi: navigation_vue_1.default, sub: sub_vue_1.default } },
+    { name: "tasks_index", path: `${mount}/page/1`, alias: `${mount}/` },
+    { name: "tasks_add", path: `${mount}/add`, components: { main: add_vue_1.default, navi: navigation_vue_1.default, sub: sub_vue_1.default } },
+    { name: "tasks_view", path: `${mount}/:id`, components: { main: view_vue_1.default, navi: navigation_vue_1.default, sub: sub_vue_1.default } },
+    { name: "tasks_edit", path: `${mount}/:id/edit`, components: { main: edit_vue_1.default, navi: navigation_vue_1.default, sub: sub_vue_1.default } },
 ];
 
 
@@ -17024,24 +16787,6 @@ exports.default = [
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -17049,10 +16794,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var vuex_1 = __webpack_require__(3);
-var indicator_1 = __webpack_require__(55);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const vuex_1 = __webpack_require__(3);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -17063,56 +16807,38 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var navi = /** @class */ (function (_super) {
-    __extends(navi, _super);
-    function navi() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    navi.prototype.asyncData = function (_a) {
-        var store = _a.store, route = _a.route;
-        return store.dispatch('auth/fetchAuthUser');
-    };
-    navi.prototype.toggle = function () {
+let navi = class navi extends vue_1.default {
+    toggle() {
         this.toggleOffset();
-    };
-    navi.prototype.m_login = function () {
+    }
+    m_login() {
         this.setModal({ "template": "login_modal" });
         this.openModal();
-    };
-    navi.prototype.h_logout = function () {
+    }
+    h_logout() {
         this.logout();
         return false;
-    };
-    navi = __decorate([
-        vue_class_component_1.default({
-            name: "navi",
-            components: {
-                "app-indicater": indicator_1.default,
-            },
-            computed: __assign({}, vuex_1.mapGetters([
-                'domain', 'token'
-            ]), vuex_1.mapState("offset", {
-                show: function (_a) {
-                    var show = _a.show;
-                    return show;
-                }
-            }), vuex_1.mapState("auth", {
-                auth_user: function (_a) {
-                    var user = _a.user;
-                    return user;
-                },
-                auth_status: function (_a) {
-                    var auth_status = _a.auth_status;
-                    return auth_status;
-                }
-            })),
-            methods: __assign({}, vuex_1.mapMutations("offset", ["toggleOffset"]), vuex_1.mapActions("auth", [
-                "logout"
-            ]), vuex_1.mapMutations("modal", ["setModal", "toggleModal", "openModal"]))
-        })
-    ], navi);
-    return navi;
-}(vue_1.default));
+    }
+};
+navi = __decorate([
+    vue_class_component_1.default({
+        name: "navi",
+        components: {
+            "app-indicater": () => Promise.resolve().then(function () { return __webpack_require__(55); }),
+        },
+        computed: Object.assign({}, vuex_1.mapGetters([
+            'domain', 'token'
+        ]), vuex_1.mapState("offset", {
+            show: ({ show }) => show
+        }), vuex_1.mapState("auth", {
+            auth_user: ({ user }) => user,
+            auth_status: ({ auth_status }) => auth_status
+        })),
+        methods: Object.assign({}, vuex_1.mapMutations("offset", ["toggleOffset"]), vuex_1.mapActions("auth", [
+            "logout"
+        ]), vuex_1.mapMutations("modal", ["setModal", "toggleModal", "openModal"]))
+    })
+], navi);
 exports.default = navi;
 
 
@@ -17217,24 +16943,6 @@ exports.push([module.i, "", ""]);
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -17242,9 +16950,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var vuex_1 = __webpack_require__(3);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const vuex_1 = __webpack_require__(3);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -17255,15 +16963,14 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var indicator = /** @class */ (function (_super) {
-    __extends(indicator, _super);
-    function indicator() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.light = true;
-        _this.beat = function (self) {
-            var i = 0;
-            self._beat = function () {
-                var prosess = self.indicator.prosess;
+let indicator = class indicator extends vue_1.default {
+    constructor() {
+        super(...arguments);
+        this.light = true;
+        this.beat = (self) => {
+            let i = 0;
+            self._beat = () => {
+                let prosess = self.indicator.prosess;
                 if (prosess === true) {
                     self.light = (self.light) ? false : true;
                     setTimeout(self._beat, 2000);
@@ -17276,41 +16983,31 @@ var indicator = /** @class */ (function (_super) {
             };
             self._beat();
         };
-        return _this;
     }
-    Object.defineProperty(indicator.prototype, "width", {
-        get: function () {
-            return this.indicator.complate;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(indicator.prototype, "css", {
-        get: function () {
-            var css = { light: false };
-            css[this.indicator.status] = true;
-            css.light = this.light;
-            return css;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    indicator.prototype.mounted = function () {
-        var self = this;
+    get width() {
+        return this.indicator.complate;
+    }
+    get css() {
+        let css = { light: false };
+        css[this.indicator.status] = true;
+        css.light = this.light;
+        return css;
+    }
+    mounted() {
+        let self = this;
         this.beat(self);
-    };
-    indicator = __decorate([
-        vue_class_component_1.default({
-            name: "indicator",
-            computed: __assign({}, vuex_1.mapGetters([
-                'domain', 'token'
-            ]), vuex_1.mapState("loading", {
-                indicator: function (state) { return state.indicator; }
-            })),
-        })
-    ], indicator);
-    return indicator;
-}(vue_1.default));
+    }
+};
+indicator = __decorate([
+    vue_class_component_1.default({
+        name: "indicator",
+        computed: Object.assign({}, vuex_1.mapGetters([
+            'domain', 'token'
+        ]), vuex_1.mapState("loading", {
+            indicator: (state) => state.indicator
+        })),
+    })
+], indicator);
 exports.default = indicator;
 
 
@@ -17587,24 +17284,6 @@ if (false) {(function () {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -17612,10 +17291,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var vuex_1 = __webpack_require__(3);
-var search_vue_1 = __webpack_require__(63);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const vuex_1 = __webpack_require__(3);
+const search_vue_1 = __webpack_require__(63);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -17626,25 +17305,17 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var sub = /** @class */ (function (_super) {
-    __extends(sub, _super);
-    function sub() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    sub = __decorate([
-        vue_class_component_1.default({
-            name: 'sub',
-            computed: __assign({}, vuex_1.mapState('tasks', {
-                mount: function (_a) {
-                    var mount = _a.mount;
-                    return mount;
-                }
-            })),
-            components: { "app-search": search_vue_1.default }
-        })
-    ], sub);
-    return sub;
-}(vue_1.default));
+let sub = class sub extends vue_1.default {
+};
+sub = __decorate([
+    vue_class_component_1.default({
+        name: 'sub',
+        computed: Object.assign({}, vuex_1.mapState('tasks', {
+            mount: ({ mount }) => mount
+        })),
+        components: { "app-search": search_vue_1.default }
+    })
+], sub);
 exports.default = sub;
 
 
@@ -17705,24 +17376,6 @@ if (false) {(function () {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -17730,13 +17383,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var vuex_1 = __webpack_require__(3);
-var flatpickr = __webpack_require__(5);
-var confirmDatePlugin = __webpack_require__(6);
-var build_query_1 = __webpack_require__(13);
-var bq = new build_query_1.build_query();
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const vuex_1 = __webpack_require__(3);
+const flatpickr = __webpack_require__(5);
+const confirmDatePlugin = __webpack_require__(6);
+const build_query_1 = __webpack_require__(13);
+let bq = new build_query_1.build_query();
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -17747,57 +17400,47 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var search = /** @class */ (function (_super) {
-    __extends(search, _super);
-    function search() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.frm = {
+let search = class search extends vue_1.default {
+    constructor() {
+        super(...arguments);
+        this.frm = {
             "id": "",
             "title": "",
             "priod": "",
             "created_at": "",
             "updated_at": "",
         };
-        return _this;
     }
-    search.prototype.search = function () {
-        var q = bq.http(this.frm);
-        this.$router.push(this.mount + "?" + q);
-    };
-    search.prototype.reset = function () {
-        var frm = this.frm;
-        for (var key in frm) {
+    search() {
+        let q = bq.http(this.frm);
+        this.$router.push(`${this.mount}?${q}`);
+    }
+    reset() {
+        let frm = this.frm;
+        for (let key in frm) {
             frm[key] = null;
         }
-    };
-    Object.defineProperty(search.prototype, "action", {
-        get: function () {
-            return this.mount;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    search.prototype.mounted = function () {
+    }
+    get action() {
+        return this.mount;
+    }
+    mounted() {
         if (window) {
             flatpickr(".calendar", {
                 "enableTime": true,
                 "plugins": [confirmDatePlugin({})]
             });
         }
-    };
-    search = __decorate([
-        vue_class_component_1.default({
-            name: 'find',
-            computed: __assign({}, vuex_1.mapState('tasks', {
-                mount: function (_a) {
-                    var mount = _a.mount;
-                    return mount;
-                }
-            }))
-        })
-    ], search);
-    return search;
-}(vue_1.default));
+    }
+};
+search = __decorate([
+    vue_class_component_1.default({
+        name: 'find',
+        computed: Object.assign({}, vuex_1.mapState('tasks', {
+            mount: ({ mount }) => mount
+        }))
+    })
+], search);
 exports.default = search;
 
 
@@ -18110,24 +17753,6 @@ if (false) {(function () {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18135,10 +17760,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var pagination_vue_1 = __webpack_require__(19);
-var vuex_1 = __webpack_require__(3);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const pagination_vue_1 = __webpack_require__(19);
+const vuex_1 = __webpack_require__(3);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -18149,23 +17774,18 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var idx = /** @class */ (function (_super) {
-    __extends(idx, _super);
-    function idx() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    idx.prototype.asyncData = function (_a) {
-        var store = _a.store, route = _a.route;
+let idx = class idx extends vue_1.default {
+    asyncData({ store, route }) {
         return store.dispatch("tasks/fetchEntities", route);
-    };
-    idx.prototype.view = function (id) {
-        return this.mount + "/" + id;
-    };
-    idx.prototype.edit = function (id) {
-        return this.mount + "/" + id + "/edit";
-    };
-    idx.prototype.destroy = function (id, title) {
-        var modal = {
+    }
+    view(id) {
+        return `${this.mount}/${id}`;
+    }
+    edit(id) {
+        return `${this.mount}/${id}/edit`;
+    }
+    destroy(id, title) {
+        let modal = {
             template: "Destroy",
             data: {
                 id: id,
@@ -18175,35 +17795,25 @@ var idx = /** @class */ (function (_super) {
         };
         this.setModal(modal);
         this.openModal();
-    };
-    idx.prototype.copy = function (id) {
-        return this.mount + "/add?copy=" + id;
-    };
-    idx = __decorate([
-        vue_class_component_1.default({
-            name: "page",
-            computed: __assign({}, vuex_1.mapGetters([
-                'domain'
-            ]), vuex_1.mapState('tasks', {
-                entities: function (_a) {
-                    var entities = _a.entities;
-                    return entities;
-                },
-                pagination: function (_a) {
-                    var page = _a.page;
-                    return page;
-                },
-                mount: function (_a) {
-                    var mount = _a.mount;
-                    return mount;
-                }
-            })),
-            methods: __assign({}, vuex_1.mapMutations("modal", ["setModal", "toggleModal", "openModal"]), vuex_1.mapActions("tasks", ["fetchEntities"])),
-            components: { pagination: pagination_vue_1.default }
-        })
-    ], idx);
-    return idx;
-}(vue_1.default));
+    }
+    copy(id) {
+        return `${this.mount}/add?copy=${id}`;
+    }
+};
+idx = __decorate([
+    vue_class_component_1.default({
+        name: "page",
+        computed: Object.assign({}, vuex_1.mapGetters([
+            'domain'
+        ]), vuex_1.mapState('tasks', {
+            entities: ({ entities }) => entities,
+            pagination: ({ page }) => page,
+            mount: ({ mount }) => mount
+        })),
+        methods: Object.assign({}, vuex_1.mapMutations("modal", ["setModal", "toggleModal", "openModal"]), vuex_1.mapActions("tasks", ["fetchEntities"])),
+        components: { pagination: pagination_vue_1.default }
+    })
+], idx);
 exports.default = idx;
 
 
@@ -18213,16 +17823,6 @@ exports.default = idx;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18230,117 +17830,90 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var build_query_1 = __webpack_require__(13);
-var bq = new build_query_1.build_query();
-var pagintaion = /** @class */ (function (_super) {
-    __extends(pagintaion, _super);
-    function pagintaion() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.special = {
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const build_query_1 = __webpack_require__(13);
+let bq = new build_query_1.build_query();
+let pagintaion = class pagintaion extends vue_1.default {
+    constructor() {
+        super(...arguments);
+        this.special = {
             first: true,
             last: true,
             next: true,
             prev: true
         };
-        return _this;
     }
-    Object.defineProperty(pagintaion.prototype, "check", {
-        get: function () {
-            var pg = this.pagination;
-            if (pg.currentPage > pg.totalPage) {
-                return false;
-            }
-            return true;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(pagintaion.prototype, "prev", {
-        get: function () {
-            var cr = this.pagination.currentPage;
-            var link = (cr > 1) ? this.format(cr - 1) : this.format(1);
-            var css = (cr === 1) ? "disable" : "";
-            return {
-                link: link,
-                css: css
-            };
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(pagintaion.prototype, "next", {
-        get: function () {
-            var cr = this.pagination.currentPage;
-            var tr = this.pagination.totalPage;
-            var link = (tr <= cr) ? this.format(tr) : this.format(cr + 1);
-            var css = (tr <= cr) ? "disable" : "";
-            return {
-                link: link,
-                css: css
-            };
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(pagintaion.prototype, "first", {
-        get: function () {
-            var cr = this.pagination.currentPage;
-            var link = this.format(1);
-            var css = (cr === 1) ? "disable" : "";
-            return {
-                link: link,
-                css: css
-            };
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(pagintaion.prototype, "last", {
-        get: function () {
-            var cr = this.pagination.currentPage;
-            var tr = this.pagination.totalPage;
-            var link = this.format(tr);
-            var css = (tr <= cr) ? "disable" : "";
-            return {
-                link: link,
-                css: css
-            };
-        },
-        enumerable: true,
-        configurable: true
-    });
-    pagintaion.prototype.format = function (number) {
-        var query = this.pagination.queryPrams;
-        var httpQuery = bq.http(query);
-        return this.mount + "/page/" + number + "/" + httpQuery;
-    };
-    Object.defineProperty(pagintaion.prototype, "numbers", {
-        get: function () {
-            var total = this.pagination.totalPage;
-            var numbers = [];
-            for (var i = 1; i <= total; i++) {
-                var active = (i === this.pagination.currentPage) ? "active" : "";
-                numbers.push({ link: this.format(i), num: i, active: active });
-            }
-            return numbers;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    pagintaion = __decorate([
-        vue_class_component_1.default({
-            name: 'pagination',
-            computed: {},
-            props: {
-                pagination: {},
-                mount: String,
-            }
-        })
-    ], pagintaion);
-    return pagintaion;
-}(vue_1.default));
+    get check() {
+        let pg = this.pagination;
+        if (pg.currentPage > pg.totalPage) {
+            return false;
+        }
+        return true;
+    }
+    get prev() {
+        let cr = this.pagination.currentPage;
+        let link = (cr > 1) ? this.format(cr - 1) : this.format(1);
+        let css = (cr === 1) ? "disable" : "";
+        return {
+            link: link,
+            css: css
+        };
+    }
+    get next() {
+        let cr = this.pagination.currentPage;
+        let tr = this.pagination.totalPage;
+        let link = (tr <= cr) ? this.format(tr) : this.format(cr + 1);
+        let css = (tr <= cr) ? "disable" : "";
+        return {
+            link: link,
+            css: css
+        };
+    }
+    get first() {
+        let cr = this.pagination.currentPage;
+        let link = this.format(1);
+        let css = (cr === 1) ? "disable" : "";
+        return {
+            link: link,
+            css: css
+        };
+    }
+    get last() {
+        let cr = this.pagination.currentPage;
+        let tr = this.pagination.totalPage;
+        let link = this.format(tr);
+        let css = (tr <= cr) ? "disable" : "";
+        return {
+            link: link,
+            css: css
+        };
+    }
+    format(number) {
+        let query = this.pagination.queryPrams;
+        let httpQuery = bq.http(query);
+        return `${this.mount}/page/${number}/${httpQuery}`;
+    }
+    get numbers() {
+        let total = this.pagination.totalPage;
+        let numbers = [];
+        for (let i = 1; i <= total; i++) {
+            let active = (i === this.pagination.currentPage) ? "active" : "";
+            numbers.push({ link: this.format(i), num: i, active: active });
+        }
+        return numbers;
+    }
+};
+pagintaion = __decorate([
+    vue_class_component_1.default({
+        name: 'pagination',
+        computed: {},
+        props: {
+            pagination: {},
+            mount: String,
+        }
+    })
+], pagintaion);
 exports.default = pagintaion;
 
 
@@ -18613,24 +18186,6 @@ if (false) {(function () {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18638,12 +18193,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var vuex_1 = __webpack_require__(3);
-var flatpickr = __webpack_require__(5);
-var confirmDatePlugin = __webpack_require__(6);
-var validation_1 = __webpack_require__(4);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const vuex_1 = __webpack_require__(3);
+const flatpickr = __webpack_require__(5);
+const confirmDatePlugin = __webpack_require__(6);
+const validation_1 = __webpack_require__(4);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -18654,27 +18209,21 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var add = /** @class */ (function (_super) {
-    __extends(add, _super);
-    function add() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.change = function (e) {
-            var kv = {};
+let add = class add extends vue_1.default {
+    constructor() {
+        super(...arguments);
+        this.change = (e) => {
+            let kv = {};
             kv["key"] = e.target.name;
             kv["value"] = e.target.value;
-            _this.updateEntity(kv);
+            this.updateEntity(kv);
         };
-        _this.errors = {};
-        return _this;
+        this.errors = {};
     }
-    Object.defineProperty(add.prototype, "action", {
-        get: function () {
-            return "" + this.mount;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    add.prototype.mounted = function () {
+    get action() {
+        return `${this.mount}`;
+    }
+    mounted() {
         if (window) {
             flatpickr(".calendar", {
                 "enableTime": true,
@@ -18682,46 +18231,38 @@ var add = /** @class */ (function (_super) {
             });
         }
         this.clearEntity();
-        var query = this.$store.state.route.query;
+        let query = this.$store.state.route.query;
         if (query["copy"]) {
             this.copyEntity({ id: query["copy"], mount: this.mount });
         }
-    };
-    add.prototype.beforeDestroy = function () {
+    }
+    beforeDestroy() {
         this.clearEntity();
-    };
-    add.prototype.save = function () {
-        var _this = this;
+    }
+    save() {
         this.loading();
-        this.insertEntity(this.token).then(function (r) {
-            _this.endLoading("success");
-            _this.$router.push({ path: _this.mount });
-        }).catch(function (e) {
-            _this.errors = e;
-            _this.endLoading("warning");
+        this.insertEntity(this.token).then(r => {
+            this.endLoading("success");
+            this.$router.push({ path: this.mount });
+        }).catch(e => {
+            this.errors = e;
+            this.endLoading("warning");
         });
         return false;
-    };
-    add = __decorate([
-        vue_class_component_1.default({
-            name: "add",
-            computed: __assign({}, vuex_1.mapGetters([
-                'domain', 'token'
-            ]), vuex_1.mapState("tasks", {
-                entity: function (_a) {
-                    var entity = _a.entity;
-                    return entity;
-                },
-                mount: function (_a) {
-                    var mount = _a.mount;
-                    return mount;
-                }
-            })),
-            methods: __assign({}, vuex_1.mapActions("tasks", ["insertEntity", "clearEntity", "copyEntity"]), vuex_1.mapMutations("tasks", ["updateEntity", "setErrors"]), vuex_1.mapMutations("loading", ["loading", "endLoading"]), validation_1.default.map(["validationClass"]))
-        })
-    ], add);
-    return add;
-}(vue_1.default));
+    }
+};
+add = __decorate([
+    vue_class_component_1.default({
+        name: "add",
+        computed: Object.assign({}, vuex_1.mapGetters([
+            'domain', 'token'
+        ]), vuex_1.mapState("tasks", {
+            entity: ({ entity }) => entity,
+            mount: ({ mount }) => mount
+        })),
+        methods: Object.assign({}, vuex_1.mapActions("tasks", ["insertEntity", "clearEntity", "copyEntity"]), vuex_1.mapMutations("tasks", ["updateEntity", "setErrors"]), vuex_1.mapMutations("loading", ["loading", "endLoading"]), validation_1.default.map(["validationClass"]))
+    })
+], add);
 exports.default = add;
 
 
@@ -18766,7 +18307,7 @@ var render = function() {
               _vm._l(_vm.errors.title, function(e) {
                 return _c("div", { staticClass: "errors" }, [
                   _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+                  _vm._v(" " + _vm._s(e.message) + " ")
                 ])
               })
             ],
@@ -18794,7 +18335,7 @@ var render = function() {
               _vm._l(_vm.errors.priod, function(e) {
                 return _c("div", { staticClass: "errors" }, [
                   _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+                  _vm._v(" " + _vm._s(e.message) + " ")
                 ])
               })
             ],
@@ -18882,24 +18423,6 @@ if (false) {(function () {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18907,9 +18430,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var vuex_1 = __webpack_require__(3);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const vuex_1 = __webpack_require__(3);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -18920,30 +18443,21 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var view = /** @class */ (function (_super) {
-    __extends(view, _super);
-    function view() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    view.prototype.asyncData = function (_a) {
-        var store = _a.store, route = _a.route;
+let view = class view extends vue_1.default {
+    asyncData({ store, route }) {
         return store.dispatch('tasks/fetchEntity', route);
-    };
-    view = __decorate([
-        vue_class_component_1.default({
-            name: "view",
-            computed: __assign({}, vuex_1.mapGetters([
-                'domain', 'token'
-            ]), vuex_1.mapState("tasks", {
-                entity: function (_a) {
-                    var entity = _a.entity;
-                    return entity;
-                }
-            })),
-        })
-    ], view);
-    return view;
-}(vue_1.default));
+    }
+};
+view = __decorate([
+    vue_class_component_1.default({
+        name: "view",
+        computed: Object.assign({}, vuex_1.mapGetters([
+            'domain', 'token'
+        ]), vuex_1.mapState("tasks", {
+            entity: ({ entity }) => entity
+        })),
+    })
+], view);
 exports.default = view;
 
 
@@ -19050,24 +18564,6 @@ if (false) {(function () {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -19075,12 +18571,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var vuex_1 = __webpack_require__(3);
-var flatpickr = __webpack_require__(5);
-var confirmDatePlugin = __webpack_require__(6);
-var validation_1 = __webpack_require__(4);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const vuex_1 = __webpack_require__(3);
+const flatpickr = __webpack_require__(5);
+const confirmDatePlugin = __webpack_require__(6);
+const validation_1 = __webpack_require__(4);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -19091,69 +18587,54 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var edit = /** @class */ (function (_super) {
-    __extends(edit, _super);
-    function edit() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.change = function (e) {
-            var kv = {};
+let edit = class edit extends vue_1.default {
+    constructor() {
+        super(...arguments);
+        this.change = (e) => {
+            let kv = {};
             kv["key"] = e.target.name;
             kv["value"] = e.target.value;
-            _this.updateEntity(kv);
+            this.updateEntity(kv);
         };
-        _this.errors = {};
-        return _this;
+        this.errors = {};
     }
-    edit.prototype.asyncData = function (_a) {
-        var store = _a.store, route = _a.route;
+    asyncData({ store, route }) {
         return store.dispatch('tasks/fetchEntity', route);
-    };
-    Object.defineProperty(edit.prototype, "action", {
-        get: function () {
-            return this.mount + "/" + this.entity.id;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    edit.prototype.mounted = function () {
+    }
+    get action() {
+        return `${this.mount}/${this.entity.id}`;
+    }
+    mounted() {
         if (window) {
             flatpickr(".calendar", {
                 "enableTime": true,
                 "plugins": [confirmDatePlugin({})]
             });
         }
-    };
-    edit.prototype.save = function () {
-        var _this = this;
+    }
+    save() {
         this.loading();
-        this.saveEntity(this.token).then(function (r) {
-            _this.errors = {};
-            _this.endLoading("success");
-        }).catch(function (e) {
-            _this.errors = e;
-            _this.endLoading("warning");
+        this.saveEntity(this.token).then(r => {
+            this.errors = {};
+            this.endLoading("success");
+        }).catch(e => {
+            this.errors = e;
+            this.endLoading("warning");
         });
-    };
-    edit = __decorate([
-        vue_class_component_1.default({
-            name: "edit",
-            computed: __assign({}, vuex_1.mapGetters([
-                'domain', 'token'
-            ]), vuex_1.mapState("tasks", {
-                entity: function (_a) {
-                    var entity = _a.entity;
-                    return entity;
-                },
-                mount: function (_a) {
-                    var mount = _a.mount;
-                    return mount;
-                }
-            })),
-            methods: __assign({}, vuex_1.mapActions("tasks", ["fetchEntity", "saveEntity"]), vuex_1.mapMutations("tasks", ["updateEntity"]), vuex_1.mapMutations("loading", ["loading", "endLoading"]), validation_1.default.map(["validationClass"]))
-        })
-    ], edit);
-    return edit;
-}(vue_1.default));
+    }
+};
+edit = __decorate([
+    vue_class_component_1.default({
+        name: "edit",
+        computed: Object.assign({}, vuex_1.mapGetters([
+            'domain', 'token'
+        ]), vuex_1.mapState("tasks", {
+            entity: ({ entity }) => entity,
+            mount: ({ mount }) => mount
+        })),
+        methods: Object.assign({}, vuex_1.mapActions("tasks", ["fetchEntity", "saveEntity"]), vuex_1.mapMutations("tasks", ["updateEntity"]), vuex_1.mapMutations("loading", ["loading", "endLoading"]), validation_1.default.map(["validationClass"]))
+    })
+], edit);
 exports.default = edit;
 
 
@@ -19205,7 +18686,7 @@ var render = function() {
               _vm._l(_vm.errors.title, function(e) {
                 return _c("div", { staticClass: "errors" }, [
                   _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+                  _vm._v(" " + _vm._s(e.message) + " ")
                 ])
               })
             ],
@@ -19233,7 +18714,7 @@ var render = function() {
               _vm._l(_vm.errors.priod, function(e) {
                 return _c("div", { staticClass: "errors" }, [
                   _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+                  _vm._v(" " + _vm._s(e.message) + " ")
                 ])
               })
             ],
@@ -19271,21 +18752,21 @@ if (false) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var navigation_vue_1 = __webpack_require__(18);
-var sub_vue_1 = __webpack_require__(82);
-var idx_vue_1 = __webpack_require__(88);
-var add_vue_1 = __webpack_require__(91);
-var view_vue_1 = __webpack_require__(94);
-var edit_vue_1 = __webpack_require__(97);
-var login_vue_1 = __webpack_require__(100);
-var mount = "/users";
+const navigation_vue_1 = __webpack_require__(18);
+const sub_vue_1 = __webpack_require__(82);
+const idx_vue_1 = __webpack_require__(88);
+const add_vue_1 = __webpack_require__(91);
+const view_vue_1 = __webpack_require__(94);
+const edit_vue_1 = __webpack_require__(97);
+const login_vue_1 = __webpack_require__(100);
+let mount = "/users";
 exports.default = [
-    { name: "users_login", path: mount + "/login", components: { single: login_vue_1.default } },
-    { name: "users_page", path: mount + "/page/:page*", components: { main: idx_vue_1.default, navi: navigation_vue_1.default, sub: sub_vue_1.default } },
-    { name: "users_index", path: mount + "/page/1", alias: mount + "/" },
-    { name: "users_add", path: mount + "/add", components: { main: add_vue_1.default, navi: navigation_vue_1.default, sub: sub_vue_1.default } },
-    { name: "users_view", path: mount + "/:id", components: { main: view_vue_1.default, navi: navigation_vue_1.default, sub: sub_vue_1.default } },
-    { name: "users_edit", path: mount + "/:id/edit", components: { main: edit_vue_1.default, navi: navigation_vue_1.default, sub: sub_vue_1.default } },
+    { name: "users_login", path: `${mount}/login`, components: { single: login_vue_1.default } },
+    { name: "users_page", path: `${mount}/page/:page*`, components: { main: idx_vue_1.default, navi: navigation_vue_1.default, sub: sub_vue_1.default } },
+    { name: "users_index", path: `${mount}/page/1`, alias: `${mount}/` },
+    { name: "users_add", path: `${mount}/add`, components: { main: add_vue_1.default, navi: navigation_vue_1.default, sub: sub_vue_1.default } },
+    { name: "users_view", path: `${mount}/:id`, components: { main: view_vue_1.default, navi: navigation_vue_1.default, sub: sub_vue_1.default } },
+    { name: "users_edit", path: `${mount}/:id/edit`, components: { main: edit_vue_1.default, navi: navigation_vue_1.default, sub: sub_vue_1.default } },
 ];
 
 
@@ -19346,24 +18827,6 @@ if (false) {(function () {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -19371,10 +18834,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var vuex_1 = __webpack_require__(3);
-var search_vue_1 = __webpack_require__(84);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const vuex_1 = __webpack_require__(3);
+const search_vue_1 = __webpack_require__(84);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -19385,25 +18848,17 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var sub = /** @class */ (function (_super) {
-    __extends(sub, _super);
-    function sub() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    sub = __decorate([
-        vue_class_component_1.default({
-            name: 'sub',
-            computed: __assign({}, vuex_1.mapState('users', {
-                mount: function (_a) {
-                    var mount = _a.mount;
-                    return mount;
-                }
-            })),
-            components: { "app-search": search_vue_1.default }
-        })
-    ], sub);
-    return sub;
-}(vue_1.default));
+let sub = class sub extends vue_1.default {
+};
+sub = __decorate([
+    vue_class_component_1.default({
+        name: 'sub',
+        computed: Object.assign({}, vuex_1.mapState('users', {
+            mount: ({ mount }) => mount
+        })),
+        components: { "app-search": search_vue_1.default }
+    })
+], sub);
 exports.default = sub;
 
 
@@ -19464,24 +18919,6 @@ if (false) {(function () {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -19489,13 +18926,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var vuex_1 = __webpack_require__(3);
-var flatpickr = __webpack_require__(5);
-var confirmDatePlugin = __webpack_require__(6);
-var build_query_1 = __webpack_require__(13);
-var bq = new build_query_1.build_query();
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const vuex_1 = __webpack_require__(3);
+const flatpickr = __webpack_require__(5);
+const confirmDatePlugin = __webpack_require__(6);
+const build_query_1 = __webpack_require__(13);
+let bq = new build_query_1.build_query();
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -19506,11 +18943,10 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var search = /** @class */ (function (_super) {
-    __extends(search, _super);
-    function search() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.frm = {
+let search = class search extends vue_1.default {
+    constructor() {
+        super(...arguments);
+        this.frm = {
             "id": "",
             "name": "",
             "mail": "",
@@ -19522,46 +18958,37 @@ var search = /** @class */ (function (_super) {
             "created_at": "",
             "updated_at": "",
         };
-        return _this;
     }
-    search.prototype.search = function () {
-        var q = bq.http(this.frm);
-        this.$router.push(this.mount + "?" + q);
-    };
-    search.prototype.reset = function () {
-        var frm = this.frm;
-        for (var key in frm) {
+    search() {
+        let q = bq.http(this.frm);
+        this.$router.push(`${this.mount}?${q}`);
+    }
+    reset() {
+        let frm = this.frm;
+        for (let key in frm) {
             frm[key] = null;
         }
-    };
-    Object.defineProperty(search.prototype, "action", {
-        get: function () {
-            return this.mount;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    search.prototype.mounted = function () {
+    }
+    get action() {
+        return this.mount;
+    }
+    mounted() {
         if (window) {
             flatpickr(".calendar", {
                 "enableTime": true,
                 "plugins": [confirmDatePlugin({})]
             });
         }
-    };
-    search = __decorate([
-        vue_class_component_1.default({
-            name: 'find',
-            computed: __assign({}, vuex_1.mapState('users', {
-                mount: function (_a) {
-                    var mount = _a.mount;
-                    return mount;
-                }
-            }))
-        })
-    ], search);
-    return search;
-}(vue_1.default));
+    }
+};
+search = __decorate([
+    vue_class_component_1.default({
+        name: 'find',
+        computed: Object.assign({}, vuex_1.mapState('users', {
+            mount: ({ mount }) => mount
+        }))
+    })
+], search);
 exports.default = search;
 
 
@@ -19676,122 +19103,6 @@ var render = function() {
                   return
                 }
                 _vm.frm.group_id = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("label", { attrs: { for: "access_token" } }, [
-            _vm._v("Access token")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.frm.access_token,
-                expression: "frm.access_token"
-              }
-            ],
-            attrs: {
-              type: "text",
-              name: "access_token",
-              placeholder: "access_token"
-            },
-            domProps: { value: _vm.frm.access_token },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.frm.access_token = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("label", { attrs: { for: "refresh_token" } }, [
-            _vm._v("Refresh token")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.frm.refresh_token,
-                expression: "frm.refresh_token"
-              }
-            ],
-            attrs: {
-              type: "text",
-              name: "refresh_token",
-              placeholder: "refresh_token"
-            },
-            domProps: { value: _vm.frm.refresh_token },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.frm.refresh_token = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("label", { attrs: { for: "new_password" } }, [
-            _vm._v("New password")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.frm.new_password,
-                expression: "frm.new_password"
-              }
-            ],
-            attrs: {
-              type: "password",
-              name: "new_password",
-              placeholder: "new_password"
-            },
-            domProps: { value: _vm.frm.new_password },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.frm.new_password = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("label", { attrs: { for: "confirm_password" } }, [
-            _vm._v("Confirm password")
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.frm.confirm_password,
-                expression: "frm.confirm_password"
-              }
-            ],
-            attrs: {
-              type: "password",
-              name: "confirm_password",
-              placeholder: "confirm_password"
-            },
-            domProps: { value: _vm.frm.confirm_password },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.frm.confirm_password = $event.target.value
               }
             }
           }),
@@ -20008,24 +19319,6 @@ if (false) {(function () {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -20033,10 +19326,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var pagination_vue_1 = __webpack_require__(19);
-var vuex_1 = __webpack_require__(3);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const pagination_vue_1 = __webpack_require__(19);
+const vuex_1 = __webpack_require__(3);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -20047,23 +19340,18 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var idx = /** @class */ (function (_super) {
-    __extends(idx, _super);
-    function idx() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    idx.prototype.asyncData = function (_a) {
-        var store = _a.store, route = _a.route;
+let idx = class idx extends vue_1.default {
+    asyncData({ store, route }) {
         return store.dispatch("users/fetchEntities", route);
-    };
-    idx.prototype.view = function (id) {
-        return this.mount + "/" + id;
-    };
-    idx.prototype.edit = function (id) {
-        return this.mount + "/" + id + "/edit";
-    };
-    idx.prototype.destroy = function (id, title) {
-        var modal = {
+    }
+    view(id) {
+        return `${this.mount}/${id}`;
+    }
+    edit(id) {
+        return `${this.mount}/${id}/edit`;
+    }
+    destroy(id, title) {
+        let modal = {
             template: "Destroy",
             data: {
                 id: id,
@@ -20073,35 +19361,25 @@ var idx = /** @class */ (function (_super) {
         };
         this.setModal(modal);
         this.openModal();
-    };
-    idx.prototype.copy = function (id) {
-        return this.mount + "/add?copy=" + id;
-    };
-    idx = __decorate([
-        vue_class_component_1.default({
-            name: "page",
-            computed: __assign({}, vuex_1.mapGetters([
-                'domain'
-            ]), vuex_1.mapState('users', {
-                entities: function (_a) {
-                    var entities = _a.entities;
-                    return entities;
-                },
-                pagination: function (_a) {
-                    var page = _a.page;
-                    return page;
-                },
-                mount: function (_a) {
-                    var mount = _a.mount;
-                    return mount;
-                }
-            })),
-            methods: __assign({}, vuex_1.mapMutations("modal", ["setModal", "toggleModal", "openModal"]), vuex_1.mapActions("users", ["fetchEntities"])),
-            components: { pagination: pagination_vue_1.default }
-        })
-    ], idx);
-    return idx;
-}(vue_1.default));
+    }
+    copy(id) {
+        return `${this.mount}/add?copy=${id}`;
+    }
+};
+idx = __decorate([
+    vue_class_component_1.default({
+        name: "page",
+        computed: Object.assign({}, vuex_1.mapGetters([
+            'domain'
+        ]), vuex_1.mapState('users', {
+            entities: ({ entities }) => entities,
+            pagination: ({ page }) => page,
+            mount: ({ mount }) => mount
+        })),
+        methods: Object.assign({}, vuex_1.mapMutations("modal", ["setModal", "toggleModal", "openModal"]), vuex_1.mapActions("users", ["fetchEntities"])),
+        components: { pagination: pagination_vue_1.default }
+    })
+], idx);
 exports.default = idx;
 
 
@@ -20262,24 +19540,6 @@ if (false) {(function () {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -20287,12 +19547,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var vuex_1 = __webpack_require__(3);
-var flatpickr = __webpack_require__(5);
-var confirmDatePlugin = __webpack_require__(6);
-var validation_1 = __webpack_require__(4);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const vuex_1 = __webpack_require__(3);
+const flatpickr = __webpack_require__(5);
+const confirmDatePlugin = __webpack_require__(6);
+const validation_1 = __webpack_require__(4);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -20303,27 +19563,21 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var add = /** @class */ (function (_super) {
-    __extends(add, _super);
-    function add() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.change = function (e) {
-            var kv = {};
+let add = class add extends vue_1.default {
+    constructor() {
+        super(...arguments);
+        this.change = (e) => {
+            let kv = {};
             kv["key"] = e.target.name;
             kv["value"] = e.target.value;
-            _this.updateEntity(kv);
+            this.updateEntity(kv);
         };
-        _this.errors = {};
-        return _this;
+        this.errors = {};
     }
-    Object.defineProperty(add.prototype, "action", {
-        get: function () {
-            return "" + this.mount;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    add.prototype.mounted = function () {
+    get action() {
+        return `${this.mount}`;
+    }
+    mounted() {
         if (window) {
             flatpickr(".calendar", {
                 "enableTime": true,
@@ -20331,46 +19585,38 @@ var add = /** @class */ (function (_super) {
             });
         }
         this.clearEntity();
-        var query = this.$store.state.route.query;
+        let query = this.$store.state.route.query;
         if (query["copy"]) {
             this.copyEntity({ id: query["copy"], mount: this.mount });
         }
-    };
-    add.prototype.beforeDestroy = function () {
+    }
+    beforeDestroy() {
         this.clearEntity();
-    };
-    add.prototype.save = function () {
-        var _this = this;
+    }
+    save() {
         this.loading();
-        this.insertEntity(this.token).then(function (r) {
-            _this.endLoading("success");
-            _this.$router.push({ path: _this.mount });
-        }).catch(function (e) {
-            _this.errors = e;
-            _this.endLoading("warning");
+        this.insertEntity(this.token).then(r => {
+            this.endLoading("success");
+            this.$router.push({ path: this.mount });
+        }).catch(e => {
+            this.errors = e;
+            this.endLoading("warning");
         });
         return false;
-    };
-    add = __decorate([
-        vue_class_component_1.default({
-            name: "add",
-            computed: __assign({}, vuex_1.mapGetters([
-                'domain', 'token'
-            ]), vuex_1.mapState("users", {
-                entity: function (_a) {
-                    var entity = _a.entity;
-                    return entity;
-                },
-                mount: function (_a) {
-                    var mount = _a.mount;
-                    return mount;
-                }
-            })),
-            methods: __assign({}, vuex_1.mapActions("users", ["insertEntity", "clearEntity", "copyEntity"]), vuex_1.mapMutations("users", ["updateEntity", "setErrors"]), vuex_1.mapMutations("loading", ["loading", "endLoading"]), validation_1.default.map(["validationClass"]))
-        })
-    ], add);
-    return add;
-}(vue_1.default));
+    }
+};
+add = __decorate([
+    vue_class_component_1.default({
+        name: "add",
+        computed: Object.assign({}, vuex_1.mapGetters([
+            'domain', 'token'
+        ]), vuex_1.mapState("users", {
+            entity: ({ entity }) => entity,
+            mount: ({ mount }) => mount
+        })),
+        methods: Object.assign({}, vuex_1.mapActions("users", ["insertEntity", "clearEntity", "copyEntity"]), vuex_1.mapMutations("users", ["updateEntity", "setErrors"]), vuex_1.mapMutations("loading", ["loading", "endLoading"]), validation_1.default.map(["validationClass"]))
+    })
+], add);
 exports.default = add;
 
 
@@ -20415,7 +19661,7 @@ var render = function() {
               _vm._l(_vm.errors.name, function(e) {
                 return _c("div", { staticClass: "errors" }, [
                   _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+                  _vm._v(" " + _vm._s(e.message) + " ")
                 ])
               })
             ],
@@ -20438,7 +19684,7 @@ var render = function() {
               _vm._l(_vm.errors.mail, function(e) {
                 return _c("div", { staticClass: "errors" }, [
                   _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+                  _vm._v(" " + _vm._s(e.message) + " ")
                 ])
               })
             ],
@@ -20465,65 +19711,7 @@ var render = function() {
               _vm._l(_vm.errors.group_id, function(e) {
                 return _c("div", { staticClass: "errors" }, [
                   _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
-                ])
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-item" },
-            [
-              _c("label", { attrs: { for: "access_token" } }, [
-                _vm._v("Access token")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                class: _vm.validationClass(_vm.errors, "access_token"),
-                attrs: {
-                  type: "text",
-                  name: "access_token",
-                  placeholder: "access_token"
-                },
-                domProps: { value: _vm.entity.access_token },
-                on: { change: _vm.change }
-              }),
-              _vm._v(" "),
-              _vm._l(_vm.errors.access_token, function(e) {
-                return _c("div", { staticClass: "errors" }, [
-                  _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
-                ])
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-item" },
-            [
-              _c("label", { attrs: { for: "refresh_token" } }, [
-                _vm._v("Refresh token")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                class: _vm.validationClass(_vm.errors, "refresh_token"),
-                attrs: {
-                  type: "text",
-                  name: "refresh_token",
-                  placeholder: "refresh_token"
-                },
-                domProps: { value: _vm.entity.refresh_token },
-                on: { change: _vm.change }
-              }),
-              _vm._v(" "),
-              _vm._l(_vm.errors.refresh_token, function(e) {
-                return _c("div", { staticClass: "errors" }, [
-                  _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+                  _vm._v(" " + _vm._s(e.message) + " ")
                 ])
               })
             ],
@@ -20535,7 +19723,7 @@ var render = function() {
             { staticClass: "form-item" },
             [
               _c("label", { attrs: { for: "new_password" } }, [
-                _vm._v("New password")
+                _vm._v("Password")
               ]),
               _vm._v(" "),
               _c("input", {
@@ -20552,7 +19740,7 @@ var render = function() {
               _vm._l(_vm.errors.new_password, function(e) {
                 return _c("div", { staticClass: "errors" }, [
                   _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+                  _vm._v(" " + _vm._s(e.message) + " ")
                 ])
               })
             ],
@@ -20581,7 +19769,7 @@ var render = function() {
               _vm._l(_vm.errors.confirm_password, function(e) {
                 return _c("div", { staticClass: "errors" }, [
                   _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+                  _vm._v(" " + _vm._s(e.message) + " ")
                 ])
               })
             ],
@@ -20669,24 +19857,6 @@ if (false) {(function () {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -20694,9 +19864,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var vuex_1 = __webpack_require__(3);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const vuex_1 = __webpack_require__(3);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -20707,30 +19877,21 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var view = /** @class */ (function (_super) {
-    __extends(view, _super);
-    function view() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    view.prototype.asyncData = function (_a) {
-        var store = _a.store, route = _a.route;
+let view = class view extends vue_1.default {
+    asyncData({ store, route }) {
         return store.dispatch('users/fetchEntity', route);
-    };
-    view = __decorate([
-        vue_class_component_1.default({
-            name: "view",
-            computed: __assign({}, vuex_1.mapGetters([
-                'domain', 'token'
-            ]), vuex_1.mapState("users", {
-                entity: function (_a) {
-                    var entity = _a.entity;
-                    return entity;
-                }
-            })),
-        })
-    ], view);
-    return view;
-}(vue_1.default));
+    }
+};
+view = __decorate([
+    vue_class_component_1.default({
+        name: "view",
+        computed: Object.assign({}, vuex_1.mapGetters([
+            'domain', 'token'
+        ]), vuex_1.mapState("users", {
+            entity: ({ entity }) => entity
+        })),
+    })
+], view);
 exports.default = view;
 
 
@@ -20762,22 +19923,6 @@ var render = function() {
         _c("h3", [_vm._v("Group")]),
         _vm._v(" "),
         _c("div", [_vm._v(_vm._s(_vm.entity.group_id))]),
-        _vm._v(" "),
-        _c("h3", [_vm._v("Access token")]),
-        _vm._v(" "),
-        _c("div", [_vm._v(_vm._s(_vm.entity.access_token))]),
-        _vm._v(" "),
-        _c("h3", [_vm._v("Refresh token")]),
-        _vm._v(" "),
-        _c("div", [_vm._v(_vm._s(_vm.entity.refresh_token))]),
-        _vm._v(" "),
-        _c("h3", [_vm._v("New password")]),
-        _vm._v(" "),
-        _c("div", [_vm._v(_vm._s(_vm.entity.new_password))]),
-        _vm._v(" "),
-        _c("h3", [_vm._v("Confirm password")]),
-        _vm._v(" "),
-        _c("div", [_vm._v(_vm._s(_vm.entity.confirm_password))]),
         _vm._v(" "),
         _c("h3", [_vm._v("Created at")]),
         _vm._v(" "),
@@ -20857,24 +20002,6 @@ if (false) {(function () {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -20882,12 +20009,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var vuex_1 = __webpack_require__(3);
-var flatpickr = __webpack_require__(5);
-var confirmDatePlugin = __webpack_require__(6);
-var validation_1 = __webpack_require__(4);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const vuex_1 = __webpack_require__(3);
+const flatpickr = __webpack_require__(5);
+const confirmDatePlugin = __webpack_require__(6);
+const validation_1 = __webpack_require__(4);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -20898,69 +20025,54 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var edit = /** @class */ (function (_super) {
-    __extends(edit, _super);
-    function edit() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.change = function (e) {
-            var kv = {};
+let edit = class edit extends vue_1.default {
+    constructor() {
+        super(...arguments);
+        this.change = (e) => {
+            let kv = {};
             kv["key"] = e.target.name;
             kv["value"] = e.target.value;
-            _this.updateEntity(kv);
+            this.updateEntity(kv);
         };
-        _this.errors = {};
-        return _this;
+        this.errors = {};
     }
-    edit.prototype.asyncData = function (_a) {
-        var store = _a.store, route = _a.route;
+    asyncData({ store, route }) {
         return store.dispatch('users/fetchEntity', route);
-    };
-    Object.defineProperty(edit.prototype, "action", {
-        get: function () {
-            return this.mount + "/" + this.entity.id;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    edit.prototype.mounted = function () {
+    }
+    get action() {
+        return `${this.mount}/${this.entity.id}`;
+    }
+    mounted() {
         if (window) {
             flatpickr(".calendar", {
                 "enableTime": true,
                 "plugins": [confirmDatePlugin({})]
             });
         }
-    };
-    edit.prototype.save = function () {
-        var _this = this;
+    }
+    save() {
         this.loading();
-        this.saveEntity(this.token).then(function (r) {
-            _this.errors = {};
-            _this.endLoading("success");
-        }).catch(function (e) {
-            _this.errors = e;
-            _this.endLoading("warning");
+        this.saveEntity(this.token).then(r => {
+            this.errors = {};
+            this.endLoading("success");
+        }).catch(e => {
+            this.errors = e;
+            this.endLoading("warning");
         });
-    };
-    edit = __decorate([
-        vue_class_component_1.default({
-            name: "edit",
-            computed: __assign({}, vuex_1.mapGetters([
-                'domain', 'token'
-            ]), vuex_1.mapState("users", {
-                entity: function (_a) {
-                    var entity = _a.entity;
-                    return entity;
-                },
-                mount: function (_a) {
-                    var mount = _a.mount;
-                    return mount;
-                }
-            })),
-            methods: __assign({}, vuex_1.mapActions("users", ["fetchEntity", "saveEntity"]), vuex_1.mapMutations("users", ["updateEntity"]), vuex_1.mapMutations("loading", ["loading", "endLoading"]), validation_1.default.map(["validationClass"]))
-        })
-    ], edit);
-    return edit;
-}(vue_1.default));
+    }
+};
+edit = __decorate([
+    vue_class_component_1.default({
+        name: "edit",
+        computed: Object.assign({}, vuex_1.mapGetters([
+            'domain', 'token'
+        ]), vuex_1.mapState("users", {
+            entity: ({ entity }) => entity,
+            mount: ({ mount }) => mount
+        })),
+        methods: Object.assign({}, vuex_1.mapActions("users", ["fetchEntity", "saveEntity"]), vuex_1.mapMutations("users", ["updateEntity"]), vuex_1.mapMutations("loading", ["loading", "endLoading"]), validation_1.default.map(["validationClass"]))
+    })
+], edit);
 exports.default = edit;
 
 
@@ -21012,7 +20124,7 @@ var render = function() {
               _vm._l(_vm.errors.name, function(e) {
                 return _c("div", { staticClass: "errors" }, [
                   _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+                  _vm._v(" " + _vm._s(e.message) + " ")
                 ])
               })
             ],
@@ -21035,7 +20147,7 @@ var render = function() {
               _vm._l(_vm.errors.mail, function(e) {
                 return _c("div", { staticClass: "errors" }, [
                   _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+                  _vm._v(" " + _vm._s(e.message) + " ")
                 ])
               })
             ],
@@ -21062,65 +20174,7 @@ var render = function() {
               _vm._l(_vm.errors.group_id, function(e) {
                 return _c("div", { staticClass: "errors" }, [
                   _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
-                ])
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-item" },
-            [
-              _c("label", { attrs: { for: "access_token" } }, [
-                _vm._v("Access token")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                class: _vm.validationClass(_vm.errors, "access_token"),
-                attrs: {
-                  type: "text",
-                  name: "access_token",
-                  placeholder: "access_token"
-                },
-                domProps: { value: _vm.entity.access_token },
-                on: { change: _vm.change }
-              }),
-              _vm._v(" "),
-              _vm._l(_vm.errors.access_token, function(e) {
-                return _c("div", { staticClass: "errors" }, [
-                  _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
-                ])
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-item" },
-            [
-              _c("label", { attrs: { for: "refresh_token" } }, [
-                _vm._v("Refresh token")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                class: _vm.validationClass(_vm.errors, "refresh_token"),
-                attrs: {
-                  type: "text",
-                  name: "refresh_token",
-                  placeholder: "refresh_token"
-                },
-                domProps: { value: _vm.entity.refresh_token },
-                on: { change: _vm.change }
-              }),
-              _vm._v(" "),
-              _vm._l(_vm.errors.refresh_token, function(e) {
-                return _c("div", { staticClass: "errors" }, [
-                  _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+                  _vm._v(" " + _vm._s(e.message) + " ")
                 ])
               })
             ],
@@ -21149,7 +20203,7 @@ var render = function() {
               _vm._l(_vm.errors.new_password, function(e) {
                 return _c("div", { staticClass: "errors" }, [
                   _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+                  _vm._v(" " + _vm._s(e.message) + " ")
                 ])
               })
             ],
@@ -21178,7 +20232,7 @@ var render = function() {
               _vm._l(_vm.errors.confirm_password, function(e) {
                 return _c("div", { staticClass: "errors" }, [
                   _c("span", { staticClass: "typcn typcn-warning-outline" }),
-                  _vm._v(" " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")")
+                  _vm._v(" " + _vm._s(e.message) + " ")
                 ])
               })
             ],
@@ -21266,24 +20320,6 @@ if (false) {(function () {
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -21291,11 +20327,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vue_class_component_1 = __webpack_require__(2);
-var vuex_1 = __webpack_require__(3);
-var validation_1 = __webpack_require__(4);
-var auth_1 = __webpack_require__(14);
+const vue_1 = __webpack_require__(0);
+const vue_class_component_1 = __webpack_require__(2);
+const vuex_1 = __webpack_require__(3);
+const validation_1 = __webpack_require__(4);
+const auth_1 = __webpack_require__(14);
 vue_class_component_1.default.registerHooks([
     'beforeRouteEnter',
     'beforeRouteLeave',
@@ -21306,47 +20342,39 @@ vue_class_component_1.default.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-var login = /** @class */ (function (_super) {
-    __extends(login, _super);
-    function login() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.user = {
+let login = class login extends vue_1.default {
+    constructor() {
+        super(...arguments);
+        this.user = {
             account: "",
             password: ""
         };
-        _this.errors = {};
-        return _this;
+        this.errors = {};
     }
-    Object.defineProperty(login.prototype, "action", {
-        get: function () {
-            return "/api/users/login";
-        },
-        enumerable: true,
-        configurable: true
-    });
-    login.prototype.login = function () {
-        var _this = this;
-        var auth = new auth_1.auth();
-        auth.login(this.user, this.token).then(function (r) {
-            _this.errors = {};
-            _this.$router.push("/tasks");
-        }).catch(function (e) {
+    get action() {
+        return "/api/users/login";
+    }
+    login() {
+        let auth = new auth_1.auth();
+        auth.login(this.user, this.token).then(r => {
+            this.errors = {};
+            this.$router.push("/tasks");
+        }).catch(e => {
             console.log(e);
-            _this.errors = e;
+            this.errors = e;
             console.log("login failed");
         });
-    };
-    login = __decorate([
-        vue_class_component_1.default({
-            name: "login",
-            computed: __assign({}, vuex_1.mapGetters([
-                'domain', 'token'
-            ])),
-            methods: __assign({}, validation_1.default.map(["validationClass"]))
-        })
-    ], login);
-    return login;
-}(vue_1.default));
+    }
+};
+login = __decorate([
+    vue_class_component_1.default({
+        name: "login",
+        computed: Object.assign({}, vuex_1.mapGetters([
+            'domain', 'token'
+        ])),
+        methods: Object.assign({}, validation_1.default.map(["validationClass"]))
+    })
+], login);
 exports.default = login;
 
 
@@ -21425,9 +20453,7 @@ var render = function() {
                       _c("span", {
                         staticClass: "typcn typcn-warning-outline"
                       }),
-                      _vm._v(
-                        " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-                      )
+                      _vm._v(" " + _vm._s(e.message) + " ")
                     ])
                   })
                 ],
@@ -21473,9 +20499,7 @@ var render = function() {
                       _c("span", {
                         staticClass: "typcn typcn-warning-outline"
                       }),
-                      _vm._v(
-                        " " + _vm._s(e.message) + " (" + _vm._s(e.type) + ")"
-                      )
+                      _vm._v(" " + _vm._s(e.message) + " ")
                     ])
                   })
                 ],
@@ -21514,42 +20538,34 @@ if (false) {
 
 "use strict";
 
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var vue_1 = __webpack_require__(0);
-var vuex_1 = __webpack_require__(3);
+const vue_1 = __webpack_require__(0);
+const vuex_1 = __webpack_require__(3);
 vue_1.default.use(vuex_1.default);
-var store_module_1 = __webpack_require__(104);
-var store_module_2 = __webpack_require__(109);
-var store_module_3 = __webpack_require__(114);
-var store_module_4 = __webpack_require__(119);
-var store_module_5 = __webpack_require__(125);
-var store_module_6 = __webpack_require__(130);
+const store_module_1 = __webpack_require__(104);
+const store_module_2 = __webpack_require__(109);
+const store_module_3 = __webpack_require__(114);
+const store_module_4 = __webpack_require__(119);
+const store_module_5 = __webpack_require__(125);
+const store_module_6 = __webpack_require__(130);
 function createStore(feeds) {
-    var getters = {
-        token: function (state) {
+    let getters = {
+        token: (state) => {
             if (typeof window === "undefined") {
                 return "";
             }
-            var body = document.getElementsByTagName("body")[0];
-            var csrfToken = body.attributes["data-csrf-token"].value;
+            let body = document.getElementsByTagName("body")[0];
+            let csrfToken = body.attributes["data-csrf-token"].value;
             return csrfToken;
         }
     };
-    var tasks = new store_module_4.store_module(__assign({ entities: "tasks", endPoint: "/tasks" }, feeds)).store();
-    var users = new store_module_5.store_module(__assign({ entities: "users", endPoint: "/users" }, feeds)).store();
-    var auth = new store_module_6.store_module(__assign({}, feeds)).store();
-    var loading = new store_module_1.store_module(__assign({}, feeds)).store();
-    var modal = new store_module_2.store_module(__assign({}, feeds)).store();
-    var offset = new store_module_3.store_module(__assign({}, feeds)).store();
-    var vuex = {
+    let tasks = new store_module_4.store_module(Object.assign({ entities: "tasks", endPoint: "/tasks" }, feeds)).store();
+    let users = new store_module_5.store_module(Object.assign({ entities: "users", endPoint: "/users" }, feeds)).store();
+    let auth = new store_module_6.store_module(Object.assign({}, feeds)).store();
+    let loading = new store_module_1.store_module(Object.assign({}, feeds)).store();
+    let modal = new store_module_2.store_module(Object.assign({}, feeds)).store();
+    let offset = new store_module_3.store_module(Object.assign({}, feeds)).store();
+    let vuex = {
         getters: getters,
         modules: {
             "tasks": tasks,
@@ -21571,34 +20587,21 @@ exports.createStore = createStore;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_module_1 = __webpack_require__(7);
-var mutations_1 = __webpack_require__(105);
-var actions_1 = __webpack_require__(106);
-var state_1 = __webpack_require__(107);
-var getters_1 = __webpack_require__(108);
-var store_module = /** @class */ (function (_super) {
-    __extends(store_module, _super);
-    function store_module(options) {
-        var _this = _super.call(this) || this;
-        _this.state = new state_1.state(options).map("all");
-        _this.actions = new actions_1.actions(options).map("all");
-        _this.mutations = new mutations_1.mutations(options).map("all");
-        _this.getters = new getters_1.getters(options).map("all");
-        return _this;
+const store_module_1 = __webpack_require__(7);
+const mutations_1 = __webpack_require__(105);
+const actions_1 = __webpack_require__(106);
+const state_1 = __webpack_require__(107);
+const getters_1 = __webpack_require__(108);
+class store_module extends store_module_1.store_module {
+    constructor(options) {
+        super();
+        this.state = new state_1.state(options).map("all");
+        this.actions = new actions_1.actions(options).map("all");
+        this.mutations = new mutations_1.mutations(options).map("all");
+        this.getters = new getters_1.getters(options).map("all");
     }
-    return store_module;
-}(store_module_1.store_module));
+}
 exports.store_module = store_module;
 
 
@@ -21608,26 +20611,13 @@ exports.store_module = store_module;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var mutations_1 = __webpack_require__(8);
-var mutations = /** @class */ (function (_super) {
-    __extends(mutations, _super);
-    function mutations(options) {
-        var _this = _super.call(this) || this;
-        _this.setIndicator = function (_a, _b) {
-            var indicator = _a.indicator;
-            var status = _b.status, complate = _b.complate;
-            var before = indicator.complate;
+const mutations_1 = __webpack_require__(8);
+class mutations extends mutations_1.mutations {
+    constructor(options) {
+        super();
+        this.setIndicator = ({ indicator }, { status, complate }) => {
+            let before = indicator.complate;
             indicator.status = status;
             indicator.show = true;
             indicator.complate = complate;
@@ -21641,20 +20631,18 @@ var mutations = /** @class */ (function (_super) {
                 indicator.prosess = true;
             }
         };
-        _this.loading = function (state, status) {
-            _this.setIndicator(state, { status: status, complate: 3 });
+        this.loading = (state, status) => {
+            this.setIndicator(state, { status: status, complate: 3 });
             state.overLay = true;
             state.loading = true;
         };
-        _this.endLoading = function (state, status) {
-            _this.setIndicator(state, { status: status, complate: 100 });
+        this.endLoading = (state, status) => {
+            this.setIndicator(state, { status: status, complate: 100 });
             state.loading = false;
             state.overLay = false;
         };
-        return _this;
     }
-    return mutations;
-}(mutations_1.mutations));
+}
 exports.mutations = mutations;
 
 
@@ -21664,25 +20652,13 @@ exports.mutations = mutations;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var actions_1 = __webpack_require__(9);
-var actions = /** @class */ (function (_super) {
-    __extends(actions, _super);
-    function actions(options) {
-        return _super.call(this) || this;
+const actions_1 = __webpack_require__(9);
+class actions extends actions_1.actions {
+    constructor(options) {
+        super();
     }
-    return actions;
-}(actions_1.actions));
+}
 exports.actions = actions;
 
 
@@ -21692,34 +20668,21 @@ exports.actions = actions;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var state_1 = __webpack_require__(10);
-var state = /** @class */ (function (_super) {
-    __extends(state, _super);
-    function state(options) {
-        var _this = _super.call(this) || this;
-        _this.overLay = false;
-        _this.loading = false;
-        _this.indicator = {
+const state_1 = __webpack_require__(10);
+class state extends state_1.state {
+    constructor(options) {
+        super();
+        this.overLay = false;
+        this.loading = false;
+        this.indicator = {
             show: false,
             status: "success",
             complate: 0,
             prosess: true
         };
-        return _this;
     }
-    return state;
-}(state_1.state));
+}
 exports.state = state;
 
 
@@ -21729,25 +20692,13 @@ exports.state = state;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var getters_1 = __webpack_require__(11);
-var getters = /** @class */ (function (_super) {
-    __extends(getters, _super);
-    function getters(options) {
-        return _super.call(this) || this;
+const getters_1 = __webpack_require__(11);
+class getters extends getters_1.getters {
+    constructor(options) {
+        super();
     }
-    return getters;
-}(getters_1.getters));
+}
 exports.getters = getters;
 
 
@@ -21757,34 +20708,21 @@ exports.getters = getters;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_module_1 = __webpack_require__(7);
-var mutations_1 = __webpack_require__(110);
-var actions_1 = __webpack_require__(111);
-var state_1 = __webpack_require__(112);
-var getters_1 = __webpack_require__(113);
-var store_module = /** @class */ (function (_super) {
-    __extends(store_module, _super);
-    function store_module(options) {
-        var _this = _super.call(this) || this;
-        _this.state = new state_1.state(options).map("all");
-        _this.actions = new actions_1.actions(options).map("all");
-        _this.mutations = new mutations_1.mutations(options).map("all");
-        _this.getters = new getters_1.getters(options).map("all");
-        return _this;
+const store_module_1 = __webpack_require__(7);
+const mutations_1 = __webpack_require__(110);
+const actions_1 = __webpack_require__(111);
+const state_1 = __webpack_require__(112);
+const getters_1 = __webpack_require__(113);
+class store_module extends store_module_1.store_module {
+    constructor(options) {
+        super();
+        this.state = new state_1.state(options).map("all");
+        this.actions = new actions_1.actions(options).map("all");
+        this.mutations = new mutations_1.mutations(options).map("all");
+        this.getters = new getters_1.getters(options).map("all");
     }
-    return store_module;
-}(store_module_1.store_module));
+}
 exports.store_module = store_module;
 
 
@@ -21794,44 +20732,30 @@ exports.store_module = store_module;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var mutations_1 = __webpack_require__(8);
-var mutations = /** @class */ (function (_super) {
-    __extends(mutations, _super);
-    function mutations(options) {
-        var _this = _super.call(this) || this;
-        _this.setModal = function (state, _a) {
-            var template = _a.template, data = _a.data, show = _a.show;
+const mutations_1 = __webpack_require__(8);
+class mutations extends mutations_1.mutations {
+    constructor(options) {
+        super();
+        this.setModal = (state, { template, data, show }) => {
             state.template = template;
             state.data = data;
         };
-        _this.toggleModal = function (state) {
+        this.toggleModal = (state) => {
             if (!state.show) {
                 state.close = true;
             }
             state.show = (state.show) ? false : true;
         };
-        _this.closeModal = function (state) {
+        this.closeModal = (state) => {
             state.show = false;
         };
-        _this.openModal = function (state) {
+        this.openModal = (state) => {
             state.close = true;
             state.show = true;
         };
-        return _this;
     }
-    return mutations;
-}(mutations_1.mutations));
+}
 exports.mutations = mutations;
 
 
@@ -21841,25 +20765,13 @@ exports.mutations = mutations;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var actions_1 = __webpack_require__(9);
-var actions = /** @class */ (function (_super) {
-    __extends(actions, _super);
-    function actions(options) {
-        return _super.call(this) || this;
+const actions_1 = __webpack_require__(9);
+class actions extends actions_1.actions {
+    constructor(options) {
+        super();
     }
-    return actions;
-}(actions_1.actions));
+}
 exports.actions = actions;
 
 
@@ -21869,33 +20781,20 @@ exports.actions = actions;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var state_1 = __webpack_require__(10);
-var state = /** @class */ (function (_super) {
-    __extends(state, _super);
-    function state(options) {
-        var _this = _super.call(this) || this;
-        _this.close = false;
-        _this.show = false;
-        _this.template = "";
-        _this.data = {
+const state_1 = __webpack_require__(10);
+class state extends state_1.state {
+    constructor(options) {
+        super();
+        this.close = false;
+        this.show = false;
+        this.template = "";
+        this.data = {
             id: "",
             name: ""
         };
-        return _this;
     }
-    return state;
-}(state_1.state));
+}
 exports.state = state;
 
 
@@ -21905,25 +20804,13 @@ exports.state = state;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var getters_1 = __webpack_require__(11);
-var getters = /** @class */ (function (_super) {
-    __extends(getters, _super);
-    function getters(options) {
-        return _super.call(this) || this;
+const getters_1 = __webpack_require__(11);
+class getters extends getters_1.getters {
+    constructor(options) {
+        super();
     }
-    return getters;
-}(getters_1.getters));
+}
 exports.getters = getters;
 
 
@@ -21933,34 +20820,21 @@ exports.getters = getters;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_module_1 = __webpack_require__(7);
-var mutations_1 = __webpack_require__(115);
-var actions_1 = __webpack_require__(116);
-var state_1 = __webpack_require__(117);
-var getters_1 = __webpack_require__(118);
-var store_module = /** @class */ (function (_super) {
-    __extends(store_module, _super);
-    function store_module(options) {
-        var _this = _super.call(this) || this;
-        _this.state = new state_1.state(options).map("all");
-        _this.actions = new actions_1.actions(options).map("all");
-        _this.mutations = new mutations_1.mutations(options).map("all");
-        _this.getters = new getters_1.getters(options).map("all");
-        return _this;
+const store_module_1 = __webpack_require__(7);
+const mutations_1 = __webpack_require__(115);
+const actions_1 = __webpack_require__(116);
+const state_1 = __webpack_require__(117);
+const getters_1 = __webpack_require__(118);
+class store_module extends store_module_1.store_module {
+    constructor(options) {
+        super();
+        this.state = new state_1.state(options).map("all");
+        this.actions = new actions_1.actions(options).map("all");
+        this.mutations = new mutations_1.mutations(options).map("all");
+        this.getters = new getters_1.getters(options).map("all");
     }
-    return store_module;
-}(store_module_1.store_module));
+}
 exports.store_module = store_module;
 
 
@@ -21970,44 +20844,30 @@ exports.store_module = store_module;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var mutations_1 = __webpack_require__(8);
-var mutations = /** @class */ (function (_super) {
-    __extends(mutations, _super);
-    function mutations(options) {
-        var _this = _super.call(this) || this;
-        _this.setOffset = function (state, _a) {
-            var template = _a.template, data = _a.data, show = _a.show;
+const mutations_1 = __webpack_require__(8);
+class mutations extends mutations_1.mutations {
+    constructor(options) {
+        super();
+        this.setOffset = (state, { template, data, show }) => {
             state.template = template;
             state.data = data;
         };
-        _this.toggleOffset = function (state) {
+        this.toggleOffset = (state) => {
             if (!state.show) {
                 state.close = true;
             }
             state.show = (state.show) ? false : true;
         };
-        _this.closeOffset = function (state) {
+        this.closeOffset = (state) => {
             state.show = false;
         };
-        _this.openOffset = function (state) {
+        this.openOffset = (state) => {
             state.close = true;
             state.show = true;
         };
-        return _this;
     }
-    return mutations;
-}(mutations_1.mutations));
+}
 exports.mutations = mutations;
 
 
@@ -22017,25 +20877,13 @@ exports.mutations = mutations;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var actions_1 = __webpack_require__(9);
-var actions = /** @class */ (function (_super) {
-    __extends(actions, _super);
-    function actions(options) {
-        return _super.call(this) || this;
+const actions_1 = __webpack_require__(9);
+class actions extends actions_1.actions {
+    constructor(options) {
+        super();
     }
-    return actions;
-}(actions_1.actions));
+}
 exports.actions = actions;
 
 
@@ -22045,29 +20893,16 @@ exports.actions = actions;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var state_1 = __webpack_require__(10);
-var state = /** @class */ (function (_super) {
-    __extends(state, _super);
-    function state(options) {
-        var _this = _super.call(this) || this;
-        _this.close = false;
-        _this.show = false;
-        _this.template = "";
-        return _this;
+const state_1 = __webpack_require__(10);
+class state extends state_1.state {
+    constructor(options) {
+        super();
+        this.close = false;
+        this.show = false;
+        this.template = "";
     }
-    return state;
-}(state_1.state));
+}
 exports.state = state;
 
 
@@ -22077,25 +20912,13 @@ exports.state = state;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var getters_1 = __webpack_require__(11);
-var getters = /** @class */ (function (_super) {
-    __extends(getters, _super);
-    function getters(options) {
-        return _super.call(this) || this;
+const getters_1 = __webpack_require__(11);
+class getters extends getters_1.getters {
+    constructor(options) {
+        super();
     }
-    return getters;
-}(getters_1.getters));
+}
 exports.getters = getters;
 
 
@@ -22105,51 +20928,30 @@ exports.getters = getters;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_module_1 = __webpack_require__(7);
-var mutations_1 = __webpack_require__(120);
-var actions_1 = __webpack_require__(121);
-var state_1 = __webpack_require__(122);
-var getters_1 = __webpack_require__(123);
-var internal_crud_1 = __webpack_require__(20);
-var store_module = /** @class */ (function (_super) {
-    __extends(store_module, _super);
-    function store_module(feeds) {
-        var _this = _super.call(this) || this;
-        _this.state = new state_1.state(feeds).map("all");
-        _this.actions = new actions_1.actions(feeds).map("all");
-        _this.mutations = new mutations_1.mutations(feeds).map("all");
-        var local_getters = new getters_1.getters(feeds).map("all");
-        var crud = function () {
+const store_module_1 = __webpack_require__(7);
+const mutations_1 = __webpack_require__(120);
+const actions_1 = __webpack_require__(121);
+const state_1 = __webpack_require__(122);
+const getters_1 = __webpack_require__(123);
+const internal_crud_1 = __webpack_require__(20);
+class store_module extends store_module_1.store_module {
+    constructor(feeds) {
+        super();
+        this.state = new state_1.state(feeds).map("all");
+        this.actions = new actions_1.actions(feeds).map("all");
+        this.mutations = new mutations_1.mutations(feeds).map("all");
+        let local_getters = new getters_1.getters(feeds).map("all");
+        let crud = () => {
             return new internal_crud_1.internal_crud({
                 endPoint: "/api/tasks",
                 resource: "tasks",
                 feeds: feeds
             });
         };
-        _this.getters = __assign({}, local_getters, { crud: crud });
-        return _this;
+        this.getters = Object.assign({}, local_getters, { crud: crud });
     }
-    return store_module;
-}(store_module_1.store_module));
+}
 exports.store_module = store_module;
 
 
@@ -22159,35 +20961,24 @@ exports.store_module = store_module;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var mutations_1 = __webpack_require__(8);
-var mutations = /** @class */ (function (_super) {
-    __extends(mutations, _super);
-    function mutations(options) {
-        var _this = _super.call(this) || this;
-        _this.setEntities = function (state, paginate) {
-            state.entities = paginate[_this._entities];
+const mutations_1 = __webpack_require__(8);
+class mutations extends mutations_1.mutations {
+    constructor(options) {
+        super();
+        this.setEntities = (state, paginate) => {
+            state.entities = paginate[this._entities];
             state.page = paginate.page;
         };
-        _this.setEntity = function (state, response) {
+        this.setEntity = (state, response) => {
             state.entity = response;
         };
-        _this.updateEntity = function (state, kv) {
+        this.updateEntity = (state, kv) => {
             state.entity[kv.key] = kv.value;
         };
-        _this.setClearEntity = function (state) {
-            var entity = state.entity;
-            for (var key in entity) {
+        this.setClearEntity = (state) => {
+            let entity = state.entity;
+            for (let key in entity) {
                 entity[key] = null;
                 if (key === "id" || key === "created_at" || key === "updated_at") {
                     delete entity[key];
@@ -22197,15 +20988,13 @@ var mutations = /** @class */ (function (_super) {
                 }
             }
         };
-        _this.setErrors = function (state, errors) {
+        this.setErrors = (state, errors) => {
             state.entity["errors"] = errors;
         };
-        _this._mount = options.mount;
-        _this._entities = options.entities;
-        return _this;
+        this._mount = options.mount;
+        this._entities = options.entities;
     }
-    return mutations;
-}(mutations_1.mutations));
+}
 exports.mutations = mutations;
 
 
@@ -22215,47 +21004,33 @@ exports.mutations = mutations;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var actions_1 = __webpack_require__(9);
-var actions = /** @class */ (function (_super) {
-    __extends(actions, _super);
-    function actions(feeds) {
-        var _this = _super.call(this) || this;
-        _this.fetchEntities = function (_a, route) {
-            var commit = _a.commit, getters = _a.getters, state = _a.state;
-            var crud = getters.crud;
-            return crud.paginate(route).then(function (paginate) {
+const actions_1 = __webpack_require__(9);
+class actions extends actions_1.actions {
+    constructor(feeds) {
+        super();
+        this.fetchEntities = ({ commit, getters, state }, route) => {
+            let crud = getters.crud;
+            return crud.paginate(route).then((paginate) => {
                 commit("setEntities", paginate);
             });
         };
-        _this.fetchEntity = function (_a, route) {
-            var commit = _a.commit, getters = _a.getters, state = _a.state;
-            var crud = getters.crud;
-            return crud.entity(route).then(function (entity) {
+        this.fetchEntity = ({ commit, getters, state }, route) => {
+            let crud = getters.crud;
+            return crud.entity(route).then((entity) => {
                 commit("setEntity", entity);
             });
         };
-        _this.copyEntity = function (_a, copy) {
-            var commit = _a.commit, getters = _a.getters, state = _a.state;
-            var route = {
+        this.copyEntity = ({ commit, getters, state }, copy) => {
+            let route = {
                 params: {
                     id: copy.id,
                 },
                 path: copy.mount + "/" + copy.id,
             };
-            var crud = getters.crud;
-            return crud.entity(route).then(function (entity) {
-                for (var key in entity) {
+            let crud = getters.crud;
+            return crud.entity(route).then((entity) => {
+                for (let key in entity) {
                     if (key === "id" || key === "updated_at" || key === "created_at") {
                         delete entity[key];
                     }
@@ -22263,29 +21038,23 @@ var actions = /** @class */ (function (_super) {
                 commit("setEntity", entity);
             });
         };
-        _this.insertEntity = function (_a, token) {
-            var state = _a.state, commit = _a.commit, getters = _a.getters;
-            var crud = getters.crud;
+        this.insertEntity = ({ state, commit, getters }, token) => {
+            let crud = getters.crud;
             return crud.insert(state.entity, token);
         };
-        _this.saveEntity = function (_a, token) {
-            var state = _a.state, commit = _a.commit, getters = _a.getters;
-            var crud = getters.crud;
+        this.saveEntity = ({ state, commit, getters }, token) => {
+            let crud = getters.crud;
             return crud.update(state.entity, token);
         };
-        _this.deleteEntity = function (_a, delObj) {
-            var state = _a.state, commit = _a.commit, getters = _a.getters;
-            var crud = getters.crud;
+        this.deleteEntity = ({ state, commit, getters }, delObj) => {
+            let crud = getters.crud;
             return crud.delete(delObj.id, delObj.token);
         };
-        _this.clearEntity = function (_a) {
-            var commit = _a.commit;
+        this.clearEntity = ({ commit }) => {
             return Promise.resolve(commit("setClearEntity"));
         };
-        return _this;
     }
-    return actions;
-}(actions_1.actions));
+}
 exports.actions = actions;
 
 
@@ -22295,35 +21064,22 @@ exports.actions = actions;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var state_1 = __webpack_require__(10);
-var state = /** @class */ (function (_super) {
-    __extends(state, _super);
-    function state(options) {
-        var _this = _super.call(this) || this;
-        _this.mount = "";
-        _this.entities = [];
-        _this.entity = {};
-        _this.page = {
+const state_1 = __webpack_require__(10);
+class state extends state_1.state {
+    constructor(options) {
+        super();
+        this.mount = "";
+        this.entities = [];
+        this.entity = {};
+        this.page = {
             totalPage: 1,
             currentPage: 1,
             queryPrams: {}
         };
-        _this.mount = options.endPoint;
-        return _this;
+        this.mount = options.endPoint;
     }
-    return state;
-}(state_1.state));
+}
 exports.state = state;
 
 
@@ -22333,25 +21089,13 @@ exports.state = state;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var getters_1 = __webpack_require__(11);
-var getters = /** @class */ (function (_super) {
-    __extends(getters, _super);
-    function getters(options) {
-        return _super.call(this) || this;
+const getters_1 = __webpack_require__(11);
+class getters extends getters_1.getters {
+    constructor(options) {
+        super();
     }
-    return getters;
-}(getters_1.getters));
+}
 exports.getters = getters;
 
 
@@ -22362,19 +21106,16 @@ exports.getters = getters;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var route_parse = /** @class */ (function () {
-    function route_parse() {
-    }
-    route_parse.prototype.parse = function (route) {
-        var params = route.params;
-        var paramsStr = "";
-        for (var key in params) {
-            paramsStr = key + "/" + params[key];
+class route_parse {
+    parse(route) {
+        let params = route.params;
+        let paramsStr = "";
+        for (let key in params) {
+            paramsStr = `${key}/${params[key]}`;
         }
         return paramsStr;
-    };
-    return route_parse;
-}());
+    }
+}
 exports.default = new route_parse();
 
 
@@ -22384,51 +21125,30 @@ exports.default = new route_parse();
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_module_1 = __webpack_require__(7);
-var mutations_1 = __webpack_require__(126);
-var actions_1 = __webpack_require__(127);
-var state_1 = __webpack_require__(128);
-var getters_1 = __webpack_require__(129);
-var internal_crud_1 = __webpack_require__(20);
-var store_module = /** @class */ (function (_super) {
-    __extends(store_module, _super);
-    function store_module(feeds) {
-        var _this = _super.call(this) || this;
-        _this.state = new state_1.state(feeds).map("all");
-        _this.actions = new actions_1.actions(feeds).map("all");
-        _this.mutations = new mutations_1.mutations(feeds).map("all");
-        var local_getters = new getters_1.getters(feeds).map("all");
-        var crud = function () {
+const store_module_1 = __webpack_require__(7);
+const mutations_1 = __webpack_require__(126);
+const actions_1 = __webpack_require__(127);
+const state_1 = __webpack_require__(128);
+const getters_1 = __webpack_require__(129);
+const internal_crud_1 = __webpack_require__(20);
+class store_module extends store_module_1.store_module {
+    constructor(feeds) {
+        super();
+        this.state = new state_1.state(feeds).map("all");
+        this.actions = new actions_1.actions(feeds).map("all");
+        this.mutations = new mutations_1.mutations(feeds).map("all");
+        let local_getters = new getters_1.getters(feeds).map("all");
+        let crud = () => {
             return new internal_crud_1.internal_crud({
                 endPoint: "/api/users",
                 resource: "users",
                 feeds: feeds
             });
         };
-        _this.getters = __assign({}, local_getters, { crud: crud });
-        return _this;
+        this.getters = Object.assign({}, local_getters, { crud: crud });
     }
-    return store_module;
-}(store_module_1.store_module));
+}
 exports.store_module = store_module;
 
 
@@ -22438,35 +21158,24 @@ exports.store_module = store_module;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var mutations_1 = __webpack_require__(8);
-var mutations = /** @class */ (function (_super) {
-    __extends(mutations, _super);
-    function mutations(options) {
-        var _this = _super.call(this) || this;
-        _this.setEntities = function (state, paginate) {
-            state.entities = paginate[_this._entities];
+const mutations_1 = __webpack_require__(8);
+class mutations extends mutations_1.mutations {
+    constructor(options) {
+        super();
+        this.setEntities = (state, paginate) => {
+            state.entities = paginate[this._entities];
             state.page = paginate.page;
         };
-        _this.setEntity = function (state, response) {
+        this.setEntity = (state, response) => {
             state.entity = response;
         };
-        _this.updateEntity = function (state, kv) {
+        this.updateEntity = (state, kv) => {
             state.entity[kv.key] = kv.value;
         };
-        _this.setClearEntity = function (state) {
-            var entity = state.entity;
-            for (var key in entity) {
+        this.setClearEntity = (state) => {
+            let entity = state.entity;
+            for (let key in entity) {
                 entity[key] = null;
                 if (key === "id" || key === "created_at" || key === "updated_at") {
                     delete entity[key];
@@ -22476,15 +21185,13 @@ var mutations = /** @class */ (function (_super) {
                 }
             }
         };
-        _this.setErrors = function (state, errors) {
+        this.setErrors = (state, errors) => {
             state.entity["errors"] = errors;
         };
-        _this._mount = options.mount;
-        _this._entities = options.entities;
-        return _this;
+        this._mount = options.mount;
+        this._entities = options.entities;
     }
-    return mutations;
-}(mutations_1.mutations));
+}
 exports.mutations = mutations;
 
 
@@ -22494,47 +21201,33 @@ exports.mutations = mutations;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var actions_1 = __webpack_require__(9);
-var actions = /** @class */ (function (_super) {
-    __extends(actions, _super);
-    function actions(feeds) {
-        var _this = _super.call(this) || this;
-        _this.fetchEntities = function (_a, route) {
-            var commit = _a.commit, getters = _a.getters, state = _a.state;
-            var crud = getters.crud;
-            return crud.paginate(route).then(function (paginate) {
+const actions_1 = __webpack_require__(9);
+class actions extends actions_1.actions {
+    constructor(feeds) {
+        super();
+        this.fetchEntities = ({ commit, getters, state }, route) => {
+            let crud = getters.crud;
+            return crud.paginate(route).then((paginate) => {
                 commit("setEntities", paginate);
             });
         };
-        _this.fetchEntity = function (_a, route) {
-            var commit = _a.commit, getters = _a.getters, state = _a.state;
-            var crud = getters.crud;
-            return crud.entity(route).then(function (entity) {
+        this.fetchEntity = ({ commit, getters, state }, route) => {
+            let crud = getters.crud;
+            return crud.entity(route).then((entity) => {
                 commit("setEntity", entity);
             });
         };
-        _this.copyEntity = function (_a, copy) {
-            var commit = _a.commit, getters = _a.getters, state = _a.state;
-            var route = {
+        this.copyEntity = ({ commit, getters, state }, copy) => {
+            let route = {
                 params: {
                     id: copy.id,
                 },
                 path: copy.mount + "/" + copy.id,
             };
-            var crud = getters.crud;
-            return crud.entity(route).then(function (entity) {
-                for (var key in entity) {
+            let crud = getters.crud;
+            return crud.entity(route).then((entity) => {
+                for (let key in entity) {
                     if (key === "id" || key === "updated_at" || key === "created_at") {
                         delete entity[key];
                     }
@@ -22542,29 +21235,23 @@ var actions = /** @class */ (function (_super) {
                 commit("setEntity", entity);
             });
         };
-        _this.insertEntity = function (_a, token) {
-            var state = _a.state, commit = _a.commit, getters = _a.getters;
-            var crud = getters.crud;
+        this.insertEntity = ({ state, commit, getters }, token) => {
+            let crud = getters.crud;
             return crud.insert(state.entity, token);
         };
-        _this.saveEntity = function (_a, token) {
-            var state = _a.state, commit = _a.commit, getters = _a.getters;
-            var crud = getters.crud;
+        this.saveEntity = ({ state, commit, getters }, token) => {
+            let crud = getters.crud;
             return crud.update(state.entity, token);
         };
-        _this.deleteEntity = function (_a, delObj) {
-            var state = _a.state, commit = _a.commit, getters = _a.getters;
-            var crud = getters.crud;
+        this.deleteEntity = ({ state, commit, getters }, delObj) => {
+            let crud = getters.crud;
             return crud.delete(delObj.id, delObj.token);
         };
-        _this.clearEntity = function (_a) {
-            var commit = _a.commit;
+        this.clearEntity = ({ commit }) => {
             return Promise.resolve(commit("setClearEntity"));
         };
-        return _this;
     }
-    return actions;
-}(actions_1.actions));
+}
 exports.actions = actions;
 
 
@@ -22574,35 +21261,22 @@ exports.actions = actions;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var state_1 = __webpack_require__(10);
-var state = /** @class */ (function (_super) {
-    __extends(state, _super);
-    function state(options) {
-        var _this = _super.call(this) || this;
-        _this.mount = "";
-        _this.entities = [];
-        _this.entity = {};
-        _this.page = {
+const state_1 = __webpack_require__(10);
+class state extends state_1.state {
+    constructor(options) {
+        super();
+        this.mount = "";
+        this.entities = [];
+        this.entity = {};
+        this.page = {
             totalPage: 1,
             currentPage: 1,
             queryPrams: {}
         };
-        _this.mount = options.endPoint;
-        return _this;
+        this.mount = options.endPoint;
     }
-    return state;
-}(state_1.state));
+}
 exports.state = state;
 
 
@@ -22612,25 +21286,13 @@ exports.state = state;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var getters_1 = __webpack_require__(11);
-var getters = /** @class */ (function (_super) {
-    __extends(getters, _super);
-    function getters(options) {
-        return _super.call(this) || this;
+const getters_1 = __webpack_require__(11);
+class getters extends getters_1.getters {
+    constructor(options) {
+        super();
     }
-    return getters;
-}(getters_1.getters));
+}
 exports.getters = getters;
 
 
@@ -22640,34 +21302,21 @@ exports.getters = getters;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_module_1 = __webpack_require__(7);
-var mutations_1 = __webpack_require__(131);
-var actions_1 = __webpack_require__(132);
-var state_1 = __webpack_require__(133);
-var getters_1 = __webpack_require__(134);
-var store_module = /** @class */ (function (_super) {
-    __extends(store_module, _super);
-    function store_module(options) {
-        var _this = _super.call(this) || this;
-        _this.state = new state_1.state(options).map("all");
-        _this.actions = new actions_1.actions(options).map("all");
-        _this.mutations = new mutations_1.mutations(options).map("all");
-        _this.getters = new getters_1.getters(options).map("all");
-        return _this;
+const store_module_1 = __webpack_require__(7);
+const mutations_1 = __webpack_require__(131);
+const actions_1 = __webpack_require__(132);
+const state_1 = __webpack_require__(133);
+const getters_1 = __webpack_require__(134);
+class store_module extends store_module_1.store_module {
+    constructor(feeds) {
+        super();
+        this.state = new state_1.state(feeds).map("all");
+        this.actions = new actions_1.actions(feeds).map("all");
+        this.mutations = new mutations_1.mutations(feeds).map("all");
+        this.getters = new getters_1.getters(feeds).map("all");
     }
-    return store_module;
-}(store_module_1.store_module));
+}
 exports.store_module = store_module;
 
 
@@ -22677,36 +21326,23 @@ exports.store_module = store_module;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var mutations_1 = __webpack_require__(8);
-var mutations = /** @class */ (function (_super) {
-    __extends(mutations, _super);
-    function mutations(options) {
-        var _this = _super.call(this) || this;
-        _this.setAuthUser = function (state, user) {
+const mutations_1 = __webpack_require__(8);
+class mutations extends mutations_1.mutations {
+    constructor(options) {
+        super();
+        this.setAuthUser = (state, user) => {
             state.auth_status = true;
             state.user = user;
         };
-        _this.restAuthUser = function (state) {
+        this.restAuthUser = (state) => {
             state.auth_status = false;
-            for (var k in state.user) {
+            for (let k in state.user) {
                 state.user[k] = null;
             }
         };
-        return _this;
     }
-    return mutations;
-}(mutations_1.mutations));
+}
 exports.mutations = mutations;
 
 
@@ -22716,40 +21352,25 @@ exports.mutations = mutations;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var actions_1 = __webpack_require__(9);
-var auth_1 = __webpack_require__(14);
-var auth_api = new auth_1.auth();
-var actions = /** @class */ (function (_super) {
-    __extends(actions, _super);
-    function actions(options) {
-        var _this = _super.call(this) || this;
-        _this.fetchAuthUser = function (_a) {
-            var commit = _a.commit, getters = _a.getters, state = _a.state;
-            return auth_api.user().then(function (r) {
+const actions_1 = __webpack_require__(9);
+const auth_1 = __webpack_require__(14);
+let auth_api = new auth_1.auth();
+class actions extends actions_1.actions {
+    constructor(options) {
+        super();
+        this.fetchAuthUser = ({ commit, getters, state }) => {
+            return auth_api.user().then(r => {
                 commit("setAuthUser", r);
             });
         };
-        _this.logout = function (_a) {
-            var commit = _a.commit, getters = _a.getters, state = _a.state;
-            return auth_api.logout().then(function (r) {
+        this.logout = ({ commit, getters, state }) => {
+            return auth_api.logout().then(r => {
                 commit("restAuthUser");
             });
         };
-        return _this;
     }
-    return actions;
-}(actions_1.actions));
+}
 exports.actions = actions;
 
 
@@ -22759,32 +21380,19 @@ exports.actions = actions;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var state_1 = __webpack_require__(10);
-var state = /** @class */ (function (_super) {
-    __extends(state, _super);
-    function state(options) {
-        var _this = _super.call(this) || this;
-        _this.auth_status = false;
-        _this.user = {
+const state_1 = __webpack_require__(10);
+class state extends state_1.state {
+    constructor(options) {
+        super();
+        this.auth_status = false;
+        this.user = {
             id: "",
             name: "",
             mail: ""
         };
-        return _this;
     }
-    return state;
-}(state_1.state));
+}
 exports.state = state;
 
 
@@ -22794,25 +21402,13 @@ exports.state = state;
 
 "use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var getters_1 = __webpack_require__(11);
-var getters = /** @class */ (function (_super) {
-    __extends(getters, _super);
-    function getters(options) {
-        return _super.call(this) || this;
+const getters_1 = __webpack_require__(11);
+class getters extends getters_1.getters {
+    constructor(options) {
+        super();
     }
-    return getters;
-}(getters_1.getters));
+}
 exports.getters = getters;
 
 

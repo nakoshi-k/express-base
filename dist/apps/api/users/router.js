@@ -98,51 +98,46 @@ class router extends apps_router_1.router {
             });
         };
         this.login = (req, res, next) => {
-            const passport = this.service.auth.passport;
+            let login = this.service.auth.login(req, res, next);
             let rend = this.renderer.create(res);
-            passport.authenticate('local', (err, user, info) => {
-                if (err) {
-                    rend.status(401);
-                    rend.json({ password: [{ type: "invalid", message: "invalid password" }] });
+            login.then(user => {
+                rend.status(201);
+                rend.json(user);
+            }).catch(e => {
+                rend.status(401);
+                if (e === "password") {
+                    rend.json({ "password": [{ "message": "invalid password" }] });
                     return;
                 }
-                if (!user) {
-                    rend.status(401);
-                    rend.json({ account: [{ type: "invalid", message: "invalid account" }] });
+                if (e === "account") {
+                    rend.json({ "account": [{ "message": "invalid account" }] });
                     return;
                 }
-                req.logIn(user, (login_err) => {
-                    if (login_err) {
-                        rend.status(500);
-                        rend.json({ internal: [{ type: "error", message: "internal error" }] });
-                        return;
-                    }
-                    rend.status(201);
-                    rend.json(user);
-                });
-            })(req, res, next);
+                rend.status(500);
+                rend.json({ "internal": [e] });
+            });
         };
         this.logout = (req, res, next) => {
             let rend = this.renderer.create(res);
-            try {
-                req.logOut();
+            let logout = this.service.auth.logout(req);
+            logout.then(r => {
                 rend.status(201);
-                rend.json({ message: "log out" });
-            }
-            catch (e) {
-                rend.status(404);
-                rend.json({});
-            }
+                rend.json({ "message": "logout" });
+            }).catch(e => {
+                rend.status(401);
+                rend.json({ "message": "logout failed" });
+            });
         };
         this.auth = (req, res, next) => {
             let rend = this.renderer.create(res);
-            if (!req.user) {
+            let auth_user = this.service.auth.user(req);
+            auth_user.then(user => {
+                rend.status(201);
+                rend.json(user);
+            }).catch(e => {
                 rend.status(401);
                 rend.json({});
-                return;
-            }
-            let user = req.user;
-            rend.json(user);
+            });
         };
         this.service = new service_1.service(this.name);
     }

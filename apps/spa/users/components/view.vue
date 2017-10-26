@@ -9,14 +9,6 @@
   <div>{{entity.mail}}</div>
   <h3>Group</h3>
   <div>{{entity.group_id}}</div>
-  <h3>Access token</h3>
-  <div>{{entity.access_token}}</div>
-  <h3>Refresh token</h3>
-  <div>{{entity.refresh_token}}</div>
-  <h3>New password</h3>
-  <div>{{entity.new_password}}</div>
-  <h3>Confirm password</h3>
-  <div>{{entity.confirm_password}}</div>
   <h3>Created at</h3>
   <div>{{entity.created_at}}</div>
   <h3>Updated at</h3>

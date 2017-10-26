@@ -1,4 +1,12 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const apps_router_1 = require("../apps_router");
 const path = require("path");
@@ -58,6 +66,7 @@ class router extends apps_router_1.router {
             this.renderer.views = { common: dir, typical: dir };
             let rend = this.renderer.create(res);
             this.ssr(context).then(ssrr => {
+                console.log(91);
                 rend.set_vars({
                     title: ssrr.title,
                     meta: ssrr.meta,
@@ -66,6 +75,7 @@ class router extends apps_router_1.router {
                 });
                 rend.render("view");
             }).catch(err => {
+                console.log(err);
                 if (err.code == 404) {
                     rend.status(404);
                 }
@@ -86,10 +96,12 @@ class router extends apps_router_1.router {
             });
         };
     }
-    async ssr(context) {
-        let app = await this.app(context);
-        let render = await this.appRender(app);
-        return render;
+    ssr(context) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let app = yield this.app(context);
+            let render = yield this.appRender(app);
+            return render;
+        });
     }
 }
 exports.router = router;

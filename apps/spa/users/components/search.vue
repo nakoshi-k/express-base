@@ -10,14 +10,6 @@
         <input type="email" name="mail" v-model="frm.mail" placeholder="mail">
         <label for="group_id">Group</label>
         <input type="text" name="group_id" v-model="frm.group_id" placeholder="group_id">
-        <label for="access_token">Access token</label>
-        <input type="text" name="access_token" v-model="frm.access_token" placeholder="access_token">
-        <label for="refresh_token">Refresh token</label>
-        <input type="text" name="refresh_token" v-model="frm.refresh_token" placeholder="refresh_token">
-        <label for="new_password">New password</label>
-        <input type="password" name="new_password" v-model="frm.new_password" placeholder="new_password">
-        <label for="confirm_password">Confirm password</label>
-        <input type="password" name="confirm_password" v-model="frm.confirm_password" placeholder="confirm_password">
         <label for="created_at">Created at</label>
         <input class="calendar" type="datetime-local" name="created_at" v-model="frm.created_at" placeholder="created_at">
         <label for="updated_at">Updated at</label>

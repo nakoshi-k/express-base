@@ -18,7 +18,9 @@ export interface request extends e.Request{
     user : {
         id : string,
         name : string,
-        mail : string
+        mail : string,
+        last_login : string,
+        toJSON : () => {[prop:string] : any}
     }
 }
 

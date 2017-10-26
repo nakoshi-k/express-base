@@ -1807,7 +1807,6 @@ input[type='search'],
 input[type='tel'],
 input[type='text'],
 input[type='url'],
-input[type='date'],
 textarea,
 select,
 input[type='datetime-local'] {
@@ -1828,7 +1827,6 @@ input[type='search']:focus,
 input[type='tel']:focus,
 input[type='text']:focus,
 input[type='url']:focus,
-input[type='date']:focus,
 textarea:focus,
 select:focus,
 input[type='datetime-local']:focus {
@@ -2841,6 +2839,10 @@ img {
   margin-top: 8rem;
   min-width: 40rem;
   min-height: 6rem;
+  padding: 0rem;
+  position: relative;
+}
+.modal .content {
   padding: 2rem;
   background-color: #f9fdfd;
   border: 1px solid #e9eded;
@@ -2848,7 +2850,6 @@ img {
   box-shadow: 3px 6px 10px -3px #c9cdcd;
   -moz-box-shadow: 3px 6px 10px -3px #c9cdcd;
   -webkit-box-shadow: 3px 6px 10px -3px #c9cdcd;
-  position: relative;
 }
 .modal h3 {
   border-bottom: 1px solid #e9eded;
@@ -2914,6 +2915,14 @@ img {
   -webkit-box-shadow: 2px 0px 16px 5px #b9bdbd;
   border-right: 0.1rem solid #ce513b;
 }
+.offset-container a {
+  color: #e9eded;
+  cursor: pointer;
+}
+.offset-container a:hover,
+.offset-container a:focus {
+  color: #f9fdfd;
+}
 .offset-container .content {
   margin: 6rem 0.01rem 0.01rem 0.01rem;
 }
@@ -2942,7 +2951,6 @@ img {
   -webkit-box-shadow: 0px 5px 1px -5px #ea9586 inset;
 }
 .offset-container ul li > a {
-  color: #f9fdfd;
   display: block;
   padding: 0.8rem 0.8rem 0.8rem 1.6rem;
   font-weight: bold;
@@ -2991,4 +2999,39 @@ img {
   color: #d9dddd;
   margin-top: 1.2rem;
   margin-left: 0.2rem;
+}
+.animation.reject {
+  animation: reject 0.08s ease-in-out 4 alternate;
+}
+@-moz-keyframes reject {
+  0% {
+    transform: translateX(-3px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+@-webkit-keyframes reject {
+  0% {
+    transform: translateX(-3px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+@-o-keyframes reject {
+  0% {
+    transform: translateX(-3px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+@keyframes reject {
+  0% {
+    transform: translateX(-3px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
 }

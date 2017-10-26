@@ -1,5 +1,5 @@
 <template>
-<div v-if="show">
+<div v-if="show" class="content">
   <h3>Delete #{{data.id}}</h3>
   "{{data.name}}" を削除します。一度削除されたデータは元に戻す事ができません。
   <div class="margin text-right">

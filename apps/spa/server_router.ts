@@ -88,6 +88,7 @@ export class router extends core_router{
 
         let rend = this.renderer.create(res);
         this.ssr(context).then(ssrr => {
+            console.log(91);
             rend.set_vars( {
                 title : ssrr.title,
                 meta : ssrr.meta,
@@ -96,6 +97,7 @@ export class router extends core_router{
             })
             rend.render("view")
         }).catch(err => {
+            console.log(err)
             if ( err.code == 404){
                 rend.status(404)
             }

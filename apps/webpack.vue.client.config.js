@@ -28,7 +28,7 @@ module.exports  = {
                           compilerOptions : {
                             "module": "commonjs",
                             "lib" : ["dom", "es2015",  "es5"],
-                            "target": "es5",
+                            "target": "es2015",
                             "noImplicitAny": false,
                             "sourceMap": false,
                             "outDir" : "dist",

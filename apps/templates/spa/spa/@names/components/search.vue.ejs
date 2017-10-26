@@ -6,6 +6,11 @@
             if( field.name === "id" ){
               field.attrString = 'type="text"'
             }
+
+            if( /"type" : "(token|password)$"/.test(field.name) ){
+              return
+            }
+
           _%>
         <label for="<%= field.name %>"><%= inflection.humanize(field.name) %></label>
         <input <%- field.attrString %> name="<%- field.name %>" v-model="frm.<%= field.name %>" placeholder="<%= field.name %>">

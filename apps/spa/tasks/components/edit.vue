@@ -8,13 +8,13 @@
       <div class="form-item">
         <label for="title">Title</label>
         <input type="text" name="title" @change="change" :class="validationClass( errors , 'title')" :value="entity.title" placeholder="title">
-        <div class="errors" v-for="e in errors.title"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
+        <div class="errors" v-for="e in errors.title"> <span class="typcn typcn-warning-outline"></span> {{e.message}} </div>
       </div>
 
       <div class="form-item">
         <label for="priod">Priod</label>
         <input class="calendar" type="datetime-local" name="priod" @change="change" :class="validationClass( errors , 'priod')" :value="entity.priod" placeholder="priod">
-        <div class="errors" v-for="e in errors.priod"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
+        <div class="errors" v-for="e in errors.priod"> <span class="typcn typcn-warning-outline"></span> {{e.message}} </div>
       </div>
     </fieldset>
     <button type="submit" :class="validationClass(errors,'submit')">update</button>

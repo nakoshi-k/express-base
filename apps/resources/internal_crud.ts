@@ -23,8 +23,9 @@ export class internal_crud{
     
     private serverPagination = (route) => {
        let serverPagination = (resolve,reject) => {
+            let service = this.feeds.service( this.resource );
             let pagination = this.feeds.pagination(this.resource);
-            let conditions = this.feeds.conditions( route );
+            let conditions = service.conditions( route );
             let entities = pagination.find( conditions ,route.query);
             let name = this.resource;
             let data = {};

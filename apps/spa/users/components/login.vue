@@ -9,12 +9,12 @@
       <div class="form-item">
         <label for="name">user name or e-mail </label>
         <input type="text" name="account"  v-model="user.account" :class="validationClass( errors , 'account')"  placeholder="user name or e-mail">
-        <div class="errors" v-for="e in errors.account"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
+        <div class="errors" v-for="e in errors.account"> <span class="typcn typcn-warning-outline"></span> {{e.message}} </div>
       </div>
       <div class="form-item">
         <label for="password">Password</label>
         <input type="password" name="password" v-model="user.password" :class="validationClass( errors , 'password')" placeholder="password">
-        <div class="errors" v-for="e in errors.password"> <span class="typcn typcn-warning-outline"></span> {{e.message}} ({{e.type}})</div>
+        <div class="errors" v-for="e in errors.password"> <span class="typcn typcn-warning-outline"></span> {{e.message}} </div>
       </div>
     </fieldset>
     <button type="submit" :class="validationClass(errors,'submit')">Login</button>
