@@ -11,7 +11,8 @@ class store_module extends store_module_1.store_module {
         this.state = new state_1.state(feeds).map("all");
         this.actions = new actions_1.actions(feeds).map("all");
         this.mutations = new mutations_1.mutations(feeds).map("all");
-        this.getters = new getters_1.getters(feeds).map("all");
+        let lgetters = new getters_1.getters(feeds).map("all");
+        this.getters = Object.assign({}, lgetters, { feeds: function () { return feeds; } });
     }
 }
 exports.store_module = store_module;

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const actions_1 = require("../../../../base/spa/stores/actions");
 const auth_1 = require("../../../resources/auth");
-let auth_api = new auth_1.auth();
+let auth_api = new auth_1.auth({});
 class actions extends actions_1.actions {
     constructor(options) {
         super();

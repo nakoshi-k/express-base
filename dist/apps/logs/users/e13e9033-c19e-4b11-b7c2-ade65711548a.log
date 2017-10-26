@@ -1,1 +1,4 @@
 , {"action":"login","user_id":"e13e9033-c19e-4b11-b7c2-ade65711548a","date":"2017-10-26 19:14:30+09:00","uuid":"e88ee511-367f-47f3-8935-d4b271378ae8"} 
+, {"action":"logout","user_id":"e13e9033-c19e-4b11-b7c2-ade65711548a","date":"2017-10-26 19:16:47+09:00","uuid":"7b66fcdf-4c06-4c9c-9f99-511d16e0c355"} 
+, {"action":"login","user_id":"e13e9033-c19e-4b11-b7c2-ade65711548a","date":"2017-10-26 19:16:55+09:00","uuid":"876b5f28-db79-4d4a-a3b8-1be9bd0d30bd"} 
+, {"action":"logout","user_id":"e13e9033-c19e-4b11-b7c2-ade65711548a","date":"2017-10-26 19:17:01+09:00","uuid":"a2394b3a-9086-48a5-a959-3920bba600cf"} 

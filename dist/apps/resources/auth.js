@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const client_fetch_1 = require("./client_fetch");
 let client = new client_fetch_1.client_fetch();
 class auth {
-    constructor() {
+    constructor(feeds) {
         this.end_point = "/api/users";
         this.login = (user, token) => {
             let login = (resolve, reject) => {
@@ -23,7 +23,7 @@ class auth {
             };
             return new Promise(login);
         };
-        this.user = () => {
+        this.user_client = () => {
             let user = (resolve, reject) => {
                 let url = this.end_point + "/auth";
                 client.fetch(url, {}).then(r => {
@@ -33,6 +33,23 @@ class auth {
                 });
             };
             return new Promise(user);
+        };
+        this.user_server = () => {
+            let user = (resolve, reject) => {
+                let url = this.end_point + "/auth";
+                client.fetch(url, {}).then(r => {
+                    resolve(r);
+                }).catch(e => {
+                    reject(e);
+                });
+            };
+            return new Promise(user);
+        };
+        this.user = () => {
+            if (typeof window === "undefined") {
+                return this.user_client();
+            }
+            return this.user_server();
         };
         this.logout = () => {
             let logout = (resolve, reject) => {
@@ -45,6 +62,9 @@ class auth {
             };
             return new Promise(logout);
         };
+        if (feeds) {
+            this.feeds = feeds;
+        }
     }
 }
 exports.auth = auth;

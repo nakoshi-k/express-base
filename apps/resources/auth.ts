@@ -8,6 +8,12 @@ let client = new client_fetch();
 
 export class auth{
     private end_point = "/api/users"
+    private feeds:any;
+    constructor(feeds?:any){
+        if(feeds){
+            this.feeds = feeds;
+        }
+    }
 
     login = (user : { account : string ,password : string } , token ) => {
         let login = (resolve,reject) => {
@@ -28,9 +34,10 @@ export class auth{
         return new Promise(login);
     }
 
-    user = () => {
+    user_client = () => {
         let user = (resolve,reject) => {
             let url = this.end_point + "/auth";
+            
             client.fetch(url,{}).then(r => {
                 resolve(r)                
             }).catch(e => {
@@ -38,6 +45,24 @@ export class auth{
             })
         }
         return new Promise(user);
+    }
+    user_server = () => {
+        let user = (resolve,reject) => {
+            let url = this.end_point + "/auth";
+            
+            client.fetch(url,{}).then(r => {
+                resolve(r)                
+            }).catch(e => {
+                reject(e)
+            })
+        }
+        return new Promise(user);
+    }
+    user = () => {
+        if(typeof window === "undefined"){
+            return this.user_client();
+        }
+        return this.user_server()
     }
 
     logout = () => {

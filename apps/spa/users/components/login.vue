@@ -47,7 +47,7 @@ Component.registerHooks([
     ...mapGetters([
       'domain' , 'token'
     ]),
-
+    ...mapGetters('auth',["feeds"]),
   },
   methods : {
         ...form_validation.map(["validationClass"])
@@ -68,7 +68,7 @@ export default class login extends Vue {
   }
   
   token:string
-
+  feeds:any;
   login(){
      let auth = new auth_api();
      auth.login( this.user , this.token ).then(r => {

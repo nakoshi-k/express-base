@@ -11959,7 +11959,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const client_fetch_1 = __webpack_require__(17);
 let client = new client_fetch_1.client_fetch();
 class auth {
-    constructor() {
+    constructor(feeds) {
         this.end_point = "/api/users";
         this.login = (user, token) => {
             let login = (resolve, reject) => {
@@ -11979,7 +11979,7 @@ class auth {
             };
             return new Promise(login);
         };
-        this.user = () => {
+        this.user_client = () => {
             let user = (resolve, reject) => {
                 let url = this.end_point + "/auth";
                 client.fetch(url, {}).then(r => {
@@ -11989,6 +11989,23 @@ class auth {
                 });
             };
             return new Promise(user);
+        };
+        this.user_server = () => {
+            let user = (resolve, reject) => {
+                let url = this.end_point + "/auth";
+                client.fetch(url, {}).then(r => {
+                    resolve(r);
+                }).catch(e => {
+                    reject(e);
+                });
+            };
+            return new Promise(user);
+        };
+        this.user = () => {
+            if (typeof window === "undefined") {
+                return this.user_client();
+            }
+            return this.user_server();
         };
         this.logout = () => {
             let logout = (resolve, reject) => {
@@ -12001,6 +12018,9 @@ class auth {
             };
             return new Promise(logout);
         };
+        if (feeds) {
+            this.feeds = feeds;
+        }
     }
 }
 exports.auth = auth;
@@ -12614,7 +12634,7 @@ exports.internal_crud = internal_crud;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const application_1 = __webpack_require__(22);
-const { app, router, store } = application_1.createApp({ host: "", request: {} });
+const { app, router, store } = application_1.createApp({});
 if (window["__INITIAL_STATE__"]) {
     store.replaceState(window["__INITIAL_STATE__"]);
 }
@@ -13569,7 +13589,7 @@ let login_modal = class login_modal extends vue_1.default {
     }
     login() {
         this.errors = {};
-        let auth = new auth_1.auth();
+        let auth = new auth_1.auth(this.feeds);
         auth.login(this.user, this.token).then(r => {
             this.setAuthUser(r);
             this.closeModal();
@@ -13588,7 +13608,7 @@ login_modal = __decorate([
         name: "login_modal",
         computed: Object.assign({}, vuex_1.mapGetters([
             'domain', 'token'
-        ]), vuex_1.mapState('modal', {
+        ]), vuex_1.mapGetters('auth', ["feeds"]), vuex_1.mapState('modal', {
             'close': ({ close }) => close,
             'data': ({ data }) => data,
             'template': ({ template }) => template,
@@ -20374,7 +20394,7 @@ login = __decorate([
         name: "login",
         computed: Object.assign({}, vuex_1.mapGetters([
             'domain', 'token'
-        ])),
+        ]), vuex_1.mapGetters('auth', ["feeds"])),
         methods: Object.assign({}, validation_1.default.map(["validationClass"]))
     })
 ], login);
@@ -21317,7 +21337,8 @@ class store_module extends store_module_1.store_module {
         this.state = new state_1.state(feeds).map("all");
         this.actions = new actions_1.actions(feeds).map("all");
         this.mutations = new mutations_1.mutations(feeds).map("all");
-        this.getters = new getters_1.getters(feeds).map("all");
+        let lgetters = new getters_1.getters(feeds).map("all");
+        this.getters = Object.assign({}, lgetters, { feeds: function () { return feeds; } });
     }
 }
 exports.store_module = store_module;
@@ -21358,7 +21379,7 @@ exports.mutations = mutations;
 Object.defineProperty(exports, "__esModule", { value: true });
 const actions_1 = __webpack_require__(9);
 const auth_1 = __webpack_require__(14);
-let auth_api = new auth_1.auth();
+let auth_api = new auth_1.auth({});
 class actions extends actions_1.actions {
     constructor(options) {
         super();

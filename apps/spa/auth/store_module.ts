@@ -11,7 +11,10 @@ export class store_module extends core_module{
         this.state = new state( feeds ).map("all");
         this.actions = new actions( feeds ).map("all");
         this.mutations = new mutations( feeds ).map("all");
-        this.getters = new getters( feeds ).map("all");
+
+        let lgetters =  new getters( feeds ).map("all");
+
+        this.getters = { ...lgetters , feeds : function(){return feeds} };
     }
 
 }

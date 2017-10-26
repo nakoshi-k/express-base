@@ -3941,7 +3941,7 @@ class build_query {
 
 let client = new __WEBPACK_IMPORTED_MODULE_0__client_fetch__["a" /* client_fetch */]();
 class auth {
-    constructor() {
+    constructor(feeds) {
         this.end_point = "/api/users";
         this.login = (user, token) => {
             let login = (resolve, reject) => {
@@ -3961,7 +3961,7 @@ class auth {
             };
             return new Promise(login);
         };
-        this.user = () => {
+        this.user_client = () => {
             let user = (resolve, reject) => {
                 let url = this.end_point + "/auth";
                 client.fetch(url, {}).then(r => {
@@ -3971,6 +3971,23 @@ class auth {
                 });
             };
             return new Promise(user);
+        };
+        this.user_server = () => {
+            let user = (resolve, reject) => {
+                let url = this.end_point + "/auth";
+                client.fetch(url, {}).then(r => {
+                    resolve(r);
+                }).catch(e => {
+                    reject(e);
+                });
+            };
+            return new Promise(user);
+        };
+        this.user = () => {
+            if (typeof window === "undefined") {
+                return this.user_client();
+            }
+            return this.user_server();
         };
         this.logout = () => {
             let logout = (resolve, reject) => {
@@ -3983,6 +4000,9 @@ class auth {
             };
             return new Promise(logout);
         };
+        if (feeds) {
+            this.feeds = feeds;
+        }
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = auth;
@@ -5258,7 +5278,7 @@ let login_modal = class login_modal extends __WEBPACK_IMPORTED_MODULE_0_vue___de
     }
     login() {
         this.errors = {};
-        let auth = new __WEBPACK_IMPORTED_MODULE_4__resources_auth__["a" /* auth */]();
+        let auth = new __WEBPACK_IMPORTED_MODULE_4__resources_auth__["a" /* auth */](this.feeds);
         auth.login(this.user, this.token).then(r => {
             this.setAuthUser(r);
             this.closeModal();
@@ -5277,7 +5297,7 @@ login_modal = __decorate([
         name: "login_modal",
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])([
             'domain', 'token'
-        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])('modal', {
+        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])('auth', ["feeds"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])('modal', {
             'close': ({ close }) => close,
             'data': ({ data }) => data,
             'template': ({ template }) => template,
@@ -8306,7 +8326,7 @@ login = __decorate([
         name: "login",
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])([
             'domain', 'token'
-        ])),
+        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])('auth', ["feeds"])),
         methods: Object.assign({}, __WEBPACK_IMPORTED_MODULE_3__utilities_validation__["a" /* default */].map(["validationClass"]))
     })
 ], login);
@@ -9177,7 +9197,8 @@ class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_mo
         this.state = new __WEBPACK_IMPORTED_MODULE_3__stores_state__["a" /* state */](feeds).map("all");
         this.actions = new __WEBPACK_IMPORTED_MODULE_2__stores_actions__["a" /* actions */](feeds).map("all");
         this.mutations = new __WEBPACK_IMPORTED_MODULE_1__stores_mutations__["a" /* mutations */](feeds).map("all");
-        this.getters = new __WEBPACK_IMPORTED_MODULE_4__stores_getters__["a" /* getters */](feeds).map("all");
+        let lgetters = new __WEBPACK_IMPORTED_MODULE_4__stores_getters__["a" /* getters */](feeds).map("all");
+        this.getters = Object.assign({}, lgetters, { feeds: function () { return feeds; } });
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = store_module;
@@ -9219,7 +9240,7 @@ class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__resources_auth__ = __webpack_require__(13);
 
 
-let auth_api = new __WEBPACK_IMPORTED_MODULE_1__resources_auth__["a" /* auth */]();
+let auth_api = new __WEBPACK_IMPORTED_MODULE_1__resources_auth__["a" /* auth */]({});
 class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a" /* actions */] {
     constructor(options) {
         super();
