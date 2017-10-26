@@ -34,22 +34,11 @@ class auth {
             };
             return new Promise(user);
         };
-        this.user_server = () => {
-            let user = (resolve, reject) => {
-                let url = this.end_point + "/auth";
-                client.fetch(url, {}).then(r => {
-                    resolve(r);
-                }).catch(e => {
-                    reject(e);
-                });
-            };
-            return new Promise(user);
-        };
-        this.user = () => {
+        this.user = (feeds) => {
             if (typeof window === "undefined") {
-                return this.user_client();
+                return Promise.reject({});
             }
-            return this.user_server();
+            return this.user_client();
         };
         this.logout = () => {
             let logout = (resolve, reject) => {

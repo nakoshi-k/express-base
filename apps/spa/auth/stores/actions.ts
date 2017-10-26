@@ -8,7 +8,7 @@ export class actions extends core_actions{
     }
     
     fetchAuthUser = ( {commit , getters , state }) => {
-        return auth_api.user().then(r => {
+        return auth_api.user(state.feeds).then(r => {
           commit("setAuthUser" , r)
         });
     }

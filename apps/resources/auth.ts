@@ -3,6 +3,7 @@ import {build_query} from "../../base/sideless/build_query";
 import {app_error,input_error,response_error} from "../../base/core";
 import {client_fetch} from "./client_fetch";
 import route_parse from "../utilities/route_parse";
+import {feeds} from "./feeds";
 
 let client = new client_fetch();
 
@@ -46,23 +47,12 @@ export class auth{
         }
         return new Promise(user);
     }
-    user_server = () => {
-        let user = (resolve,reject) => {
-            let url = this.end_point + "/auth";
-            
-            client.fetch(url,{}).then(r => {
-                resolve(r)                
-            }).catch(e => {
-                reject(e)
-            })
-        }
-        return new Promise(user);
-    }
-    user = () => {
+    
+    user = (feeds?:feeds) => {
         if(typeof window === "undefined"){
-            return this.user_client();
+            return Promise.reject({});
         }
-        return this.user_server()
+        return this.user_client()
     }
 
     logout = () => {

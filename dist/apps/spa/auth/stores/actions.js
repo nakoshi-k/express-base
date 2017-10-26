@@ -7,7 +7,7 @@ class actions extends actions_1.actions {
     constructor(options) {
         super();
         this.fetchAuthUser = ({ commit, getters, state }) => {
-            return auth_api.user().then(r => {
+            return auth_api.user(state.feeds).then(r => {
                 commit("setAuthUser", r);
             });
         };

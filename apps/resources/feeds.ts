@@ -12,10 +12,6 @@ let service = {
 
 export class feeds{
 
-    constructor(){
-
-    }
-
     get models(){
         return models;
     }

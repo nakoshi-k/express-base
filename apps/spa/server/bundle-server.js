@@ -3972,22 +3972,11 @@ class auth {
             };
             return new Promise(user);
         };
-        this.user_server = () => {
-            let user = (resolve, reject) => {
-                let url = this.end_point + "/auth";
-                client.fetch(url, {}).then(r => {
-                    resolve(r);
-                }).catch(e => {
-                    reject(e);
-                });
-            };
-            return new Promise(user);
-        };
-        this.user = () => {
+        this.user = (feeds) => {
             if (typeof window === "undefined") {
-                return this.user_client();
+                return Promise.reject({});
             }
-            return this.user_server();
+            return this.user_client();
         };
         this.logout = () => {
             let logout = (resolve, reject) => {
@@ -9245,7 +9234,7 @@ class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a"
     constructor(options) {
         super();
         this.fetchAuthUser = ({ commit, getters, state }) => {
-            return auth_api.user().then(r => {
+            return auth_api.user(state.feeds).then(r => {
                 commit("setAuthUser", r);
             });
         };
@@ -9268,14 +9257,16 @@ class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a"
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(10);
 
 class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* state */] {
-    constructor(options) {
+    constructor(feeds) {
         super();
+        this.feeds = {};
         this.auth_status = false;
         this.user = {
             id: "",
             name: "",
             mail: ""
         };
+        this.feeds = feeds;
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = state;
