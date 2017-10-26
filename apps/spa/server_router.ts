@@ -12,7 +12,7 @@ import * as VueRender from "vue-server-renderer"
 import * as Request from "request"
 import * as serialize from "serialize-javascript"
 import {feeds as resources_feeds} from "../resources/feeds"
-import {default as BundleServer}  from "./bundle-server"
+import {default as BundleServer}  from "./server/bundle-server"
 
 interface ssr_response {
     html : string,

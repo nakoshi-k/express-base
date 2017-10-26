@@ -16,7 +16,7 @@ Vue.use(Router);
 const VueRender = require("vue-server-renderer");
 const serialize = require("serialize-javascript");
 const feeds_1 = require("../resources/feeds");
-const bundle_server_1 = require("./bundle-server");
+const bundle_server_1 = require("./server/bundle-server");
 class router extends apps_router_1.router {
     constructor() {
         super();

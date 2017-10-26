@@ -16808,6 +16808,9 @@ vue_class_component_1.default.registerHooks([
     'scrollToTop'
 ]);
 let navi = class navi extends vue_1.default {
+    asyncData({ store, route }) {
+        return store.dispatch('auth/fetchAuthUser');
+    }
     toggle() {
         this.toggleOffset();
     }

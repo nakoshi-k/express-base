@@ -75,11 +75,9 @@ Component.registerHooks([
 export default class navi extends Vue {
   show:boolean;
   logout : () => void;
-  /*
   asyncData ({ store, route }) {
     return store.dispatch('auth/fetchAuthUser')
   }
-  */
   toggleOffset:() => {}
 
   toggle(){

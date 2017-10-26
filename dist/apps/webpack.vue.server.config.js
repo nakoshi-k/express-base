@@ -5,7 +5,7 @@ module.exports  = {
             externals: [ /^(vue|vue\-router)$/],
             output: {
                 libraryTarget : "commonjs",
-                path: __dirname + "/spa/"  ,
+                path: __dirname + "/spa/server/"  ,
                 filename: 'bundle-server.js',
             },
             resolve: {
@@ -26,7 +26,7 @@ module.exports  = {
                         options: {
                           appendTsSuffixTo: [/\.vue$/],
                           compilerOptions : {
-                            "module": "es2015",
+                            "module": "esnext",
                             "lib" : ["dom", "es2015", "es5"],
                             "target": "es2015",
                             "noImplicitAny": false,
