@@ -6258,7 +6258,6 @@
             constructor(options) {
                 super();
                 this.setEntities = (state, paginate) => {
-                    console.log(this._resource);
                     state.entities = paginate[this._resource];
                     state.page = paginate.page;
                 };

@@ -19034,7 +19034,6 @@ class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__
     constructor(options) {
         super();
         this.setEntities = (state, paginate) => {
-            console.log(this._resource);
             state.entities = paginate[this._resource];
             state.page = paginate.page;
         };

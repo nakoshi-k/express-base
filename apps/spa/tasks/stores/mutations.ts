@@ -10,7 +10,6 @@ export class mutations extends core_mutations{
     } 
     
     setEntities = ( state , paginate ) => {
-      console.log(this._resource)
       state.entities = paginate[this._resource]
       state.page = paginate.page
     }
