@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_fetch_1 = require("./client_fetch");
+const resource_1 = require("./resource");
 let client = new client_fetch_1.client_fetch();
-class auth {
-    constructor(feeds) {
+class auth extends resource_1.resource {
+    constructor(options) {
+        super();
         this.end_point = "/api/users";
         this.login = (user, token) => {
             let login = (resolve, reject) => {
@@ -34,9 +36,19 @@ class auth {
             };
             return new Promise(user);
         };
-        this.user = (feeds) => {
-            if (typeof window === "undefined") {
-                return Promise.reject({});
+        this.user_server = () => {
+            let user_server = (resolve, reject) => {
+                if (this.feeds.user["id"]) {
+                    resolve(this.feeds.user);
+                    return;
+                }
+                reject();
+            };
+            return new Promise(user_server);
+        };
+        this.user = () => {
+            if (this.is_server()) {
+                return this.user_server();
             }
             return this.user_client();
         };
@@ -51,9 +63,7 @@ class auth {
             };
             return new Promise(logout);
         };
-        if (feeds) {
-            this.feeds = feeds;
-        }
+        this.feeds = options.feeds;
     }
 }
 exports.auth = auth;

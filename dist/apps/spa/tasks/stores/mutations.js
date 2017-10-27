@@ -5,7 +5,8 @@ class mutations extends mutations_1.mutations {
     constructor(options) {
         super();
         this.setEntities = (state, paginate) => {
-            state.entities = paginate[this._entities];
+            console.log(this._resource);
+            state.entities = paginate[this._resource];
             state.page = paginate.page;
         };
         this.setEntity = (state, response) => {
@@ -30,7 +31,7 @@ class mutations extends mutations_1.mutations {
             state.entity["errors"] = errors;
         };
         this._mount = options.mount;
-        this._entities = options.entities;
+        this._resource = options.resource;
     }
 }
 exports.mutations = mutations;

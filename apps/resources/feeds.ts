@@ -4,6 +4,7 @@ import {pagination , validation_error ,search } from "../../base/core";
 import * as sequelize from "sequelize";
 import {service as tasks_service } from "../api/tasks/service"
 import {service as users_service } from "../api/users/service"
+import {request,response} from "../apps_router"
 
 let service = {
     tasks : new tasks_service("tasks"),
@@ -35,5 +36,18 @@ export class feeds{
     public validationError = (error:sequelize.ValidationError) =>{
         return new validation_error(error);
     }
+    
+    public user = {}
+
+    private setUser = (req:request) => {
+        if(req.user){
+            this.user = Object.assign( {},  req.user.toJSON() )
+        }
+    }
+    
+    public init = (req : request ,res:response) => {
+        this.setUser(req);
+    }
+    
 
 }

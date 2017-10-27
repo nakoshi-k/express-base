@@ -1,5 +1,5 @@
 import * as express from "express"
-import { router as core_router,routing_map} from "../apps_router"
+import { router as core_router,routing_map,request,response,next} from "../apps_router"
 import {service as apps_service} from "../apps_service"
 import { system } from "../../base/core"
 import * as path from "path"
@@ -77,10 +77,14 @@ export class router extends core_router{
         return render;
     }
 
-    private view = (req : express.Request,res: express.Response, next : express.NextFunction) => {
+    private view = (req : request,res: response, next :next) => {
+
+        let feeds = new resources_feeds();
+        feeds.init(req,res);
+
         const context = {
             url: req.url,
-            feeds : new resources_feeds()
+            feeds : feeds
         }
 
         let dir = path.resolve([ __dirname , ".." , "views"].join(path.sep) )
@@ -88,7 +92,6 @@ export class router extends core_router{
 
         let rend = this.renderer.create(res);
         this.ssr(context).then(ssrr => {
-            console.log(91);
             rend.set_vars( {
                 title : ssrr.title,
                 meta : ssrr.meta,
@@ -97,7 +100,6 @@ export class router extends core_router{
             })
             rend.render("view")
         }).catch(err => {
-            console.log(err)
             if ( err.code == 404){
                 rend.status(404)
             }

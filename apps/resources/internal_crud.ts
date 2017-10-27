@@ -3,17 +3,19 @@ import {build_query} from "../../base/sideless/build_query";
 import {app_error,input_error,response_error} from "../../base/core";
 import {client_fetch} from "./client_fetch";
 import route_parse from "../utilities/route_parse";
+import {resource} from "./resource";
 let client = new client_fetch();
 
-export class internal_crud{
+export class internal_crud extends resource{
    
     private endPoint = "";
     private feeds:any;
     private resource:any;
 
     constructor( options ){
-        this.endPoint = options.endPoint;
-        this.resource = options.resource;
+        super()
+        this.endPoint = options.endPoint
+        this.resource = options.resource
         this.feeds = options.feeds
     }
     
@@ -76,7 +78,7 @@ export class internal_crud{
     public paginate = (route) => {
         let bq = new build_query();
         let URI = `${this.endPoint}/${route_parse.parse(route)}${bq.http(route.query)}`;
-        if(typeof window === "undefined"){
+        if(this.is_server()){
             return this.server("paginate",route);
         }
         return this.client(URI ,{});
@@ -85,7 +87,7 @@ export class internal_crud{
     public entity = (route) => {
         let id = route.params.id;
         let URI = `${this.endPoint}/${id}`;
-        if(typeof window === "undefined"){
+        if(this.is_server()){
             return this.server( "entity" ,route);
         }
         return this.client(URI ,{});

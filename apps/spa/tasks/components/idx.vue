@@ -19,8 +19,8 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import pagination from '../../pagination/components/pagination.vue'
 import {mapGetters,mapState,mapMutations,mapActions} from "vuex"
+
 Component.registerHooks([
   'beforeRouteEnter',
   'beforeRouteLeave',
@@ -50,7 +50,9 @@ Component.registerHooks([
       ["fetchEntities"]
     )
   },
-  components:{pagination}
+  components:{ 
+    pagination : () => import("../../pagination/components/pagination.vue")
+  }
 })
 
 export default class idx extends Vue {

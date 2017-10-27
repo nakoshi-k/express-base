@@ -58,15 +58,16 @@ class router extends apps_router_1.router {
             return new Promise(appRender);
         };
         this.view = (req, res, next) => {
+            let feeds = new feeds_1.feeds();
+            feeds.init(req, res);
             const context = {
                 url: req.url,
-                feeds: new feeds_1.feeds()
+                feeds: feeds
             };
             let dir = path.resolve([__dirname, "..", "views"].join(path.sep));
             this.renderer.views = { common: dir, typical: dir };
             let rend = this.renderer.create(res);
             this.ssr(context).then(ssrr => {
-                console.log(91);
                 rend.set_vars({
                     title: ssrr.title,
                     meta: ssrr.meta,
@@ -75,7 +76,6 @@ class router extends apps_router_1.router {
                 });
                 rend.render("view");
             }).catch(err => {
-                console.log(err);
                 if (err.code == 404) {
                     rend.status(404);
                 }

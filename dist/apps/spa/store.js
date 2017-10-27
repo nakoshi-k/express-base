@@ -20,12 +20,12 @@ function createStore(feeds) {
             return csrfToken;
         }
     };
-    let tasks = new store_module_4.store_module(Object.assign({ entities: "tasks", endPoint: "/tasks" }, feeds)).store();
-    let users = new store_module_5.store_module(Object.assign({ entities: "users", endPoint: "/users" }, feeds)).store();
-    let auth = new store_module_6.store_module(Object.assign({}, feeds)).store();
-    let loading = new store_module_1.store_module(Object.assign({}, feeds)).store();
-    let modal = new store_module_2.store_module(Object.assign({}, feeds)).store();
-    let offset = new store_module_3.store_module(Object.assign({}, feeds)).store();
+    let tasks = new store_module_4.store_module({ resource: "tasks", endPoint: "/api/tasks", feeds: feeds }).store();
+    let users = new store_module_5.store_module({ resource: "users", endPoint: "/api/users", feeds: feeds }).store();
+    let auth = new store_module_6.store_module({ feeds: feeds }).store();
+    let loading = new store_module_1.store_module({ feeds: feeds }).store();
+    let modal = new store_module_2.store_module({ feeds: feeds }).store();
+    let offset = new store_module_3.store_module({ feeds: feeds }).store();
     let vuex = {
         getters: getters,
         modules: {

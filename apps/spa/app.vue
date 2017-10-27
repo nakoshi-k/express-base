@@ -18,10 +18,11 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
+/*
 import over_lay from './loading/components/over_lay.vue';
 import modal from './modal/components/modal.vue'
 import offset from './offset/components/offset.vue'
-
+*/
 Component.registerHooks([
   'beforeRouteEnter',
   'beforeRouteLeave',
@@ -36,9 +37,9 @@ Component.registerHooks([
 @Component({
   name: 'app',
   components:{
-    "app-overlay":over_lay,
-    "app-modal":modal,
-    "app-offset":offset
+    "app-overlay": () => import ( "./loading/components/over_lay.vue" ),
+    "app-modal": () => import("./modal/components/modal.vue"),
+    "app-offset": () => import("./offset/components/offset.vue")
   }
 })
 

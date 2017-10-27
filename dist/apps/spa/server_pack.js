@@ -35,8 +35,6 @@ exports.default = context => {
                 context.state = store.state;
                 resolve(app);
             }).catch(e => {
-                console.log("----err------");
-                console.log(e);
                 resolve(app);
             });
         }, reject);

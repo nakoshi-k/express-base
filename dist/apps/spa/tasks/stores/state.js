@@ -12,7 +12,7 @@ class state extends state_1.state {
             currentPage: 1,
             queryPrams: {}
         };
-        this.mount = options.endPoint;
+        this.mount = options.resource;
     }
 }
 exports.state = state;

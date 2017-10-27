@@ -3,7 +3,7 @@ export class state extends core_state{
     mount = ""
     constructor(options){
         super();
-        this.mount = options.endPoint
+        this.mount = options.resource
     }
 
     entities = []
