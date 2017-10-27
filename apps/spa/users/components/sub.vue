@@ -9,7 +9,7 @@
       <nav class="navigation-stack">
         <ul class="navigation-list">
             <li><router-link :to="mount">Index</router-link></li>
-            <li><router-link :to="`${mount}/add`">Add</router-link></li>
+            <li><router-link :to="`/${mount}/add`">Add</router-link></li>
         </ul>
       </nav>
     </div>

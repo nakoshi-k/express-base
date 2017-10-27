@@ -1,11 +1,11 @@
 import Router, { RouteConfig } from 'vue-router'
-import navigation from '../navigation/components/navigation.vue'
-import sub from './components/sub.vue'
-import idx from './components/idx.vue'
-import add from './components/add.vue'
-import view from './components/view.vue'
-import edit from './components/edit.vue'
-let mount = "/tasks"
+const navigation = () => import ('../navigation/components/navigation.vue')
+const sub = () => import('./components/sub.vue')
+const idx = () => import('./components/idx.vue')
+const add = () => import('./components/add.vue')
+const view = () => import('./components/view.vue')
+const edit = () => import('./components/edit.vue')
+const mount = "/tasks"
 export default [
     { name : "tasks_page" ,path: `${mount}/page/:page*`, components: { main : idx , navi : navigation ,sub : sub } } as RouteConfig,
     { name : "tasks_index" ,path: `${mount}/page/1` , alias : `${mount}/` } as RouteConfig,

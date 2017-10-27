@@ -4,7 +4,7 @@ import {pagination , validation_error ,search } from "../../base/core";
 import * as sequelize from "sequelize";
 import {service as tasks_service } from "../api/tasks/service"
 import {service as users_service } from "../api/users/service"
-import {request,response} from "../apps_router"
+import {request,response} from "../interfaces/express_extend"
 
 let service = {
     tasks : new tasks_service("tasks"),

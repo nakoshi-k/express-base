@@ -17,14 +17,17 @@ const VueRender = require("vue-server-renderer");
 const serialize = require("serialize-javascript");
 const feeds_1 = require("../resources/feeds");
 const bundle_server_1 = require("./server/bundle-server");
+exports.mapping = {
+    idx: { method: "get", route: "/*", component: "view", middle_ware: null },
+};
 class router extends apps_router_1.router {
     constructor() {
         super();
         this.name = "spa";
         this.parent = {};
         this.mount = "/";
-        this._mapping = {
-            idx: { type: "get", mount: "/*", component: "view", middle_ware: null },
+        this._mapping = () => {
+            return exports.mapping;
         };
         this.app = (context) => {
             let server = bundle_server_1.default;
@@ -58,6 +61,7 @@ class router extends apps_router_1.router {
             return new Promise(appRender);
         };
         this.view = (req, res, next) => {
+            console.log("view");
             let feeds = new feeds_1.feeds();
             feeds.init(req, res);
             const context = {
@@ -76,6 +80,7 @@ class router extends apps_router_1.router {
                 });
                 rend.render("view");
             }).catch(err => {
+                console.log(err);
                 if (err.code == 404) {
                     rend.status(404);
                 }

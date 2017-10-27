@@ -1,12 +1,12 @@
 import Router, { RouteConfig } from 'vue-router'
-import navigation from '../navigation/components/navigation.vue'
-import sub from './components/sub.vue'
-import idx from './components/idx.vue'
-import add from './components/add.vue'
-import view from './components/view.vue'
-import edit from './components/edit.vue'
-import login from './components/login.vue'
-let mount = "/users"
+const navigation = () => import ('../navigation/components/navigation.vue')
+const sub = () => import('./components/sub.vue')
+const idx = () => import('./components/idx.vue')
+const add = () => import('./components/add.vue')
+const view = () => import('./components/view.vue')
+const edit = () => import('./components/edit.vue')
+const login = () => import('./components/login.vue')
+const mount = "/users"
 export default [
     { name : "users_login",path: `${mount}/login`, components: { single : login } } as RouteConfig,
     { name : "users_page" ,path: `${mount}/page/:page*`, components: { main : idx , navi : navigation,sub : sub } } as RouteConfig,

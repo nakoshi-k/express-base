@@ -1,5 +1,6 @@
 import * as express from "express"
-import { router as core_router,routing_map,request,response,next} from "../apps_router"
+import { router as core_router,routing_map} from "../apps_router"
+import {request,response,next} from "../interfaces/express_extend"
 import {service as apps_service} from "../apps_service"
 import { system } from "../../base/core"
 import * as path from "path"
@@ -21,6 +22,10 @@ interface ssr_response {
     description : string
 }
 
+export const mapping :  { [propName: string]: routing_map } = {
+    idx : { method : "get", route : "/*", component : "view" , middle_ware : null } ,
+}
+
 export class router extends core_router{
     public name = "spa"
     public parent = {}
@@ -30,9 +35,10 @@ export class router extends core_router{
         super();
     }
 
-    protected _mapping :  { [propName: string]: routing_map }= {
-        idx : { type : "get", mount : "/*", component : "view" , middle_ware : null } ,
+    protected _mapping = () => {
+        return mapping
     }
+    
 
     private app : (context) => Promise<Vue> = (context) => {
         let server : any = BundleServer
@@ -78,7 +84,7 @@ export class router extends core_router{
     }
 
     private view = (req : request,res: response, next :next) => {
-
+        console.log("view");
         let feeds = new resources_feeds();
         feeds.init(req,res);
 
@@ -100,6 +106,7 @@ export class router extends core_router{
             })
             rend.render("view")
         }).catch(err => {
+            console.log(err)
             if ( err.code == 404){
                 rend.status(404)
             }

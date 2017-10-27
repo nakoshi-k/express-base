@@ -1,14 +1,63 @@
 webpackJsonp([8],{
 
-/***/ 119:
+/***/ 15:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class form_validation_class {
+    constructor() {
+        this.validationClass = (errors, name) => {
+            if (name === "submit") {
+                if ((Object.keys(errors).length > 0)) {
+                    return "warning";
+                }
+            }
+            if (errors[name]) {
+                return "warning";
+            }
+        };
+        this.map = (call) => {
+            if (call === "all") {
+                call = Object.keys(this);
+            }
+            let map = {};
+            for (let idx in call) {
+                if (typeof this[call[idx]] === 'undefined') {
+                    continue;
+                }
+                if (call[idx].charAt(0) === '_') {
+                    continue;
+                }
+                if (call[idx] === 'map') {
+                    continue;
+                }
+                if (call[idx] === 'constructor') {
+                    continue;
+                }
+                if (typeof idx === 'number') {
+                    map[call[String(idx)]] = this[call[String(idx)]];
+                    continue;
+                }
+                map[call[idx]] = this[call[idx]];
+            }
+            return map;
+        };
+    }
+}
+/* harmony default export */ __webpack_exports__["a"] = (new form_validation_class());
+
+
+/***/ }),
+
+/***/ 29:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_destroy_vue__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_240a0082_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_destroy_vue__ = __webpack_require__(121);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_login_vue__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2756e128_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_login_vue__ = __webpack_require__(31);
 var disposed = false
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 
 /* template */
@@ -20,15 +69,15 @@ var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_destroy_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_240a0082_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_destroy_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_login_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2756e128_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_login_vue__["a" /* default */],
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "apps/spa/modal/components/inner/destroy.vue"
+Component.options.__file = "apps/spa/users/components/login.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] destroy.vue: functional components are not supported with templates, they should use render functions.")}
+if (Component.options.functional) {console.error("[vue-loader] login.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -37,9 +86,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-240a0082", Component.options)
+    hotAPI.createRecord("data-v-2756e128", Component.options)
   } else {
-    hotAPI.reload("data-v-240a0082", Component.options)
+    hotAPI.reload("data-v-2756e128", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -51,20 +100,24 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 120:
+/***/ 30:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utilities_validation__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__resources_auth__ = __webpack_require__(11);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -78,63 +131,45 @@ __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-let Destroy = class Destroy extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
+let login = class login extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
     constructor() {
         super(...arguments);
-        this.button = {
-            done: true,
-            cancel: true
+        this.user = {
+            account: "",
+            password: ""
         };
-        this.name = "Destroy";
+        this.errors = {};
     }
-    get show() {
-        return this.template === this.name;
+    get action() {
+        return "/api/users/login";
     }
-    disable() {
-        let disable = (resolve, reject) => {
-            resolve(true);
-        };
-        return new Promise(disable);
-    }
-    destroy() {
-        let data = this.data;
-        data["token"] = this.token;
-        this.loading();
-        let names = data.mount.replace("/", "");
-        this.$store.dispatch(`${names}/deleteEntity`, data).then(r => {
-            this.closeModal();
-            this.$store.dispatch(`${names}/fetchEntities`, this.$store.state.route);
-            this.endLoading("success");
+    login() {
+        let auth = new __WEBPACK_IMPORTED_MODULE_4__resources_auth__["a" /* auth */]();
+        auth.login(this.user, this.token).then(r => {
+            this.errors = {};
+            this.$router.push("/tasks");
         }).catch(e => {
-            this.endLoading("warning");
-        });
-    }
-    cancel() {
-        let plot = this.disable();
-        plot.then(res => {
-            this.closeModal();
+            console.log(e);
+            this.errors = e;
+            console.log("login failed");
         });
     }
 };
-Destroy = __decorate([
+login = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
-        name: "destroy",
+        name: "login",
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])([
             'domain', 'token'
-        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])('modal', {
-            'close': ({ close }) => close,
-            'data': ({ data }) => data,
-            'template': ({ template }) => template,
-        })),
-        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])('modal', ["setModal", "toggleModal", "closeModal", "deleteEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("loading", ["loading", "endLoading"]))
+        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])('auth', ["feeds"])),
+        methods: Object.assign({}, __WEBPACK_IMPORTED_MODULE_3__utilities_validation__["a" /* default */].map(["validationClass"]))
     })
-], Destroy);
-/* harmony default export */ __webpack_exports__["a"] = (Destroy);
+], login);
+/* harmony default export */ __webpack_exports__["a"] = (login);
 
 
 /***/ }),
 
-/***/ 121:
+/***/ 31:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -142,45 +177,139 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.show
-    ? _c("div", { staticClass: "content" }, [
-        _c("h3", [_vm._v("Delete #" + _vm._s(_vm.data.id))]),
-        _vm._v(
-          '\n  "' +
-            _vm._s(_vm.data.name) +
-            '" を削除します。一度削除されたデータは元に戻す事ができません。\n  '
-        ),
-        _c("div", { staticClass: "margin text-right" }, [
-          _c(
-            "button",
-            {
-              staticClass: "button warning",
-              attrs: { disabled: !_vm.button.cancel },
-              on: {
-                click: function($event) {
-                  _vm.closeModal()
-                }
+  return _c(
+    "div",
+    { staticClass: "login column column-md-50 column-md-offset-25" },
+    [
+      _c("div", { staticClass: "panel" }, [
+        _c("h1", { staticClass: "text-center" }, [_vm._v("Application")]),
+        _vm._v(" "),
+        _c("h2", [_vm._v("Login")]),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            attrs: { action: _vm.action, method: "post" },
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                _vm.login($event)
               }
-            },
-            [_vm._v("Cancel")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "button primary",
-              attrs: { disabled: !_vm.button.done },
-              on: {
-                click: function($event) {
-                  _vm.destroy()
-                }
-              }
-            },
-            [_vm._v("Apply")]
-          )
-        ])
+            }
+          },
+          [
+            _c("fieldset", [
+              _c("input", {
+                attrs: { type: "hidden", name: "_csrf" },
+                domProps: { value: _vm.token }
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "form-item" },
+                [
+                  _c("label", { attrs: { for: "name" } }, [
+                    _vm._v("user name or e-mail ")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.user.account,
+                        expression: "user.account"
+                      }
+                    ],
+                    class: _vm.validationClass(_vm.errors, "account"),
+                    attrs: {
+                      type: "text",
+                      name: "account",
+                      placeholder: "user name or e-mail"
+                    },
+                    domProps: { value: _vm.user.account },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.user.account = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.errors.account, function(e) {
+                    return _c("div", { staticClass: "errors" }, [
+                      _c("span", {
+                        staticClass: "typcn typcn-warning-outline"
+                      }),
+                      _vm._v(" " + _vm._s(e.message) + " ")
+                    ])
+                  })
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "form-item" },
+                [
+                  _c("label", { attrs: { for: "password" } }, [
+                    _vm._v("Password")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.user.password,
+                        expression: "user.password"
+                      }
+                    ],
+                    class: _vm.validationClass(_vm.errors, "password"),
+                    attrs: {
+                      type: "password",
+                      name: "password",
+                      placeholder: "password"
+                    },
+                    domProps: { value: _vm.user.password },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.user.password = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm._l(_vm.errors.password, function(e) {
+                    return _c("div", { staticClass: "errors" }, [
+                      _c("span", {
+                        staticClass: "typcn typcn-warning-outline"
+                      }),
+                      _vm._v(" " + _vm._s(e.message) + " ")
+                    ])
+                  })
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                class: _vm.validationClass(_vm.errors, "submit"),
+                attrs: { type: "submit" }
+              },
+              [_vm._v("Login")]
+            )
+          ]
+        )
       ])
-    : _vm._e()
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -189,7 +318,7 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-240a0082", esExports)
+     require("vue-hot-reload-api").rerender("data-v-2756e128", esExports)
   }
 }
 

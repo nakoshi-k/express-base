@@ -1,4 +1,4 @@
-import  Vue , {mixin,ComponentOptions } from 'vue';
+import Vue , {mixin,ComponentOptions } from 'vue';
 import App from './app.vue';
 import { createRouter } from './client_router';
 import { createStore } from './store';

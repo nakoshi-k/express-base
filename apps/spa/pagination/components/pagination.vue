@@ -98,7 +98,7 @@ export default class pagintaion extends Vue {
     format( number : number ) {
       let query = this.pagination.queryPrams;
       let httpQuery = bq.http(query)
-      return `${this.mount}/page/${number}/${httpQuery}`
+      return `/${this.mount}/page/${number}/${httpQuery}`
     }
 
 
