@@ -61,7 +61,6 @@ class router extends apps_router_1.router {
             return new Promise(appRender);
         };
         this.view = (req, res, next) => {
-            console.log("view");
             let feeds = new feeds_1.feeds();
             feeds.init(req, res);
             const context = {

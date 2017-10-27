@@ -84,7 +84,6 @@ export class router extends core_router{
     }
 
     private view = (req : request,res: response, next :next) => {
-        console.log("view");
         let feeds = new resources_feeds();
         feeds.init(req,res);
 
