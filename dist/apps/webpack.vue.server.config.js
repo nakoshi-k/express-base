@@ -6,7 +6,7 @@ module.exports  = {
             output: {
                 libraryTarget : "commonjs",
                 path: __dirname + "/spa/server/"  ,
-                filename: 'bundle-server.js',
+                filename: 'bundle-server.js'
             },
             resolve: {
                 // extensionsに'.ts'を追加

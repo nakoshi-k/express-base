@@ -1,14 +1,14 @@
 webpackJsonp([1],{
 
-/***/ 109:
+/***/ 122:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__search_vue__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__search_vue__ = __webpack_require__(123);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -34,7 +34,7 @@ let sub = class sub extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
 sub = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
         name: 'sub',
-        computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])('tasks', {
+        computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])('users', {
             mount: ({ mount }) => mount
         })),
         components: { "app-search": __WEBPACK_IMPORTED_MODULE_3__search_vue__["a" /* default */] }
@@ -45,14 +45,14 @@ sub = __decorate([
 
 /***/ }),
 
-/***/ 110:
+/***/ 123:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue__ = __webpack_require__(111);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_4aa0468a_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_search_vue__ = __webpack_require__(112);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue__ = __webpack_require__(124);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_42a11096_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_search_vue__ = __webpack_require__(125);
 var disposed = false
-var normalizeComponent = __webpack_require__(7)
+var normalizeComponent = __webpack_require__(10)
 /* script */
 
 /* template */
@@ -65,12 +65,12 @@ var __vue_scopeId__ = null
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_search_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_4aa0468a_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_search_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_42a11096_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_search_vue__["a" /* default */],
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "apps/spa/tasks/components/search.vue"
+Component.options.__file = "apps/spa/users/components/search.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] search.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -81,9 +81,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4aa0468a", Component.options)
+    hotAPI.createRecord("data-v-42a11096", Component.options)
   } else {
-    hotAPI.reload("data-v-4aa0468a", Component.options)
+    hotAPI.reload("data-v-42a11096", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -95,19 +95,19 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 111:
+/***/ 124:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_flatpickr__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_flatpickr__ = __webpack_require__(74);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_flatpickr___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_flatpickr__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__base_sideless_build_query__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__base_sideless_build_query__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -136,8 +136,13 @@ let search = class search extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
         super(...arguments);
         this.frm = {
             "id": "",
-            "title": "",
-            "priod": "",
+            "name": "",
+            "mail": "",
+            "group_id": "",
+            "access_token": "",
+            "refresh_token": "",
+            "new_password": "",
+            "confirm_password": "",
             "created_at": "",
             "updated_at": "",
         };
@@ -167,7 +172,7 @@ let search = class search extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
 search = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
         name: 'find',
-        computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])('tasks', {
+        computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])('users', {
             mount: ({ mount }) => mount
         }))
     })
@@ -177,7 +182,7 @@ search = __decorate([
 
 /***/ }),
 
-/***/ 112:
+/***/ 125:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -222,53 +227,71 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
+          _c("label", { attrs: { for: "name" } }, [_vm._v("Name")]),
           _vm._v(" "),
           _c("input", {
             directives: [
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.frm.title,
-                expression: "frm.title"
+                value: _vm.frm.name,
+                expression: "frm.name"
               }
             ],
-            attrs: { type: "text", name: "title", placeholder: "title" },
-            domProps: { value: _vm.frm.title },
+            attrs: { type: "text", name: "name", placeholder: "name" },
+            domProps: { value: _vm.frm.name },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.frm.title = $event.target.value
+                _vm.frm.name = $event.target.value
               }
             }
           }),
           _vm._v(" "),
-          _c("label", { attrs: { for: "priod" } }, [_vm._v("Priod")]),
+          _c("label", { attrs: { for: "mail" } }, [_vm._v("Mail")]),
           _vm._v(" "),
           _c("input", {
             directives: [
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.frm.priod,
-                expression: "frm.priod"
+                value: _vm.frm.mail,
+                expression: "frm.mail"
               }
             ],
-            staticClass: "calendar",
-            attrs: {
-              type: "datetime-local",
-              name: "priod",
-              placeholder: "priod"
-            },
-            domProps: { value: _vm.frm.priod },
+            attrs: { type: "email", name: "mail", placeholder: "mail" },
+            domProps: { value: _vm.frm.mail },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.frm.priod = $event.target.value
+                _vm.frm.mail = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("label", { attrs: { for: "group_id" } }, [_vm._v("Group")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.frm.group_id,
+                expression: "frm.group_id"
+              }
+            ],
+            attrs: { type: "text", name: "group_id", placeholder: "group_id" },
+            domProps: { value: _vm.frm.group_id },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.frm.group_id = $event.target.value
               }
             }
           }),
@@ -369,13 +392,13 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-4aa0468a", esExports)
+     require("vue-hot-reload-api").rerender("data-v-42a11096", esExports)
   }
 }
 
 /***/ }),
 
-/***/ 113:
+/***/ 126:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -425,21 +448,21 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-4c7c7b86", esExports)
+     require("vue-hot-reload-api").rerender("data-v-0a1e9983", esExports)
   }
 }
 
 /***/ }),
 
-/***/ 69:
+/***/ 67:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_sub_vue__ = __webpack_require__(109);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_4c7c7b86_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_sub_vue__ = __webpack_require__(113);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_sub_vue__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_0a1e9983_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_sub_vue__ = __webpack_require__(126);
 var disposed = false
-var normalizeComponent = __webpack_require__(7)
+var normalizeComponent = __webpack_require__(10)
 /* script */
 
 /* template */
@@ -452,12 +475,12 @@ var __vue_scopeId__ = null
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_sub_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_4c7c7b86_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_sub_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_0a1e9983_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_sub_vue__["a" /* default */],
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "apps/spa/tasks/components/sub.vue"
+Component.options.__file = "apps/spa/users/components/sub.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] sub.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -468,9 +491,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4c7c7b86", Component.options)
+    hotAPI.createRecord("data-v-0a1e9983", Component.options)
   } else {
-    hotAPI.reload("data-v-4c7c7b86", Component.options)
+    hotAPI.reload("data-v-0a1e9983", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -482,7 +505,7 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 79:
+/***/ 74:
 /***/ (function(module, exports) {
 
 /*! flatpickr v3.0.6, @license MIT */
@@ -490,7 +513,7 @@ function FlatpickrInstance(e,t){function n(e){return e.bind(De)}function a(e){De
 
 /***/ }),
 
-/***/ 80:
+/***/ 75:
 /***/ (function(module, exports, __webpack_require__) {
 
 function confirmDatePlugin(pluginConfig) {

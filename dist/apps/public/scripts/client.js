@@ -29,7 +29,7 @@
 /******/
 /******/ 	// objects to store loaded and loading chunks
 /******/ 	var installedChunks = {
-/******/ 		18: 0
+/******/ 		20: 0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -142,11 +142,199 @@
 /******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 17);
+/******/ 	return __webpack_require__(__webpack_require__.s = 16);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class store_module {
+    set state(state) {
+        this._state = state;
+    }
+    set actions(actions) {
+        this._actions = actions;
+    }
+    set mutations(mutations) {
+        this._mutations = mutations;
+    }
+    set getters(getters) {
+        this._getters = getters;
+    }
+    store() {
+        return {
+            namespaced: true,
+            state: this._state,
+            actions: this._actions,
+            mutations: this._mutations,
+            getters: this._getters,
+        };
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = store_module;
+
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class mutations {
+    constructor() {
+        this.map = (call) => {
+            if (call === "all") {
+                call = Object.keys(this);
+            }
+            let map = {};
+            for (let idx in call) {
+                if (typeof this[call[idx]] === 'undefined') {
+                    continue;
+                }
+                if (call[idx].charAt(0) === '_') {
+                    continue;
+                }
+                if (call[idx] === 'map') {
+                    continue;
+                }
+                if (call[idx] === 'constructor') {
+                    continue;
+                }
+                if (typeof idx === 'number') {
+                    map[call[String(idx)]] = this[call[String(idx)]];
+                    continue;
+                }
+                map[call[idx]] = this[call[idx]];
+            }
+            return map;
+        };
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = mutations;
+
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class actions {
+    constructor() {
+        this.map = (call) => {
+            if (call === "all") {
+                call = Object.keys(this);
+            }
+            let map = {};
+            for (let idx in call) {
+                if (typeof this[call[idx]] === 'undefined') {
+                    continue;
+                }
+                if (call[idx].charAt(0) === '_') {
+                    continue;
+                }
+                if (call[idx] === 'map') {
+                    continue;
+                }
+                if (call[idx] === 'constructor') {
+                    continue;
+                }
+                if (typeof idx === 'number') {
+                    map[call[String(idx)]] = this[call[String(idx)]];
+                    continue;
+                }
+                map[call[idx]] = this[call[idx]];
+            }
+            return map;
+        };
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = actions;
+
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class state {
+    constructor() {
+        this.map = (call) => {
+            if (call === "all") {
+                call = Object.keys(this);
+            }
+            let map = {};
+            for (let idx in call) {
+                if (typeof this[call[idx]] === 'undefined') {
+                    continue;
+                }
+                if (call[idx].charAt(0) === '_') {
+                    continue;
+                }
+                if (call[idx] === 'map') {
+                    continue;
+                }
+                if (call[idx] === 'constructor') {
+                    continue;
+                }
+                if (typeof idx === 'number') {
+                    map[call[String(idx)]] = this[call[String(idx)]];
+                    continue;
+                }
+                map[call[idx]] = this[call[idx]];
+            }
+            return map;
+        };
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = state;
+
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class getters {
+    constructor() {
+        this.map = (call) => {
+            if (call === "all") {
+                call = Object.keys(this);
+            }
+            let map = {};
+            for (let idx in call) {
+                if (typeof this[call[idx]] === 'undefined') {
+                    continue;
+                }
+                if (call[idx].charAt(0) === '_') {
+                    continue;
+                }
+                if (call[idx] === 'map') {
+                    continue;
+                }
+                if (call[idx] === 'constructor') {
+                    continue;
+                }
+                if (typeof idx === 'number') {
+                    map[call[String(idx)]] = this[call[String(idx)]];
+                    continue;
+                }
+                map[call[idx]] = this[call[idx]];
+            }
+            return map;
+        };
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = getters;
+
+
+
+/***/ }),
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10342,195 +10530,7 @@ Vue$3.compile = compileToFunctions;
 
 /* harmony default export */ __webpack_exports__["default"] = (Vue$3);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(6), __webpack_require__(19)))
-
-/***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class store_module {
-    set state(state) {
-        this._state = state;
-    }
-    set actions(actions) {
-        this._actions = actions;
-    }
-    set mutations(mutations) {
-        this._mutations = mutations;
-    }
-    set getters(getters) {
-        this._getters = getters;
-    }
-    store() {
-        return {
-            namespaced: true,
-            state: this._state,
-            actions: this._actions,
-            mutations: this._mutations,
-            getters: this._getters,
-        };
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = store_module;
-
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class mutations {
-    constructor() {
-        this.map = (call) => {
-            if (call === "all") {
-                call = Object.keys(this);
-            }
-            let map = {};
-            for (let idx in call) {
-                if (typeof this[call[idx]] === 'undefined') {
-                    continue;
-                }
-                if (call[idx].charAt(0) === '_') {
-                    continue;
-                }
-                if (call[idx] === 'map') {
-                    continue;
-                }
-                if (call[idx] === 'constructor') {
-                    continue;
-                }
-                if (typeof idx === 'number') {
-                    map[call[String(idx)]] = this[call[String(idx)]];
-                    continue;
-                }
-                map[call[idx]] = this[call[idx]];
-            }
-            return map;
-        };
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = mutations;
-
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class actions {
-    constructor() {
-        this.map = (call) => {
-            if (call === "all") {
-                call = Object.keys(this);
-            }
-            let map = {};
-            for (let idx in call) {
-                if (typeof this[call[idx]] === 'undefined') {
-                    continue;
-                }
-                if (call[idx].charAt(0) === '_') {
-                    continue;
-                }
-                if (call[idx] === 'map') {
-                    continue;
-                }
-                if (call[idx] === 'constructor') {
-                    continue;
-                }
-                if (typeof idx === 'number') {
-                    map[call[String(idx)]] = this[call[String(idx)]];
-                    continue;
-                }
-                map[call[idx]] = this[call[idx]];
-            }
-            return map;
-        };
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = actions;
-
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class state {
-    constructor() {
-        this.map = (call) => {
-            if (call === "all") {
-                call = Object.keys(this);
-            }
-            let map = {};
-            for (let idx in call) {
-                if (typeof this[call[idx]] === 'undefined') {
-                    continue;
-                }
-                if (call[idx].charAt(0) === '_') {
-                    continue;
-                }
-                if (call[idx] === 'map') {
-                    continue;
-                }
-                if (call[idx] === 'constructor') {
-                    continue;
-                }
-                if (typeof idx === 'number') {
-                    map[call[String(idx)]] = this[call[String(idx)]];
-                    continue;
-                }
-                map[call[idx]] = this[call[idx]];
-            }
-            return map;
-        };
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = state;
-
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class getters {
-    constructor() {
-        this.map = (call) => {
-            if (call === "all") {
-                call = Object.keys(this);
-            }
-            let map = {};
-            for (let idx in call) {
-                if (typeof this[call[idx]] === 'undefined') {
-                    continue;
-                }
-                if (call[idx].charAt(0) === '_') {
-                    continue;
-                }
-                if (call[idx] === 'map') {
-                    continue;
-                }
-                if (call[idx] === 'constructor') {
-                    continue;
-                }
-                if (typeof idx === 'number') {
-                    map[call[String(idx)]] = this[call[String(idx)]];
-                    continue;
-                }
-                map[call[idx]] = this[call[idx]];
-            }
-            return map;
-        };
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = getters;
-
-
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(6), __webpack_require__(18)))
 
 /***/ }),
 /* 6 */
@@ -10724,6 +10724,222 @@ process.umask = function() { return 0; };
 
 /***/ }),
 /* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class client_fetch {
+    constructor() {
+        this._options = {
+            credentials: 'same-origin',
+            method: "get",
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/json'
+            }
+        };
+        this.fetch = (url, options) => {
+            let base = this.options;
+            if (options.headers) {
+                options.headers = Object.assign(base.headers, options.headers);
+            }
+            options = Object.assign(base, options);
+            let client = (resolve, reject) => {
+                fetch(url, options)
+                    .then((response) => {
+                    //deleted
+                    if (response.status === 204) {
+                        resolve(response.status);
+                        return;
+                    }
+                    response.json().then(r => {
+                        if (response.status < 200 || response.status > 300) {
+                            reject(r);
+                            return;
+                        }
+                        resolve(r);
+                    });
+                }).catch((err) => {
+                    reject(err);
+                });
+            };
+            return new Promise(client);
+        };
+    }
+    get options() {
+        return Object.create(this._options);
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = client_fetch;
+
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class resource {
+    is_server() {
+        if (typeof window === "undefined") {
+            return true;
+        }
+        return false;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = resource;
+
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_sideless_build_query__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__client_fetch__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_route_parse__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__resource__ = __webpack_require__(8);
+
+
+
+
+let client = new __WEBPACK_IMPORTED_MODULE_1__client_fetch__["a" /* client_fetch */]();
+class internal_crud extends __WEBPACK_IMPORTED_MODULE_3__resource__["a" /* resource */] {
+    constructor(options) {
+        super();
+        this.endPoint = "";
+        this.client = (url, options) => {
+            return client.fetch(url, options);
+        };
+        this.serverPagination = (route) => {
+            let serverPagination = (resolve, reject) => {
+                let service = this.feeds.service(this.resource);
+                let pagination = this.feeds.pagination(this.resource);
+                let conditions = service.conditions(route);
+                let entities = pagination.find(conditions, route.query);
+                let name = this.resource;
+                let data = {};
+                entities.then((result) => {
+                    if (result.rows.length === 0) {
+                        reject(false);
+                    }
+                    ;
+                    data[name] = result.rows;
+                    data["page"] = result.pagination;
+                    resolve(data);
+                }).catch((error) => {
+                    data[name] = {};
+                    data["page"] = {};
+                    reject(error);
+                });
+            };
+            return serverPagination;
+        };
+        this.serverEntity = (route) => {
+            let serverEntity = (resolve, reject) => {
+                let model = this.feeds.model(this.resource);
+                let data = {};
+                model.findById(route.params.id).then((result) => {
+                    if (!result) {
+                        reject();
+                        throw Error;
+                    }
+                    resolve(result);
+                }).catch((err) => {
+                    reject(err);
+                });
+            };
+            return serverEntity;
+        };
+        this.server = (type, route) => {
+            let server;
+            if (type === "paginate") {
+                server = this.serverPagination(route);
+            }
+            if (type === "entity") {
+                server = this.serverEntity(route);
+            }
+            return new Promise(server);
+        };
+        this.paginate = (route) => {
+            let bq = new __WEBPACK_IMPORTED_MODULE_0__base_sideless_build_query__["a" /* build_query */]();
+            let URI = `${this.endPoint}/${__WEBPACK_IMPORTED_MODULE_2__utilities_route_parse__["a" /* default */].parse(route)}${bq.http(route.query)}`;
+            if (this.is_server()) {
+                return this.server("paginate", route);
+            }
+            return this.client(URI, {});
+        };
+        this.entity = (route) => {
+            let id = route.params.id;
+            let URI = `${this.endPoint}/${id}`;
+            if (this.is_server()) {
+                return this.server("entity", route);
+            }
+            return this.client(URI, {});
+        };
+        this.insert = (entity, token) => {
+            entity = JSON.stringify(entity);
+            let URI = this.endPoint;
+            let insert = (resolve, reject) => {
+                this.client(URI, {
+                    body: entity,
+                    method: "post",
+                    headers: {
+                        'X-XSRF-Token': token
+                    }
+                }).then(r => {
+                    resolve(r);
+                }).catch(e => {
+                    reject(e);
+                });
+            };
+            return new Promise(insert);
+        };
+        this.update = (entity, token) => {
+            let URI = this.endPoint + "/" + entity.id;
+            entity = JSON.stringify(entity);
+            let insert = (resolve, reject) => {
+                this.client(URI, {
+                    body: entity,
+                    method: "put",
+                    headers: {
+                        'X-XSRF-Token': token
+                    }
+                }).then(r => {
+                    resolve(r);
+                }).catch(e => {
+                    reject(e);
+                });
+            };
+            return new Promise(insert);
+        };
+        this.delete = (id, token) => {
+            let URI = this.endPoint + "/" + id;
+            let del = (resolve, reject) => {
+                this.client(URI, {
+                    method: "delete",
+                    headers: {
+                        'X-XSRF-Token': token
+                    }
+                }).then(r => {
+                    resolve("api delete ok");
+                }).catch(e => {
+                    reject("api delete error");
+                });
+            };
+            return new Promise(del);
+        };
+        this.endPoint = options.endPoint;
+        this.resource = options.resource;
+        this.feeds = options.feeds;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = internal_crud;
+
+
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -10820,7 +11036,7 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 8 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10835,7 +11051,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var Vue = _interopDefault(__webpack_require__(0));
+var Vue = _interopDefault(__webpack_require__(5));
 
 function createDecorator(factory) {
     return function (target, key, index) {
@@ -10966,7 +11182,7 @@ exports.createDecorator = createDecorator;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ }),
-/* 9 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11877,13 +12093,38 @@ var index_esm = {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(6)))
 
 /***/ }),
-/* 10 */,
-/* 11 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__client_fetch__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__resource__ = __webpack_require__(13);
+class build_query {
+    http(query) {
+        let prts = query;
+        if (prts.length === 0) {
+            return "";
+        }
+        let q = "";
+        Object.keys(prts).forEach(function (key) {
+            if (!prts[key]) {
+                return;
+            }
+            q += `&${encodeURIComponent(key)}=${encodeURIComponent(prts[key])}`;
+        });
+        return q.replace("&", "?");
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = build_query;
+
+
+
+/***/ }),
+/* 14 */,
+/* 15 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__client_fetch__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__resource__ = __webpack_require__(8);
 
 
 let client = new __WEBPACK_IMPORTED_MODULE_0__client_fetch__["a" /* client_fetch */]();
@@ -11955,254 +12196,12 @@ class auth extends __WEBPACK_IMPORTED_MODULE_1__resource__["a" /* resource */] {
 
 
 /***/ }),
-/* 12 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class client_fetch {
-    constructor() {
-        this._options = {
-            credentials: 'same-origin',
-            method: "get",
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Content-Type': 'application/json'
-            }
-        };
-        this.fetch = (url, options) => {
-            let base = this.options;
-            if (options.headers) {
-                options.headers = Object.assign(base.headers, options.headers);
-            }
-            options = Object.assign(base, options);
-            let client = (resolve, reject) => {
-                fetch(url, options)
-                    .then((response) => {
-                    //deleted
-                    if (response.status === 204) {
-                        resolve(response.status);
-                        return;
-                    }
-                    response.json().then(r => {
-                        if (response.status < 200 || response.status > 300) {
-                            reject(r);
-                            return;
-                        }
-                        resolve(r);
-                    });
-                }).catch((err) => {
-                    reject(err);
-                });
-            };
-            return new Promise(client);
-        };
-    }
-    get options() {
-        return Object.create(this._options);
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = client_fetch;
-
-
-
-/***/ }),
-/* 13 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class resource {
-    is_server() {
-        if (typeof window === "undefined") {
-            return true;
-        }
-        return false;
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = resource;
-
-
-
-/***/ }),
-/* 14 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_sideless_build_query__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__client_fetch__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_route_parse__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__resource__ = __webpack_require__(13);
-
-
-
-
-let client = new __WEBPACK_IMPORTED_MODULE_1__client_fetch__["a" /* client_fetch */]();
-class internal_crud extends __WEBPACK_IMPORTED_MODULE_3__resource__["a" /* resource */] {
-    constructor(options) {
-        super();
-        this.endPoint = "";
-        this.client = (url, options) => {
-            return client.fetch(url, options);
-        };
-        this.serverPagination = (route) => {
-            let serverPagination = (resolve, reject) => {
-                let service = this.feeds.service(this.resource);
-                let pagination = this.feeds.pagination(this.resource);
-                let conditions = service.conditions(route);
-                let entities = pagination.find(conditions, route.query);
-                let name = this.resource;
-                let data = {};
-                entities.then((result) => {
-                    if (result.rows.length === 0) {
-                        reject(false);
-                    }
-                    ;
-                    data[name] = result.rows;
-                    data["page"] = result.pagination;
-                    resolve(data);
-                }).catch((error) => {
-                    data[name] = {};
-                    data["page"] = {};
-                    reject(error);
-                });
-            };
-            return serverPagination;
-        };
-        this.serverEntity = (route) => {
-            let serverEntity = (resolve, reject) => {
-                let model = this.feeds.model(this.resource);
-                let data = {};
-                model.findById(route.params.id).then((result) => {
-                    if (!result) {
-                        reject();
-                        throw Error;
-                    }
-                    resolve(result);
-                }).catch((err) => {
-                    reject(err);
-                });
-            };
-            return serverEntity;
-        };
-        this.server = (type, route) => {
-            let server;
-            if (type === "paginate") {
-                server = this.serverPagination(route);
-            }
-            if (type === "entity") {
-                server = this.serverEntity(route);
-            }
-            return new Promise(server);
-        };
-        this.paginate = (route) => {
-            let bq = new __WEBPACK_IMPORTED_MODULE_0__base_sideless_build_query__["a" /* build_query */]();
-            let URI = `${this.endPoint}/${__WEBPACK_IMPORTED_MODULE_2__utilities_route_parse__["a" /* default */].parse(route)}${bq.http(route.query)}`;
-            if (this.is_server()) {
-                return this.server("paginate", route);
-            }
-            return this.client(URI, {});
-        };
-        this.entity = (route) => {
-            let id = route.params.id;
-            let URI = `${this.endPoint}/${id}`;
-            if (this.is_server()) {
-                return this.server("entity", route);
-            }
-            return this.client(URI, {});
-        };
-        this.insert = (entity, token) => {
-            entity = JSON.stringify(entity);
-            let URI = this.endPoint;
-            let insert = (resolve, reject) => {
-                this.client(URI, {
-                    body: entity,
-                    method: "post",
-                    headers: {
-                        'X-XSRF-Token': token
-                    }
-                }).then(r => {
-                    resolve(r);
-                }).catch(e => {
-                    reject(e);
-                });
-            };
-            return new Promise(insert);
-        };
-        this.update = (entity, token) => {
-            let URI = this.endPoint + "/" + entity.id;
-            entity = JSON.stringify(entity);
-            let insert = (resolve, reject) => {
-                this.client(URI, {
-                    body: entity,
-                    method: "put",
-                    headers: {
-                        'X-XSRF-Token': token
-                    }
-                }).then(r => {
-                    resolve(r);
-                }).catch(e => {
-                    reject(e);
-                });
-            };
-            return new Promise(insert);
-        };
-        this.delete = (id, token) => {
-            let URI = this.endPoint + "/" + id;
-            let del = (resolve, reject) => {
-                this.client(URI, {
-                    method: "delete",
-                    headers: {
-                        'X-XSRF-Token': token
-                    }
-                }).then(r => {
-                    resolve("api delete ok");
-                }).catch(e => {
-                    reject("api delete error");
-                });
-            };
-            return new Promise(del);
-        };
-        this.endPoint = options.endPoint;
-        this.resource = options.resource;
-        this.feeds = options.feeds;
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = internal_crud;
-
-
-
-/***/ }),
-/* 15 */,
 /* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-class build_query {
-    http(query) {
-        let prts = query;
-        if (prts.length === 0) {
-            return "";
-        }
-        let q = "";
-        Object.keys(prts).forEach(function (key) {
-            if (!prts[key]) {
-                return;
-            }
-            q += `&${encodeURIComponent(key)}=${encodeURIComponent(prts[key])}`;
-        });
-        return q.replace("&", "?");
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = build_query;
-
-
-
-/***/ }),
-/* 17 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__application__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__application__ = __webpack_require__(17);
 
 const { app, router, store } = Object(__WEBPACK_IMPORTED_MODULE_0__application__["a" /* createApp */])({});
 if (window["__INITIAL_STATE__"]) {
@@ -12212,16 +12211,16 @@ app.$mount("#application");
 
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = createApp;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_vue__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__client_router__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex_router_sync__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_vue__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__client_router__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex_router_sync__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex_router_sync___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vuex_router_sync__);
 
 
@@ -12277,7 +12276,7 @@ function createApp(feeds) {
 
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports) {
 
 var g;
@@ -12304,14 +12303,14 @@ module.exports = g;
 
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_app_vue__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_dba65148_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_app_vue__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_app_vue__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_dba65148_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_app_vue__ = __webpack_require__(21);
 var disposed = false
-var normalizeComponent = __webpack_require__(7)
+var normalizeComponent = __webpack_require__(10)
 /* script */
 
 /* template */
@@ -12353,12 +12352,12 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -12389,9 +12388,9 @@ app = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
         name: 'app',
         components: {
-            "app-overlay": () => __webpack_require__.e/* import() */(13).then(__webpack_require__.bind(null, 65)),
-            "app-modal": () => __webpack_require__.e/* import() */(12).then(__webpack_require__.bind(null, 66)),
-            "app-offset": () => __webpack_require__.e/* import() */(3).then(__webpack_require__.bind(null, 67))
+            "app-overlay": () => __webpack_require__.e/* import() */(14).then(__webpack_require__.bind(null, 59)),
+            "app-modal": () => __webpack_require__.e/* import() */(13).then(__webpack_require__.bind(null, 60)),
+            "app-offset": () => __webpack_require__.e/* import() */(3).then(__webpack_require__.bind(null, 61))
         }
     })
 ], app);
@@ -12399,7 +12398,7 @@ app = __decorate([
 
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12459,15 +12458,15 @@ if (false) {
 }
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = createRouter;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__tasks_spa_router__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__users_spa_router__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__tasks_spa_router__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__users_spa_router__ = __webpack_require__(25);
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue__["default"].use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]);
@@ -12485,7 +12484,7 @@ function createRouter() {
 
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14998,16 +14997,16 @@ if (inBrowser && window.Vue) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(6)))
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-const navigation = () => __webpack_require__.e/* import() */(19/* duplicate */).then(__webpack_require__.bind(null, 10));
-const sub = () => __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 69));
-const idx = () => __webpack_require__.e/* import() */(11).then(__webpack_require__.bind(null, 70));
-const add = () => __webpack_require__.e/* import() */(7).then(__webpack_require__.bind(null, 71));
-const view = () => __webpack_require__.e/* import() */(10).then(__webpack_require__.bind(null, 72));
-const edit = () => __webpack_require__.e/* import() */(6).then(__webpack_require__.bind(null, 73));
+const navigation = () => __webpack_require__.e/* import() */(0/* duplicate */).then(__webpack_require__.bind(null, 14));
+const sub = () => __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, 62));
+const idx = () => __webpack_require__.e/* import() */(12).then(__webpack_require__.bind(null, 63));
+const add = () => __webpack_require__.e/* import() */(7).then(__webpack_require__.bind(null, 64));
+const view = () => __webpack_require__.e/* import() */(11).then(__webpack_require__.bind(null, 65));
+const edit = () => __webpack_require__.e/* import() */(6).then(__webpack_require__.bind(null, 66));
 const mount = "/tasks";
 /* harmony default export */ __webpack_exports__["a"] = ([
     { name: "tasks_page", path: `${mount}/page/:page*`, components: { main: idx, navi: navigation, sub: sub } },
@@ -15019,19 +15018,17 @@ const mount = "/tasks";
 
 
 /***/ }),
-/* 26 */,
-/* 27 */,
-/* 28 */
+/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-const navigation = () => __webpack_require__.e/* import() */(19).then(__webpack_require__.bind(null, 10));
-const sub = () => __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, 74));
-const idx = () => __webpack_require__.e/* import() */(25).then(__webpack_require__.bind(null, 75));
-const add = () => __webpack_require__.e/* import() */(5).then(__webpack_require__.bind(null, 76));
-const view = () => __webpack_require__.e/* import() */(9).then(__webpack_require__.bind(null, 77));
-const edit = () => __webpack_require__.e/* import() */(4).then(__webpack_require__.bind(null, 78));
-const login = () => __webpack_require__.e/* import() */(8).then(__webpack_require__.bind(null, 29));
+const navigation = () => __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, 14));
+const sub = () => __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 67));
+const idx = () => __webpack_require__.e/* import() */(10).then(__webpack_require__.bind(null, 68));
+const add = () => __webpack_require__.e/* import() */(5).then(__webpack_require__.bind(null, 69));
+const view = () => __webpack_require__.e/* import() */(9).then(__webpack_require__.bind(null, 70));
+const edit = () => __webpack_require__.e/* import() */(4).then(__webpack_require__.bind(null, 71));
+const login = () => __webpack_require__.e/* import() */(8).then(__webpack_require__.bind(null, 72));
 const mount = "/users";
 /* harmony default export */ __webpack_exports__["a"] = ([
     { name: "users_login", path: `${mount}/login`, components: { single: login } },
@@ -15044,22 +15041,19 @@ const mount = "/users";
 
 
 /***/ }),
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */
+/* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = createStore;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__loading_store_module__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modal_store_module__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__offset_store_module__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__tasks_store_module__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__users_store_module__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__auth_store_module__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__loading_store_module__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modal_store_module__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__offset_store_module__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__tasks_store_module__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__users_store_module__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__auth_store_module__ = __webpack_require__(53);
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue__["default"].use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
@@ -15102,15 +15096,15 @@ function createStore(feeds) {
 
 
 /***/ }),
-/* 33 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(31);
 
 
 
@@ -15130,11 +15124,11 @@ class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_mo
 
 
 /***/ }),
-/* 34 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(1);
 
 class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__["a" /* mutations */] {
     constructor(options) {
@@ -15171,11 +15165,11 @@ class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__
 
 
 /***/ }),
-/* 35 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(2);
 
 class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a" /* actions */] {
     constructor(options) {
@@ -15187,11 +15181,11 @@ class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a"
 
 
 /***/ }),
-/* 36 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(3);
 
 class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* state */] {
     constructor(options) {
@@ -15211,11 +15205,11 @@ class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* 
 
 
 /***/ }),
-/* 37 */
+/* 31 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(4);
 
 class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a" /* getters */] {
     constructor(options) {
@@ -15227,15 +15221,15 @@ class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a"
 
 
 /***/ }),
-/* 38 */
+/* 32 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(36);
 
 
 
@@ -15255,11 +15249,11 @@ class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_mo
 
 
 /***/ }),
-/* 39 */
+/* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(1);
 
 class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__["a" /* mutations */] {
     constructor(options) {
@@ -15288,11 +15282,11 @@ class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__
 
 
 /***/ }),
-/* 40 */
+/* 34 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(2);
 
 class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a" /* actions */] {
     constructor(options) {
@@ -15304,11 +15298,11 @@ class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a"
 
 
 /***/ }),
-/* 41 */
+/* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(3);
 
 class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* state */] {
     constructor(options) {
@@ -15327,11 +15321,11 @@ class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* 
 
 
 /***/ }),
-/* 42 */
+/* 36 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(4);
 
 class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a" /* getters */] {
     constructor(options) {
@@ -15343,15 +15337,15 @@ class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a"
 
 
 /***/ }),
-/* 43 */
+/* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(41);
 
 
 
@@ -15371,11 +15365,11 @@ class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_mo
 
 
 /***/ }),
-/* 44 */
+/* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(1);
 
 class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__["a" /* mutations */] {
     constructor(options) {
@@ -15404,11 +15398,11 @@ class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__
 
 
 /***/ }),
-/* 45 */
+/* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(2);
 
 class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a" /* actions */] {
     constructor(options) {
@@ -15420,11 +15414,11 @@ class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a"
 
 
 /***/ }),
-/* 46 */
+/* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(3);
 
 class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* state */] {
     constructor(options) {
@@ -15439,11 +15433,11 @@ class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* 
 
 
 /***/ }),
-/* 47 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(4);
 
 class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a" /* getters */] {
     constructor(options) {
@@ -15455,16 +15449,16 @@ class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a"
 
 
 /***/ }),
-/* 48 */
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(52);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__ = __webpack_require__(9);
 
 
 
@@ -15489,11 +15483,211 @@ class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_mo
 
 
 /***/ }),
+/* 43 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(1);
+
+class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__["a" /* mutations */] {
+    constructor(options) {
+        super();
+        this.setEntities = (state, paginate) => {
+            state.entities = paginate[this._resource];
+            state.page = paginate.page;
+        };
+        this.setEntity = (state, response) => {
+            state.entity = response;
+        };
+        this.updateEntity = (state, kv) => {
+            state.entity[kv.key] = kv.value;
+        };
+        this.setClearEntity = (state) => {
+            let entity = state.entity;
+            for (let key in entity) {
+                entity[key] = null;
+                if (key === "id" || key === "created_at" || key === "updated_at") {
+                    delete entity[key];
+                }
+                if (key === "errors") {
+                    entity[key] = [];
+                }
+            }
+        };
+        this.setErrors = (state, errors) => {
+            state.entity["errors"] = errors;
+        };
+        this._mount = options.mount;
+        this._resource = options.resource;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = mutations;
+
+
+
+/***/ }),
+/* 44 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(2);
+
+class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a" /* actions */] {
+    constructor(feeds) {
+        super();
+        this.fetchEntities = ({ commit, getters, state }, route) => {
+            let crud = getters.crud;
+            return crud.paginate(route).then((paginate) => {
+                commit("setEntities", paginate);
+            });
+        };
+        this.fetchEntity = ({ commit, getters, state }, route) => {
+            let crud = getters.crud;
+            return crud.entity(route).then((entity) => {
+                commit("setEntity", entity);
+            });
+        };
+        this.copyEntity = ({ commit, getters, state }, copy) => {
+            let route = {
+                params: {
+                    id: copy.id,
+                },
+                path: copy.mount + "/" + copy.id,
+            };
+            let crud = getters.crud;
+            return crud.entity(route).then((entity) => {
+                for (let key in entity) {
+                    if (key === "id" || key === "updated_at" || key === "created_at") {
+                        delete entity[key];
+                    }
+                }
+                commit("setEntity", entity);
+            });
+        };
+        this.insertEntity = ({ state, commit, getters }, token) => {
+            let crud = getters.crud;
+            return crud.insert(state.entity, token);
+        };
+        this.saveEntity = ({ state, commit, getters }, token) => {
+            let crud = getters.crud;
+            return crud.update(state.entity, token);
+        };
+        this.deleteEntity = ({ state, commit, getters }, delObj) => {
+            let crud = getters.crud;
+            return crud.delete(delObj.id, delObj.token);
+        };
+        this.clearEntity = ({ commit }) => {
+            return Promise.resolve(commit("setClearEntity"));
+        };
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = actions;
+
+
+
+/***/ }),
+/* 45 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(3);
+
+class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* state */] {
+    constructor(options) {
+        super();
+        this.mount = "";
+        this.entities = [];
+        this.entity = {};
+        this.page = {
+            totalPage: 1,
+            currentPage: 1,
+            queryPrams: {}
+        };
+        this.mount = options.resource;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = state;
+
+
+
+/***/ }),
+/* 46 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(4);
+
+class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a" /* getters */] {
+    constructor(options) {
+        super();
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = getters;
+
+
+
+/***/ }),
+/* 47 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class route_parse {
+    parse(route) {
+        let params = route.params;
+        let paramsStr = "";
+        for (let key in params) {
+            paramsStr = `${key}/${params[key]}`;
+        }
+        return paramsStr;
+    }
+}
+/* harmony default export */ __webpack_exports__["a"] = (new route_parse());
+
+
+/***/ }),
+/* 48 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__ = __webpack_require__(9);
+
+
+
+
+
+
+class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__["a" /* store_module */] {
+    constructor(feeds) {
+        super();
+        this.state = new __WEBPACK_IMPORTED_MODULE_3__stores_state__["a" /* state */](feeds).map("all");
+        this.actions = new __WEBPACK_IMPORTED_MODULE_2__stores_actions__["a" /* actions */](feeds).map("all");
+        this.mutations = new __WEBPACK_IMPORTED_MODULE_1__stores_mutations__["a" /* mutations */](feeds).map("all");
+        let local_getters = new __WEBPACK_IMPORTED_MODULE_4__stores_getters__["a" /* getters */](feeds).map("all");
+        let crud = () => {
+            return new __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__["a" /* internal_crud */]({
+                endPoint: "/api/users",
+                resource: "users",
+                feeds: feeds
+            });
+        };
+        this.getters = Object.assign({}, local_getters, { crud: crud });
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = store_module;
+
+
+
+/***/ }),
 /* 49 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(1);
 
 class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__["a" /* mutations */] {
     constructor(options) {
@@ -15536,7 +15730,7 @@ class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(2);
 
 class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a" /* actions */] {
     constructor(feeds) {
@@ -15596,7 +15790,7 @@ class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a"
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(3);
 
 class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* state */] {
     constructor(options) {
@@ -15621,7 +15815,7 @@ class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(4);
 
 class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a" /* getters */] {
     constructor(options) {
@@ -15637,212 +15831,12 @@ class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a"
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-class route_parse {
-    parse(route) {
-        let params = route.params;
-        let paramsStr = "";
-        for (let key in params) {
-            paramsStr = `${key}/${params[key]}`;
-        }
-        return paramsStr;
-    }
-}
-/* harmony default export */ __webpack_exports__["a"] = (new route_parse());
-
-
-/***/ }),
-/* 54 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(57);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(58);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__ = __webpack_require__(14);
-
-
-
-
-
-
-class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__["a" /* store_module */] {
-    constructor(feeds) {
-        super();
-        this.state = new __WEBPACK_IMPORTED_MODULE_3__stores_state__["a" /* state */](feeds).map("all");
-        this.actions = new __WEBPACK_IMPORTED_MODULE_2__stores_actions__["a" /* actions */](feeds).map("all");
-        this.mutations = new __WEBPACK_IMPORTED_MODULE_1__stores_mutations__["a" /* mutations */](feeds).map("all");
-        let local_getters = new __WEBPACK_IMPORTED_MODULE_4__stores_getters__["a" /* getters */](feeds).map("all");
-        let crud = () => {
-            return new __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__["a" /* internal_crud */]({
-                endPoint: "/api/users",
-                resource: "users",
-                feeds: feeds
-            });
-        };
-        this.getters = Object.assign({}, local_getters, { crud: crud });
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = store_module;
-
-
-
-/***/ }),
-/* 55 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(2);
-
-class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__["a" /* mutations */] {
-    constructor(options) {
-        super();
-        this.setEntities = (state, paginate) => {
-            state.entities = paginate[this._resource];
-            state.page = paginate.page;
-        };
-        this.setEntity = (state, response) => {
-            state.entity = response;
-        };
-        this.updateEntity = (state, kv) => {
-            state.entity[kv.key] = kv.value;
-        };
-        this.setClearEntity = (state) => {
-            let entity = state.entity;
-            for (let key in entity) {
-                entity[key] = null;
-                if (key === "id" || key === "created_at" || key === "updated_at") {
-                    delete entity[key];
-                }
-                if (key === "errors") {
-                    entity[key] = [];
-                }
-            }
-        };
-        this.setErrors = (state, errors) => {
-            state.entity["errors"] = errors;
-        };
-        this._mount = options.mount;
-        this._resource = options.resource;
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = mutations;
-
-
-
-/***/ }),
-/* 56 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(3);
-
-class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a" /* actions */] {
-    constructor(feeds) {
-        super();
-        this.fetchEntities = ({ commit, getters, state }, route) => {
-            let crud = getters.crud;
-            return crud.paginate(route).then((paginate) => {
-                commit("setEntities", paginate);
-            });
-        };
-        this.fetchEntity = ({ commit, getters, state }, route) => {
-            let crud = getters.crud;
-            return crud.entity(route).then((entity) => {
-                commit("setEntity", entity);
-            });
-        };
-        this.copyEntity = ({ commit, getters, state }, copy) => {
-            let route = {
-                params: {
-                    id: copy.id,
-                },
-                path: copy.mount + "/" + copy.id,
-            };
-            let crud = getters.crud;
-            return crud.entity(route).then((entity) => {
-                for (let key in entity) {
-                    if (key === "id" || key === "updated_at" || key === "created_at") {
-                        delete entity[key];
-                    }
-                }
-                commit("setEntity", entity);
-            });
-        };
-        this.insertEntity = ({ state, commit, getters }, token) => {
-            let crud = getters.crud;
-            return crud.insert(state.entity, token);
-        };
-        this.saveEntity = ({ state, commit, getters }, token) => {
-            let crud = getters.crud;
-            return crud.update(state.entity, token);
-        };
-        this.deleteEntity = ({ state, commit, getters }, delObj) => {
-            let crud = getters.crud;
-            return crud.delete(delObj.id, delObj.token);
-        };
-        this.clearEntity = ({ commit }) => {
-            return Promise.resolve(commit("setClearEntity"));
-        };
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = actions;
-
-
-
-/***/ }),
-/* 57 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(4);
-
-class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* state */] {
-    constructor(options) {
-        super();
-        this.mount = "";
-        this.entities = [];
-        this.entity = {};
-        this.page = {
-            totalPage: 1,
-            currentPage: 1,
-            queryPrams: {}
-        };
-        this.mount = options.resource;
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = state;
-
-
-
-/***/ }),
-/* 58 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(5);
-
-class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a" /* getters */] {
-    constructor(options) {
-        super();
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = getters;
-
-
-
-/***/ }),
-/* 59 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_auth__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_auth__ = __webpack_require__(15);
 
 
 
@@ -15869,11 +15863,11 @@ class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_mo
 
 
 /***/ }),
-/* 60 */
+/* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(1);
 
 class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__["a" /* mutations */] {
     constructor(options) {
@@ -15895,11 +15889,11 @@ class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__
 
 
 /***/ }),
-/* 61 */
+/* 55 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(2);
 
 class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a" /* actions */] {
     constructor(options) {
@@ -15923,11 +15917,11 @@ class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a"
 
 
 /***/ }),
-/* 62 */
+/* 56 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(3);
 
 class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* state */] {
     constructor(feeds) {
@@ -15947,11 +15941,11 @@ class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* 
 
 
 /***/ }),
-/* 63 */
+/* 57 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(4);
 
 class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a" /* getters */] {
     constructor(options) {
@@ -15963,7 +15957,7 @@ class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a"
 
 
 /***/ }),
-/* 64 */
+/* 58 */
 /***/ (function(module, exports) {
 
 exports.sync = function (store, router, options) {

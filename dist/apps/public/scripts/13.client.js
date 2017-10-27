@@ -1,14 +1,14 @@
 webpackJsonp([13],{
 
-/***/ 65:
+/***/ 60:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_over_lay_vue__ = __webpack_require__(85);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_79dbe67a_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_over_lay_vue__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_modal_vue__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1da2b52b_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_modal_vue__ = __webpack_require__(94);
 var disposed = false
-var normalizeComponent = __webpack_require__(7)
+var normalizeComponent = __webpack_require__(10)
 /* script */
 
 /* template */
@@ -20,15 +20,15 @@ var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_over_lay_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_79dbe67a_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_over_lay_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_modal_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1da2b52b_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_modal_vue__["a" /* default */],
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "apps/spa/loading/components/over_lay.vue"
+Component.options.__file = "apps/spa/modal/components/modal.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] over_lay.vue: functional components are not supported with templates, they should use render functions.")}
+if (Component.options.functional) {console.error("[vue-loader] modal.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -37,9 +37,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-79dbe67a", Component.options)
+    hotAPI.createRecord("data-v-1da2b52b", Component.options)
   } else {
-    hotAPI.reload("data-v-79dbe67a", Component.options)
+    hotAPI.reload("data-v-1da2b52b", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -51,14 +51,14 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 85:
+/***/ 87:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(12);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -78,27 +78,38 @@ __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-let over_lay = class over_lay extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
+let modal = class modal extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
+    close() {
+        if (this._close) {
+            this.closeModal();
+        }
+    }
+    get isDisable() {
+        return !this.close;
+    }
 };
-over_lay = __decorate([
+modal = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
-        name: "orver_lay",
-        components: {
-            "app-loading": () => __webpack_require__.e/* import() */(15).then(__webpack_require__.bind(null, 86)),
-        },
+        name: "modal",
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])([
             'domain', 'token'
-        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])("loading", {
-            overLay: ({ overLay }) => overLay,
+        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])('modal', {
+            'show': ({ show }) => show,
+            '_close': ({ close }) => close
         })),
+        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("modal", ["closeModal"])),
+        components: {
+            "modal-destroy": () => __webpack_require__.e/* import() */(19).then(__webpack_require__.bind(null, 88)),
+            "modal-login": () => __webpack_require__.e/* import() */(18).then(__webpack_require__.bind(null, 91))
+        }
     })
-], over_lay);
-/* harmony default export */ __webpack_exports__["a"] = (over_lay);
+], modal);
+/* harmony default export */ __webpack_exports__["a"] = (modal);
 
 
 /***/ }),
 
-/***/ 91:
+/***/ 94:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -106,22 +117,45 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("transition", { attrs: { name: "orverlay" } }, [
-        _vm.overLay
-          ? _c(
-              "div",
-              { staticClass: "over-lay", attrs: { id: "over-lay" } },
-              [_c("app-loading", [_vm._v("ローディング")])],
-              1
-            )
-          : _vm._e()
-      ])
-    ],
-    1
-  )
+  return _vm.show
+    ? _c(
+        "div",
+        {
+          staticClass: "modal-container",
+          attrs: { id: "modal-container" },
+          on: {
+            click: function($event) {
+              if ($event.target !== $event.currentTarget) {
+                return null
+              }
+              _vm.close()
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal" },
+            [
+              _c("modal-destroy"),
+              _vm._v(" "),
+              _c("modal-login"),
+              _vm._v(" "),
+              _c("span", {
+                staticClass: "close typcn typcn-delete large",
+                class: { disabled: _vm.isDisable },
+                on: {
+                  click: function($event) {
+                    _vm.close()
+                  }
+                }
+              })
+            ],
+            1
+          )
+        ]
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -130,7 +164,7 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-79dbe67a", esExports)
+     require("vue-hot-reload-api").rerender("data-v-1da2b52b", esExports)
   }
 }
 

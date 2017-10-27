@@ -1,14 +1,14 @@
 exports.ids = [13];
 exports.modules = {
 
-/***/ 63:
+/***/ 58:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_over_lay_vue__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_79dbe67a_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_over_lay_vue__ = __webpack_require__(89);
-var normalizeComponent = __webpack_require__(6)
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_modal_vue__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1da2b52b_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_modal_vue__ = __webpack_require__(92);
+var normalizeComponent = __webpack_require__(9)
 /* script */
 
 /* template */
@@ -18,32 +18,32 @@ var __vue_styles__ = null
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
-var __vue_module_identifier__ = "bd55321a"
+var __vue_module_identifier__ = "4b11e5dc"
 var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_over_lay_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_79dbe67a_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_over_lay_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_modal_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1da2b52b_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_modal_vue__["a" /* default */],
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "apps/spa/loading/components/over_lay.vue"
+Component.options.__file = "apps/spa/modal/components/modal.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] over_lay.vue: functional components are not supported with templates, they should use render functions.")}
+if (Component.options.functional) {console.error("[vue-loader] modal.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
 
 /***/ }),
 
-/***/ 83:
+/***/ 85:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(11);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -63,27 +63,38 @@ __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-let over_lay = class over_lay extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
+let modal = class modal extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
+    close() {
+        if (this._close) {
+            this.closeModal();
+        }
+    }
+    get isDisable() {
+        return !this.close;
+    }
 };
-over_lay = __decorate([
+modal = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
-        name: "orver_lay",
-        components: {
-            "app-loading": () => __webpack_require__.e/* import() */(15).then(__webpack_require__.bind(null, 84)),
-        },
+        name: "modal",
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])([
             'domain', 'token'
-        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])("loading", {
-            overLay: ({ overLay }) => overLay,
+        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])('modal', {
+            'show': ({ show }) => show,
+            '_close': ({ close }) => close
         })),
+        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("modal", ["closeModal"])),
+        components: {
+            "modal-destroy": () => __webpack_require__.e/* import() */(19).then(__webpack_require__.bind(null, 86)),
+            "modal-login": () => __webpack_require__.e/* import() */(18).then(__webpack_require__.bind(null, 89))
+        }
     })
-], over_lay);
-/* harmony default export */ __webpack_exports__["a"] = (over_lay);
+], modal);
+/* harmony default export */ __webpack_exports__["a"] = (modal);
 
 
 /***/ }),
 
-/***/ 89:
+/***/ 92:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -91,22 +102,42 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("transition", { attrs: { name: "orverlay" } }, [
-        _vm.overLay
-          ? _c(
-              "div",
-              { staticClass: "over-lay", attrs: { id: "over-lay" } },
-              [_c("app-loading", [_vm._v("ローディング")])],
-              1
-            )
-          : _vm._e()
-      ])
-    ],
-    1
-  )
+  return _vm.show
+    ? _c(
+        "div",
+        {
+          staticClass: "modal-container",
+          attrs: { id: "modal-container" },
+          on: {
+            click: function($event) {
+              if ($event.target !== $event.currentTarget) {
+                return null
+              }
+              _vm.close()
+            }
+          }
+        },
+        [
+          _vm._ssrNode(
+            '<div class="modal">',
+            "</div>",
+            [
+              _c("modal-destroy"),
+              _vm._ssrNode(" "),
+              _c("modal-login"),
+              _vm._ssrNode(
+                " <span" +
+                  _vm._ssrClass("close typcn typcn-delete large", {
+                    disabled: _vm.isDisable
+                  }) +
+                  "></span>"
+              )
+            ],
+            2
+          )
+        ]
+      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
