@@ -1982,14 +1982,14 @@ var render = function() {
             "</div>",
             [
               _vm._ssrNode(
-                '<div class="column column-lg-75 column-md-65">',
+                '<div class="column column-lg-75 column-md-70">',
                 "</div>",
                 [_c("router-view", { attrs: { name: "main" } })],
                 1
               ),
               _vm._ssrNode(" "),
               _vm._ssrNode(
-                '<div class="column column-lg-25 column-md-35">',
+                '<div class="column column-lg-25 column-md-30">',
                 "</div>",
                 [_c("router-view", { attrs: { name: "sub" } })],
                 1

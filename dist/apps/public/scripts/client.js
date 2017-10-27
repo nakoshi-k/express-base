@@ -12423,14 +12423,14 @@ var render = function() {
         _c("div", { staticClass: "row row-md-reverse" }, [
           _c(
             "div",
-            { staticClass: "column column-lg-75 column-md-65" },
+            { staticClass: "column column-lg-75 column-md-70" },
             [_c("router-view", { attrs: { name: "main" } })],
             1
           ),
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "column column-lg-25 column-md-35" },
+            { staticClass: "column column-lg-25 column-md-30" },
             [_c("router-view", { attrs: { name: "sub" } })],
             1
           )
