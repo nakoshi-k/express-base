@@ -8,22 +8,22 @@ export interface routing_map{
 
 }
 
-export const mapping :  { [propName: string]: routing_map } = {
-    test : { method : "get", route : "/", middlewares : [ "test" ] } 
-}
-
 export class core_routing{
 
-    get mapping(){
-        return mapping;
+    mapping:{ [propName: string]: routing_map } 
+
+    private strip_object_key = (obj:object) =>{
+        let ary = [];
+        for(let k in obj){
+            ary.push(obj[k]);
+        }
+        return ary;
     }
 
-    protected route : {}
+    pre_mw : {[prop : string] : (req : ee.request,res : ee.response,next : ee.next) => void }
 
-    pre_mw : object[]
-
-    pre_mw_regist = () => {
-
+    pre_mw_regist = ( key:string , mw : (req : ee.request,res : ee.response,next : ee.next) => void ) => {
+        this.pre_mw[key] = mw
     }
     
     mw_pull = (names:string[]) => {
@@ -40,8 +40,9 @@ export class core_routing{
         }
         included.forEach((key) => {
             let m = map[key];
-            let mws = this.mw_pull(m.middlewares); 
-            router[ m.method ]( m.route , ...this.pre_mw , ...mws  );
+            let mw = this.mw_pull(m.middlewares);
+            let pre_mw = this.strip_object_key(this.pre_mw)
+            router[ m.method ]( m.route , ...pre_mw , ...mw  );
         })
         return router;
     }
