@@ -4002,155 +4002,10 @@ if (Component.options.functional) {console.error("[vue-loader] pagination.vue: f
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__client_fetch__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__resource__ = __webpack_require__(17);
-
-
-let client = new __WEBPACK_IMPORTED_MODULE_0__client_fetch__["a" /* client_fetch */]();
-class auth extends __WEBPACK_IMPORTED_MODULE_1__resource__["a" /* resource */] {
-    constructor(options) {
-        super();
-        this.end_point = "/api/users";
-        this.login = (user, token) => {
-            let login = (resolve, reject) => {
-                let url = this.end_point + "/login";
-                let opt = {
-                    body: JSON.stringify(user),
-                    method: "post",
-                    headers: {
-                        "X-XSRF-Token": token
-                    }
-                };
-                client.fetch(url, opt).then(r => {
-                    resolve(r);
-                }).catch(e => {
-                    reject(e);
-                });
-            };
-            return new Promise(login);
-        };
-        this.user_client = () => {
-            let user = (resolve, reject) => {
-                let url = this.end_point + "/auth";
-                client.fetch(url, {}).then(r => {
-                    resolve(r);
-                }).catch(e => {
-                    resolve({ id: "", name: "", mail: "" });
-                });
-            };
-            return new Promise(user);
-        };
-        this.user_server = () => {
-            let user_server = (resolve, reject) => {
-                if (this.feeds.user["id"]) {
-                    resolve(this.feeds.user);
-                    return;
-                }
-                resolve({ id: "", name: "", mail: "" });
-            };
-            return new Promise(user_server);
-        };
-        this.user = () => {
-            if (this.is_server()) {
-                return this.user_server();
-            }
-            return this.user_client();
-        };
-        this.logout = () => {
-            let logout = (resolve, reject) => {
-                let url = this.end_point + "/logout";
-                client.fetch(url, {}).then(r => {
-                    resolve(r);
-                }).catch(e => {
-                    reject(e);
-                });
-            };
-            return new Promise(logout);
-        };
-        this.feeds = options.feeds;
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = auth;
-
-
-
-/***/ }),
-/* 16 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class client_fetch {
-    constructor() {
-        this._options = {
-            credentials: 'same-origin',
-            method: "get",
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Content-Type': 'application/json'
-            }
-        };
-        this.fetch = (url, options) => {
-            let base = this.options;
-            if (options.headers) {
-                options.headers = Object.assign(base.headers, options.headers);
-            }
-            options = Object.assign(base, options);
-            let client = (resolve, reject) => {
-                fetch(url, options)
-                    .then((response) => {
-                    //deleted
-                    if (response.status === 204) {
-                        resolve(response.status);
-                        return;
-                    }
-                    response.json().then(r => {
-                        if (response.status < 200 || response.status > 300) {
-                            reject(r);
-                            return;
-                        }
-                        resolve(r);
-                    });
-                }).catch((err) => {
-                    reject(err);
-                });
-            };
-            return new Promise(client);
-        };
-    }
-    get options() {
-        return Object.create(this._options);
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = client_fetch;
-
-
-
-/***/ }),
-/* 17 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class resource {
-    is_server() {
-        if (typeof window === "undefined") {
-            return true;
-        }
-        return false;
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = resource;
-
-
-
-/***/ }),
-/* 18 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_sideless_build_query__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__client_fetch__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__client_fetch__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_route_parse__ = __webpack_require__(111);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__resource__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__resource__ = __webpack_require__(18);
 
 
 
@@ -4291,6 +4146,151 @@ class internal_crud extends __WEBPACK_IMPORTED_MODULE_3__resource__["a" /* resou
 
 
 /***/ }),
+/* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__client_fetch__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__resource__ = __webpack_require__(18);
+
+
+let client = new __WEBPACK_IMPORTED_MODULE_0__client_fetch__["a" /* client_fetch */]();
+class auth extends __WEBPACK_IMPORTED_MODULE_1__resource__["a" /* resource */] {
+    constructor(options) {
+        super();
+        this.end_point = "/api/users";
+        this.login = (user, token) => {
+            let login = (resolve, reject) => {
+                let url = this.end_point + "/login";
+                let opt = {
+                    body: JSON.stringify(user),
+                    method: "post",
+                    headers: {
+                        "X-XSRF-Token": token
+                    }
+                };
+                client.fetch(url, opt).then(r => {
+                    resolve(r);
+                }).catch(e => {
+                    reject(e);
+                });
+            };
+            return new Promise(login);
+        };
+        this.user_client = () => {
+            let user = (resolve, reject) => {
+                let url = this.end_point + "/auth";
+                client.fetch(url, {}).then(r => {
+                    resolve(r);
+                }).catch(e => {
+                    reject("login user undefined");
+                });
+            };
+            return new Promise(user);
+        };
+        this.user_server = () => {
+            let user_server = (resolve, reject) => {
+                if (this.feeds.user["id"]) {
+                    resolve(this.feeds.user);
+                    return;
+                }
+                reject("login user undefined");
+            };
+            return new Promise(user_server);
+        };
+        this.user = () => {
+            if (this.is_server()) {
+                return this.user_server();
+            }
+            return this.user_client();
+        };
+        this.logout = () => {
+            let logout = (resolve, reject) => {
+                let url = this.end_point + "/logout";
+                client.fetch(url, {}).then(r => {
+                    resolve(r);
+                }).catch(e => {
+                    reject(e);
+                });
+            };
+            return new Promise(logout);
+        };
+        this.feeds = options.feeds;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = auth;
+
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class client_fetch {
+    constructor() {
+        this._options = {
+            credentials: 'same-origin',
+            method: "get",
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/json'
+            }
+        };
+        this.fetch = (url, options) => {
+            let base = this.options;
+            if (options.headers) {
+                options.headers = Object.assign(base.headers, options.headers);
+            }
+            options = Object.assign(base, options);
+            let client = (resolve, reject) => {
+                fetch(url, options)
+                    .then((response) => {
+                    //deleted
+                    if (response.status === 204) {
+                        resolve(response.status);
+                        return;
+                    }
+                    response.json().then(r => {
+                        if (response.status < 200 || response.status > 300) {
+                            reject(r);
+                            return;
+                        }
+                        resolve(r);
+                    });
+                }).catch((err) => {
+                    reject(err);
+                });
+            };
+            return new Promise(client);
+        };
+    }
+    get options() {
+        return Object.create(this._options);
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = client_fetch;
+
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class resource {
+    is_server() {
+        if (typeof window === "undefined") {
+            return true;
+        }
+        return false;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = resource;
+
+
+
+/***/ }),
 /* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4352,7 +4352,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_vue__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__client_router__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex_router_sync__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex_router_sync__ = __webpack_require__(127);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vuex_router_sync___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vuex_router_sync__);
 
 
@@ -4472,9 +4472,9 @@ app = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
         name: 'app',
         components: {
-            "app-overlay": () => __webpack_require__.e/* import() */(3).then(__webpack_require__.bind(null, 123)),
-            "app-modal": () => __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, 124)),
-            "app-offset": () => __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 125))
+            "app-overlay": () => __webpack_require__.e/* import() */(3).then(__webpack_require__.bind(null, 128)),
+            "app-modal": () => __webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, 129)),
+            "app-offset": () => __webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 130))
         }
     })
 ], app);
@@ -4658,7 +4658,7 @@ navi = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
         name: "navi",
         components: {
-            "app-indicater": () => __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, 126)),
+            "app-indicater": () => __webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, 131)),
         },
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])([
             'domain', 'token'
@@ -7060,7 +7060,7 @@ if (Component.options.functional) {console.error("[vue-loader] login.vue: functi
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utilities_validation__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__resources_auth__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__resources_auth__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8120,8 +8120,8 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__offset_store_module__ = __webpack_require__(101);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__tasks_store_module__ = __webpack_require__(106);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__users_store_module__ = __webpack_require__(112);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__groups_store_module__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__auth_store_module__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__groups_store_module__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__auth_store_module__ = __webpack_require__(122);
 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
@@ -8529,7 +8529,7 @@ class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a"
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(108);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(109);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(110);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__ = __webpack_require__(15);
 
 
 
@@ -8725,7 +8725,7 @@ class route_parse {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(115);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(116);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__ = __webpack_require__(15);
 
 
 
@@ -8903,7 +8903,185 @@ class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a"
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(119);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(120);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(121);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_auth__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__ = __webpack_require__(15);
+
+
+
+
+
+
+class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__["a" /* store_module */] {
+    constructor(options) {
+        super();
+        this.state = new __WEBPACK_IMPORTED_MODULE_3__stores_state__["a" /* state */](options).map("all");
+        this.actions = new __WEBPACK_IMPORTED_MODULE_2__stores_actions__["a" /* actions */](options).map("all");
+        this.mutations = new __WEBPACK_IMPORTED_MODULE_1__stores_mutations__["a" /* mutations */](options).map("all");
+        let local_getters = new __WEBPACK_IMPORTED_MODULE_4__stores_getters__["a" /* getters */](options).map("all");
+        let crud = () => {
+            return new __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__["a" /* internal_crud */](options);
+        };
+        this.getters = Object.assign({}, local_getters, { crud: crud });
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = store_module;
+
+
+
+/***/ }),
+/* 118 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(8);
+
+class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__["a" /* mutations */] {
+    constructor(options) {
+        super();
+        this.setEntities = (state, paginate) => {
+            state.entities = paginate[this._resource];
+            state.page = paginate.page;
+        };
+        this.setEntity = (state, response) => {
+            state.entity = response;
+        };
+        this.updateEntity = (state, kv) => {
+            state.entity[kv.key] = kv.value;
+        };
+        this.setClearEntity = (state) => {
+            let entity = state.entity;
+            for (let key in entity) {
+                entity[key] = null;
+                if (key === "id" || key === "created_at" || key === "updated_at") {
+                    delete entity[key];
+                }
+                if (key === "errors") {
+                    entity[key] = [];
+                }
+            }
+        };
+        this.setErrors = (state, errors) => {
+            state.entity["errors"] = errors;
+        };
+        this._mount = options.mount;
+        this._resource = options.resource;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = mutations;
+
+
+
+/***/ }),
+/* 119 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(9);
+
+class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a" /* actions */] {
+    constructor(feeds) {
+        super();
+        this.fetchEntities = ({ commit, getters, state }, route) => {
+            let crud = getters.crud;
+            return crud.paginate(route).then((paginate) => {
+                commit("setEntities", paginate);
+            });
+        };
+        this.fetchEntity = ({ commit, getters, state }, route) => {
+            let crud = getters.crud;
+            return crud.entity(route).then((entity) => {
+                commit("setEntity", entity);
+            });
+        };
+        this.copyEntity = ({ commit, getters, state }, copy) => {
+            let route = {
+                params: {
+                    id: copy.id,
+                },
+                path: copy.mount + "/" + copy.id,
+            };
+            let crud = getters.crud;
+            return crud.entity(route).then((entity) => {
+                for (let key in entity) {
+                    if (key === "id" || key === "updated_at" || key === "created_at") {
+                        delete entity[key];
+                    }
+                }
+                commit("setEntity", entity);
+            });
+        };
+        this.insertEntity = ({ state, commit, getters }, token) => {
+            let crud = getters.crud;
+            return crud.insert(state.entity, token);
+        };
+        this.saveEntity = ({ state, commit, getters }, token) => {
+            let crud = getters.crud;
+            return crud.update(state.entity, token);
+        };
+        this.deleteEntity = ({ state, commit, getters }, delObj) => {
+            let crud = getters.crud;
+            return crud.delete(delObj.id, delObj.token);
+        };
+        this.clearEntity = ({ commit }) => {
+            return Promise.resolve(commit("setClearEntity"));
+        };
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = actions;
+
+
+
+/***/ }),
+/* 120 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(10);
+
+class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* state */] {
+    constructor(options) {
+        super();
+        this.mount = "";
+        this.entities = [];
+        this.entity = {};
+        this.page = {
+            totalPage: 1,
+            currentPage: 1,
+            queryPrams: {}
+        };
+        this.mount = options.resource;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = state;
+
+
+
+/***/ }),
+/* 121 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(11);
+
+class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a" /* getters */] {
+    constructor(options) {
+        super();
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = getters;
+
+
+
+/***/ }),
+/* 122 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(123);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(124);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(125);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(126);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_auth__ = __webpack_require__(16);
 
 
 
@@ -8930,7 +9108,7 @@ class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_mo
 
 
 /***/ }),
-/* 118 */
+/* 123 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8956,7 +9134,7 @@ class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__
 
 
 /***/ }),
-/* 119 */
+/* 124 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8969,6 +9147,9 @@ class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a"
             let api = getters.api;
             return api.user().then(r => {
                 commit("setAuthUser", r);
+            }).catch(e => {
+                console.log(e);
+                return Promise.resolve();
             });
         };
         this.logout = ({ commit, getters, state }) => {
@@ -8984,7 +9165,7 @@ class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a"
 
 
 /***/ }),
-/* 120 */
+/* 125 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9006,7 +9187,7 @@ class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* 
 
 
 /***/ }),
-/* 121 */
+/* 126 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9022,7 +9203,7 @@ class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a"
 
 
 /***/ }),
-/* 122 */
+/* 127 */
 /***/ (function(module, exports) {
 
 exports.sync = function (store, router, options) {
@@ -9099,215 +9280,6 @@ function cloneRoute (to, from) {
   }
   return Object.freeze(clone)
 }
-
-
-
-/***/ }),
-/* 123 */,
-/* 124 */,
-/* 125 */,
-/* 126 */,
-/* 127 */,
-/* 128 */,
-/* 129 */,
-/* 130 */,
-/* 131 */,
-/* 132 */,
-/* 133 */,
-/* 134 */,
-/* 135 */,
-/* 136 */,
-/* 137 */,
-/* 138 */,
-/* 139 */,
-/* 140 */,
-/* 141 */,
-/* 142 */,
-/* 143 */,
-/* 144 */,
-/* 145 */,
-/* 146 */,
-/* 147 */,
-/* 148 */,
-/* 149 */,
-/* 150 */,
-/* 151 */,
-/* 152 */,
-/* 153 */,
-/* 154 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(155);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(156);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(157);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(158);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__ = __webpack_require__(18);
-
-
-
-
-
-
-class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__["a" /* store_module */] {
-    constructor(options) {
-        super();
-        this.state = new __WEBPACK_IMPORTED_MODULE_3__stores_state__["a" /* state */](options).map("all");
-        this.actions = new __WEBPACK_IMPORTED_MODULE_2__stores_actions__["a" /* actions */](options).map("all");
-        this.mutations = new __WEBPACK_IMPORTED_MODULE_1__stores_mutations__["a" /* mutations */](options).map("all");
-        let local_getters = new __WEBPACK_IMPORTED_MODULE_4__stores_getters__["a" /* getters */](options).map("all");
-        let crud = () => {
-            return new __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__["a" /* internal_crud */](options);
-        };
-        this.getters = Object.assign({}, local_getters, { crud: crud });
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = store_module;
-
-
-
-/***/ }),
-/* 155 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(8);
-
-class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__["a" /* mutations */] {
-    constructor(options) {
-        super();
-        this.setEntities = (state, paginate) => {
-            state.entities = paginate[this._resource];
-            state.page = paginate.page;
-        };
-        this.setEntity = (state, response) => {
-            state.entity = response;
-        };
-        this.updateEntity = (state, kv) => {
-            state.entity[kv.key] = kv.value;
-        };
-        this.setClearEntity = (state) => {
-            let entity = state.entity;
-            for (let key in entity) {
-                entity[key] = null;
-                if (key === "id" || key === "created_at" || key === "updated_at") {
-                    delete entity[key];
-                }
-                if (key === "errors") {
-                    entity[key] = [];
-                }
-            }
-        };
-        this.setErrors = (state, errors) => {
-            state.entity["errors"] = errors;
-        };
-        this._mount = options.mount;
-        this._resource = options.resource;
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = mutations;
-
-
-
-/***/ }),
-/* 156 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(9);
-
-class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a" /* actions */] {
-    constructor(feeds) {
-        super();
-        this.fetchEntities = ({ commit, getters, state }, route) => {
-            let crud = getters.crud;
-            return crud.paginate(route).then((paginate) => {
-                commit("setEntities", paginate);
-            });
-        };
-        this.fetchEntity = ({ commit, getters, state }, route) => {
-            let crud = getters.crud;
-            return crud.entity(route).then((entity) => {
-                commit("setEntity", entity);
-            });
-        };
-        this.copyEntity = ({ commit, getters, state }, copy) => {
-            let route = {
-                params: {
-                    id: copy.id,
-                },
-                path: copy.mount + "/" + copy.id,
-            };
-            let crud = getters.crud;
-            return crud.entity(route).then((entity) => {
-                for (let key in entity) {
-                    if (key === "id" || key === "updated_at" || key === "created_at") {
-                        delete entity[key];
-                    }
-                }
-                commit("setEntity", entity);
-            });
-        };
-        this.insertEntity = ({ state, commit, getters }, token) => {
-            let crud = getters.crud;
-            return crud.insert(state.entity, token);
-        };
-        this.saveEntity = ({ state, commit, getters }, token) => {
-            let crud = getters.crud;
-            return crud.update(state.entity, token);
-        };
-        this.deleteEntity = ({ state, commit, getters }, delObj) => {
-            let crud = getters.crud;
-            return crud.delete(delObj.id, delObj.token);
-        };
-        this.clearEntity = ({ commit }) => {
-            return Promise.resolve(commit("setClearEntity"));
-        };
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = actions;
-
-
-
-/***/ }),
-/* 157 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(10);
-
-class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* state */] {
-    constructor(options) {
-        super();
-        this.mount = "";
-        this.entities = [];
-        this.entity = {};
-        this.page = {
-            totalPage: 1,
-            currentPage: 1,
-            queryPrams: {}
-        };
-        this.mount = options.resource;
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = state;
-
-
-
-/***/ }),
-/* 158 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(11);
-
-class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a" /* getters */] {
-    constructor(options) {
-        super();
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = getters;
 
 
 
