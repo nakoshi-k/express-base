@@ -1,27 +1,29 @@
 import * as path from "path"
-import {router as apps_router,routing_map,request,response,next} from "../../apps_router"
+import {router as apps_router,routing_map} from "../../apps_router"
+import {request,response,next} from "../../interfaces/express_extend"
 import {service} from "./service"
 import {input_error} from "../../../base/core"
 
 export const mapping :  { [propName: string]: routing_map } = {
-    idx : { type : "get", mount : "/", component : "search" , middle_ware : null } ,
-    login : { type : "post", mount : "/login", component : "login" , middle_ware : null } ,
-    logout : { type : "get", mount : "/logout", component : "logout" , middle_ware : null } ,
-    auth : { type : "get", mount : "/auth", component : "auth" , middle_ware : null },
-    page: { type : "get", mount : "/page/:page", component : "search" , middle_ware : null } ,
-    entity : { type : "get", mount : "/:id", component : "entity" , middle_ware : null} ,
-    insert : { type : "post", mount : "/", component : "insert" , middle_ware : null} ,
-    update : { type : "put", mount : "/:id", component : "update" , middle_ware : null } ,
-    delete : { type : "delete", mount : "/:id", component : "delete" , middle_ware : null },
+    idx : { method : "get", route : "/", component : "search" , middle_ware : null } ,
+    login : { method : "post", route : "/login", component : "login" , middle_ware : null } ,
+    logout : { method : "get", route : "/logout", component : "logout" , middle_ware : null } ,
+    auth : { method : "get", route : "/auth", component : "auth" , middle_ware : null },
+    page: { method : "get", route : "/page/:page", component : "search" , middle_ware : null } ,
+    entity : { method : "get", route : "/:id", component : "entity" , middle_ware : null} ,
+    insert : { method : "post", route : "/", component : "insert" , middle_ware : null} ,
+    update : { method : "put", route : "/:id", component : "update" , middle_ware : null } ,
+    delete : { method : "delete", route : "/:id", component : "delete" , middle_ware : null },
 }
 
 export class router extends apps_router {
     public name = "users"
     public service:service
 
-    get _mapping(){
-        return mapping;
+    protected _mapping = () => {
+        return mapping 
     }
+    
     constructor(){
         super()
         this.service = new service(this.name)

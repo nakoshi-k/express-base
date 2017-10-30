@@ -10,9 +10,8 @@ let body_csrf = (req, res, next) => {
 let is_authenticated = (req, res, next) => {
     next();
 };
-let rbac = (req, res, next) => {
-    next();
-};
+const rbac_1 = require("./middle_ware/rbac");
+let rbac = new rbac_1.rbac();
 class router extends router_1.router {
     constructor() {
         super();
@@ -25,7 +24,7 @@ class router extends router_1.router {
         this.mw_regist("csrf", csurf({ cookie: true }));
         this.mw_regist("body_csrf", body_csrf);
         this.mw_regist("is_authenticated", is_authenticated);
-        this.mw_regist("rbac", rbac);
+        this.mw_regist("rbac", rbac.create());
     }
 }
 exports.router = router;

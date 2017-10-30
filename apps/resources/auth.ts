@@ -4,16 +4,16 @@ import {app_error,input_error,response_error} from "../../base/core";
 import {client_fetch} from "./client_fetch";
 import route_parse from "../utilities/route_parse";
 import {feeds} from "./feeds";
+import {resource} from "./resource"
 
 let client = new client_fetch();
 
-export class auth{
+export class auth extends resource{
     private end_point = "/api/users"
-    private feeds:any;
-    constructor(feeds?:any){
-        if(feeds){
-            this.feeds = feeds;
-        }
+    public feeds:feeds;
+    constructor(options?:any){
+        super()
+        this.feeds = options.feeds;
     }
 
     login = (user : { account : string ,password : string } , token ) => {
@@ -47,10 +47,21 @@ export class auth{
         }
         return new Promise(user);
     }
-    
-    user = (feeds?:feeds) => {
-        if(typeof window === "undefined"){
-            return Promise.reject({});
+
+    user_server = () => {
+        let user_server= (resolve,reject) => {
+            if(this.feeds.user["id"]){
+                resolve(this.feeds.user)
+                return
+            }
+            reject()
+        }
+        return new Promise(user_server);
+    }
+
+    user = () => {
+        if( this.is_server() ){
+            return this.user_server();
         }
         return this.user_client()
     }

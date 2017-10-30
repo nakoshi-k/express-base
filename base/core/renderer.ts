@@ -8,8 +8,8 @@ export interface middle_ware{
 }
 
 export interface routing_map{
-    type : string,
-    mount : string,
+    method : string,
+    route : string,
     component : string,
     middle_ware? : string[]
 

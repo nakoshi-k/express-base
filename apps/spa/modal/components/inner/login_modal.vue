@@ -45,7 +45,7 @@ Component.registerHooks([
     ...mapGetters([
       'domain' , 'token'
     ]),
-    ...mapGetters('auth',["feeds"]),
+    ...mapGetters('auth',["api"]),
     ...mapState('modal' , { 
       'close' : ({close}) => close,
       'data' : ({data}) => data,
@@ -95,10 +95,11 @@ export default class login_modal extends Vue {
   token:string
   closeModal:() => void
   setAuthUser:(user) => void
-  feeds:any
+  api:any
+  
   login(){
     this.errors = {};
-    let auth = new auth_api(this.feeds);
+    let auth = this.api;
     
     auth.login( this.user , this.token ).then(r => {
       this.setAuthUser(r)

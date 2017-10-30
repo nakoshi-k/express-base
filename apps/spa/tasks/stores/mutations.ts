@@ -2,15 +2,15 @@ import {mutations as core_mutations} from "../../../../base/spa/stores/mutations
 
 export class mutations extends core_mutations{
     private _mount;
-    private _entities;
+    private _resource;
     constructor(options){
       super()
       this._mount = options.mount
-      this._entities = options.entities
+      this._resource = options.resource
     } 
     
     setEntities = ( state , paginate ) => {
-      state.entities = paginate[this._entities]
+      state.entities = paginate[this._resource]
       state.page = paginate.page
     }
     

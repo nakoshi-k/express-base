@@ -12,8 +12,6 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
 import { mapGetters , mapState , mapMutations} from 'vuex'
-import destroy from './inner/destroy.vue'
-import login_modal from './inner/login_modal.vue'
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -42,8 +40,8 @@ Component.registerHooks([
     ...mapMutations( "modal" , ["closeModal"])
   },
 components : {
-    "modal-destroy" : destroy,
-    "modal-login" : login_modal 
+    "modal-destroy" : () => import("./inner/destroy.vue"),
+    "modal-login" : () => import("./inner/login_modal.vue") 
   }
 
 })

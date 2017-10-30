@@ -36,13 +36,13 @@ class router {
         this.map = (included = []) => {
             let router = e.Router();
             let middle_ware = this.middle_ware;
-            let map = this._mapping;
+            let map = this._mapping();
             if (included.length === 0) {
-                included = Object.keys(this._mapping);
+                included = Object.keys(map);
             }
             included.forEach((key) => {
                 let m = map[key];
-                router[m.type](m.mount, ...middle_ware(m.middle_ware), this[m.component]);
+                router[m.method](m.route, ...middle_ware(m.middle_ware), this[m.component]);
             });
             return router;
         };

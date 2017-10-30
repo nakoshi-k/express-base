@@ -1,85 +1,187 @@
 exports.ids = [0];
 exports.modules = {
 
-/***/ 129:
+/***/ 104:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm._ssrNode(
+      '<nav class="navigation column">',
+      "</nav>",
+      [
+        _vm._ssrNode('<div class="container">', "</div>", [
+          _vm._ssrNode(
+            '<div class="row row-md-reverse">',
+            "</div>",
+            [
+              _vm._ssrNode(
+                '<div class="hidden-md column text-right">',
+                "</div>",
+                [
+                  _vm._ssrNode(
+                    '<ul class="navigation-list navigation-list-reverse">',
+                    "</ul>",
+                    [
+                      _vm._ssrNode(
+                        '<li class="show-lg show-xl show-md">',
+                        "</li>",
+                        [
+                          _vm._ssrNode(
+                            "<h1>",
+                            "</h1>",
+                            [
+                              _c("router-link", { attrs: { to: "/tasks" } }, [
+                                _vm._v("Apprication")
+                              ])
+                            ],
+                            1
+                          )
+                        ]
+                      ),
+                      _vm._ssrNode(
+                        " " +
+                          (!_vm.auth_status
+                            ? '<li class="show-lg show-xl show-md"><a title="login"><span class="typcn typcn-key"></span> Login</a></li>'
+                            : "<!---->") +
+                          " " +
+                          (_vm.auth_status
+                            ? '<li class="show-lg show-xl show-md"><a title="logout"><span class="typcn typcn-export"></span> Logout</a></li>'
+                            : "<!---->")
+                      )
+                    ],
+                    2
+                  )
+                ]
+              ),
+              _vm._ssrNode(" "),
+              _vm._ssrNode('<div class="column">', "</div>", [
+                _vm._ssrNode(
+                  '<ul class="navigation-list">',
+                  "</ul>",
+                  [
+                    _vm._ssrNode(
+                      '<li><a href="#" title="open offset menu"' +
+                        _vm._ssrClass("offset-toggle", { active: _vm.show }) +
+                        '><span class="typcn typcn-th-menu"></span></a></li> '
+                    ),
+                    _vm._ssrNode(
+                      "<li>",
+                      "</li>",
+                      [
+                        _c(
+                          "router-link",
+                          { attrs: { to: "/tasks", title: "Home" } },
+                          [_vm._v("Home ")]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._ssrNode(" "),
+                    _vm._ssrNode(
+                      "<li>",
+                      "</li>",
+                      [
+                        _c(
+                          "router-link",
+                          { attrs: { to: "/tasks", title: "Tasks" } },
+                          [_vm._v("Tasks")]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._ssrNode(" "),
+                    _vm._ssrNode(
+                      "<li>",
+                      "</li>",
+                      [
+                        _c(
+                          "router-link",
+                          { attrs: { to: "/users", title: "Users" } },
+                          [_vm._v("Users")]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._ssrNode(
+                      " " +
+                        (!_vm.auth_status
+                          ? '<li class="show-sm"><a title="login"><span class="typcn typcn-key"></span> Login</a></li>'
+                          : "<!---->") +
+                        " " +
+                        (_vm.auth_status
+                          ? '<li class="show-sm"><a title="logout"><span class="typcn typcn-export"></span> Logout</a></li>'
+                          : "<!---->")
+                    )
+                  ],
+                  2
+                )
+              ])
+            ],
+            2
+          )
+        ]),
+        _vm._ssrNode(" "),
+        _c("app-indicater")
+      ],
+      2
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+
+/***/ }),
+
+/***/ 13:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_indicator_vue__ = __webpack_require__(132);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7b90319e_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_indicator_vue__ = __webpack_require__(133);
-function injectStyle (ssrContext) {
-var i
-;(i=__webpack_require__(130),i.__inject__&&i.__inject__(ssrContext),i)
-}
-var normalizeComponent = __webpack_require__(1)
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_navigation_vue__ = __webpack_require__(98);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_59631247_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_navigation_vue__ = __webpack_require__(104);
+var normalizeComponent = __webpack_require__(9)
 /* script */
 
 /* template */
 
 /* styles */
-var __vue_styles__ = injectStyle
+var __vue_styles__ = null
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
-var __vue_module_identifier__ = "4346c045"
+var __vue_module_identifier__ = "3053f56e"
 var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_indicator_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7b90319e_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_indicator_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_navigation_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_59631247_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_navigation_vue__["a" /* default */],
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "apps/spa/loading/components/indicator.vue"
+Component.options.__file = "apps/spa/navigation/components/navigation.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] indicator.vue: functional components are not supported with templates, they should use render functions.")}
+if (Component.options.functional) {console.error("[vue-loader] navigation.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
 
 /***/ }),
 
-/***/ 130:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(131);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add CSS to SSR context
-var add = __webpack_require__(19)
-module.exports.__inject__ = function (context) {
-  add("54bc1cb2", content, false, context)
-};
-
-/***/ }),
-
-/***/ 131:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(18)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ 132:
+/***/ 98:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__(11);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -99,80 +201,43 @@ __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
     'transition',
     'scrollToTop'
 ]);
-let indicator = class indicator extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
-    constructor() {
-        super(...arguments);
-        this.light = true;
-        this.beat = (self) => {
-            let i = 0;
-            self._beat = () => {
-                let prosess = self.indicator.prosess;
-                if (prosess === true) {
-                    self.light = (self.light) ? false : true;
-                    setTimeout(self._beat, 2000);
-                    return;
-                }
-                if (prosess === false && self.light === false) {
-                    self.light = true;
-                }
-                setTimeout(self._beat, 2000);
-            };
-            self._beat();
-        };
+let navi = class navi extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
+    asyncData({ store, route }) {
+        return store.dispatch('auth/fetchAuthUser');
     }
-    get width() {
-        return this.indicator.complate;
+    toggle() {
+        this.toggleOffset();
     }
-    get css() {
-        let css = { light: false };
-        css[this.indicator.status] = true;
-        css.light = this.light;
-        return css;
+    m_login() {
+        this.setModal({ "template": "login_modal" });
+        this.openModal();
     }
-    mounted() {
-        let self = this;
-        this.beat(self);
+    h_logout() {
+        this.logout();
+        return false;
     }
 };
-indicator = __decorate([
+navi = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
-        name: "indicator",
+        name: "navi",
+        components: {
+            "app-indicater": () => __webpack_require__.e/* import() */(16).then(__webpack_require__.bind(null, 99)),
+        },
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])([
             'domain', 'token'
-        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])("loading", {
-            indicator: (state) => state.indicator
+        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])("offset", {
+            show: ({ show }) => show
+        }), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])("auth", {
+            auth_user: ({ user }) => user,
+            auth_status: ({ auth_status }) => auth_status
         })),
+        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("offset", ["toggleOffset"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])("auth", [
+            "logout"
+        ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("modal", ["setModal", "toggleModal", "openModal"]))
     })
-], indicator);
-/* harmony default export */ __webpack_exports__["a"] = (indicator);
+], navi);
+/* harmony default export */ __webpack_exports__["a"] = (navi);
 
-
-/***/ }),
-
-/***/ 133:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm.indicator.show
-    ? _c(
-        "div",
-        {
-          staticClass: "indicator",
-          class: _vm.css,
-          style: { width: _vm.width + "%" }
-        },
-        []
-      )
-    : _vm._e()
-}
-var staticRenderFns = []
-render._withStripped = true
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
 
 /***/ })
 

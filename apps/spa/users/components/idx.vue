@@ -50,7 +50,9 @@ Component.registerHooks([
       ["fetchEntities"]
     )
   },
-  components:{pagination}
+  components:{
+    pagination : () => import("../../pagination/components/pagination.vue")
+    }
 })
 
 export default class idx extends Vue {

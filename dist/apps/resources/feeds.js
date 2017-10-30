@@ -25,6 +25,15 @@ class feeds {
         this.validationError = (error) => {
             return new core_1.validation_error(error);
         };
+        this.user = {};
+        this.setUser = (req) => {
+            if (req.user) {
+                this.user = Object.assign({}, req.user.toJSON());
+            }
+        };
+        this.init = (req, res) => {
+            this.setUser(req);
+        };
     }
     get models() {
         return models;

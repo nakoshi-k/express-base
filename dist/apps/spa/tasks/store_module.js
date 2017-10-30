@@ -7,18 +7,14 @@ const state_1 = require("./stores/state");
 const getters_1 = require("./stores/getters");
 const internal_crud_1 = require("../../resources/internal_crud");
 class store_module extends store_module_1.store_module {
-    constructor(feeds) {
+    constructor(options) {
         super();
-        this.state = new state_1.state(feeds).map("all");
-        this.actions = new actions_1.actions(feeds).map("all");
-        this.mutations = new mutations_1.mutations(feeds).map("all");
-        let local_getters = new getters_1.getters(feeds).map("all");
+        this.state = new state_1.state(options).map("all");
+        this.actions = new actions_1.actions(options).map("all");
+        this.mutations = new mutations_1.mutations(options).map("all");
+        let local_getters = new getters_1.getters(options).map("all");
         let crud = () => {
-            return new internal_crud_1.internal_crud({
-                endPoint: "/api/tasks",
-                resource: "tasks",
-                feeds: feeds
-            });
+            return new internal_crud_1.internal_crud(options);
         };
         this.getters = Object.assign({}, local_getters, { crud: crud });
     }

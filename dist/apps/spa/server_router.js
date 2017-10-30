@@ -17,14 +17,17 @@ const VueRender = require("vue-server-renderer");
 const serialize = require("serialize-javascript");
 const feeds_1 = require("../resources/feeds");
 const bundle_server_1 = require("./server/bundle-server");
+exports.mapping = {
+    idx: { method: "get", route: "/*", component: "view", middle_ware: null },
+};
 class router extends apps_router_1.router {
     constructor() {
         super();
         this.name = "spa";
         this.parent = {};
         this.mount = "/";
-        this._mapping = {
-            idx: { type: "get", mount: "/*", component: "view", middle_ware: null },
+        this._mapping = () => {
+            return exports.mapping;
         };
         this.app = (context) => {
             let server = bundle_server_1.default;
@@ -58,15 +61,16 @@ class router extends apps_router_1.router {
             return new Promise(appRender);
         };
         this.view = (req, res, next) => {
+            let feeds = new feeds_1.feeds();
+            feeds.init(req, res);
             const context = {
                 url: req.url,
-                feeds: new feeds_1.feeds()
+                feeds: feeds
             };
             let dir = path.resolve([__dirname, "..", "views"].join(path.sep));
             this.renderer.views = { common: dir, typical: dir };
             let rend = this.renderer.create(res);
             this.ssr(context).then(ssrr => {
-                console.log(91);
                 rend.set_vars({
                     title: ssrr.title,
                     meta: ssrr.meta,

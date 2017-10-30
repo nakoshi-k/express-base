@@ -11,7 +11,7 @@ import {store_module as tasks_module } from './tasks/store_module'
 import {store_module as users_module } from './users/store_module'
 import {store_module as auth_module} from './auth/store_module'
 
-export function createStore( feeds ){ 
+export function createStore( feeds ){
   let getters = {
     token : (state) => {
       if(typeof window === "undefined"){
@@ -23,12 +23,13 @@ export function createStore( feeds ){
     }
   }
 
-  let tasks = new tasks_module({ entities : "tasks" , endPoint : "/tasks" , ...feeds} ).store()
-  let users = new users_module({ entities : "users" , endPoint : "/users" , ...feeds} ).store();
-  let auth = new auth_module({ ...feeds} ).store();
-  let loading = new loading_module({...feeds}).store();
-  let modal = new modal_module({...feeds}).store();
-  let offset = new offset_module({...feeds}).store();
+  let tasks = new tasks_module({ resource : "tasks" , endPoint : "/api/tasks" , feeds : feeds} ).store()
+  let users = new users_module({ resource : "users" , endPoint : "/api/users" ,feeds : feeds} ).store();
+
+  let auth = new auth_module({ feeds : feeds} ).store();
+  let loading = new loading_module({feeds : feeds}).store();
+  let modal = new modal_module({feeds : feeds}).store();
+  let offset = new offset_module({feeds : feeds}).store();
 
 let vuex : Vuex.StoreOptions<any> =  {
     getters: getters,

@@ -7,7 +7,7 @@ import * as path from "path";
 import * as moment from "moment";
 import { logger_users as logger_class} from "./logger_users"
 const logger = new logger_class();
-import {request,response,next} from "../apps_router"
+import {request,response,next} from "../interfaces/express_extend"
 
 export class authorization{
     public name = "auth";

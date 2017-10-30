@@ -1,5 +1,5 @@
 let path =require("path");
-let outdir = path.resolve( __dirname + "/../dist/apps/public/");
+let outdir = path.resolve( __dirname + "/../dist/apps/public/scripts/");
 
 module.exports  = {
             entry: __dirname + "/spa/client_pack.ts",
@@ -7,6 +7,7 @@ module.exports  = {
             output: {
                 path: outdir ,
                 filename: 'client.js',
+                publicPath: "/scripts/"
             },
             resolve: {
                 // extensionsに'.ts'を追加
@@ -26,7 +27,7 @@ module.exports  = {
                         options: {
                           appendTsSuffixTo: [/\.vue$/],
                           compilerOptions : {
-                            "module": "commonjs",
+                            "module": "esnext",
                             "lib" : ["dom", "es2015",  "es5"],
                             "target": "es2015",
                             "noImplicitAny": false,
