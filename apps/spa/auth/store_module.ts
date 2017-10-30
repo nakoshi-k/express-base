@@ -6,16 +6,16 @@ import {getters} from "./stores/getters"
 import {auth} from "../../resources/auth"
 export class store_module extends core_module{
     
-    constructor( feeds ){
+    constructor( options ){
         super();
-        this.state = new state( feeds ).map("all");
-        this.actions = new actions( feeds ).map("all");
-        this.mutations = new mutations( feeds ).map("all");
-        let lgetters =  new getters( feeds ).map("all");
-        this.getters = { ...lgetters , feeds : function(){return feeds} };
-        let local_getters = new getters( feeds ).map("all");
+        this.state = new state( options ).map("all");
+        this.actions = new actions( options ).map("all");
+        this.mutations = new mutations( options ).map("all");
+        let lgetters =  new getters( options ).map("all");
+        this.getters = { ...lgetters , feeds : function(){return options} };
+        let local_getters = new getters( options ).map("all");
         let api = () => {
-            return new auth(feeds);
+            return new auth(options);
         }
         this.getters = { ...local_getters , api : api };
 

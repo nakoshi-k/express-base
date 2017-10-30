@@ -21,17 +21,12 @@ class router extends apps_router_1.router {
             return exports.mapping;
         };
         this.search = (req, res, next) => {
-            let pagination = this.service.pagination();
-            let conditions = this.service.conditions(req);
-            let entities = pagination.find(conditions, req.query);
-            let data = {};
             let rend = this.renderer.create(res);
-            entities.then((result) => {
-                data[this.entities_name] = result.rows;
-                data["page"] = result.pagination;
+            this.service.page(req, res).then((result) => {
                 rend.status(201);
-                rend.json(data);
+                rend.json(result);
             }).catch((error) => {
+                let data = {};
                 data[this.entities_name] = {};
                 data["page"] = {};
                 rend.status(400);

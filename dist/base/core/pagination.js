@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 class pagination {
     constructor(model) {
         this.find = (findOptions, queryPrams = {}) => {
-            let pagination = new Promise((resolve, reject) => {
+            let find = (resolve, reject) => {
                 this.model.findAndCountAll(findOptions)
                     .then((res) => {
                     let pagination = { pagination: { totalPage: 0, currentPage: 1 } };
@@ -19,8 +19,8 @@ class pagination {
                 }).catch((e) => {
                     reject(e);
                 });
-            });
-            return pagination;
+            };
+            return new Promise(find);
         };
         this.model = model;
     }

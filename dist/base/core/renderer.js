@@ -90,6 +90,10 @@ class renderer {
             this._response = res;
             return Object.assign({}, this);
         };
+        this._to_json_field = "data";
+        this.toJSON = () => {
+            return this._response.locals[this._to_json_field];
+        };
     }
     set name(name) {
         this.name = name;

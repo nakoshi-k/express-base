@@ -108,7 +108,7 @@ export class authorization{
     public logout = (req : request) => {
         const logout = (resolve,reject) => {
             if(!req.user){
-                reject()
+                reject("user login yet")
             }
             try{
                 const user_id = req.user.id;
@@ -116,7 +116,7 @@ export class authorization{
                 logger.access_log( user_id ,"logout");
                 resolve()
             }catch(e){
-                reject()
+                reject(e)
             }
         }
         return new Promise(logout);
@@ -125,7 +125,7 @@ export class authorization{
     public user = (req:request) => {
         const user = (resolve,reject) => {
             if(!req.user){
-                reject()
+                reject("no user")
                 return;
             }
             const user = req.user.toJSON();
@@ -134,6 +134,7 @@ export class authorization{
                 user.last_login = moment(last_login).format("YYYY-MM-DD HH:mm:ss");
                 resolve(user)
             }).catch(e => {
+                console.log("aaaaaaaaa")
                 reject(e)
             })
         }

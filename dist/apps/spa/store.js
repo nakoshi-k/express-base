@@ -8,7 +8,8 @@ const store_module_2 = require("./modal/store_module");
 const store_module_3 = require("./offset/store_module");
 const store_module_4 = require("./tasks/store_module");
 const store_module_5 = require("./users/store_module");
-const store_module_6 = require("./auth/store_module");
+const store_module_6 = require("./groups/store_module");
+const store_module_7 = require("./auth/store_module");
 function createStore(feeds) {
     let getters = {
         token: (state) => {
@@ -22,7 +23,8 @@ function createStore(feeds) {
     };
     let tasks = new store_module_4.store_module({ resource: "tasks", endPoint: "/api/tasks", feeds: feeds }).store();
     let users = new store_module_5.store_module({ resource: "users", endPoint: "/api/users", feeds: feeds }).store();
-    let auth = new store_module_6.store_module({ feeds: feeds }).store();
+    let groups = new store_module_6.store_module({ resource: "groups", endPoint: "/api/groups", feeds: feeds }).store();
+    let auth = new store_module_7.store_module({ feeds: feeds }).store();
     let loading = new store_module_1.store_module({ feeds: feeds }).store();
     let modal = new store_module_2.store_module({ feeds: feeds }).store();
     let offset = new store_module_3.store_module({ feeds: feeds }).store();
@@ -33,6 +35,7 @@ function createStore(feeds) {
             "loading": loading,
             "modal": modal,
             "users": users,
+            "groups": groups,
             "auth": auth,
             "offset": offset
         }

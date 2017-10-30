@@ -42,7 +42,7 @@ export class auth extends resource{
             client.fetch(url,{}).then(r => {
                 resolve(r)                
             }).catch(e => {
-                reject(e)
+                reject("login user undefined")
             })
         }
         return new Promise(user);
@@ -54,7 +54,7 @@ export class auth extends resource{
                 resolve(this.feeds.user)
                 return
             }
-            reject()
+           reject("login user undefined")
         }
         return new Promise(user_server);
     }

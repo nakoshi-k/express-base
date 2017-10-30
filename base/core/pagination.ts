@@ -9,7 +9,7 @@ export class pagination{
     }
 
     public find = ( findOptions : sequelize.FindOptions<any> , queryPrams = {}) => {
-        let pagination = new Promise((resolve,reject) => {
+        let find = (resolve,reject) => {
             this.model.findAndCountAll(findOptions)
             .then((res:{rows : any, count :number}) => {
                 let pagination :any = { pagination : {totalPage:0,currentPage:1}};
@@ -25,7 +25,7 @@ export class pagination{
             }).catch((e) => {
                 reject(e);
             })
-        });
-        return pagination;
+        };
+        return new Promise(find);
     }
 }

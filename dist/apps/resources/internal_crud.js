@@ -42,7 +42,7 @@ class internal_crud extends resource_1.resource {
                 let data = {};
                 model.findById(route.params.id).then((result) => {
                     if (!result) {
-                        reject();
+                        reject("no save");
                         throw Error;
                     }
                     resolve(result);

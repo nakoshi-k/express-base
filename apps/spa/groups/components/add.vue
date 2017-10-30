@@ -1,0 +1,123 @@
+<template>
+<div class="add">
+  <h2>Add</h2>
+  <form :action="action" method="post" v-on:submit.prevent="save">
+    <fieldset>
+
+      <div class="form-item">
+        <label for="name">Name</label>
+        <input type="text" name="name" @change="change" :class="validationClass( errors , 'name')" :value="entity.name" placeholder="name">
+        <div class="errors" v-for="e in errors.name"> <span class="typcn typcn-warning-outline"></span> {{e.message}} </div>
+      </div>
+    </fieldset>
+    <button type="submit" :class="validationClass(errors , 'submit')">add</button>
+  </form>
+</div>
+</template>
+
+<script lang="ts">
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import {mapGetters,mapState,mapActions,mapMutations} from 'vuex'
+import * as flatpickr from "flatpickr"
+import * as confirmDatePlugin from "../../../../node_modules/flatpickr/src/plugins/confirmDate/confirmDate.js"
+import form_validation from "../../../utilities/validation"
+
+Component.registerHooks([
+  'beforeRouteEnter',
+  'beforeRouteLeave',
+  'asyncData',
+  'fetch',
+  'middleware',
+  'layout',
+  'transition',
+  'scrollToTop'
+])
+
+@Component({
+  name : "add",
+  computed : {
+    ...mapGetters([
+      'domain' , 'token'
+    ]),
+    ...mapState("groups" , {
+        entity : ({entity}) =>  entity,
+        mount : ({mount}) => mount 
+    }),
+  },
+  methods : {
+    ...mapActions( "groups" , 
+      ["insertEntity" , "clearEntity" ,"copyEntity"]
+    ),
+    ...mapMutations( "groups" , 
+      ["updateEntity" , "setErrors"]
+    ),
+    ...mapMutations( "loading" , 
+      ["loading","endLoading"]
+    ),
+    ...form_validation.map(["validationClass"])
+  }
+})
+
+export default class add extends Vue {
+  /*from mutations */
+  updateEntity:(kv) => {}//from mutations
+  insertEntity:any;//from mutations
+  loading:() => {}
+  endLoading:(status:string) => {}
+  token : string
+  mount : string
+  clearEntity:() => {}
+  
+  get action(){
+    return `${this.mount}`
+  }
+
+  entity : {
+    title : "",
+    priod : ""
+    errors : {}
+  }
+   
+  change = (e) => {
+    let kv = {}
+    kv["key"] = e.target.name
+    kv["value"] = e.target.value
+    this.updateEntity(kv)
+  }
+
+  copyEntity:(any) => {}
+  mounted(){
+    if(window){
+      flatpickr(".calendar" , {
+        "enableTime": true,
+        "plugins": [confirmDatePlugin({})]
+      })
+    }
+    this.clearEntity()
+    let query = this.$store.state.route.query
+    if(query["copy"]){
+      this.copyEntity({ id : query["copy"] , mount : this.mount })
+    }
+  }
+
+  beforeDestroy(){
+    this.clearEntity()
+  }
+  
+  errors = {}
+
+  save(){
+    this.loading()
+    this.insertEntity(this.token).then(r => {
+      this.endLoading("success")
+      this.$router.push({path : this.mount})
+    }).catch( e => {
+      this.errors = e
+      this.endLoading("warning")
+    })
+    return false
+  }
+
+}
+</script>

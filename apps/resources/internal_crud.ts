@@ -28,6 +28,7 @@ export class internal_crud extends resource{
             let service = this.feeds.service( this.resource );
             let pagination = this.feeds.pagination(this.resource);
             let conditions = service.conditions( route );
+
             let entities = pagination.find( conditions ,route.query);
             let name = this.resource;
             let data = {};
@@ -36,6 +37,7 @@ export class internal_crud extends resource{
                     reject(false);
                 };
                 data[name] = result.rows;
+
                 data["page"] = result.pagination;
                 resolve(data);
             }).catch((error) => {
@@ -53,7 +55,7 @@ export class internal_crud extends resource{
             let data = {};
             model.findById( route.params.id ).then((result) => {
                 if(!result){
-                    reject();
+                    reject("no save");
                     throw Error;
                 }
                 resolve(result);

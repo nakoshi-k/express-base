@@ -11,6 +11,7 @@
     </div>
   </div>
   <app-offset></app-offset>
+
   <app-modal></app-modal>
   <app-overlay></app-overlay>
 </div>
@@ -18,11 +19,9 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-/*
 import over_lay from './loading/components/over_lay.vue';
 import modal from './modal/components/modal.vue'
 import offset from './offset/components/offset.vue'
-*/
 Component.registerHooks([
   'beforeRouteEnter',
   'beforeRouteLeave',

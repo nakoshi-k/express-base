@@ -38,7 +38,8 @@ export default context => {
         context.state = store.state;
         resolve(app);
       }).catch(e => {
-        resolve(app);
+        console.log(e)
+        reject(e);
       })
 
     },reject)

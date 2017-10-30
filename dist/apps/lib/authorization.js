@@ -90,7 +90,7 @@ class authorization {
         this.logout = (req) => {
             const logout = (resolve, reject) => {
                 if (!req.user) {
-                    reject();
+                    reject("user login yet");
                 }
                 try {
                     const user_id = req.user.id;
@@ -99,7 +99,7 @@ class authorization {
                     resolve();
                 }
                 catch (e) {
-                    reject();
+                    reject(e);
                 }
             };
             return new Promise(logout);
@@ -107,7 +107,7 @@ class authorization {
         this.user = (req) => {
             const user = (resolve, reject) => {
                 if (!req.user) {
-                    reject();
+                    reject("no user");
                     return;
                 }
                 const user = req.user.toJSON();
@@ -116,6 +116,7 @@ class authorization {
                     user.last_login = moment(last_login).format("YYYY-MM-DD HH:mm:ss");
                     resolve(user);
                 }).catch(e => {
+                    console.log("aaaaaaaaa");
                     reject(e);
                 });
             };

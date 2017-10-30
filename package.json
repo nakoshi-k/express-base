@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "browsersync": "browser-sync start --proxy localhost:4000 --reload-delay 2000 --files=\"dist/**/*.*\" ",
+    "browsersync": "browser-sync start --proxy localhost:4000 --reload-delay 2000 --files=\"dist/**/*.*\" --ignored \"*.log\" ",
     "start": "nodemon ./dist/bin/www.js -d 5 --ignore ./sessions",
     "build:move": "cpx \"{apps,base,models,config,public}/**/*.{ejs,js,json,jpg,jpeg,png,gif,ico,css,eot,svg,ttf,woff}\" dist",
     "build:stylus": "stylus apps/public/stylesheets/style.styl -o dist/apps/public/stylesheets/style.css --include-css",

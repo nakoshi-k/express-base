@@ -27,17 +27,12 @@ export class router extends apps_router {
     }
 
     private search = (req : request ,res: response, next : next ) => {
-        let pagination = this.service.pagination()
-        let conditions = this.service.conditions( req )
-        let entities = pagination.find( conditions , req.query)
-        let data = {}
         let rend = this.renderer.create(res);
-        entities.then( (result : {rows : any, count :number,pagination:any}) => {
-            data[this.entities_name] = result.rows
-            data["page"] = result.pagination
+        this.service.page(req,res).then( (result : {rows : any, count :number,pagination:any}) => {
             rend.status(201)
-            rend.json(data)
-        }).catch((error) => { 
+            rend.json(result)
+        }).catch((error) => {
+            let data = {} 
             data[this.entities_name] = {}
             data["page"] = {}
             rend.status(400)

@@ -7,16 +7,16 @@ const state_1 = require("./stores/state");
 const getters_1 = require("./stores/getters");
 const auth_1 = require("../../resources/auth");
 class store_module extends store_module_1.store_module {
-    constructor(feeds) {
+    constructor(options) {
         super();
-        this.state = new state_1.state(feeds).map("all");
-        this.actions = new actions_1.actions(feeds).map("all");
-        this.mutations = new mutations_1.mutations(feeds).map("all");
-        let lgetters = new getters_1.getters(feeds).map("all");
-        this.getters = Object.assign({}, lgetters, { feeds: function () { return feeds; } });
-        let local_getters = new getters_1.getters(feeds).map("all");
+        this.state = new state_1.state(options).map("all");
+        this.actions = new actions_1.actions(options).map("all");
+        this.mutations = new mutations_1.mutations(options).map("all");
+        let lgetters = new getters_1.getters(options).map("all");
+        this.getters = Object.assign({}, lgetters, { feeds: function () { return options; } });
+        let local_getters = new getters_1.getters(options).map("all");
         let api = () => {
-            return new auth_1.auth(feeds);
+            return new auth_1.auth(options);
         };
         this.getters = Object.assign({}, local_getters, { api: api });
     }

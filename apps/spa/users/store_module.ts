@@ -8,18 +8,14 @@ import {internal_crud} from "../../resources/internal_crud"
 
 export class store_module extends core_module{
     
-    constructor( feeds ){
+    constructor( options ){
         super();
-        this.state = new state( feeds ).map("all")
-        this.actions = new actions( feeds ).map("all");
-        this.mutations = new mutations( feeds ).map("all");
-        let local_getters = new getters( feeds ).map("all");
+        this.state = new state( options).map("all")
+        this.actions = new actions( options).map("all");
+        this.mutations = new mutations( options).map("all");
+        let local_getters = new getters( options).map("all");
         let crud = () => {
-            return new internal_crud({
-                endPoint : "/api/users",
-                resource : "users",
-                feeds:feeds 
-            });
+            return new internal_crud(options);
         }
         this.getters = { ...local_getters , crud : crud };
     }

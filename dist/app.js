@@ -24,6 +24,7 @@ const passport = require("passport");
 const server_router_1 = require("./apps/spa/server_router");
 const router_1 = require("./apps/api/tasks/router");
 const router_2 = require("./apps/api/users/router");
+const router_3 = require("./apps/api/groups/router");
 /**
  * main
  */
@@ -38,6 +39,7 @@ class main {
         this.router = (app) => {
             app.use("/api/tasks", new router_1.router().map());
             app.use("/api/users", new router_2.router().map());
+            app.use("/api/groups", new router_3.router().map());
             app.use("/", new server_router_1.router().map());
         };
         this.overrideForm = (req, res) => {

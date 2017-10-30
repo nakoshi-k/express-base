@@ -50,6 +50,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
+        users.belongsTo(models.groups, { foreignKey: 'group_id'} );
       }
     },
     instanceMethods: {
@@ -79,5 +80,6 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
+
   return users;
 };

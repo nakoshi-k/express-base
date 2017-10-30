@@ -4,7 +4,7 @@ import {actions} from "./stores/actions"
 import {state} from "./stores/state"
 import {getters} from "./stores/getters"
 
-import {internal} from "../../resources/internal"
+import {internal_crud} from "../../resources/internal_crud"
 
 export class store_module extends core_module{
     
@@ -15,7 +15,7 @@ export class store_module extends core_module{
         this.mutations = new mutations( options ).map("all");
         let local_getters = new getters( options ).map("all");
         let crud = () => {
-            return new internal(options);
+            return new internal_crud(options);
         }
         this.getters = { ...local_getters , crud : crud };
     }

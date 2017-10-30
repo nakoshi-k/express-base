@@ -9,6 +9,9 @@ export class actions extends core_actions{
         let api = getters.api;
         return api.user().then(r => {
           commit("setAuthUser" , r)
+        }).catch(e => {
+            console.log(e)
+            return Promise.resolve()
         });
     }
 

@@ -9,6 +9,7 @@ import {store_module as offset_module } from './offset/store_module';
 
 import {store_module as tasks_module } from './tasks/store_module'
 import {store_module as users_module } from './users/store_module'
+import {store_module as groups_module } from './groups/store_module'
 import {store_module as auth_module} from './auth/store_module'
 
 export function createStore( feeds ){
@@ -25,6 +26,7 @@ export function createStore( feeds ){
 
   let tasks = new tasks_module({ resource : "tasks" , endPoint : "/api/tasks" , feeds : feeds} ).store()
   let users = new users_module({ resource : "users" , endPoint : "/api/users" ,feeds : feeds} ).store();
+  let groups = new groups_module({ resource : "groups" , endPoint : "/api/groups" ,feeds : feeds} ).store();
 
   let auth = new auth_module({ feeds : feeds} ).store();
   let loading = new loading_module({feeds : feeds}).store();
@@ -38,6 +40,7 @@ let vuex : Vuex.StoreOptions<any> =  {
       "loading" : loading,
       "modal" : modal,
       "users" : users,
+      "groups" : groups,
       "auth" : auth,
       "offset" : offset
     }

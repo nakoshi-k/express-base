@@ -130,5 +130,11 @@ export class renderer{
         this._response = res;
         return Object.assign({},this);
     }
+    
+    _to_json_field = "data";
+
+    toJSON = () => {
+        return this._response.locals[this._to_json_field];
+    }
 
 }

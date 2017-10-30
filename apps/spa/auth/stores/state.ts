@@ -1,9 +1,7 @@
 import {state as core_state} from "../../../../base/spa/stores/state";
 export class state extends core_state{
-    feeds = {}
-    constructor(feeds){
+    constructor(options){
         super();
-        this.feeds = feeds;
     }
 
     auth_status = false;
