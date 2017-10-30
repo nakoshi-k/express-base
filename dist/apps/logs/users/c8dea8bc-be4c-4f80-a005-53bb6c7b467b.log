@@ -13,3 +13,4 @@
 , {"action":"login","user_id":"c8dea8bc-be4c-4f80-a005-53bb6c7b467b","date":"2017-10-26 23:12:12+09:00","uuid":"525464bb-360f-40cf-9dc6-f781c026454e"} 
 , {"action":"logout","user_id":"c8dea8bc-be4c-4f80-a005-53bb6c7b467b","date":"2017-10-26 23:12:37+09:00","uuid":"408c3a34-9209-41a8-8596-145d8f3346de"} 
 , {"action":"login","user_id":"c8dea8bc-be4c-4f80-a005-53bb6c7b467b","date":"2017-10-26 23:12:40+09:00","uuid":"ce30186b-a267-4179-ade4-c22775fb0b48"} 
+, {"action":"login","user_id":"c8dea8bc-be4c-4f80-a005-53bb6c7b467b","date":"2017-10-30 20:52:28+09:00","uuid":"a456d575-a661-42a2-b292-490614f79321"} 

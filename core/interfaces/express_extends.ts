@@ -1,6 +1,6 @@
 import * as e from "express"
 
-interface request extends e.Request{
+export interface request extends e.Request{
     csrfToken : () => string,
     //isAuthenticated : () => void,
     logIn : (user,callback) => boolean
@@ -14,16 +14,14 @@ interface request extends e.Request{
     }
 }
 
-interface response extends e.Response{
+export interface response extends e.Response{
 
 }
 
-interface next extends e.NextFunction{
+export interface next extends e.NextFunction{
 
 }
 
-export interface express_extend{
-    res : response,
-    req : request,
-    next : next
+export interface router extends e.Router{
+    
 }
