@@ -7,7 +7,7 @@ import view from './components/view.vue'
 import edit from './components/edit.vue'
 let mount = "/groups"
 export default [
-{ name : "groups_page" ,path: `${mount}/page/:page*`, components: { main : idx  , navi : navigation,sub : sub  } } as RouteConfig,
+    { name : "groups_page" ,path: `${mount}/page/:page*`, components: { main : idx , navi : navigation,sub : sub } } as RouteConfig,
     { name : "groups_index" ,path: `${mount}/page/1` , alias : `${mount}/` } as RouteConfig,
     { name : "groups_add" , path: `${mount}/add`, components: { main : add , navi : navigation ,sub : sub } } as RouteConfig,
     { name : "groups_view" , path: `${mount}/:id`, components: { main : view , navi : navigation ,sub : sub } } as RouteConfig,

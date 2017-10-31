@@ -1,6 +1,11 @@
 'use strict';
 let bcrypt = require("bcrypt");
 var hashPasswordHook = function(user, options, callback) {
+    let new_pass = user.get('new_password');
+    console.log(new_pass)
+    if(!new_pass){
+      return callback(null,options);
+    }
     bcrypt.hash(user.get('new_password'), 10, function(err, hash) {
       if (err) {
         return callback(err);
@@ -32,7 +37,6 @@ module.exports = function(sequelize, DataTypes) {
           args : [8,64],
           msg : "パスワードは8文字から64文字までで入力してください。"
         },
-
       }
     },
     confirm_password: {

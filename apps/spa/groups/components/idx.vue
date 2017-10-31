@@ -65,11 +65,11 @@ export default class idx extends Vue {
 
  
   view(id){
-    return `${this.mount}/${id}`
+    return `/${this.mount}/${id}`
   }
 
   edit(id){
-    return `${this.mount}/${id}/edit`
+    return `/${this.mount}/${id}/edit`
   }
 
   setModal:(modal) => {}
@@ -90,7 +90,7 @@ export default class idx extends Vue {
   }
 
   copy(id:string){
-     return `${this.mount}/add?copy=${id}`
+     return `/${this.mount}/add?copy=${id}`
   }
 
   

@@ -6,7 +6,7 @@ const validation_1 = require("../../core/lib/validation");
 const search_1 = require("../../core/lib/search");
 const service_1 = require("../api/tasks/service");
 const service_2 = require("../api/users/service");
-const service_3 = require("../api/users/service");
+const service_3 = require("../api/groups/service");
 let service = {
     tasks: new service_1.service("tasks"),
     groups: new service_3.service("groups"),

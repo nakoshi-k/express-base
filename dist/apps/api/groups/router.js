@@ -44,13 +44,11 @@ class router extends apps_router_1.router {
         };
         this.delete = (req, res) => {
             let rend = this.renderer.create(res);
-            this.service.get_entity(req.params.id).then(entity => {
-                entity.destroy().then(() => {
-                    rend.status(204);
-                    rend.json({});
-                });
-            }).catch(e => {
-                console.log(e);
+            this.service.delete_entity(req.params.id).then(r => {
+                rend.status(204);
+                rend.json({});
+            }).catch(err => {
+                console.log(err);
                 rend.status(500);
                 rend.json({});
             });

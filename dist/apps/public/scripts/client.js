@@ -12142,57 +12142,12 @@ class internal_crud extends __WEBPACK_IMPORTED_MODULE_3__resource__["a" /* resou
         this.client = (url, options) => {
             return client.fetch(url, options);
         };
-        this.serverPagination = (route) => {
-            let serverPagination = (resolve, reject) => {
-                let service = this.feeds.service(this.resource);
-                let pagination = this.feeds.pagination(this.resource);
-                let conditions = service.conditions(route);
-                let entities = pagination.find(conditions, route.query);
-                let name = this.resource;
-                let data = {};
-                entities.then((result) => {
-                    data[name] = result.rows;
-                    data["page"] = result.pagination;
-                    resolve(data);
-                }).catch((error) => {
-                    data[name] = {};
-                    data["page"] = {};
-                    reject(error);
-                });
-            };
-            return serverPagination;
-        };
-        this.serverEntity = (route) => {
-            let serverEntity = (resolve, reject) => {
-                let model = this.feeds.model(this.resource);
-                let data = {};
-                model.findById(route.params.id).then((result) => {
-                    if (!result) {
-                        reject("no save");
-                        throw Error;
-                    }
-                    resolve(result);
-                }).catch((err) => {
-                    reject(err);
-                });
-            };
-            return serverEntity;
-        };
-        this.server = (type, route) => {
-            let server;
-            if (type === "paginate") {
-                server = this.serverPagination(route);
-            }
-            if (type === "entity") {
-                server = this.serverEntity(route);
-            }
-            return new Promise(server);
-        };
         this.paginate = (route) => {
             let bq = new __WEBPACK_IMPORTED_MODULE_0__core_lib_build_query__["a" /* build_query */]();
             let URI = `${this.endPoint}/${__WEBPACK_IMPORTED_MODULE_2__utilities_route_parse__["a" /* default */].parse(route)}${bq.http(route.query)}`;
             if (this.is_server()) {
-                return this.server("paginate", route);
+                let service = this.feeds.service(this.resource);
+                return service.pagination(route);
             }
             return this.client(URI, {});
         };
@@ -12200,7 +12155,8 @@ class internal_crud extends __WEBPACK_IMPORTED_MODULE_3__resource__["a" /* resou
             let id = route.params.id;
             let URI = `${this.endPoint}/${id}`;
             if (this.is_server()) {
-                return this.server("entity", route);
+                let service = this.feeds.service(this.resource);
+                return service.get_entity(route.params.id);
             }
             return this.client(URI, {});
         };
@@ -15682,7 +15638,7 @@ let search = class search extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
     }
     search() {
         let q = bq.http(this.frm);
-        this.$router.push(`${this.mount}?${q}`);
+        this.$router.push(`/${this.mount}?${q}`);
     }
     reset() {
         let frm = this.frm;
@@ -16047,10 +16003,10 @@ let idx = class idx extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
         return store.dispatch("tasks/fetchEntities", route);
     }
     view(id) {
-        return `${this.mount}/${id}`;
+        return `/${this.mount}/${id}`;
     }
     edit(id) {
-        return `${this.mount}/${id}/edit`;
+        return `/${this.mount}/${id}/edit`;
     }
     destroy(id, title) {
         let modal = {
@@ -16065,7 +16021,7 @@ let idx = class idx extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
         this.openModal();
     }
     copy(id) {
-        return `${this.mount}/add?copy=${id}`;
+        return `/${this.mount}/add?copy=${id}`;
     }
 };
 idx = __decorate([
@@ -17840,12 +17796,14 @@ if (false) {(function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utilities_validation__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__form_components_select__ = __webpack_require__(164);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -17865,16 +17823,16 @@ __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
 let add = class add extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
     constructor() {
         super(...arguments);
-        this.change = (e) => {
-            let kv = {};
-            kv["key"] = e.target.name;
-            kv["value"] = e.target.value;
-            this.updateEntity(kv);
-        };
         this.errors = {};
     }
     get action() {
         return `${this.mount}`;
+    }
+    change(e) {
+        let kv = {};
+        kv["key"] = e.target.name;
+        kv["value"] = e.target.value;
+        this.updateEntity(kv);
     }
     mounted() {
         if (window) {
@@ -17907,6 +17865,9 @@ let add = class add extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
 add = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
         name: "add",
+        components: {
+            "form-select": __WEBPACK_IMPORTED_MODULE_6__form_components_select__["a" /* default */]
+        },
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])([
             'domain', 'token'
         ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])("users", {
@@ -17996,14 +17957,12 @@ var render = function() {
             [
               _c("label", { attrs: { for: "group_id" } }, [_vm._v("Group")]),
               _vm._v(" "),
-              _c("input", {
-                class: _vm.validationClass(_vm.errors, "group_id"),
+              _c("form-select", {
                 attrs: {
-                  type: "text",
                   name: "group_id",
-                  placeholder: "group_id"
+                  errors: _vm.errors,
+                  value: _vm.entity.group_id
                 },
-                domProps: { value: _vm.entity.group_id },
                 on: { change: _vm.change }
               }),
               _vm._v(" "),
@@ -18041,6 +18000,13 @@ var render = function() {
                   _c("span", { staticClass: "typcn typcn-warning-outline" }),
                   _vm._v(" " + _vm._s(e.message) + " ")
                 ])
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.errors.isEvenPassword, function(e) {
+                return _c("div", { staticClass: "errors" }, [
+                  _c("span", { staticClass: "typcn typcn-warning-outline" }),
+                  _vm._v(" " + _vm._s(e.message) + " ")
+                ])
               })
             ],
             2
@@ -18066,6 +18032,13 @@ var render = function() {
               }),
               _vm._v(" "),
               _vm._l(_vm.errors.confirm_password, function(e) {
+                return _c("div", { staticClass: "errors" }, [
+                  _c("span", { staticClass: "typcn typcn-warning-outline" }),
+                  _vm._v(" " + _vm._s(e.message) + " ")
+                ])
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.errors.isEvenPassword, function(e) {
                 return _c("div", { staticClass: "errors" }, [
                   _c("span", { staticClass: "typcn typcn-warning-outline" }),
                   _vm._v(" " + _vm._s(e.message) + " ")
@@ -18307,12 +18280,14 @@ if (false) {(function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utilities_validation__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__form_components_select__ = __webpack_require__(164);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -18368,6 +18343,9 @@ let edit = class edit extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
 edit = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
         name: "edit",
+        components: {
+            "form-select": __WEBPACK_IMPORTED_MODULE_6__form_components_select__["a" /* default */]
+        },
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])([
             'domain', 'token'
         ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])("users", {
@@ -18464,14 +18442,12 @@ var render = function() {
             [
               _c("label", { attrs: { for: "group_id" } }, [_vm._v("Group")]),
               _vm._v(" "),
-              _c("input", {
-                class: _vm.validationClass(_vm.errors, "group_id"),
+              _c("form-select", {
                 attrs: {
-                  type: "text",
                   name: "group_id",
-                  placeholder: "group_id"
+                  errors: _vm.errors,
+                  value: _vm.entity.group_id
                 },
-                domProps: { value: _vm.entity.group_id },
                 on: { change: _vm.change }
               }),
               _vm._v(" "),
@@ -18509,6 +18485,13 @@ var render = function() {
                   _c("span", { staticClass: "typcn typcn-warning-outline" }),
                   _vm._v(" " + _vm._s(e.message) + " ")
                 ])
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.errors.isEvenPassword, function(e) {
+                return _c("div", { staticClass: "errors" }, [
+                  _c("span", { staticClass: "typcn typcn-warning-outline" }),
+                  _vm._v(" " + _vm._s(e.message) + " ")
+                ])
               })
             ],
             2
@@ -18534,6 +18517,13 @@ var render = function() {
               }),
               _vm._v(" "),
               _vm._l(_vm.errors.confirm_password, function(e) {
+                return _c("div", { staticClass: "errors" }, [
+                  _c("span", { staticClass: "typcn typcn-warning-outline" }),
+                  _vm._v(" " + _vm._s(e.message) + " ")
+                ])
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.errors.isEvenPassword, function(e) {
                 return _c("div", { staticClass: "errors" }, [
                   _c("span", { staticClass: "typcn typcn-warning-outline" }),
                   _vm._v(" " + _vm._s(e.message) + " ")
@@ -19281,7 +19271,9 @@ var render = function() {
           _c(
             "li",
             [
-              _c("router-link", { attrs: { to: _vm.mount } }, [_vm._v("Index")])
+              _c("router-link", { attrs: { to: "/" + _vm.mount } }, [
+                _vm._v("Index")
+              ])
             ],
             1
           ),
@@ -19395,10 +19387,10 @@ let idx = class idx extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
         return store.dispatch("groups/fetchEntities", route);
     }
     view(id) {
-        return `${this.mount}/${id}`;
+        return `/${this.mount}/${id}`;
     }
     edit(id) {
-        return `${this.mount}/${id}/edit`;
+        return `/${this.mount}/${id}/edit`;
     }
     destroy(id, title) {
         let modal = {
@@ -19413,7 +19405,7 @@ let idx = class idx extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
         this.openModal();
     }
     copy(id) {
-        return `${this.mount}/add?copy=${id}`;
+        return `/${this.mount}/add?copy=${id}`;
     }
 };
 idx = __decorate([
@@ -20829,6 +20821,12 @@ class actions extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_actions__["a"
         };
         this.saveEntity = ({ state, commit, getters }, token) => {
             let crud = getters.crud;
+            if (state.entity.new_password === "") {
+                delete state.entity.new_password;
+            }
+            if (state.entity.confirm_password === "") {
+                delete state.entity.confirm_password;
+            }
             return crud.update(state.entity, token);
         };
         this.deleteEntity = ({ state, commit, getters }, delObj) => {
@@ -21274,6 +21272,170 @@ function cloneRoute (to, from) {
 }
 
 
+
+/***/ }),
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_select_vue__ = __webpack_require__(165);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3d3c1f1f_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_select_vue__ = __webpack_require__(166);
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+
+/* template */
+
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_select_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3d3c1f1f_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_select_vue__["a" /* default */],
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "apps/spa/form/components/select.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] select.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3d3c1f1f", Component.options)
+  } else {
+    hotAPI.reload("data-v-3d3c1f1f", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+
+
+/***/ }),
+/* 165 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_validation__ = __webpack_require__(6);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+let select = class select extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
+    change(e) {
+        this.$emit('change', e);
+    }
+};
+select = __decorate([
+    __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
+        name: 'select',
+        computed: {},
+        props: {
+            value: String,
+            name: String,
+            errors: {}
+        },
+        methods: Object.assign({}, __WEBPACK_IMPORTED_MODULE_2__utilities_validation__["a" /* default */].map(["validationClass"]))
+    })
+], select);
+/* harmony default export */ __webpack_exports__["a"] = (select);
+
+
+/***/ }),
+/* 166 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "from-select" }, [
+    _c(
+      "select",
+      {
+        class: _vm.validationClass(_vm.errors, _vm.name),
+        attrs: { name: _vm.name },
+        domProps: { value: _vm.value },
+        on: { change: _vm.change }
+      },
+      [
+        _c("option", { attrs: { disabled: "" } }, [
+          _vm._v("Please select one")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "1" } }, [_vm._v("A")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "2" } }, [_vm._v("B")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "3" } }, [_vm._v("C")])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-3d3c1f1f", esExports)
+  }
+}
 
 /***/ })
 /******/ ]);

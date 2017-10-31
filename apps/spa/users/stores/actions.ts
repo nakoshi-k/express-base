@@ -43,6 +43,12 @@ export class actions extends core_actions{
 
     saveEntity = ( {state,commit ,getters}, token) => {
         let crud = getters.crud;
+        if(state.entity.new_password === ""){
+            delete state.entity.new_password;
+        }
+        if(state.entity.confirm_password === ""){
+            delete state.entity.confirm_password;
+        }
         return  crud.update(state.entity,token)
     }
     

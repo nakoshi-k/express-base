@@ -30,7 +30,7 @@ import Component from 'vue-class-component'
 import {mapState} from "vuex"
 import * as flatpickr from "flatpickr"
 import * as confirmDatePlugin from "../../../../node_modules/flatpickr/src/plugins/confirmDate/confirmDate.js"
-import {build_query} from "../../../../base/sideless/build_query"
+import {build_query} from "../../../../core/lib/build_query"
 let bq = new build_query()
 Component.registerHooks([
   'beforeRouteEnter',
@@ -62,7 +62,7 @@ export default class search extends Vue {
 
   search(){
     let q = bq.http(this.frm)
-    this.$router.push(`${this.mount}?${q}`)
+    this.$router.push(`/${this.mount}?${q}`)
   }
   reset(){
     let frm = this.frm;
@@ -71,7 +71,7 @@ export default class search extends Vue {
     }
   }
   get action(){
-    return this.mount
+    return `/${this.mount}`
   }
   
   mounted(){

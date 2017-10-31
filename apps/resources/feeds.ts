@@ -6,7 +6,7 @@ import { search} from "../../core/lib/search";
 import * as sequelize from "sequelize";
 import {service as tasks_service } from "../api/tasks/service"
 import {service as users_service } from "../api/users/service"
-import {service as groups_service} from "../api/users/service"
+import {service as groups_service} from "../api/groups/service"
 import ee from "../../core/interfaces/express_extends"
 
 let service = {

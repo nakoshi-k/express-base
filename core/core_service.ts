@@ -4,6 +4,13 @@ import {validation_error} from "./lib/validation";
 import {ModelsHashInterface,Model,WhereLogic,ValidationError , Instance , InstanceSetOptions} from "sequelize";
 import  * as models from "../models";
 import {missing_entity} from "./errors/errors"
+
+interface list_option{
+    key_field? : string,
+    value_field? : string,
+    where? : {}
+}
+
 export abstract class core_service{
 
     public models:ModelsHashInterface;    
@@ -11,7 +18,6 @@ export abstract class core_service{
     public name:string
 
     constructor (name:string) {
-        this.name = name;
         this.models = models;
         this.model = models[name];
     }
@@ -19,11 +25,10 @@ export abstract class core_service{
     public search = (query = {}) => {
         return new search(query);
     }
-    
 
     abstract conditions : (req) => { where : WhereLogic,limit:number,offset:number }
 
-    public pagination = ( req, res ) => {
+    public pagination = ( req, res = {locals:{}} ) => {
         let page = new pagination_mod(this.model);
         let conditions = this.conditions( req )
         
@@ -67,8 +72,8 @@ export abstract class core_service{
     }
 
     public save_entity : (newData:{[prop:string] : string }) => Promise<any> = (newData) => {
-        let entity = this.new_entity(newData)
         const save_entity = (resolve,reject) => {
+            let entity = this.new_entity(newData)
             entity.save().then( (result) => {
                 resolve(result)
             }).catch((err) => {
@@ -83,8 +88,61 @@ export abstract class core_service{
         return await entity.update(newData)
     }
 
+    public delete_entity : (id:string) => Promise<any> = async (id) => {
+        const entity = await this.get_entity(id);
+        return await entity.destroy()
+    }
+
     public validationError = (error:ValidationError) =>{
         return new validation_error(error);
     }
+
+
+    public get_list : (list_option?:list_option) => Promise<{[prop:string] : string}> = (list_option = {} ) => {
+        
+        let key_field = "id"
+        let value_field = ""
+
+        if(list_option.key_field){
+            key_field = list_option.key_field
+        }
+        
+        if(list_option.value_field){
+           value_field = list_option.value_field
+        }
+
+        if(!list_option.value_field){
+            let fields = Object.keys(this.model["rawAttributes"])
+            let candidate = ["name" , "title" , "id"].reverse()
+            candidate.forEach((v,idx) => {
+                if( fields.indexOf(v) > -1 ){
+                    value_field = v
+                    return;
+                }
+            })
+        }
+        let options = {
+            attributes : [ key_field , value_field ]
+        }
+
+        if(list_option.where){
+           options["where"] = list_option.where
+         }
+
+        const get_list = (resolve,reject) => {
+            this.model.findAll(options)
+            .then((result : Instance<{id:string}>[]) => {
+                let list = {};
+                result.forEach((v ,idx) => {
+                   list[v.getDataValue( key_field )] = v.getDataValue( value_field )
+                })
+                resolve(list)
+            }).catch(e => {
+                reject(e)
+            })
+        }
+        return new Promise(get_list)
+    }
+
 
 }

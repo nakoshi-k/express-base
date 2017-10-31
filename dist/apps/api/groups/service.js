@@ -5,11 +5,6 @@ class service extends apps_service_1.service {
     constructor(name) {
         super(name);
         this.name = "groups";
-        this.list = (req) => {
-            const list = (resolve, reject) => {
-            };
-            return new Promise(list);
-        };
         this.conditions = (req) => {
             let search = this.search();
             search.query = req.query;

@@ -5,7 +5,6 @@ const authorization_1 = require("./lib/authorization");
 class service extends core_service_1.core_service {
     constructor(name) {
         super(name);
-        this.name = "service";
         /* auth */
         this.auth = new authorization_1.authorization();
         /* activate local */

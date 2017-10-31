@@ -1,16 +1,15 @@
 import * as path from "path"
 import {router as apps_router,routing_map} from "../../apps_router"
-import {request,response,next} from "../../interfaces/express_extend"
+import ee from "../../../core/interfaces/express_extends"
 import {service} from "./service"
-import {input_error} from "../../../base/core"
 
 export const mapping :  { [propName: string]: routing_map } = {
-    idx : { method : "get", route : "/", component : "search" , middle_ware : null } ,
-    page: { method : "get", route : "/page/:page", component : "search" , middle_ware : null } ,
-    entity : { method : "get", route : "/:id", component : "entity" , middle_ware : null} ,
-    insert : { method : "post", route : "/", component : "insert" , middle_ware : null} ,
-    update : { method : "put", route : "/:id", component : "update" , middle_ware : null } ,
-    delete : { method : "delete", route : "/:id", component : "delete" , middle_ware : null } 
+    idx : { method : "get", route : "/", middleware : "search" , pre : null } ,
+    page: { method : "get", route : "/page/:page", middleware : "search" , pre : null } ,
+    entity : { method : "get", route : "/:id", middleware : "entity" , pre : null} ,
+    insert : { method : "post", route : "/", middleware : "insert" , pre : null} ,
+    update : { method : "put", route : "/:id", middleware : "update" , pre : null } ,
+    delete : { method : "delete", route : "/:id", middleware : "delete" , pre : null } 
 }
 
 export class router extends apps_router {
@@ -26,82 +25,64 @@ export class router extends apps_router {
         this.service = new service(this.name)
     }
 
-    private search = (req : request ,res: response, next : next ) => {
+    private search = (req : ee.request ,res: ee.response, next : ee.next ) => {
         let rend = this.renderer.create(res);
-        this.service.page(req,res).then( (result : {rows : any, count :number,pagination:any}) => {
+        this.service.pagination(req,res).then( (result : {rows : any, count :number,pagination:any}) => {
             rend.status(201)
-            rend.json(result)
+            rend.json(rend.toJSON())
         }).catch((error) => {
-            let data = {} 
+            let data = {}; 
             data[this.entities_name] = {}
             data["page"] = {}
             rend.status(400)
             rend.json(data)
         })
-    }
+    }   
    
-    private entity = (req:request,res:response,next:next) => {
-        let model = this.model
-        let data = {}
+    private entity = (req:ee.request,res:ee.response,next:ee.next) => {
         let rend = this.renderer.create(res);
-        model.findById( req.params.id ).then((result) => {
-            if(!result){
-                throw Error
-            }
+        this.service.get_entity( req.params.id ).then((r) => {
             rend.status(201)
-            rend.json(result)
+            rend.json(r)
         }).catch((err) => {
+            let data = {}
             data[this.entities_name] = {}
             rend.status(401)
             rend.json(data)
         })        
     }
    
-    private delete = (req:request,res:response) => {
-        let model = this.model
+    private delete = (req:ee.request,res:ee.response) => {
         let rend = this.renderer.create(res)
-        model.findById( req.params.id ).then((result) => {
-            if(result){
-                result.destroy().then( () => {
-                    rend.status(204)
-                    rend.json( {} )
-                }).catch(e => {
-                   rend.status(500)
-                   rend.json({})
-                })
-            }else{
-                rend.status(500)
-                rend.json({})
-            }
+        this.service.delete_entity( req.params.id ).then( r => {
+            rend.status(204)
+            rend.json( {} )
+        }).catch(err => {
+            console.log(err)
+            rend.status(500)
+            rend.json({})
         })
     }
 
-    private insert = (req: request,res:response,next:next) => {
-        let entity = this.model.build(req.body)
+    private insert = (req: ee.request,res:ee.response,next:ee.next) => {
         let rend = this.renderer.create(res)
-        entity.save().then( (result) => {
+        this.service.save_entity(req.body).then(r => {
             rend.status(201)
-            rend.json(entity.dataValues)
-        }).catch((err) => {
+            rend.json(r.toJSON())
+        }).catch(err =>{
             rend.status(400)
             rend.json(this.service.validationError(err))
         })
     }
 
-    private update = (req:request,res:response,next:next) => {
-        let model = this.model
+    private update = (req:ee.request,res:ee.response,next:ee.next) => {
         let rend = this.renderer.create(res)
-        model.findById( req.params.id ).then((entity) => {
-            entity.update(req.body).then( (result) => {
-                rend.status(201)
-                rend.json(result)
-            }).catch((err) => {
-                rend.status(400)
-                rend.json(this.service.validationError(err))
-            })
-        }).catch((err) => {
+        this.service.update_entity(req.params.id , req.body).then(r => {
+            rend.status(201)
+            rend.json(r.toJSON())
+        }).catch(err => {
             rend.status(400)
-            rend.json(err)
+            rend.json(this.service.validationError(err))
         })
     }
 

@@ -12,7 +12,7 @@ export interface routing_map{
 
 }
 
-export class core_routing{
+export abstract class core_routing{
     protected name = "router"
     protected service:core_service;
 

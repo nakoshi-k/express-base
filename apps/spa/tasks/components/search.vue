@@ -61,7 +61,7 @@ export default class search extends Vue {
 
   search(){
     let q = bq.http(this.frm)
-    this.$router.push(`${this.mount}?${q}`)
+    this.$router.push(`/${this.mount}?${q}`)
   }
   reset(){
     let frm = this.frm;

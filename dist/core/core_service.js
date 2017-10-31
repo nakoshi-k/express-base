@@ -18,7 +18,7 @@ class core_service {
         this.search = (query = {}) => {
             return new search_1.search(query);
         };
-        this.pagination = (req, res) => {
+        this.pagination = (req, res = { locals: {} }) => {
             let page = new pagination_1.pagination(this.model);
             let conditions = this.conditions(req);
             const pagination = (resolve, reject) => {
@@ -56,8 +56,8 @@ class core_service {
             return this.model.build(data);
         };
         this.save_entity = (newData) => {
-            let entity = this.new_entity(newData);
             const save_entity = (resolve, reject) => {
+                let entity = this.new_entity(newData);
                 entity.save().then((result) => {
                     resolve(result);
                 }).catch((err) => {
@@ -70,10 +70,52 @@ class core_service {
             const entity = yield this.get_entity(id);
             return yield entity.update(newData);
         });
+        this.delete_entity = (id) => __awaiter(this, void 0, void 0, function* () {
+            const entity = yield this.get_entity(id);
+            return yield entity.destroy();
+        });
         this.validationError = (error) => {
             return new validation_1.validation_error(error);
         };
-        this.name = name;
+        this.get_list = (list_option = {}) => {
+            let key_field = "id";
+            let value_field = "";
+            if (list_option.key_field) {
+                key_field = list_option.key_field;
+            }
+            if (list_option.value_field) {
+                value_field = list_option.value_field;
+            }
+            if (!list_option.value_field) {
+                let fields = Object.keys(this.model["rawAttributes"]);
+                let candidate = ["name", "title", "id"].reverse();
+                candidate.forEach((v, idx) => {
+                    if (fields.indexOf(v) > -1) {
+                        value_field = v;
+                        return;
+                    }
+                });
+            }
+            let options = {
+                attributes: [key_field, value_field]
+            };
+            if (list_option.where) {
+                options["where"] = list_option.where;
+            }
+            const get_list = (resolve, reject) => {
+                this.model.findAll(options)
+                    .then((result) => {
+                    let list = {};
+                    result.forEach((v, idx) => {
+                        list[v.getDataValue(key_field)] = v.getDataValue(value_field);
+                    });
+                    resolve(list);
+                }).catch(e => {
+                    reject(e);
+                });
+            };
+            return new Promise(get_list);
+        };
         this.models = models;
         this.model = models[name];
     }

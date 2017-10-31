@@ -7,7 +7,7 @@ export const mapping :  { [propName: string]: routing_map } = {
     idx : { method : "get", route : "/", middleware : "search" , pre : null } ,
     page: { method : "get", route : "/page/:page", middleware : "search" , pre : null } ,
     entity : { method : "get", route : "/:id", middleware : "entity" , pre : null} ,
-    insert : { method : "post", route : "/", middleware: "insert" , pre : null} ,
+    insert : { method : "post", route : "/", middleware : "insert" , pre : null} ,
     update : { method : "put", route : "/:id", middleware : "update" , pre : null } ,
     delete : { method : "delete", route : "/:id", middleware : "delete" , pre : null } 
 }
@@ -54,13 +54,11 @@ export class router extends apps_router {
    
     private delete = (req:ee.request,res:ee.response) => {
         let rend = this.renderer.create(res)
-        this.service.get_entity( req.params.id ).then( entity => {
-            entity.destroy().then(() => {
-                rend.status(204)
-                rend.json( {} )
-            })
-        }).catch(e => {
-            console.log(e)
+        this.service.delete_entity( req.params.id ).then( r => {
+            rend.status(204)
+            rend.json( {} )
+        }).catch(err => {
+            console.log(err)
             rend.status(500)
             rend.json({})
         })
@@ -86,7 +84,6 @@ export class router extends apps_router {
             rend.status(400)
             rend.json(this.service.validationError(err))
         })
-
     }
 
 }

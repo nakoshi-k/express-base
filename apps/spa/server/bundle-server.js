@@ -4018,57 +4018,12 @@ class internal_crud extends __WEBPACK_IMPORTED_MODULE_3__resource__["a" /* resou
         this.client = (url, options) => {
             return client.fetch(url, options);
         };
-        this.serverPagination = (route) => {
-            let serverPagination = (resolve, reject) => {
-                let service = this.feeds.service(this.resource);
-                let pagination = this.feeds.pagination(this.resource);
-                let conditions = service.conditions(route);
-                let entities = pagination.find(conditions, route.query);
-                let name = this.resource;
-                let data = {};
-                entities.then((result) => {
-                    data[name] = result.rows;
-                    data["page"] = result.pagination;
-                    resolve(data);
-                }).catch((error) => {
-                    data[name] = {};
-                    data["page"] = {};
-                    reject(error);
-                });
-            };
-            return serverPagination;
-        };
-        this.serverEntity = (route) => {
-            let serverEntity = (resolve, reject) => {
-                let model = this.feeds.model(this.resource);
-                let data = {};
-                model.findById(route.params.id).then((result) => {
-                    if (!result) {
-                        reject("no save");
-                        throw Error;
-                    }
-                    resolve(result);
-                }).catch((err) => {
-                    reject(err);
-                });
-            };
-            return serverEntity;
-        };
-        this.server = (type, route) => {
-            let server;
-            if (type === "paginate") {
-                server = this.serverPagination(route);
-            }
-            if (type === "entity") {
-                server = this.serverEntity(route);
-            }
-            return new Promise(server);
-        };
         this.paginate = (route) => {
             let bq = new __WEBPACK_IMPORTED_MODULE_0__core_lib_build_query__["a" /* build_query */]();
             let URI = `${this.endPoint}/${__WEBPACK_IMPORTED_MODULE_2__utilities_route_parse__["a" /* default */].parse(route)}${bq.http(route.query)}`;
             if (this.is_server()) {
-                return this.server("paginate", route);
+                let service = this.feeds.service(this.resource);
+                return service.pagination(route);
             }
             return this.client(URI, {});
         };
@@ -4076,7 +4031,8 @@ class internal_crud extends __WEBPACK_IMPORTED_MODULE_3__resource__["a" /* resou
             let id = route.params.id;
             let URI = `${this.endPoint}/${id}`;
             if (this.is_server()) {
-                return this.server("entity", route);
+                let service = this.feeds.service(this.resource);
+                return service.get_entity(route.params.id);
             }
             return this.client(URI, {});
         };
@@ -4969,7 +4925,7 @@ let search = class search extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
     }
     search() {
         let q = bq.http(this.frm);
-        this.$router.push(`${this.mount}?${q}`);
+        this.$router.push(`/${this.mount}?${q}`);
     }
     reset() {
         let frm = this.frm;
@@ -5167,10 +5123,10 @@ let idx = class idx extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
         return store.dispatch("tasks/fetchEntities", route);
     }
     view(id) {
-        return `${this.mount}/${id}`;
+        return `/${this.mount}/${id}`;
     }
     edit(id) {
-        return `${this.mount}/${id}/edit`;
+        return `/${this.mount}/${id}/edit`;
     }
     destroy(id, title) {
         let modal = {
@@ -5185,7 +5141,7 @@ let idx = class idx extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
         this.openModal();
     }
     copy(id) {
-        return `${this.mount}/add?copy=${id}`;
+        return `/${this.mount}/add?copy=${id}`;
     }
 };
 idx = __decorate([
@@ -6534,12 +6490,14 @@ if (Component.options.functional) {console.error("[vue-loader] add.vue: function
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utilities_validation__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__form_components_select__ = __webpack_require__(162);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -6559,16 +6517,16 @@ __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
 let add = class add extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
     constructor() {
         super(...arguments);
-        this.change = (e) => {
-            let kv = {};
-            kv["key"] = e.target.name;
-            kv["value"] = e.target.value;
-            this.updateEntity(kv);
-        };
         this.errors = {};
     }
     get action() {
         return `${this.mount}`;
+    }
+    change(e) {
+        let kv = {};
+        kv["key"] = e.target.name;
+        kv["value"] = e.target.value;
+        this.updateEntity(kv);
     }
     mounted() {
         if (window) {
@@ -6601,6 +6559,9 @@ let add = class add extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
 add = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
         name: "add",
+        components: {
+            "form-select": __WEBPACK_IMPORTED_MODULE_6__form_components_select__["a" /* default */]
+        },
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])([
             'domain', 'token'
         ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])("users", {
@@ -6622,73 +6583,131 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "add" }, [
-    _vm._ssrNode(
-      "<h2>Add</h2> <form" +
-        _vm._ssrAttr("action", _vm.action) +
-        ' method="post"><fieldset><div class="form-item"><label for="name">Name</label> <input type="text" name="name" placeholder="name"' +
-        _vm._ssrAttr("value", _vm.entity.name) +
-        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "name")) +
-        "> " +
-        _vm._ssrList(_vm.errors.name, function(e) {
-          return (
-            '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
-            "</div>"
+  return _c(
+    "div",
+    { staticClass: "add" },
+    [
+      _vm._ssrNode("<h2>Add</h2> "),
+      _vm._ssrNode(
+        "<form" + _vm._ssrAttr("action", _vm.action) + ' method="post">',
+        "</form>",
+        [
+          _vm._ssrNode(
+            "<fieldset>",
+            "</fieldset>",
+            [
+              _vm._ssrNode(
+                '<div class="form-item"><label for="name">Name</label> <input type="text" name="name" placeholder="name"' +
+                  _vm._ssrAttr("value", _vm.entity.name) +
+                  _vm._ssrClass(null, _vm.validationClass(_vm.errors, "name")) +
+                  "> " +
+                  _vm._ssrList(_vm.errors.name, function(e) {
+                    return (
+                      '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+                      _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
+                      "</div>"
+                    )
+                  }) +
+                  '</div> <div class="form-item"><label for="mail">Mail</label> <input type="email" name="mail" placeholder="mail"' +
+                  _vm._ssrAttr("value", _vm.entity.mail) +
+                  _vm._ssrClass(null, _vm.validationClass(_vm.errors, "mail")) +
+                  "> " +
+                  _vm._ssrList(_vm.errors.mail, function(e) {
+                    return (
+                      '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+                      _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
+                      "</div>"
+                    )
+                  }) +
+                  "</div> "
+              ),
+              _vm._ssrNode(
+                '<div class="form-item">',
+                "</div>",
+                [
+                  _vm._ssrNode('<label for="group_id">Group</label> '),
+                  _c("form-select", {
+                    attrs: {
+                      name: "group_id",
+                      errors: _vm.errors,
+                      value: _vm.entity.group_id
+                    },
+                    on: { change: _vm.change }
+                  }),
+                  _vm._ssrNode(
+                    " " +
+                      _vm._ssrList(_vm.errors.group_id, function(e) {
+                        return (
+                          '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+                          _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
+                          "</div>"
+                        )
+                      })
+                  )
+                ],
+                2
+              ),
+              _vm._ssrNode(
+                ' <div class="form-item"><label for="new_password">Password</label> <input type="password" name="new_password" placeholder="new_password"' +
+                  _vm._ssrAttr("value", _vm.entity.new_password) +
+                  _vm._ssrClass(
+                    null,
+                    _vm.validationClass(_vm.errors, "new_password")
+                  ) +
+                  "> " +
+                  _vm._ssrList(_vm.errors.new_password, function(e) {
+                    return (
+                      '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+                      _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
+                      "</div>"
+                    )
+                  }) +
+                  " " +
+                  _vm._ssrList(_vm.errors.isEvenPassword, function(e) {
+                    return (
+                      '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+                      _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
+                      "</div>"
+                    )
+                  }) +
+                  '</div> <div class="form-item"><label for="confirm_password">Confirm password</label> <input type="password" name="confirm_password" placeholder="confirm_password"' +
+                  _vm._ssrAttr("value", _vm.entity.confirm_password) +
+                  _vm._ssrClass(
+                    null,
+                    _vm.validationClass(_vm.errors, "confirm_password")
+                  ) +
+                  "> " +
+                  _vm._ssrList(_vm.errors.confirm_password, function(e) {
+                    return (
+                      '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+                      _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
+                      "</div>"
+                    )
+                  }) +
+                  " " +
+                  _vm._ssrList(_vm.errors.isEvenPassword, function(e) {
+                    return (
+                      '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+                      _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
+                      "</div>"
+                    )
+                  }) +
+                  "</div>"
+              )
+            ],
+            2
+          ),
+          _vm._ssrNode(
+            ' <button type="submit"' +
+              _vm._ssrClass(null, _vm.validationClass(_vm.errors, "submit")) +
+              ">add</button>"
           )
-        }) +
-        '</div> <div class="form-item"><label for="mail">Mail</label> <input type="email" name="mail" placeholder="mail"' +
-        _vm._ssrAttr("value", _vm.entity.mail) +
-        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "mail")) +
-        "> " +
-        _vm._ssrList(_vm.errors.mail, function(e) {
-          return (
-            '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
-            "</div>"
-          )
-        }) +
-        '</div> <div class="form-item"><label for="group_id">Group</label> <input type="text" name="group_id" placeholder="group_id"' +
-        _vm._ssrAttr("value", _vm.entity.group_id) +
-        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "group_id")) +
-        "> " +
-        _vm._ssrList(_vm.errors.group_id, function(e) {
-          return (
-            '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
-            "</div>"
-          )
-        }) +
-        '</div> <div class="form-item"><label for="new_password">Password</label> <input type="password" name="new_password" placeholder="new_password"' +
-        _vm._ssrAttr("value", _vm.entity.new_password) +
-        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "new_password")) +
-        "> " +
-        _vm._ssrList(_vm.errors.new_password, function(e) {
-          return (
-            '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
-            "</div>"
-          )
-        }) +
-        '</div> <div class="form-item"><label for="confirm_password">Confirm password</label> <input type="password" name="confirm_password" placeholder="confirm_password"' +
-        _vm._ssrAttr("value", _vm.entity.confirm_password) +
-        _vm._ssrClass(
-          null,
-          _vm.validationClass(_vm.errors, "confirm_password")
-        ) +
-        "> " +
-        _vm._ssrList(_vm.errors.confirm_password, function(e) {
-          return (
-            '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
-            "</div>"
-          )
-        }) +
-        '</div></fieldset> <button type="submit"' +
-        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "submit")) +
-        ">add</button></form>"
-    )
-  ])
+        ],
+        2
+      )
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -6855,12 +6874,14 @@ if (Component.options.functional) {console.error("[vue-loader] edit.vue: functio
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utilities_validation__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__form_components_select__ = __webpack_require__(162);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -6916,6 +6937,9 @@ let edit = class edit extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
 edit = __decorate([
     __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
         name: "edit",
+        components: {
+            "form-select": __WEBPACK_IMPORTED_MODULE_6__form_components_select__["a" /* default */]
+        },
         computed: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapGetters */])([
             'domain', 'token'
         ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])("users", {
@@ -6937,76 +6961,134 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "edit" }, [
-    _vm._ssrNode(
-      "<h2>Edit</h2> <form" +
-        _vm._ssrAttr("action", _vm.action) +
-        ' method="post"><fieldset><input type="hidden" name="id"' +
-        _vm._ssrAttr("value", _vm.entity.id) +
-        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "id")) +
-        '> <div class="form-item"><label for="name">Name</label> <input type="text" name="name" placeholder="name"' +
-        _vm._ssrAttr("value", _vm.entity.name) +
-        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "name")) +
-        "> " +
-        _vm._ssrList(_vm.errors.name, function(e) {
-          return (
-            '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
-            "</div>"
+  return _c(
+    "div",
+    { staticClass: "edit" },
+    [
+      _vm._ssrNode("<h2>Edit</h2> "),
+      _vm._ssrNode(
+        "<form" + _vm._ssrAttr("action", _vm.action) + ' method="post">',
+        "</form>",
+        [
+          _vm._ssrNode(
+            "<fieldset>",
+            "</fieldset>",
+            [
+              _vm._ssrNode(
+                '<input type="hidden" name="id"' +
+                  _vm._ssrAttr("value", _vm.entity.id) +
+                  _vm._ssrClass(null, _vm.validationClass(_vm.errors, "id")) +
+                  '> <div class="form-item"><label for="name">Name</label> <input type="text" name="name" placeholder="name"' +
+                  _vm._ssrAttr("value", _vm.entity.name) +
+                  _vm._ssrClass(null, _vm.validationClass(_vm.errors, "name")) +
+                  "> " +
+                  _vm._ssrList(_vm.errors.name, function(e) {
+                    return (
+                      '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+                      _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
+                      "</div>"
+                    )
+                  }) +
+                  '</div> <div class="form-item"><label for="mail">Mail</label> <input type="email" name="mail" placeholder="mail"' +
+                  _vm._ssrAttr("value", _vm.entity.mail) +
+                  _vm._ssrClass(null, _vm.validationClass(_vm.errors, "mail")) +
+                  "> " +
+                  _vm._ssrList(_vm.errors.mail, function(e) {
+                    return (
+                      '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+                      _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
+                      "</div>"
+                    )
+                  }) +
+                  "</div> "
+              ),
+              _vm._ssrNode(
+                '<div class="form-item">',
+                "</div>",
+                [
+                  _vm._ssrNode('<label for="group_id">Group</label> '),
+                  _c("form-select", {
+                    attrs: {
+                      name: "group_id",
+                      errors: _vm.errors,
+                      value: _vm.entity.group_id
+                    },
+                    on: { change: _vm.change }
+                  }),
+                  _vm._ssrNode(
+                    " " +
+                      _vm._ssrList(_vm.errors.group_id, function(e) {
+                        return (
+                          '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+                          _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
+                          "</div>"
+                        )
+                      })
+                  )
+                ],
+                2
+              ),
+              _vm._ssrNode(
+                ' <div class="form-item"><label for="new_password">New password</label> <input type="password" name="new_password" placeholder="new_password"' +
+                  _vm._ssrAttr("value", _vm.entity.new_password) +
+                  _vm._ssrClass(
+                    null,
+                    _vm.validationClass(_vm.errors, "new_password")
+                  ) +
+                  "> " +
+                  _vm._ssrList(_vm.errors.new_password, function(e) {
+                    return (
+                      '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+                      _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
+                      "</div>"
+                    )
+                  }) +
+                  " " +
+                  _vm._ssrList(_vm.errors.isEvenPassword, function(e) {
+                    return (
+                      '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+                      _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
+                      "</div>"
+                    )
+                  }) +
+                  '</div> <div class="form-item"><label for="confirm_password">Confirm password</label> <input type="password" name="confirm_password" placeholder="confirm_password"' +
+                  _vm._ssrAttr("value", _vm.entity.confirm_password) +
+                  _vm._ssrClass(
+                    null,
+                    _vm.validationClass(_vm.errors, "confirm_password")
+                  ) +
+                  "> " +
+                  _vm._ssrList(_vm.errors.confirm_password, function(e) {
+                    return (
+                      '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+                      _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
+                      "</div>"
+                    )
+                  }) +
+                  " " +
+                  _vm._ssrList(_vm.errors.isEvenPassword, function(e) {
+                    return (
+                      '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+                      _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
+                      "</div>"
+                    )
+                  }) +
+                  "</div>"
+              )
+            ],
+            2
+          ),
+          _vm._ssrNode(
+            ' <button type="submit"' +
+              _vm._ssrClass(null, _vm.validationClass(_vm.errors, "submit")) +
+              ">update</button>"
           )
-        }) +
-        '</div> <div class="form-item"><label for="mail">Mail</label> <input type="email" name="mail" placeholder="mail"' +
-        _vm._ssrAttr("value", _vm.entity.mail) +
-        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "mail")) +
-        "> " +
-        _vm._ssrList(_vm.errors.mail, function(e) {
-          return (
-            '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
-            "</div>"
-          )
-        }) +
-        '</div> <div class="form-item"><label for="group_id">Group</label> <input type="text" name="group_id" placeholder="group_id"' +
-        _vm._ssrAttr("value", _vm.entity.group_id) +
-        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "group_id")) +
-        "> " +
-        _vm._ssrList(_vm.errors.group_id, function(e) {
-          return (
-            '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
-            "</div>"
-          )
-        }) +
-        '</div> <div class="form-item"><label for="new_password">New password</label> <input type="password" name="new_password" placeholder="new_password"' +
-        _vm._ssrAttr("value", _vm.entity.new_password) +
-        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "new_password")) +
-        "> " +
-        _vm._ssrList(_vm.errors.new_password, function(e) {
-          return (
-            '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
-            "</div>"
-          )
-        }) +
-        '</div> <div class="form-item"><label for="confirm_password">Confirm password</label> <input type="password" name="confirm_password" placeholder="confirm_password"' +
-        _vm._ssrAttr("value", _vm.entity.confirm_password) +
-        _vm._ssrClass(
-          null,
-          _vm.validationClass(_vm.errors, "confirm_password")
-        ) +
-        "> " +
-        _vm._ssrList(_vm.errors.confirm_password, function(e) {
-          return (
-            '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
-            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
-            "</div>"
-          )
-        }) +
-        '</div></fieldset> <button type="submit"' +
-        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "submit")) +
-        ">update</button></form>"
-    )
-  ])
+        ],
+        2
+      )
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -7447,7 +7529,7 @@ var render = function() {
                   "<li>",
                   "</li>",
                   [
-                    _c("router-link", { attrs: { to: _vm.mount } }, [
+                    _c("router-link", { attrs: { to: "/" + _vm.mount } }, [
                       _vm._v("Index")
                     ])
                   ],
@@ -7550,10 +7632,10 @@ let idx = class idx extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
         return store.dispatch("groups/fetchEntities", route);
     }
     view(id) {
-        return `${this.mount}/${id}`;
+        return `/${this.mount}/${id}`;
     }
     edit(id) {
-        return `${this.mount}/${id}/edit`;
+        return `/${this.mount}/${id}/edit`;
     }
     destroy(id, title) {
         let modal = {
@@ -7568,7 +7650,7 @@ let idx = class idx extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
         this.openModal();
     }
     copy(id) {
-        return `${this.mount}/add?copy=${id}`;
+        return `/${this.mount}/add?copy=${id}`;
     }
 };
 idx = __decorate([
@@ -8833,6 +8915,12 @@ class actions extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_actions__["a"
         };
         this.saveEntity = ({ state, commit, getters }, token) => {
             let crud = getters.crud;
+            if (state.entity.new_password === "") {
+                delete state.entity.new_password;
+            }
+            if (state.entity.confirm_password === "") {
+                delete state.entity.confirm_password;
+            }
             return crud.update(state.entity, token);
         };
         this.deleteEntity = ({ state, commit, getters }, delObj) => {
@@ -9278,6 +9366,135 @@ function cloneRoute (to, from) {
 }
 
 
+
+/***/ }),
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_select_vue__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3d3c1f1f_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_select_vue__ = __webpack_require__(164);
+var normalizeComponent = __webpack_require__(1)
+/* script */
+
+/* template */
+
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = "0bdf11f4"
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_select_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3d3c1f1f_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_select_vue__["a" /* default */],
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "apps/spa/form/components/select.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] select.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+
+
+/***/ }),
+/* 163 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_validation__ = __webpack_require__(6);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+let select = class select extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
+    change(e) {
+        this.$emit('change', e);
+    }
+};
+select = __decorate([
+    __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default()({
+        name: 'select',
+        computed: {},
+        props: {
+            value: String,
+            name: String,
+            errors: {}
+        },
+        methods: Object.assign({}, __WEBPACK_IMPORTED_MODULE_2__utilities_validation__["a" /* default */].map(["validationClass"]))
+    })
+], select);
+/* harmony default export */ __webpack_exports__["a"] = (select);
+
+
+/***/ }),
+/* 164 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "from-select" }, [
+    _vm._ssrNode(
+      "<select" +
+        _vm._ssrAttr("name", _vm.name) +
+        _vm._ssrAttr("value", _vm.value) +
+        _vm._ssrClass(null, _vm.validationClass(_vm.errors, _vm.name)) +
+        '><option disabled="disabled">Please select one</option> <option value="1">A</option> <option value="2">B</option> <option value="3">C</option></select>'
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
 
 /***/ })
 /******/ ])));

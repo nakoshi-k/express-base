@@ -12,57 +12,12 @@ class internal_crud extends resource_1.resource {
         this.client = (url, options) => {
             return client.fetch(url, options);
         };
-        this.serverPagination = (route) => {
-            let serverPagination = (resolve, reject) => {
-                let service = this.feeds.service(this.resource);
-                let pagination = this.feeds.pagination(this.resource);
-                let conditions = service.conditions(route);
-                let entities = pagination.find(conditions, route.query);
-                let name = this.resource;
-                let data = {};
-                entities.then((result) => {
-                    data[name] = result.rows;
-                    data["page"] = result.pagination;
-                    resolve(data);
-                }).catch((error) => {
-                    data[name] = {};
-                    data["page"] = {};
-                    reject(error);
-                });
-            };
-            return serverPagination;
-        };
-        this.serverEntity = (route) => {
-            let serverEntity = (resolve, reject) => {
-                let model = this.feeds.model(this.resource);
-                let data = {};
-                model.findById(route.params.id).then((result) => {
-                    if (!result) {
-                        reject("no save");
-                        throw Error;
-                    }
-                    resolve(result);
-                }).catch((err) => {
-                    reject(err);
-                });
-            };
-            return serverEntity;
-        };
-        this.server = (type, route) => {
-            let server;
-            if (type === "paginate") {
-                server = this.serverPagination(route);
-            }
-            if (type === "entity") {
-                server = this.serverEntity(route);
-            }
-            return new Promise(server);
-        };
         this.paginate = (route) => {
             let bq = new build_query_1.build_query();
             let URI = `${this.endPoint}/${route_parse_1.default.parse(route)}${bq.http(route.query)}`;
             if (this.is_server()) {
-                return this.server("paginate", route);
+                let service = this.feeds.service(this.resource);
+                return service.pagination(route);
             }
             return this.client(URI, {});
         };
@@ -70,7 +25,8 @@ class internal_crud extends resource_1.resource {
             let id = route.params.id;
             let URI = `${this.endPoint}/${id}`;
             if (this.is_server()) {
-                return this.server("entity", route);
+                let service = this.feeds.service(this.resource);
+                return service.get_entity(route.params.id);
             }
             return this.client(URI, {});
         };
