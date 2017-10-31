@@ -12212,8 +12212,7 @@ class internal_crud extends __WEBPACK_IMPORTED_MODULE_3__resource__["a" /* resou
             };
             return new Promise(del);
         };
-        this.list = (route) => {
-            let id = route.params.id;
+        this.list = () => {
             let URI = `${this.endPoint}/list`;
             if (this.is_server()) {
                 let service = this.feeds.service(this.resource);
@@ -19395,6 +19394,9 @@ let idx = class idx extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
     asyncData({ store, route }) {
         return store.dispatch("groups/fetchEntities", route);
     }
+    mounted() {
+        // this.fetchList()
+    }
     view(id) {
         return `/${this.mount}/${id}`;
     }
@@ -19427,7 +19429,7 @@ idx = __decorate([
             pagination: ({ page }) => page,
             mount: ({ mount }) => mount
         })),
-        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["d" /* mapMutations */])("modal", ["setModal", "toggleModal", "openModal"]), Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapActions */])("groups", ["fetchEntities"])),
+        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["d" /* mapMutations */])("modal", ["setModal", "toggleModal", "openModal"]), Object(__WEBPACK_IMPORTED_MODULE_3_vuex__["b" /* mapActions */])("groups", ["fetchEntities", "fetchList"])),
         components: { pagination: __WEBPACK_IMPORTED_MODULE_2__pagination_components_pagination_vue__["default"] }
     })
 ], idx);
@@ -20940,8 +20942,11 @@ class mutations extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_mutations__
             state.entities = paginate[this._resource];
             state.page = paginate.page;
         };
-        this.setEntity = (state, response) => {
-            state.entity = response;
+        this.setEntity = (state, entity) => {
+            state.entity = entity;
+        };
+        this.setList = (state, list) => {
+            state.list = list;
         };
         this.updateEntity = (state, kv) => {
             state.entity[kv.key] = kv.value;
@@ -20989,6 +20994,13 @@ class actions extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_actions__["a"
             let crud = getters.crud;
             return crud.entity(route).then((entity) => {
                 commit("setEntity", entity);
+            });
+        };
+        this.fetchList = ({ commit, getters, state }) => {
+            let crud = getters.crud;
+            return crud.list().then((list) => {
+                console.log(list);
+                commit("setList", list);
             });
         };
         this.copyEntity = ({ commit, getters, state }, copy) => {
@@ -21047,6 +21059,7 @@ class state extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_state__["a" /* 
             currentPage: 1,
             queryPrams: {}
         };
+        this.list = {};
         this.mount = options.resource;
     }
 }

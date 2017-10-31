@@ -82,8 +82,7 @@ class internal_crud extends resource_1.resource {
             };
             return new Promise(del);
         };
-        this.list = (route) => {
-            let id = route.params.id;
+        this.list = () => {
             let URI = `${this.endPoint}/list`;
             if (this.is_server()) {
                 let service = this.feeds.service(this.resource);

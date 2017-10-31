@@ -47,7 +47,7 @@ Component.registerHooks([
   methods : {
     ...mapMutations( "modal" , ["setModal","toggleModal" , "openModal"] ),
     ...mapActions( "groups" , 
-      ["fetchEntities"]
+      ["fetchEntities" , "fetchList"]
     )
   },
   components:{pagination}
@@ -59,8 +59,15 @@ export default class idx extends Vue {
   mount:string
   pagination:any
   fetchEntities : (route) => {}
+  
   asyncData ( {store,route} ) {
     return store.dispatch("groups/fetchEntities" ,route)
+  }
+
+  fetchList:() => void
+
+  mounted(){
+    this.fetchList()
   }
 
  

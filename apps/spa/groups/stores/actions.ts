@@ -18,6 +18,16 @@ export class actions extends core_actions{
             commit("setEntity",entity);
         })
     }
+
+    fetchList = ( {commit,getters ,state} ) => {
+        let crud = getters.crud;
+        return crud.list().then((list) => {
+            console.log(list)
+            commit("setList",list);
+        })
+
+    }
+
     copyEntity = ( {commit ,getters , state} , copy ) => {
         let route = {
             params :{

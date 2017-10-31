@@ -12,6 +12,7 @@ class state extends state_1.state {
             currentPage: 1,
             queryPrams: {}
         };
+        this.list = {};
         this.mount = options.resource;
     }
 }

@@ -16,6 +16,13 @@ class actions extends actions_1.actions {
                 commit("setEntity", entity);
             });
         };
+        this.fetchList = ({ commit, getters, state }) => {
+            let crud = getters.crud;
+            return crud.list().then((list) => {
+                console.log(list);
+                commit("setList", list);
+            });
+        };
         this.copyEntity = ({ commit, getters, state }, copy) => {
             let route = {
                 params: {

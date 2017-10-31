@@ -14,8 +14,12 @@ export class mutations extends core_mutations{
       state.page = paginate.page
     }
     
-    setEntity =  ( state , response) => {
-      state.entity = response
+    setEntity =  ( state , entity) => {
+      state.entity = entity
+    }
+
+    setList =  ( state , list) => {
+      state.list = list
     }
 
     updateEntity = ( state , kv : {key:string,value:string} ) => {
