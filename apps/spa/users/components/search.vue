@@ -29,7 +29,7 @@ import Component from 'vue-class-component'
 import {mapState} from "vuex"
 import * as flatpickr from "flatpickr"
 import * as confirmDatePlugin from "../../../../node_modules/flatpickr/src/plugins/confirmDate/confirmDate.js"
-import {build_query} from "../../../../base/sideless/build_query"
+import {build_query} from "../../../../core/lib/build_query"
 let bq = new build_query()
 Component.registerHooks([
   'beforeRouteEnter',

@@ -3,15 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const apps_router_1 = require("../../apps_router");
 const service_1 = require("./service");
 exports.mapping = {
-    idx: { method: "get", route: "/", component: "search", middle_ware: null },
-    login: { method: "post", route: "/login", component: "login", middle_ware: null },
-    logout: { method: "get", route: "/logout", component: "logout", middle_ware: null },
-    auth: { method: "get", route: "/auth", component: "auth", middle_ware: null },
-    page: { method: "get", route: "/page/:page", component: "search", middle_ware: null },
-    entity: { method: "get", route: "/:id", component: "entity", middle_ware: null },
-    insert: { method: "post", route: "/", component: "insert", middle_ware: null },
-    update: { method: "put", route: "/:id", component: "update", middle_ware: null },
-    delete: { method: "delete", route: "/:id", component: "delete", middle_ware: null },
+    idx: { method: "get", route: "/", middleware: "search", pre: null },
+    login: { method: "post", route: "/login", middleware: "login", pre: null },
+    logout: { method: "get", route: "/logout", middleware: "logout", pre: null },
+    auth: { method: "get", route: "/auth", middleware: "auth", pre: null },
+    page: { method: "get", route: "/page/:page", middleware: "search", pre: null },
+    entity: { method: "get", route: "/:id", middleware: "entity", pre: null },
+    insert: { method: "post", route: "/", middleware: "insert", pre: null },
+    update: { method: "put", route: "/:id", middleware: "update", pre: null },
+    delete: { method: "delete", route: "/:id", middleware: "delete", pre: null },
 };
 class router extends apps_router_1.router {
     constructor() {
@@ -22,7 +22,7 @@ class router extends apps_router_1.router {
         };
         this.search = (req, res, next) => {
             let rend = this.renderer.create(res);
-            this.service.page(req, res).then((result) => {
+            this.service.pagination(req, res).then((result) => {
                 rend.status(201);
                 rend.json(result);
             }).catch((error) => {

@@ -1,4 +1,4 @@
-import {mutations as core_mutations} from "../../../../base/spa/stores/mutations"
+import {mutations as core_mutations} from "../../../../core/spa/stores/mutations"
 
 export class mutations extends core_mutations{
     private _mount;

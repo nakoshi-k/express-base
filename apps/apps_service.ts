@@ -1,4 +1,4 @@
-import { service as core_service} from "../base/core"
+import {core_service} from "../core/core_service"
 import {authorization} from "./lib/authorization"
 import * as sequelize from "sequelize"
 export class service extends core_service{
@@ -13,9 +13,6 @@ export class service extends core_service{
         this.auth = new authorization();
         /* activate local */
         this.auth.local();
-
-        
-
     }
 
 }

@@ -1,19 +1,18 @@
 import * as path from "path"
 import {router as apps_router,routing_map} from "../../apps_router"
-import {request,response,next} from "../../interfaces/express_extend"
+import ee from "../../../core/interfaces/express_extends"
 import {service} from "./service"
-import {input_error} from "../../../base/core"
 
 export const mapping :  { [propName: string]: routing_map } = {
-    idx : { method : "get", route : "/", component : "search" , middle_ware : null } ,
-    login : { method : "post", route : "/login", component : "login" , middle_ware : null } ,
-    logout : { method : "get", route : "/logout", component : "logout" , middle_ware : null } ,
-    auth : { method : "get", route : "/auth", component : "auth" , middle_ware : null },
-    page: { method : "get", route : "/page/:page", component : "search" , middle_ware : null } ,
-    entity : { method : "get", route : "/:id", component : "entity" , middle_ware : null} ,
-    insert : { method : "post", route : "/", component : "insert" , middle_ware : null} ,
-    update : { method : "put", route : "/:id", component : "update" , middle_ware : null } ,
-    delete : { method : "delete", route : "/:id", component : "delete" , middle_ware : null },
+    idx : { method : "get", route : "/", middleware: "search" , pre : null } ,
+    login : { method : "post", route : "/login", middleware: "login" , pre : null } ,
+    logout : { method : "get", route : "/logout", middleware: "logout" , pre: null } ,
+    auth : { method : "get", route : "/auth", middleware: "auth" , pre: null },
+    page: { method : "get", route : "/page/:page", middleware: "search" , pre: null } ,
+    entity : { method : "get", route : "/:id",middleware: "entity" , pre: null} ,
+    insert : { method : "post", route : "/", middleware: "insert" , pre: null} ,
+    update : { method : "put", route : "/:id", middleware: "update" ,pre: null } ,
+    delete : { method : "delete", route : "/:id", middleware : "delete" , pre : null },
 }
 
 export class router extends apps_router {
@@ -29,9 +28,9 @@ export class router extends apps_router {
         this.service = new service(this.name)
     }
 
-    private search = (req : request,res: response, next : next) => {
+    private search = (req : ee.request,res: ee.response, next : ee.next) => {
         let rend = this.renderer.create(res);
-        this.service.page(req,res).then( (result : {rows : any, count :number,pagination:any}) => {
+        this.service.pagination(req,res).then( (result : {rows : any, count :number,pagination:any}) => {
             rend.status(201)
             rend.json(result)
         }).catch((error) => {
@@ -43,7 +42,7 @@ export class router extends apps_router {
         })
     }
    
-    private entity = (req:request,res:response,next:next) => {
+    private entity = (req:ee.request,res:ee.response,next:ee.next) => {
         let model = this.model
         let data = {}
         let rend = this.renderer.create(res);
@@ -60,7 +59,7 @@ export class router extends apps_router {
         })        
     }
    
-    private delete = (req:request,res:response) => {
+    private delete = (req:ee.request,res:ee.response) => {
         let model = this.model
         let rend = this.renderer.create(res);
         model.findById( req.params.id ).then((result) => {
@@ -79,7 +78,7 @@ export class router extends apps_router {
         })
     }
 
-    private insert = (req: request,res:response,next:next) => {
+    private insert = (req: ee.request,res:ee.response,next:ee.next) => {
         let entity = this.model.build(req.body)
         let rend = this.renderer.create(res)
         entity.save().then( (result) => {
@@ -91,7 +90,7 @@ export class router extends apps_router {
         })
     }
 
-    private update = (req:request,res:response,next:next) => {
+    private update = (req:ee.request,res:ee.response,next:ee.next) => {
         let model = this.model
         let rend = this.renderer.create(res)
         model.findById( req.params.id ).then((entity) => {
@@ -108,7 +107,7 @@ export class router extends apps_router {
         })
     }
     
-    public login = ( req:request,res:response,next:next ) => {
+    public login = ( req:ee.request,res:ee.response,next:ee.next ) => {
         let login = this.service.auth.login(req,res,next)
 
         let rend = this.renderer.create(res)
@@ -131,7 +130,7 @@ export class router extends apps_router {
         
     }
     
-    public logout = ( req:request,res:response,next:next) => {
+    public logout = ( req:ee.request,res:ee.response,next:ee.next) => {
         let rend = this.renderer.create(res)
         let logout = this.service.auth.logout(req)
         
@@ -145,7 +144,7 @@ export class router extends apps_router {
 
     }
 
-    public auth = (req:request,res:response,next:next) => {
+    public auth = (req:ee.request,res:ee.response,next:ee.next) => {
         let rend = this.renderer.create(res)
         let auth_user = this.service.auth.user(req);
 

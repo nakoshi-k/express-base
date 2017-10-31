@@ -1,6 +1,6 @@
 import {service as apps_service} from "../../apps_service"
-import * as sequelize from "sequelize"
-import {request,response,next} from "../../interfaces/express_extend"
+import {WhereLogic} from "sequelize"
+import ee from "../../../core/interfaces/express_extends"
 export class service extends apps_service{
     name = "groups"
     constructor(name:string){
@@ -9,14 +9,14 @@ export class service extends apps_service{
      
     
     
-    public list = (req : request) => {
+    public list = (req : ee.request) => {
         const list = (resolve,reject) => {
 
         }
         return new Promise(list)
     }
 
-    public conditions = (req) : { where : sequelize.WhereLogic,limit:number,offset:number } =>{
+    public conditions = (req : ee.request) : { where : WhereLogic,limit:number,offset:number } =>{
         let search = this.search()
         search.query = req.query
         search.limit = 10

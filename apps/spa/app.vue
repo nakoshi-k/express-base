@@ -6,8 +6,8 @@
       <router-view name="single"></router-view>
     </div>
     <div class="row row-md-reverse">
-      <div class="column column-lg-75 column-md-65"><router-view name="main"></router-view></div>
-      <div class="column column-lg-25 column-md-35"><router-view name="sub"></router-view></div>
+      <div class="column column-lg-75 column-md-70"><router-view name="main"></router-view></div>
+      <div class="column column-lg-25 column-md-30"><router-view name="sub"></router-view></div>
     </div>
   </div>
   <app-offset></app-offset>

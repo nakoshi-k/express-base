@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const build_query_1 = require("../../base/sideless/build_query");
+const build_query_1 = require("../../core/lib/build_query");
 const client_fetch_1 = require("./client_fetch");
 const route_parse_1 = require("../utilities/route_parse");
 const resource_1 = require("./resource");
@@ -21,10 +21,6 @@ class internal_crud extends resource_1.resource {
                 let name = this.resource;
                 let data = {};
                 entities.then((result) => {
-                    if (result.rows.length === 0) {
-                        reject(false);
-                    }
-                    ;
                     data[name] = result.rows;
                     data["page"] = result.pagination;
                     resolve(data);

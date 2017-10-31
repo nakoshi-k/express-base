@@ -1,10 +1,8 @@
 import * as express from "express"
 import { router as core_router,routing_map} from "../apps_router"
-import {request,response,next} from "../interfaces/express_extend"
+import ee from "../../core/interfaces/express_extends"
 import {service as apps_service} from "../apps_service"
-import { system } from "../../base/core"
 import * as path from "path"
-
 import * as Vue from "vue"
 import * as Router from "vue-router"
 Vue.use(Router)
@@ -23,7 +21,7 @@ interface ssr_response {
 }
 
 export const mapping :  { [propName: string]: routing_map } = {
-    idx : { method : "get", route : "/*", component : "view" , middle_ware : null } ,
+    idx : { method : "get", route : "/*", middleware : "view" , pre : null } ,
 }
 
 export class router extends core_router{
@@ -83,7 +81,7 @@ export class router extends core_router{
         return render;
     }
 
-    private view = (req : request,res: response, next :next) => {
+    private view = (req : ee.request,res: ee.response, next : ee.next) => {
         let feeds = new resources_feeds();
         feeds.init(req,res);
 

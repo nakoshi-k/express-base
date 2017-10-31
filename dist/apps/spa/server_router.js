@@ -18,7 +18,7 @@ const serialize = require("serialize-javascript");
 const feeds_1 = require("../resources/feeds");
 const bundle_server_1 = require("./server/bundle-server");
 exports.mapping = {
-    idx: { method: "get", route: "/*", component: "view", middle_ware: null },
+    idx: { method: "get", route: "/*", middleware: "view", pre: null },
 };
 class router extends apps_router_1.router {
     constructor() {

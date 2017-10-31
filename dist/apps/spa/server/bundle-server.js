@@ -3454,7 +3454,7 @@
     /* 15 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_sideless_build_query__ = __webpack_require__(12);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_lib_build_query__ = __webpack_require__(12);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__client_fetch__ = __webpack_require__(17);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utilities_route_parse__ = __webpack_require__(111);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__resource__ = __webpack_require__(18);
@@ -3475,10 +3475,6 @@
                         let name = this.resource;
                         let data = {};
                         entities.then((result) => {
-                            if (result.rows.length === 0) {
-                                reject(false);
-                            }
-                            ;
                             data[name] = result.rows;
                             data["page"] = result.pagination;
                             resolve(data);
@@ -3517,7 +3513,7 @@
                     return new Promise(server);
                 };
                 this.paginate = (route) => {
-                    let bq = new __WEBPACK_IMPORTED_MODULE_0__base_sideless_build_query__["a" /* build_query */]();
+                    let bq = new __WEBPACK_IMPORTED_MODULE_0__core_lib_build_query__["a" /* build_query */]();
                     let URI = `${this.endPoint}/${__WEBPACK_IMPORTED_MODULE_2__utilities_route_parse__["a" /* default */].parse(route)}${bq.http(route.query)}`;
                     if (this.is_server()) {
                         return this.server("paginate", route);
@@ -3914,9 +3910,9 @@
                     _vm._ssrNode('<div class="row row-center">', "</div>", [_c("router-view", { attrs: { name: "single" } })], 1),
                     _vm._ssrNode(" "),
                     _vm._ssrNode('<div class="row row-md-reverse">', "</div>", [
-                        _vm._ssrNode('<div class="column column-lg-75 column-md-65">', "</div>", [_c("router-view", { attrs: { name: "main" } })], 1),
+                        _vm._ssrNode('<div class="column column-lg-75 column-md-70">', "</div>", [_c("router-view", { attrs: { name: "main" } })], 1),
                         _vm._ssrNode(" "),
-                        _vm._ssrNode('<div class="column column-lg-25 column-md-35">', "</div>", [_c("router-view", { attrs: { name: "sub" } })], 1)
+                        _vm._ssrNode('<div class="column column-lg-25 column-md-30">', "</div>", [_c("router-view", { attrs: { name: "sub" } })], 1)
                     ], 2)
                 ], 2),
                 _vm._ssrNode(" "),
@@ -4222,7 +4218,7 @@
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_flatpickr___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_flatpickr__);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__ = __webpack_require__(5);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__);
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__base_sideless_build_query__ = __webpack_require__(12);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__core_lib_build_query__ = __webpack_require__(12);
         var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
             var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
             if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
@@ -4233,7 +4229,7 @@
                         r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
             return c > 3 && r && Object.defineProperty(target, key, r), r;
         };
-        let bq = new __WEBPACK_IMPORTED_MODULE_5__base_sideless_build_query__["a" /* build_query */]();
+        let bq = new __WEBPACK_IMPORTED_MODULE_5__core_lib_build_query__["a" /* build_query */]();
         __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
             'beforeRouteEnter',
             'beforeRouteLeave',
@@ -4456,7 +4452,7 @@
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component__ = __webpack_require__(2);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_class_component__);
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__base_sideless_build_query__ = __webpack_require__(12);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__core_lib_build_query__ = __webpack_require__(12);
         var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
             var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
             if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
@@ -4467,7 +4463,7 @@
                         r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
             return c > 3 && r && Object.defineProperty(target, key, r), r;
         };
-        let bq = new __WEBPACK_IMPORTED_MODULE_2__base_sideless_build_query__["a" /* build_query */]();
+        let bq = new __WEBPACK_IMPORTED_MODULE_2__core_lib_build_query__["a" /* build_query */]();
         let pagintaion = class pagintaion extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
             constructor() {
                 super(...arguments);
@@ -5200,7 +5196,7 @@
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_flatpickr___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_flatpickr__);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__ = __webpack_require__(5);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__);
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__base_sideless_build_query__ = __webpack_require__(12);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__core_lib_build_query__ = __webpack_require__(12);
         var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
             var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
             if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
@@ -5211,7 +5207,7 @@
                         r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
             return c > 3 && r && Object.defineProperty(target, key, r), r;
         };
-        let bq = new __WEBPACK_IMPORTED_MODULE_5__base_sideless_build_query__["a" /* build_query */]();
+        let bq = new __WEBPACK_IMPORTED_MODULE_5__core_lib_build_query__["a" /* build_query */]();
         __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
             'beforeRouteEnter',
             'beforeRouteLeave',
@@ -6206,7 +6202,7 @@
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_flatpickr___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_flatpickr__);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__ = __webpack_require__(5);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__node_modules_flatpickr_src_plugins_confirmDate_confirmDate_js__);
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__base_sideless_build_query__ = __webpack_require__(12);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__core_lib_build_query__ = __webpack_require__(12);
         var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
             var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
             if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
@@ -6217,7 +6213,7 @@
                         r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
             return c > 3 && r && Object.defineProperty(target, key, r), r;
         };
-        let bq = new __WEBPACK_IMPORTED_MODULE_5__base_sideless_build_query__["a" /* build_query */]();
+        let bq = new __WEBPACK_IMPORTED_MODULE_5__core_lib_build_query__["a" /* build_query */]();
         __WEBPACK_IMPORTED_MODULE_1_vue_class_component___default.a.registerHooks([
             'beforeRouteEnter',
             'beforeRouteLeave',
@@ -6921,12 +6917,12 @@
     /* 91 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(7);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_store_module__ = __webpack_require__(7);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(92);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(93);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(94);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(95);
-        class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__["a" /* store_module */] {
+        class store_module extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_store_module__["a" /* store_module */] {
             constructor(options) {
                 super();
                 this.state = new __WEBPACK_IMPORTED_MODULE_3__stores_state__["a" /* state */](options).map("all");
@@ -6941,8 +6937,8 @@
     /* 92 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(8);
-        class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__["a" /* mutations */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_mutations__ = __webpack_require__(8);
+        class mutations extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_mutations__["a" /* mutations */] {
             constructor(options) {
                 super();
                 this.setIndicator = ({ indicator }, { status, complate }) => {
@@ -6978,8 +6974,8 @@
     /* 93 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(9);
-        class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a" /* actions */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_actions__ = __webpack_require__(9);
+        class actions extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_actions__["a" /* actions */] {
             constructor(options) {
                 super();
             }
@@ -6990,8 +6986,8 @@
     /* 94 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(10);
-        class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* state */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_state__ = __webpack_require__(10);
+        class state extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_state__["a" /* state */] {
             constructor(options) {
                 super();
                 this.overLay = false;
@@ -7010,8 +7006,8 @@
     /* 95 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(11);
-        class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a" /* getters */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_getters__ = __webpack_require__(11);
+        class getters extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_getters__["a" /* getters */] {
             constructor(options) {
                 super();
             }
@@ -7022,12 +7018,12 @@
     /* 96 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(7);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_store_module__ = __webpack_require__(7);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(97);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(98);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(99);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(100);
-        class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__["a" /* store_module */] {
+        class store_module extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_store_module__["a" /* store_module */] {
             constructor(options) {
                 super();
                 this.state = new __WEBPACK_IMPORTED_MODULE_3__stores_state__["a" /* state */](options).map("all");
@@ -7042,8 +7038,8 @@
     /* 97 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(8);
-        class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__["a" /* mutations */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_mutations__ = __webpack_require__(8);
+        class mutations extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_mutations__["a" /* mutations */] {
             constructor(options) {
                 super();
                 this.setModal = (state, { template, data, show }) => {
@@ -7071,8 +7067,8 @@
     /* 98 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(9);
-        class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a" /* actions */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_actions__ = __webpack_require__(9);
+        class actions extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_actions__["a" /* actions */] {
             constructor(options) {
                 super();
             }
@@ -7083,8 +7079,8 @@
     /* 99 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(10);
-        class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* state */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_state__ = __webpack_require__(10);
+        class state extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_state__["a" /* state */] {
             constructor(options) {
                 super();
                 this.close = false;
@@ -7102,8 +7098,8 @@
     /* 100 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(11);
-        class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a" /* getters */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_getters__ = __webpack_require__(11);
+        class getters extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_getters__["a" /* getters */] {
             constructor(options) {
                 super();
             }
@@ -7114,12 +7110,12 @@
     /* 101 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(7);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_store_module__ = __webpack_require__(7);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(102);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(103);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(104);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(105);
-        class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__["a" /* store_module */] {
+        class store_module extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_store_module__["a" /* store_module */] {
             constructor(options) {
                 super();
                 this.state = new __WEBPACK_IMPORTED_MODULE_3__stores_state__["a" /* state */](options).map("all");
@@ -7134,8 +7130,8 @@
     /* 102 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(8);
-        class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__["a" /* mutations */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_mutations__ = __webpack_require__(8);
+        class mutations extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_mutations__["a" /* mutations */] {
             constructor(options) {
                 super();
                 this.setOffset = (state, { template, data, show }) => {
@@ -7163,8 +7159,8 @@
     /* 103 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(9);
-        class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a" /* actions */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_actions__ = __webpack_require__(9);
+        class actions extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_actions__["a" /* actions */] {
             constructor(options) {
                 super();
             }
@@ -7175,8 +7171,8 @@
     /* 104 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(10);
-        class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* state */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_state__ = __webpack_require__(10);
+        class state extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_state__["a" /* state */] {
             constructor(options) {
                 super();
                 this.close = false;
@@ -7190,8 +7186,8 @@
     /* 105 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(11);
-        class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a" /* getters */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_getters__ = __webpack_require__(11);
+        class getters extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_getters__["a" /* getters */] {
             constructor(options) {
                 super();
             }
@@ -7202,13 +7198,13 @@
     /* 106 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(7);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_store_module__ = __webpack_require__(7);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(107);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(108);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(109);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(110);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__ = __webpack_require__(15);
-        class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__["a" /* store_module */] {
+        class store_module extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_store_module__["a" /* store_module */] {
             constructor(options) {
                 super();
                 this.state = new __WEBPACK_IMPORTED_MODULE_3__stores_state__["a" /* state */](options).map("all");
@@ -7227,8 +7223,8 @@
     /* 107 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(8);
-        class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__["a" /* mutations */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_mutations__ = __webpack_require__(8);
+        class mutations extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_mutations__["a" /* mutations */] {
             constructor(options) {
                 super();
                 this.setEntities = (state, paginate) => {
@@ -7266,8 +7262,8 @@
     /* 108 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(9);
-        class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a" /* actions */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_actions__ = __webpack_require__(9);
+        class actions extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_actions__["a" /* actions */] {
             constructor(feeds) {
                 super();
                 this.fetchEntities = ({ commit, getters, state }, route) => {
@@ -7322,8 +7318,8 @@
     /* 109 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(10);
-        class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* state */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_state__ = __webpack_require__(10);
+        class state extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_state__["a" /* state */] {
             constructor(options) {
                 super();
                 this.mount = "";
@@ -7343,8 +7339,8 @@
     /* 110 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(11);
-        class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a" /* getters */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_getters__ = __webpack_require__(11);
+        class getters extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_getters__["a" /* getters */] {
             constructor(options) {
                 super();
             }
@@ -7371,13 +7367,13 @@
     /* 112 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(7);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_store_module__ = __webpack_require__(7);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(113);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(114);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(115);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(116);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__ = __webpack_require__(15);
-        class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__["a" /* store_module */] {
+        class store_module extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_store_module__["a" /* store_module */] {
             constructor(options) {
                 super();
                 this.state = new __WEBPACK_IMPORTED_MODULE_3__stores_state__["a" /* state */](options).map("all");
@@ -7396,8 +7392,8 @@
     /* 113 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(8);
-        class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__["a" /* mutations */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_mutations__ = __webpack_require__(8);
+        class mutations extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_mutations__["a" /* mutations */] {
             constructor(options) {
                 super();
                 this.setEntities = (state, paginate) => {
@@ -7435,8 +7431,8 @@
     /* 114 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(9);
-        class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a" /* actions */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_actions__ = __webpack_require__(9);
+        class actions extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_actions__["a" /* actions */] {
             constructor(feeds) {
                 super();
                 this.fetchEntities = ({ commit, getters, state }, route) => {
@@ -7491,8 +7487,8 @@
     /* 115 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(10);
-        class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* state */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_state__ = __webpack_require__(10);
+        class state extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_state__["a" /* state */] {
             constructor(options) {
                 super();
                 this.mount = "";
@@ -7512,8 +7508,8 @@
     /* 116 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(11);
-        class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a" /* getters */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_getters__ = __webpack_require__(11);
+        class getters extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_getters__["a" /* getters */] {
             constructor(options) {
                 super();
             }
@@ -7524,13 +7520,13 @@
     /* 117 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(7);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_store_module__ = __webpack_require__(7);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(118);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(119);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(120);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(121);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_internal_crud__ = __webpack_require__(15);
-        class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__["a" /* store_module */] {
+        class store_module extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_store_module__["a" /* store_module */] {
             constructor(options) {
                 super();
                 this.state = new __WEBPACK_IMPORTED_MODULE_3__stores_state__["a" /* state */](options).map("all");
@@ -7549,8 +7545,8 @@
     /* 118 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(8);
-        class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__["a" /* mutations */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_mutations__ = __webpack_require__(8);
+        class mutations extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_mutations__["a" /* mutations */] {
             constructor(options) {
                 super();
                 this.setEntities = (state, paginate) => {
@@ -7588,8 +7584,8 @@
     /* 119 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(9);
-        class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a" /* actions */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_actions__ = __webpack_require__(9);
+        class actions extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_actions__["a" /* actions */] {
             constructor(feeds) {
                 super();
                 this.fetchEntities = ({ commit, getters, state }, route) => {
@@ -7644,8 +7640,8 @@
     /* 120 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(10);
-        class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* state */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_state__ = __webpack_require__(10);
+        class state extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_state__["a" /* state */] {
             constructor(options) {
                 super();
                 this.mount = "";
@@ -7665,8 +7661,8 @@
     /* 121 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(11);
-        class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a" /* getters */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_getters__ = __webpack_require__(11);
+        class getters extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_getters__["a" /* getters */] {
             constructor(options) {
                 super();
             }
@@ -7677,13 +7673,13 @@
     /* 122 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__ = __webpack_require__(7);
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_store_module__ = __webpack_require__(7);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_mutations__ = __webpack_require__(123);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_actions__ = __webpack_require__(124);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_state__ = __webpack_require__(125);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__stores_getters__ = __webpack_require__(126);
         /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__resources_auth__ = __webpack_require__(16);
-        class store_module extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_store_module__["a" /* store_module */] {
+        class store_module extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_store_module__["a" /* store_module */] {
             constructor(options) {
                 super();
                 this.state = new __WEBPACK_IMPORTED_MODULE_3__stores_state__["a" /* state */](options).map("all");
@@ -7704,8 +7700,8 @@
     /* 123 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__ = __webpack_require__(8);
-        class mutations extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_mutations__["a" /* mutations */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_mutations__ = __webpack_require__(8);
+        class mutations extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_mutations__["a" /* mutations */] {
             constructor(options) {
                 super();
                 this.setAuthUser = (state, user) => {
@@ -7726,8 +7722,8 @@
     /* 124 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__ = __webpack_require__(9);
-        class actions extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_actions__["a" /* actions */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_actions__ = __webpack_require__(9);
+        class actions extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_actions__["a" /* actions */] {
             constructor(options) {
                 super();
                 this.fetchAuthUser = ({ commit, getters, state }) => {
@@ -7753,8 +7749,8 @@
     /* 125 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__ = __webpack_require__(10);
-        class state extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_state__["a" /* state */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_state__ = __webpack_require__(10);
+        class state extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_state__["a" /* state */] {
             constructor(options) {
                 super();
                 this.auth_status = false;
@@ -7771,8 +7767,8 @@
     /* 126 */
     /***/ (function (module, __webpack_exports__, __webpack_require__) {
         "use strict";
-        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__ = __webpack_require__(11);
-        class getters extends __WEBPACK_IMPORTED_MODULE_0__base_spa_stores_getters__["a" /* getters */] {
+        /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_getters__ = __webpack_require__(11);
+        class getters extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_getters__["a" /* getters */] {
             constructor(options) {
                 super();
             }

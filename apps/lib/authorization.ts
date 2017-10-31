@@ -7,7 +7,7 @@ import * as path from "path";
 import * as moment from "moment";
 import { logger_users as logger_class} from "./logger_users"
 const logger = new logger_class();
-import {request,response,next} from "../interfaces/express_extend"
+import ee from "../../core/interfaces/express_extends"
 
 export class authorization{
     public name = "auth";
@@ -71,7 +71,7 @@ export class authorization{
         ));
     }
     
-    public login = (req:request , res : response , next :next , type = "local" ) => {
+    public login = (req:ee.request , res : ee.response , next :ee.next , type = "local" ) => {
         const login = (resolve,reject) => {
             passport.authenticate(type,(err,user,info) => {
                 if(info){
@@ -105,7 +105,7 @@ export class authorization{
         return new Promise(login);
     }
 
-    public logout = (req : request) => {
+    public logout = (req : ee.request) => {
         const logout = (resolve,reject) => {
             if(!req.user){
                 reject("user login yet")
@@ -122,7 +122,7 @@ export class authorization{
         return new Promise(logout);
     }
 
-    public user = (req:request) => {
+    public user = (req:ee.request) => {
         const user = (resolve,reject) => {
             if(!req.user){
                 reject("no user")
@@ -134,7 +134,7 @@ export class authorization{
                 user.last_login = moment(last_login).format("YYYY-MM-DD HH:mm:ss");
                 resolve(user)
             }).catch(e => {
-                console.log("aaaaaaaaa")
+                console.log(e)
                 reject(e)
             })
         }

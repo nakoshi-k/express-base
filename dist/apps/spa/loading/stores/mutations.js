@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const mutations_1 = require("../../../../base/spa/stores/mutations");
+const mutations_1 = require("../../../../core/spa/stores/mutations");
 class mutations extends mutations_1.mutations {
     constructor(options) {
         super();

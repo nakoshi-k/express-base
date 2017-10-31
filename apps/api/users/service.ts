@@ -1,12 +1,12 @@
 import {service as apps_service} from "../../apps_service"
-import * as sequelize from "sequelize"
+import {WhereLogic} from "sequelize"
 export class service extends apps_service{
     name = "users"
     constructor(name:string){
         super(name)
     }
 
-    public conditions = (req) : { where : sequelize.WhereLogic,limit:number,offset:number } =>{
+    public conditions = (req) : { where : WhereLogic,limit:number,offset:number } =>{
         let search = this.search()
         search.query = req.query
         search.limit = 10

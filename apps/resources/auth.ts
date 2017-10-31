@@ -1,24 +1,23 @@
-import {createOptionsInterFace,createOptions} from "../interfaces/interface";
-import {build_query} from "../../base/sideless/build_query";
-import {app_error,input_error,response_error} from "../../base/core";
-import {client_fetch} from "./client_fetch";
-import route_parse from "../utilities/route_parse";
-import {feeds} from "./feeds";
+import {createOptionsInterFace,createOptions} from "../interfaces/interface"
+import {build_query} from "../../core/lib/build_query"
+import {client_fetch} from "./client_fetch"
+import route_parse from "../utilities/route_parse"
+import {feeds} from "./feeds"
 import {resource} from "./resource"
 
-let client = new client_fetch();
+let client = new client_fetch()
 
 export class auth extends resource{
     private end_point = "/api/users"
-    public feeds:feeds;
+    public feeds:feeds
     constructor(options?:any){
         super()
-        this.feeds = options.feeds;
+        this.feeds = options.feeds
     }
 
     login = (user : { account : string ,password : string } , token ) => {
         let login = (resolve,reject) => {
-            let url = this.end_point + "/login";
+            let url = this.end_point + "/login"
             let opt = {
                 body : JSON.stringify(user),
                 method : "post",
@@ -32,12 +31,12 @@ export class auth extends resource{
                 reject(e)
             })
         }
-        return new Promise(login);
+        return new Promise(login)
     }
 
     user_client = () => {
         let user = (resolve,reject) => {
-            let url = this.end_point + "/auth";
+            let url = this.end_point + "/auth"
             
             client.fetch(url,{}).then(r => {
                 resolve(r)                
@@ -45,7 +44,7 @@ export class auth extends resource{
                 reject("login user undefined")
             })
         }
-        return new Promise(user);
+        return new Promise(user)
     }
 
     user_server = () => {
@@ -56,25 +55,25 @@ export class auth extends resource{
             }
            reject("login user undefined")
         }
-        return new Promise(user_server);
+        return new Promise(user_server)
     }
 
     user = () => {
         if( this.is_server() ){
-            return this.user_server();
+            return this.user_server()
         }
         return this.user_client()
     }
 
     logout = () => {
         let logout = (resolve,reject) => {
-            let url = this.end_point + "/logout";
+            let url = this.end_point + "/logout"
             client.fetch(url,{}).then(r => {
                 resolve(r)                
             }).catch(e => {
                 reject(e)
             })
         }
-        return new Promise(logout);
+        return new Promise(logout)
     }
 }

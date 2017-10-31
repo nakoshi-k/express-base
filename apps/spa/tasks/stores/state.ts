@@ -1,4 +1,4 @@
-import {state as core_state} from "../../../../base/spa/stores/state";
+import {state as core_state} from "../../../../core/spa/stores/state";
 export class state extends core_state{
     mount = ""
     constructor(options){

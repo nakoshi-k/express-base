@@ -1,4 +1,4 @@
-import {store_module as core_module} from "../../../base/spa/stores/store_module"
+import {store_module as core_module} from "../../../core/spa/stores/store_module"
 import {mutations} from "./stores/mutations"
 import {actions} from "./stores/actions"
 import {state} from "./stores/state"

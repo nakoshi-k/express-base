@@ -1,28 +1,27 @@
 import * as e from "express";
-import {router as core_router,routing_map} from "../base/core/router";
+import {core_routing} from "../core/core_routeing";
 import {service as apps_service} from "./apps_service"
-import { system } from "../base/core";
-import * as helpers from "../base/helper";
+import { system } from "../core/lib/system";
 import * as csurf from "csurf";
-import {request,response,next}  from "./interfaces/express_extend" 
-export {routing_map} from "../base/core/router"
+import ee from "../core/interfaces/express_extends" 
+export {routing_map} from "../core/core_routeing"
 
-let body_csrf = (req:request,res :response ,next:next) => {
+let body_csrf = (req:ee.request,res :ee.response ,next:ee.next) => {
     res.locals["csrf"] = req.csrfToken();
     next();
 }
 
-let is_authenticated = (req:request,res :response ,next:next) => {
+let is_authenticated = (req:ee.request,res :ee.response ,next:ee.next) => {
     next();
 }
 
 
-import {rbac as rbac_mw} from "./middle_ware/rbac"
+import {rbac as rbac_mw} from "./middlewares/rbac"
 let rbac = new rbac_mw();
 
-export class router extends core_router{
-    public parent = {}
-    public auth;
+export class router extends core_routing{
+    
+    
     constructor (){
         super();
         this.renderer.views = {
@@ -31,10 +30,10 @@ export class router extends core_router{
         }
 
         /* middle ware */
-        this.mw_regist( "csrf" ,  csurf({ cookie: true }) );
-        this.mw_regist( "body_csrf" , body_csrf );
-        this.mw_regist( "is_authenticated" , is_authenticated );
-        this.mw_regist( "rbac", rbac.create() );
+        this.pre_mw_regist( "csrf" ,  csurf({ cookie: true }) );
+        this.pre_mw_regist( "body_csrf" , body_csrf );
+        this.pre_mw_regist( "is_authenticated" , is_authenticated );
+        this.pre_mw_regist( "rbac", rbac.create() );
 
     }
 

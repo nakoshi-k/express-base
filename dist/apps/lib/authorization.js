@@ -116,7 +116,7 @@ class authorization {
                     user.last_login = moment(last_login).format("YYYY-MM-DD HH:mm:ss");
                     resolve(user);
                 }).catch(e => {
-                    console.log("aaaaaaaaa");
+                    console.log(e);
                     reject(e);
                 });
             };

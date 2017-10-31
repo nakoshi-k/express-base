@@ -17,7 +17,7 @@
 import Vue from 'vue'
 import {mapGetters} from 'vuex'
 import Component from 'vue-class-component';
-import {build_query} from "../../../../base/sideless/build_query";
+import {build_query} from "../../../../core/lib/build_query";
 let bq = new build_query();
 
 

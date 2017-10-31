@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const store_module_1 = require("../../../base/spa/stores/store_module");
+const store_module_1 = require("../../../core/spa/stores/store_module");
 const mutations_1 = require("./stores/mutations");
 const actions_1 = require("./stores/actions");
 const state_1 = require("./stores/state");
