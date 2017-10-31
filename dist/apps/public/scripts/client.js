@@ -12212,6 +12212,15 @@ class internal_crud extends __WEBPACK_IMPORTED_MODULE_3__resource__["a" /* resou
             };
             return new Promise(del);
         };
+        this.list = (route) => {
+            let id = route.params.id;
+            let URI = `${this.endPoint}/list`;
+            if (this.is_server()) {
+                let service = this.feeds.service(this.resource);
+                return service.get_list();
+            }
+            return this.client(URI, {});
+        };
         this.endPoint = options.endPoint;
         this.resource = options.resource;
         this.feeds = options.feeds;
@@ -21375,6 +21384,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 let select = class select extends __WEBPACK_IMPORTED_MODULE_0_vue__["default"] {
+    constructor() {
+        super(...arguments);
+        this.options = {
+            1: "A",
+            2: "B",
+            3: "C"
+        };
+    }
     change(e) {
         this.$emit('change', e);
     }
@@ -21417,12 +21434,13 @@ var render = function() {
           _vm._v("Please select one")
         ]),
         _vm._v(" "),
-        _c("option", { attrs: { value: "1" } }, [_vm._v("A")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "2" } }, [_vm._v("B")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "3" } }, [_vm._v("C")])
-      ]
+        _vm._l(_vm.options, function(value, key) {
+          return _c("option", { domProps: { value: key } }, [
+            _vm._v(_vm._s(value))
+          ])
+        })
+      ],
+      2
     )
   ])
 }

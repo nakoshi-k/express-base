@@ -2,9 +2,8 @@
 <div class="from-select">
     <select :name="name" :value="value" :class="validationClass(errors,name)" @change="change">
         <option disabled >Please select one</option>
-        <option value="1">A</option>
-        <option value="2">B</option>
-        <option value="3">C</option>
+        <option v-for="(value,key) in options" :value="key">{{value}}</option>
+
     </select>
 </div>
 </template>
@@ -30,6 +29,12 @@ import form_validation from "../../../utilities/validation"
 })
 
 export default class select extends Vue {
+
+    options = {
+        1: "A",
+        2: "B",
+        3: "C"
+    }
 
     change(e){
         this.$emit('change', e )

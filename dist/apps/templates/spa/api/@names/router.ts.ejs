@@ -5,6 +5,7 @@ import {service} from "./service"
 
 export const mapping :  { [propName: string]: routing_map } = {
     idx : { method : "get", route : "/", middleware : "search" , pre : null } ,
+    list : { method : "get", route : "/list", middleware : "list" , pre : null } ,
     page: { method : "get", route : "/page/:page", middleware : "search" , pre : null } ,
     entity : { method : "get", route : "/:id", middleware : "entity" , pre : null} ,
     insert : { method : "post", route : "/", middleware : "insert" , pre : null} ,
@@ -86,4 +87,14 @@ export class router extends apps_router {
         })
     }
 
+    private list = (req:ee.request,res:ee.response,next:ee.next) => {
+        let rend = this.renderer.create(res)
+        this.service.get_list().then(r => {
+            rend.status(201)
+            rend.json(r)
+        }).catch(err => {
+            rend.status(400)
+            rend.json({})
+        })
+    }
 }

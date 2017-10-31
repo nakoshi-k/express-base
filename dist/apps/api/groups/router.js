@@ -4,6 +4,7 @@ const apps_router_1 = require("../../apps_router");
 const service_1 = require("./service");
 exports.mapping = {
     idx: { method: "get", route: "/", middleware: "search", pre: null },
+    list: { method: "get", route: "/list", middleware: "list", pre: null },
     page: { method: "get", route: "/page/:page", middleware: "search", pre: null },
     entity: { method: "get", route: "/:id", middleware: "entity", pre: null },
     insert: { method: "post", route: "/", middleware: "insert", pre: null },
@@ -71,6 +72,16 @@ class router extends apps_router_1.router {
             }).catch(err => {
                 rend.status(400);
                 rend.json(this.service.validationError(err));
+            });
+        };
+        this.list = (req, res, next) => {
+            let rend = this.renderer.create(res);
+            this.service.get_list().then(r => {
+                rend.status(201);
+                rend.json(r);
+            }).catch(err => {
+                rend.status(400);
+                rend.json({});
             });
         };
         this.service = new service_1.service(this.name);

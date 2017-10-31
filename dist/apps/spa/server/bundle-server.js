@@ -3536,6 +3536,15 @@
                     };
                     return new Promise(del);
                 };
+                this.list = (route) => {
+                    let id = route.params.id;
+                    let URI = `${this.endPoint}/list`;
+                    if (this.is_server()) {
+                        let service = this.feeds.service(this.resource);
+                        return service.get_list();
+                    }
+                    return this.client(URI, {});
+                };
                 this.endPoint = options.endPoint;
                 this.resource = options.resource;
                 this.feeds = options.feeds;
@@ -7940,6 +7949,14 @@
             return c > 3 && r && Object.defineProperty(target, key, r), r;
         };
         let select = class select extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
+            constructor() {
+                super(...arguments);
+                this.options = {
+                    1: "A",
+                    2: "B",
+                    3: "C"
+                };
+            }
             change(e) {
                 this.$emit('change', e);
             }
@@ -7971,7 +7988,15 @@
                     _vm._ssrAttr("name", _vm.name) +
                     _vm._ssrAttr("value", _vm.value) +
                     _vm._ssrClass(null, _vm.validationClass(_vm.errors, _vm.name)) +
-                    '><option disabled="disabled">Please select one</option> <option value="1">A</option> <option value="2">B</option> <option value="3">C</option></select>')
+                    '><option disabled="disabled">Please select one</option> ' +
+                    _vm._ssrList(_vm.options, function (value, key) {
+                        return ("<option" +
+                            _vm._ssrAttr("value", key) +
+                            ">" +
+                            _vm._ssrEscape(_vm._s(value)) +
+                            "</option>");
+                    }) +
+                    "</select>")
             ]);
         };
         var staticRenderFns = [];
