@@ -111,7 +111,7 @@ export default class add extends Vue {
     this.loading()
     this.insertEntity(this.token).then(r => {
       this.endLoading("success")
-      this.$router.push({path : this.mount})
+      this.$router.push({path : `/${this.mount}`})
     }).catch( e => {
       this.errors = e
       this.endLoading("warning")
