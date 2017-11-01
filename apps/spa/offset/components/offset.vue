@@ -5,9 +5,9 @@
     <div class="content">
       <login-user></login-user>
       <ul>
-        <li><router-link to="/tasks" title="Home">Home </router-link></li>
         <li><router-link to="/tasks" title="Tasks">Tasks</router-link></li>
         <li><router-link to="/users" title="Users">Users</router-link></li>
+        <li><router-link to="/groups" title="Groups">Groups</router-link></li>
       </ul>
     </div>
   </div>

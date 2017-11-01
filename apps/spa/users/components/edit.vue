@@ -19,7 +19,7 @@
 
       <div class="form-item">
         <label for="group_id">Group</label>
-        <form-select name="group_id" :errors="errors" @change="change" :value="entity.group_id" ></form-select>
+        <form-select name="group_id" :select="{ key : entity.group.name ,value : entity.group_id }" :errors="errors" @change="change"></form-select>
         <div class="errors" v-for="e in errors.group_id"> <span class="typcn typcn-warning-outline"></span> {{e.message}} </div>
       </div>
 
@@ -103,7 +103,9 @@ export default class edit extends Vue {
   asyncData ({ store, route }) {
     return store.dispatch('users/fetchEntity' , route )
   }
- 
+  
+
+
   get action(){
     return `${this.mount}/${this.entity.id}`
 

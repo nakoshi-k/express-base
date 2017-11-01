@@ -298,18 +298,6 @@ var render = function() {
                     [
                       _c(
                         "router-link",
-                        { attrs: { to: "/tasks", title: "Home" } },
-                        [_vm._v("Home ")]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "li",
-                    [
-                      _c(
-                        "router-link",
                         { attrs: { to: "/tasks", title: "Tasks" } },
                         [_vm._v("Tasks")]
                       )
@@ -324,6 +312,18 @@ var render = function() {
                         "router-link",
                         { attrs: { to: "/users", title: "Users" } },
                         [_vm._v("Users")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    [
+                      _c(
+                        "router-link",
+                        { attrs: { to: "/groups", title: "Groups" } },
+                        [_vm._v("Groups")]
                       )
                     ],
                     1

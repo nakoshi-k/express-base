@@ -44,7 +44,7 @@ export class router extends apps_router {
    
     private entity = (req:ee.request,res:ee.response,next:ee.next) => {
         let rend = this.renderer.create(res);
-        this.service.get_entity( req.params.id ).then((r) => {
+        this.service.get_entity( req.params.id ).then( (r) => {
             rend.status(201)
             rend.json(r)
         }).catch((err) => {

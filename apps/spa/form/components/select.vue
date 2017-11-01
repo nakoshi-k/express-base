@@ -1,9 +1,8 @@
 <template>
 <div class="from-select">
-    <select :name="name" :value="value" :class="validationClass(errors,name)" @change="change">
-        <option disabled >Please select one</option>
-        <option v-for="(value,key) in options" :value="key">{{value}}</option>
-
+    <select :name="name" @focus.capture="read_source" :disabled="disabled" ref="select" :class="validationClass(errors,name)" @change="change">
+        <option :value="select.value" :selected="true">{{select.key}}</option>
+        <option v-for="option in options" :value="option.value" :selected="option.selected">{{option.key}}</option>
     </select>
 </div>
 </template>
@@ -13,7 +12,8 @@ import Vue from 'vue'
 import {mapGetters} from 'vuex'
 import Component from 'vue-class-component';
 import form_validation from "../../../utilities/validation"
-
+import {client_fetch} from "../../../resources/client_fetch"
+let cf  = new client_fetch();
 
 @Component({
     name: 'select',
@@ -21,7 +21,8 @@ import form_validation from "../../../utilities/validation"
     props: {
         value : String,
         name : String,
-        errors: {}
+        select : {},
+        errors: {},
     },
     methods : {
         ...form_validation.map(["validationClass"])
@@ -30,10 +31,30 @@ import form_validation from "../../../utilities/validation"
 
 export default class select extends Vue {
 
-    options = {
-        1: "A",
-        2: "B",
-        3: "C"
+    options = []
+    
+      
+    beforeRouteEnter(){
+        console.log("before")
+    }
+
+    created(){
+        
+    }
+    
+    read_source(){
+        let url = "/api/groups/list"
+        let _this = this;
+        cf.fetch(url,{}).then((r) => {
+            let ops = r.filter((v) => {
+               return v.value !== _this.value
+            })
+            this.options = ops
+        }).catch(e => {
+            console.log(e)
+        })
+        return false;
+        
     }
 
     change(e){

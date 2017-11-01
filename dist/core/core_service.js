@@ -15,6 +15,7 @@ const models = require("../models");
 const errors_1 = require("./errors/errors");
 class core_service {
     constructor(name) {
+        this.parent = {};
         this.search = (query = {}) => {
             return new search_1.search(query);
         };
@@ -38,15 +39,29 @@ class core_service {
             };
             return new Promise(pagination);
         };
-        this.get_entity = (id) => {
+        this.create_association = (includes) => {
+            let association = [];
+            for (let k in includes) {
+                association.push({ model: this.models[includes[k]] });
+            }
+            return association;
+        };
+        this.get_entity = (id, includes = {}) => {
             const entity = (resolve, reject) => {
-                this.model.findById(id).then((result) => {
+                let conditions = {
+                    where: { id: id }
+                };
+                if (includes) {
+                    conditions.include = this.create_association(includes);
+                }
+                this.model.findOne(conditions).then((result) => {
                     if (!result) {
                         reject(new errors_1.missing_entity("no result"));
                         return;
                     }
                     resolve(result);
                 }).catch((err) => {
+                    console.log(err);
                     reject(err);
                 });
             };
@@ -78,26 +93,26 @@ class core_service {
             return new validation_1.validation_error(error);
         };
         this.get_list = (list_option = {}) => {
-            let key_field = "id";
-            let value_field = "";
-            if (list_option.key_field) {
-                key_field = list_option.key_field;
-            }
+            let key_field = "";
+            let value_field = "id";
             if (list_option.value_field) {
                 value_field = list_option.value_field;
             }
-            if (!list_option.value_field) {
+            if (list_option.key_field) {
+                key_field = list_option.key_field;
+            }
+            if (!list_option.key_field) {
                 let fields = Object.keys(this.model["rawAttributes"]);
                 let candidate = ["name", "title", "id"].reverse();
                 candidate.forEach((v, idx) => {
                     if (fields.indexOf(v) > -1) {
-                        value_field = v;
+                        key_field = v;
                         return;
                     }
                 });
             }
             let options = {
-                attributes: [key_field, value_field]
+                attributes: [value_field, key_field]
             };
             if (list_option.where) {
                 options["where"] = list_option.where;
@@ -105,9 +120,9 @@ class core_service {
             const get_list = (resolve, reject) => {
                 this.model.findAll(options)
                     .then((result) => {
-                    let list = {};
+                    let list = [];
                     result.forEach((v, idx) => {
-                        list[v.getDataValue(key_field)] = v.getDataValue(value_field);
+                        list.push({ value: v.getDataValue(value_field), key: v.getDataValue(key_field) });
                     });
                     resolve(list);
                 }).catch(e => {
@@ -118,6 +133,9 @@ class core_service {
         };
         this.models = models;
         this.model = models[name];
+        for (let k in this) {
+            this.parent[k] = this[k];
+        }
     }
 }
 exports.core_service = core_service;

@@ -4,7 +4,7 @@ import * as sequelize from "sequelize"
 export class service extends core_service{
     public name:string;
     public auth:authorization;
-
+    parent:core_service;
     conditions : (req) => { where : sequelize.WhereLogic,limit:number,offset:number }
 
     constructor(name){

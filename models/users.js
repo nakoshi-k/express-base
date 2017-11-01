@@ -55,6 +55,8 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         // associations can be defined here
         users.belongsTo(models.groups, { foreignKey: 'group_id'} );
+
+        
       }
     },
     instanceMethods: {

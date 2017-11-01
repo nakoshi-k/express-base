@@ -1,7 +1,7 @@
 import {search} from "./lib/search";
 import {pagination as pagination_mod} from "./lib/pagination";
 import {validation_error} from "./lib/validation";
-import {ModelsHashInterface,Model,WhereLogic,ValidationError , Instance , InstanceSetOptions} from "sequelize";
+import {ModelsHashInterface,Model,WhereLogic,ValidationError,Instance,InstanceSetOptions,FindOptions} from "sequelize";
 import  * as models from "../models";
 import {missing_entity} from "./errors/errors"
 
@@ -16,10 +16,14 @@ export abstract class core_service{
     public models:ModelsHashInterface;    
     public model:Model<any,any>;    
     public name:string
+    public parent : any = {};
 
     constructor (name:string) {
         this.models = models;
         this.model = models[name];
+        for( let k in this ){
+            this.parent[k] = this[k]
+        }
     }
     
     public search = (query = {}) => {
@@ -28,7 +32,7 @@ export abstract class core_service{
 
     abstract conditions : (req) => { where : WhereLogic,limit:number,offset:number }
 
-    public pagination = ( req, res = {locals:{}} ) => {
+    public pagination  = ( req, res = {locals:{}} ) => {
         let page = new pagination_mod(this.model);
         let conditions = this.conditions( req )
         
@@ -50,16 +54,31 @@ export abstract class core_service{
         return new Promise(pagination);
     }
 
+    public create_association = (includes:object) => {
+        let association = []
+        for(let k in includes){
+            association.push({model : this.models[ includes[k] ] })
+        }
+        return association
+    }
 
-    public get_entity : (id:string) => Promise<Instance<InstanceSetOptions>> = (id) => {
+    public get_entity : (id:string,includes?:object) => Promise<Instance<InstanceSetOptions>> = (id,includes = {}) => {
         const entity = (resolve,reject) => {
-            this.model.findById( id ).then((result) => {
+            let conditions : FindOptions<{}> = {
+                where : {id : id}
+            }
+            if(includes){
+                conditions.include = this.create_association(includes)
+            }
+
+            this.model.findOne( conditions ).then((result) => {
                 if(!result){
                     reject( new missing_entity("no result") )
                     return
                 }
                 resolve(result)
             }).catch((err) => {
+                console.log(err)
                 reject(err)
             })  
         }
@@ -100,29 +119,28 @@ export abstract class core_service{
 
     public get_list : (list_option?:list_option) => Promise<{[prop:string] : string}> = (list_option = {} ) => {
         
-        let key_field = "id"
-        let value_field = ""
+        let key_field = ""
+        let value_field = "id"
 
-        if(list_option.key_field){
-            key_field = list_option.key_field
+        if(list_option.value_field){
+            value_field = list_option.value_field
         }
         
-        if(list_option.value_field){
-           value_field = list_option.value_field
+        if(list_option.key_field){
+           key_field = list_option.key_field
         }
-
-        if(!list_option.value_field){
+        if(!list_option.key_field){
             let fields = Object.keys(this.model["rawAttributes"])
             let candidate = ["name" , "title" , "id"].reverse()
             candidate.forEach((v,idx) => {
                 if( fields.indexOf(v) > -1 ){
-                    value_field = v
+                    key_field = v
                     return;
                 }
             })
         }
         let options = {
-            attributes : [ key_field , value_field ]
+            attributes : [ value_field , key_field ]
         }
 
         if(list_option.where){
@@ -132,9 +150,9 @@ export abstract class core_service{
         const get_list = (resolve,reject) => {
             this.model.findAll(options)
             .then((result : Instance<{id:string}>[]) => {
-                let list = {};
+                let list = [];
                 result.forEach((v ,idx) => {
-                   list[v.getDataValue( key_field )] = v.getDataValue( value_field )
+                   list.push( { value : v.getDataValue( value_field ) , key : v.getDataValue( key_field ) } )
                 })
                 resolve(list)
             }).catch(e => {

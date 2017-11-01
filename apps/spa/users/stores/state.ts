@@ -8,6 +8,10 @@ export class state extends core_state{
 
     entities = []
     entity = {
+        group:
+        {
+            id : null
+        }
     }
     page = {
         totalPage: 1,

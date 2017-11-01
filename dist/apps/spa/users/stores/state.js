@@ -6,7 +6,11 @@ class state extends state_1.state {
         super();
         this.mount = "";
         this.entities = [];
-        this.entity = {};
+        this.entity = {
+            group: {
+                id: null
+            }
+        };
         this.page = {
             totalPage: 1,
             currentPage: 1,
