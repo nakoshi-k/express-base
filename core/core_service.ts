@@ -139,7 +139,7 @@ export abstract class core_service{
     public save_entity : (newData:{[prop:string] : any } , includes?:object ) => Promise<any> = (newData ,includes) => {
         const save_entity = (resolve,reject) => {
             
-            this.tran([this.model.create(newData , { include : this.create_association(includes) } )  ]).then(r => {
+            this.tran([this.model.create(newData , { include : this.create_association(includes) })]).then(r => {
                 resolve(r)
             }).catch(e => {
                 reject(e)
