@@ -12,10 +12,16 @@ Vue.mixin({
       let ad = Promise.resolve(this.$store.commit("loading/loading" , "success"));
       ad.then( () => asyncData({store: this.$store,route: this.$route}) )
       .then(res => {
+        
+        if(this["resolveAsyncData"]){
+          this["resolveAsyncData"]()
+        }
+        
         setTimeout(() => {
           this.$store.commit("loading/endLoading" , "success");
         },240)
       }).catch(err => {
+        console.log(err)
         this.$router.push({path : `/tasks`});
       });
       this["dataPromise"] = ad;
@@ -29,6 +35,11 @@ Vue.mixin({
         store: this.$store,
         route: to
       }).then(() => {
+         
+        if(this["resolveAsyncData"]){
+          this["resolveAsyncData"]()
+        }
+        
         setTimeout(() => {
           this.$store.commit("loading/endLoading" , "success");
         },240)

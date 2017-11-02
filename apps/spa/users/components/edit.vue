@@ -19,27 +19,35 @@
 
       <div class="form-item">
         <label for="group_id">Group</label>
-        <select :name="name" :value="entity.group_id" :class="validationClass(errors,'group_id')" @change="change">
-          <option v-for="group in groups" :value="group.value">
-              {{ group.text }}
-          </option>
-        </select>
+        <div class="form-select">
+          <select name="group_id" :value="entity.group_id" @focus.once="options_load( entity.group_id ,groups,'/api/groups/list' , $event)" :class="validationClass(errors,'group_id')" @change="change">
+              <option v-for="group in groups" :value="group.value" :disabled="group.disabled">{{group.text}}</option>
+          </select>
+        </div>
         <div class="errors" v-for="e in errors.group_id"> <span class="typcn typcn-warning-outline"></span> {{e.message}} </div>
       </div>
 
       <div class="form-item">
         <label for="new_password">New password</label>
-        <input type="password" name="new_password" @change="change" :class="validationClass( errors , 'new_password')" :value="entity.new_password" placeholder="new_password">
+        <input type="password" name="new_password" @change="change" :class="validationClass( errors , 'new_password' , ['isEvenPassword'] )" :value="entity.new_password" placeholder="new_password">
         <div class="errors" v-for="e in errors.new_password"> <span class="typcn typcn-warning-outline"></span> {{e.message}} </div>
         <div class="errors" v-for="e in errors.isEvenPassword"> <span class="typcn typcn-warning-outline"></span> {{e.message}} </div>
       </div>
 
+
       <div class="form-item">
         <label for="confirm_password">Confirm password</label>
-        <input type="password" name="confirm_password" @change="change" :class="validationClass( errors , 'confirm_password')" :value="entity.confirm_password" placeholder="confirm_password">
+        <input type="password" name="confirm_password" @change="change" :class="validationClass( errors , 'confirm_password' , ['isEvenPassword'])" :value="entity.confirm_password" placeholder="confirm_password">
         <div class="errors" v-for="e in errors.confirm_password"> <span class="typcn typcn-warning-outline"></span> {{e.message}} </div>
         <div class="errors" v-for="e in errors.isEvenPassword"> <span class="typcn typcn-warning-outline"></span> {{e.message}} </div>
       </div>
+
+      <div class="form-item">
+        <label for="last_name">Last name</label>
+        <input type="text" name="user_profile.last_name" @change="change" :value="entity.user_profile.last_name" placeholder="last_name">
+        <div class="errors" v-for="e in errors.user_profile.last_name"> <span class="typcn typcn-warning-outline"></span> {{e.message}} </div>
+      </div>
+
     </fieldset>
     <button type="submit" :class="validationClass(errors,'submit')">update</button>
   </form>
@@ -53,7 +61,7 @@ import {mapGetters,mapState,mapActions,mapMutations} from 'vuex'
 import * as flatpickr from "flatpickr"
 import * as confirmDatePlugin from "../../../../node_modules/flatpickr/src/plugins/confirmDate/confirmDate.js"
 import form_validation from "../../../utilities/validation"
-import select from "../../form/components/select"
+import oll from "../../../utilities/options_lazy_load"
 
 
 
@@ -71,7 +79,6 @@ Component.registerHooks([
 @Component({
   name : "edit",
   components : {
-
   },
   computed : {
     ...mapGetters([
@@ -79,7 +86,8 @@ Component.registerHooks([
     ]),
     ...mapState("users" , {
         entity : ({entity}) =>  entity,
-        mount : ({mount}) => mount 
+        association : ({association}) =>  association,
+        mount : ({mount}) => mount
     }),
   },
   methods : {
@@ -92,17 +100,23 @@ Component.registerHooks([
     ...mapMutations( "loading" , 
       ["loading","endLoading"]
     ),
-    ...form_validation.map(["validationClass"])
+    ...form_validation.map(["validationClass"]),
+    ...oll.map(["options_load" , "set_options_default"])
   }
 
 })
 
 export default class edit extends Vue {
+  
   mount:string
   entity:{
     id : string,
     title : string,
     priod : string,
+    group_id : string,
+    group : {
+      name : string
+    }
   }
 
   groups = [
@@ -112,7 +126,19 @@ export default class edit extends Vue {
   asyncData ({ store, route }) {
     return store.dispatch('users/fetchEntity' , route )
   }
- 
+
+  set_options_default:(config)=> void
+
+  resolveAsyncData(){
+    this.set_options_default({
+      options : this.groups,
+      text : this.entity.group.name ,
+      value : this.entity.group_id,
+      emptyText : "please select one",
+      allowNull : true
+    })
+  }
+
   get action(){
     return `${this.mount}/${this.entity.id}`
   }
@@ -126,6 +152,7 @@ export default class edit extends Vue {
     this.updateEntity(kv)
   }
 
+  association:object
   mounted(){
     if(window){
       flatpickr(".calendar" , {
@@ -135,17 +162,25 @@ export default class edit extends Vue {
     }
     this.groups.push({text: this.entity.group_id ,value : this.entity.group_id })
   }
+  
   token : string
   saveEntity:(token : string) => Promise<string>
   loading : () => {}
   endLoading: (status) => {}
-  errors = {}
+
+  errors = {
+    "user_profile" : {}
+  }
+
   save(){
     this.loading()
     this.saveEntity(this.token).then(r => {
-      this.errors = {}
+      let e = {}
+      e["user_profile"] = {}
+      this.errors = e
       this.endLoading("success")
     }).catch(e => {
+      e["user_profile"] = {}
       this.errors = e
       this.endLoading("warning")
     })

@@ -1,7 +1,7 @@
 import {core_service as core_service_class} from "../core_service"
 
 export class service extends core_service_class{
-    name = "tasks"
+    name = "users"
     constructor(name:string){
         super(name)
         this.name = name;
@@ -23,13 +23,30 @@ export class service extends core_service_class{
 }
 
 describe('test_core_service', () =>  {
-    const core_service = new service("tasks");
+    const core_service = new service("users");
     
+    it("save" , (done) => {
+        let mock = { name : "gggggg" ,
+            user_profile : {
+                first_name : "first_name",
+                last_name : "first_name"
+            }    
+        }
+        core_service.save_entity(mock,["user_profiles"]).then(r => {
+            console.log(r)
+            done()
+        }).catch(e => {
+            console.log(e)
+        })
+
+    })
+
     it("get_list" , (done) => {
         core_service.get_list({
             where : {
-                title : { "$like" : "ff%"}
-            } }).then(r => {
+                name : { "$like" : "ff%"}
+            } }
+        ).then(r => {
             done()
         }).catch(e => {
             done(e)

@@ -18,7 +18,7 @@ export class client_fetch{
         return Object.create(this._options);
     }
    
-    public fetch = (url :string ,options :any ) =>{
+    public fetch = (url :string ,options? :any) =>{
         let base:any = this.options;
         if(options.headers){
             options.headers = Object.assign( base.headers, options.headers);

@@ -4,7 +4,7 @@ const core_service_1 = require("../core_service");
 class service extends core_service_1.core_service {
     constructor(name) {
         super(name);
-        this.name = "tasks";
+        this.name = "users";
         this.conditions = (req) => {
             let search = this.search();
             search.query = req.query;
@@ -22,11 +22,25 @@ class service extends core_service_1.core_service {
 }
 exports.service = service;
 describe('test_core_service', () => {
-    const core_service = new service("tasks");
+    const core_service = new service("users");
+    it("save", (done) => {
+        let mock = { name: "gggggg",
+            user_profile: {
+                first_name: "first_name",
+                last_name: "first_name"
+            }
+        };
+        core_service.save_entity(mock, ["user_profiles"]).then(r => {
+            console.log(r);
+            done();
+        }).catch(e => {
+            console.log(e);
+        });
+    });
     it("get_list", (done) => {
         core_service.get_list({
             where: {
-                title: { "$like": "ff%" }
+                name: { "$like": "ff%" }
             }
         }).then(r => {
             done();

@@ -8,18 +8,46 @@ export class mutations extends core_mutations{
       this._mount = options.mount
       this._resource = options.resource
     } 
-    
+
     setEntities = ( state , paginate ) => {
       state.entities = paginate[this._resource]
       state.page = paginate.page
     }
     
-    setEntity =  ( state , response) => {
-      state.entity = response
+
+    setEntity =  ( state , entity) => {
+      if(this.isServer()){
+        entity = JSON.parse( JSON.stringify(entity) )
+      }
+      for(let k in entity){
+         if( typeof entity[k] === "string" ){
+            state.entity[k] = entity[k]
+            continue
+         }
+         if( typeof entity[k] === "object" && typeof state.entity[k] === "object" ){
+            state.entity[k] = Object.assign( state.entity[k] , entity[k] );
+         }
+      }
     }
 
     updateEntity = ( state , kv : {key:string,value:string} ) => {
-      state.entity[ kv.key ] = kv.value
+      let key = kv.key
+      let value : any = kv.value
+      if( key.indexOf(".") > -1){
+        let sp = key.split(".");
+        key = sp.shift();
+        for(let i = 0 ; i < sp.length;i++){
+          let ne = {}
+          ne[ sp[i] ] = value
+          value = ne; 
+        }
+      }
+      //state.entity[ key ] = value
+      if( typeof value === "object" ){
+        state.entity[key] = Object.assign( state.entity[key] , value );
+        return
+      }
+      state.entity[key] = value
     }
     
     setClearEntity = (state) => {

@@ -13,9 +13,9 @@
               <div class="column">
                 <ul class="navigation-list">
                     <li><a href="#" class="offset-toggle" :class="{active : show}" @click="toggle" title="open offset menu"><span class="typcn typcn-th-menu"></span></a></li>
-                    <li><router-link to="/tasks" title="Home">Home </router-link></li>
                     <li><router-link to="/tasks" title="Tasks">Tasks</router-link></li>
                     <li><router-link to="/users" title="Users">Users</router-link></li>
+                    <li><router-link to="/groups" title="Groups">Groups</router-link></li>
                     <li v-if="!auth_status" class="show-sm"><a @click="m_login()" title="login"><span class="typcn typcn-key"></span> Login</a></li>
                     <li v-if="auth_status" class="show-sm"><a @click="h_logout()" title="logout"><span class="typcn typcn-export"></span> Logout</a></li>
                 </ul>

@@ -18,7 +18,6 @@
 
       <div class="form-item">
         <label for="group_id">Group</label>
-        <form-select name="group_id" :errors="errors" @change="change" :value="entity.group_id" ></form-select>
         <div class="errors" v-for="e in errors.group_id"> <span class="typcn typcn-warning-outline"></span> {{e.message}} </div>
       </div>
 
@@ -50,7 +49,6 @@ import {mapGetters,mapState,mapActions,mapMutations} from 'vuex'
 import * as flatpickr from "flatpickr"
 import * as confirmDatePlugin from "../../../../node_modules/flatpickr/src/plugins/confirmDate/confirmDate.js"
 import form_validation from "../../../utilities/validation"
-import select from "../../form/components/select"
 
 Component.registerHooks([
   'beforeRouteEnter',
@@ -66,7 +64,6 @@ Component.registerHooks([
 @Component({
   name : "add",
   components : {
-    "form-select" : select
   },
   computed : {
     ...mapGetters([

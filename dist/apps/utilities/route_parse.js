@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class route_parse {
+const utility_1 = require("./utility");
+class route_parse extends utility_1.utility {
     parse(route) {
         let params = route.params;
         let paramsStr = "";

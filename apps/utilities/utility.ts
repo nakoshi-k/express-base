@@ -1,13 +1,6 @@
-export class mutations{
-   
-    isServer(){
-        if(typeof window === "undefined"){
-            return true
-        }
-        return false
-    }
+export abstract class utility{
 
-   map = ( call : any ) => {
+    map = ( call : any ) => {
         if(call === "all" ){
             call = Object.keys(this);
         }
@@ -34,4 +27,5 @@ export class mutations{
         }
         return map;
     }
+
 }

@@ -5,6 +5,21 @@ class service extends apps_service_1.service {
     constructor(name) {
         super(name);
         this.name = "groups";
+        this.get_entity = (id, includes = {}) => {
+            return this.parent.get_entity(id);
+        };
+        this.pagination = (req, res = { locals: {} }) => {
+            return this.parent.pagination(req, res);
+        };
+        this.save_entity = (newData) => {
+            return this.parent.save_entity(newData);
+        };
+        this.update_entity = (id, newData) => {
+            return this.parent.update_entity(id, newData);
+        };
+        this.delete_entity = (id) => {
+            return this.parent.delete_entity(id);
+        };
         this.conditions = (req) => {
             let search = this.search();
             search.query = req.query;

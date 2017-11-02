@@ -15,6 +15,7 @@ const models = require("../models");
 const errors_1 = require("./errors/errors");
 class core_service {
     constructor(name) {
+        this.parent = {};
         this.search = (query = {}) => {
             return new search_1.search(query);
         };
@@ -38,9 +39,42 @@ class core_service {
             };
             return new Promise(pagination);
         };
-        this.get_entity = (id) => {
+        this.get_entities = (where, includes) => {
+            const eintities = (resolve, reject) => {
+                let conditions = {
+                    where: where
+                };
+                if (includes) {
+                    conditions.include = this.create_association(includes);
+                }
+                this.model.findAll(conditions).then((result) => {
+                    if (!result) {
+                        reject(new errors_1.missing_entity("no result"));
+                        return;
+                    }
+                    resolve(result);
+                }).catch((err) => {
+                    reject(err);
+                });
+            };
+            return new Promise(eintities);
+        };
+        this.create_association = (includes) => {
+            let association = [];
+            for (let k in includes) {
+                association.push({ model: this.models[includes[k]] });
+            }
+            return association;
+        };
+        this.get_entity = (id, includes = {}) => {
             const entity = (resolve, reject) => {
-                this.model.findById(id).then((result) => {
+                let conditions = {
+                    where: { id: id }
+                };
+                if (includes) {
+                    conditions.include = this.create_association(includes);
+                }
+                this.model.findOne(conditions).then((result) => {
                     if (!result) {
                         reject(new errors_1.missing_entity("no result"));
                         return;
@@ -55,21 +89,44 @@ class core_service {
         this.new_entity = (data) => {
             return this.model.build(data);
         };
-        this.save_entity = (newData) => {
+        this.tranAsync = (ps) => __awaiter(this, void 0, void 0, function* () {
+            let entity = yield ps[0];
+            let prev = entity;
+            for (let i = 1; i < ps.length; i++) {
+                prev = yield ps[i](prev, entity);
+            }
+            return prev;
+        });
+        this.tran = (ps) => {
+            const tran = this.models.sequelize['transaction']().then(transaction => {
+                return this.tranAsync(ps).then(r => {
+                    transaction.commit();
+                    return r;
+                }).catch(e => {
+                    transaction.rollback();
+                    return e;
+                });
+            });
+            return tran;
+        };
+        this.save_entity = (newData, includes) => {
             const save_entity = (resolve, reject) => {
-                let entity = this.new_entity(newData);
-                entity.save().then((result) => {
-                    resolve(result);
-                }).catch((err) => {
-                    reject(err);
+                this.model.create(newData, { include: this.create_association(includes) }).then(r => {
+                    resolve(r);
+                }).catch(e => {
+                    reject(e);
                 });
             };
             return new Promise(save_entity);
         };
-        this.update_entity = (id, newData) => __awaiter(this, void 0, void 0, function* () {
-            const entity = yield this.get_entity(id);
-            return yield entity.update(newData);
-        });
+        this.update_entity = (id, newData, includes) => {
+            let p = [];
+            p.push(this.get_entity(id, includes));
+            p.push((prev, entity) => Promise.resolve(prev.set(newData)));
+            p.push((prev, entity) => entity.save());
+            p.push((prev, entity) => prev.user_profile.save());
+            return this.tran(p);
+        };
         this.delete_entity = (id) => __awaiter(this, void 0, void 0, function* () {
             const entity = yield this.get_entity(id);
             return yield entity.destroy();
@@ -78,26 +135,26 @@ class core_service {
             return new validation_1.validation_error(error);
         };
         this.get_list = (list_option = {}) => {
-            let key_field = "id";
-            let value_field = "";
-            if (list_option.key_field) {
-                key_field = list_option.key_field;
-            }
+            let key_field = "";
+            let value_field = "id";
             if (list_option.value_field) {
                 value_field = list_option.value_field;
             }
-            if (!list_option.value_field) {
+            if (list_option.key_field) {
+                key_field = list_option.key_field;
+            }
+            if (!list_option.key_field) {
                 let fields = Object.keys(this.model["rawAttributes"]);
                 let candidate = ["name", "title", "id"].reverse();
                 candidate.forEach((v, idx) => {
                     if (fields.indexOf(v) > -1) {
-                        value_field = v;
+                        key_field = v;
                         return;
                     }
                 });
             }
             let options = {
-                attributes: [key_field, value_field]
+                attributes: [value_field, key_field]
             };
             if (list_option.where) {
                 options["where"] = list_option.where;
@@ -105,9 +162,9 @@ class core_service {
             const get_list = (resolve, reject) => {
                 this.model.findAll(options)
                     .then((result) => {
-                    let list = {};
+                    let list = [];
                     result.forEach((v, idx) => {
-                        list[v.getDataValue(key_field)] = v.getDataValue(value_field);
+                        list.push({ text: v.getDataValue(key_field), value: v.getDataValue(value_field) });
                     });
                     resolve(list);
                 }).catch(e => {
@@ -118,6 +175,9 @@ class core_service {
         };
         this.models = models;
         this.model = models[name];
+        for (let k in this) {
+            this.parent[k] = this[k];
+        }
     }
 }
 exports.core_service = core_service;

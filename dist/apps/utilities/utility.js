@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class mutations {
+class utility {
     constructor() {
         this.map = (call) => {
             if (call === "all") {
@@ -29,11 +29,5 @@ class mutations {
             return map;
         };
     }
-    isServer() {
-        if (typeof window === "undefined") {
-            return true;
-        }
-        return false;
-    }
 }
-exports.mutations = mutations;
+exports.utility = utility;

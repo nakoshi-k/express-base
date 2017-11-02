@@ -1807,6 +1807,7 @@ input[type='search'],
 input[type='tel'],
 input[type='text'],
 input[type='url'],
+input[type='date'],
 textarea,
 select,
 input[type='datetime-local'] {
@@ -1827,6 +1828,7 @@ input[type='search']:focus,
 input[type='tel']:focus,
 input[type='text']:focus,
 input[type='url']:focus,
+input[type='date']:focus,
 textarea:focus,
 select:focus,
 input[type='datetime-local']:focus {
@@ -1900,10 +1902,10 @@ textarea {
 form input {
   transition: 0.6s border-color ease;
 }
-.from-select {
+.form-select {
   position: relative;
 }
-.from-select:before {
+.form-select:before {
   z-index: 1;
   position: absolute;
   font-size: 1.8rem;
@@ -1920,9 +1922,60 @@ select {
   -moz-appearance: none;
   appearance: none;
 }
+select.loading {
+  animation-name: loading_select;
+  pointer-events: none;
+  animation-duration: 1s;
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
+}
 select:-moz-focusring {
   color: transparent;
   text-shadow: 0 0 0 #db553e;
+}
+@-moz-keyframes loading_select {
+  0% {
+    border-color: #e9eded;
+  }
+  50% {
+    border-color: #6cbcd7;
+  }
+  100% {
+    border-color: #e9eded;
+  }
+}
+@-webkit-keyframes loading_select {
+  0% {
+    border-color: #e9eded;
+  }
+  50% {
+    border-color: #6cbcd7;
+  }
+  100% {
+    border-color: #e9eded;
+  }
+}
+@-o-keyframes loading_select {
+  0% {
+    border-color: #e9eded;
+  }
+  50% {
+    border-color: #6cbcd7;
+  }
+  100% {
+    border-color: #e9eded;
+  }
+}
+@keyframes loading_select {
+  0% {
+    border-color: #e9eded;
+  }
+  50% {
+    border-color: #6cbcd7;
+  }
+  100% {
+    border-color: #e9eded;
+  }
 }
 /*grid*/
 /*
