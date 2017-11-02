@@ -26,12 +26,13 @@ describe('test_core_service', () =>  {
     const core_service = new service("users");
     
     it("save" , (done) => {
-        let mock = { name : "test" ,
+        let mock = { name : "gggggg" ,
             user_profile : {
-                first_name : "first_name"
+                first_name : "first_name",
+                last_name : "first_name"
             }    
         }
-        core_service.save_entity(mock).then(r => {
+        core_service.save_entity(mock,["user_profiles"]).then(r => {
             console.log(r)
             done()
         }).catch(e => {

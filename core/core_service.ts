@@ -127,7 +127,7 @@ export abstract class core_service{
        const tran = this.models.sequelize['transaction']().then(transaction => {
            return this.tranAsync( ps ).then(r => {
                console.log(r)
-                transaction.commit()
+               transaction.commit()
            }).catch(e => {
                console.log(e)
                 transaction.rollback()
@@ -135,35 +135,16 @@ export abstract class core_service{
        })
        return tran;
     }
-    public save_asso = (type , model) => {
- 
-        return (main) => { 
-            const save = (resolve,reject) => {
-                main[]
-                resolve()
-            }
-            return new Promise(save);
-        };   
-    }
-    public save_entity : (newData:{[prop:string] : any } , includes?:object ) => Promise<any> = (newData ,include) => {
+
+    public save_entity : (newData:{[prop:string] : any } , includes?:object ) => Promise<any> = (newData ,includes) => {
         const save_entity = (resolve,reject) => {
-            let entity = this.new_entity(newData)
-          
-            this.tran([entity.save() , this.save_asso() ]).then(r => {
-                //console.log(r)
+            
+            this.tran([this.model.create(newData , { include : this.create_association(includes) } )  ]).then(r => {
+                resolve(r)
             }).catch(e => {
-                console.log(e)
+                reject(e)
             })
 
-            /*
-            entity.save().then( (result) => {
-                
-                resolve(result)
-
-            }).catch((err) => {
-                reject(err)
-            })
-            */
         }
         return new Promise(save_entity);
     }

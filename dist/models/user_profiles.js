@@ -1,6 +1,11 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var user_profiles = sequelize.define('user_profiles', {
+    id : {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true
+    },
     user_id: DataTypes.STRING,
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,

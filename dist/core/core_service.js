@@ -112,32 +112,13 @@ class core_service {
             });
             return tran;
         };
-        this.save_asso = (type, model) => {
-            return (main) => {
-                const save = (resolve, reject) => {
-                    main[];
-                    resolve();
-                };
-                return new Promise(save);
-            };
-        };
-        this.save_entity = (newData, include) => {
+        this.save_entity = (newData, includes) => {
             const save_entity = (resolve, reject) => {
-                let entity = this.new_entity(newData);
-                this.tran([entity.save(), this.save_asso()]).then(r => {
-                    //console.log(r)
+                this.tran([this.model.create(newData, { include: this.create_association(includes) })]).then(r => {
+                    resolve(r);
                 }).catch(e => {
-                    console.log(e);
+                    reject(e);
                 });
-                /*
-                entity.save().then( (result) => {
-                    
-                    resolve(result)
-    
-                }).catch((err) => {
-                    reject(err)
-                })
-                */
             };
             return new Promise(save_entity);
         };
