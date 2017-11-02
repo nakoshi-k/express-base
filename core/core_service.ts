@@ -149,8 +149,8 @@ export abstract class core_service{
         let p = []
         p.push(this.get_entity(id , includes) )
         p.push((prev,entity) => Promise.resolve( prev.set(newData) )  )
-        p.push((prev,entity) => entity.save() )
-        p.push((prev,entity) => prev.user_profile.save())
+        p.push((prev,entity) => entity.user_profile.save())
+        p.push((prev,entity) => entity.save())
 
         return this.tran(p)
     }
