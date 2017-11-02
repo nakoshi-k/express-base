@@ -19,7 +19,11 @@
 
       <div class="form-item">
         <label for="group_id">Group</label>
-        <form-select name="group_id" :errors="errors" @change="change" :value="entity.group_id" ></form-select>
+        <select :name="name" :value="entity.group_id" :class="validationClass(errors,'group_id')" @change="change">
+          <option v-for="group in groups" :value="group.value">
+              {{ group.text }}
+          </option>
+        </select>
         <div class="errors" v-for="e in errors.group_id"> <span class="typcn typcn-warning-outline"></span> {{e.message}} </div>
       </div>
 
@@ -67,7 +71,7 @@ Component.registerHooks([
 @Component({
   name : "edit",
   components : {
-    "form-select" : select
+
   },
   computed : {
     ...mapGetters([
@@ -100,15 +104,21 @@ export default class edit extends Vue {
     title : string,
     priod : string,
   }
+
+  groups = [
+
+  ]
+
   asyncData ({ store, route }) {
     return store.dispatch('users/fetchEntity' , route )
   }
  
   get action(){
     return `${this.mount}/${this.entity.id}`
-
   }
+
   updateEntity:(kv) => {}
+
   change = (e) => {
     let kv = {}
     kv["key"] = e.target.name
@@ -123,6 +133,7 @@ export default class edit extends Vue {
         "plugins": [confirmDatePlugin({})]
       })
     }
+    this.groups.push({text: this.entity.group_id ,value : this.entity.group_id })
   }
   token : string
   saveEntity:(token : string) => Promise<string>

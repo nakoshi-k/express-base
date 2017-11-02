@@ -1,9 +1,9 @@
 <template>
 <div class="from-select">
     <select :name="name" :value="value" :class="validationClass(errors,name)" @change="change">
-        <option disabled >Please select one</option>
-        <option v-for="(value,key) in options" :value="key">{{value}}</option>
-
+    <option v-for="option in options" :value="option.value">
+        {{ option.text }}
+    </option>
     </select>
 </div>
 </template>
@@ -21,6 +21,7 @@ import form_validation from "../../../utilities/validation"
     props: {
         value : String,
         name : String,
+        text : String,
         errors: {}
     },
     methods : {
@@ -30,10 +31,11 @@ import form_validation from "../../../utilities/validation"
 
 export default class select extends Vue {
 
-    options = {
-        1: "A",
-        2: "B",
-        3: "C"
+    options = [
+    ]
+
+    mounted() {
+        this.options.push({text : this.text , value : this.value })
     }
 
     change(e){
