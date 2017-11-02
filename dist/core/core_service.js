@@ -39,6 +39,26 @@ class core_service {
             };
             return new Promise(pagination);
         };
+        this.get_entities = (where, includes) => {
+            const eintities = (resolve, reject) => {
+                let conditions = {
+                    where: where
+                };
+                if (includes) {
+                    conditions.include = this.create_association(includes);
+                }
+                this.model.findAll(conditions).then((result) => {
+                    if (!result) {
+                        reject(new errors_1.missing_entity("no result"));
+                        return;
+                    }
+                    resolve(result);
+                }).catch((err) => {
+                    reject(err);
+                });
+            };
+            return new Promise(eintities);
+        };
         this.create_association = (includes) => {
             let association = [];
             for (let k in includes) {
@@ -61,7 +81,6 @@ class core_service {
                     }
                     resolve(result);
                 }).catch((err) => {
-                    console.log(err);
                     reject(err);
                 });
             };
@@ -70,14 +89,55 @@ class core_service {
         this.new_entity = (data) => {
             return this.model.build(data);
         };
-        this.save_entity = (newData) => {
+        this.tranAsync = (ps) => __awaiter(this, void 0, void 0, function* () {
+            let main = [];
+            for (let i = 0; i < ps.length; i++) {
+                if (i === 0) {
+                    main = yield ps[i];
+                    continue;
+                }
+                yield ps[i](main);
+            }
+            return main;
+        });
+        this.tran = (ps) => {
+            const tran = this.models.sequelize['transaction']().then(transaction => {
+                return this.tranAsync(ps).then(r => {
+                    console.log(r);
+                    transaction.commit();
+                }).catch(e => {
+                    console.log(e);
+                    transaction.rollback();
+                });
+            });
+            return tran;
+        };
+        this.save_asso = (type, model) => {
+            return (main) => {
+                const save = (resolve, reject) => {
+                    main[];
+                    resolve();
+                };
+                return new Promise(save);
+            };
+        };
+        this.save_entity = (newData, include) => {
             const save_entity = (resolve, reject) => {
                 let entity = this.new_entity(newData);
-                entity.save().then((result) => {
-                    resolve(result);
-                }).catch((err) => {
-                    reject(err);
+                this.tran([entity.save(), this.save_asso()]).then(r => {
+                    //console.log(r)
+                }).catch(e => {
+                    console.log(e);
                 });
+                /*
+                entity.save().then( (result) => {
+                    
+                    resolve(result)
+    
+                }).catch((err) => {
+                    reject(err)
+                })
+                */
             };
             return new Promise(save_entity);
         };

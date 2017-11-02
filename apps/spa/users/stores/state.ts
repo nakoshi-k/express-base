@@ -5,11 +5,19 @@ export class state extends core_state{
         super();
         this.mount = options.resource
     }
-
+    
+    association = {
+        hasMany : ["user_profiles"],
+        belongsTo : ["groups"]
+    }
+    
     entities = []
     entity = {
         group:
         {
+            id : null
+        },
+        user_profile :{
             id : null
         }
     }

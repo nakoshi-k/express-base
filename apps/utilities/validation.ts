@@ -1,15 +1,40 @@
 import {utility} from "./utility";
 class form_validation_class extends utility{
-    validationClass = (errors,name) => {
-        if(name === "submit"){
-           if( (Object.keys(errors).length > 0) ){
-             return "warning"
-           }
+
+
+  validationSubmit = (errors) => {
+    if(Object.keys(errors).length > 0){
+        let clss = "";
+        for(let k in errors){
+            if(typeof errors[k] === "string"){
+              clss = "warning"
+              break;
+            }
+            return this.validationSubmit(errors[k])
         }
-        if(errors[name]){
-          return "warning"
-        }
+        return clss
+    }else{
+      return "";
     }
+  }
+
+  validationClass = (errors,name,sub:string[] = []) => {
+
+      if(name === "submit"){
+        return this.validationSubmit(errors);
+      }
+
+      if(errors[name]){
+        return "warning"
+      }
+      let clss = "";
+      sub.forEach((v) => {
+        if(errors[v]){
+          clss = "warning"
+        } 
+      })
+      return clss
+  }
 
 }
 export default new form_validation_class(); 

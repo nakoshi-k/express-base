@@ -9,10 +9,32 @@ class mutations extends mutations_1.mutations {
             state.page = paginate.page;
         };
         this.setEntity = (state, entity) => {
-            state.entity = entity;
+            if (this.isServer()) {
+                entity = JSON.parse(JSON.stringify(entity));
+            }
+            for (let k in entity) {
+                if (typeof entity[k] === "string") {
+                    state.entity[k] = entity[k];
+                    continue;
+                }
+                if (typeof entity[k] === "object" && typeof state.entity[k] === "object") {
+                    state.entity[k] = Object.assign(state.entity[k], entity[k]);
+                }
+            }
         };
         this.updateEntity = (state, kv) => {
-            state.entity[kv.key] = kv.value;
+            let key = kv.key;
+            let value = kv.value;
+            if (key.indexOf(".") > -1) {
+                let sp = key.split(".");
+                key = sp.shift();
+                for (let i = 0; i < sp.length; i++) {
+                    let ne = {};
+                    ne[sp[i]] = value;
+                    value = ne;
+                }
+            }
+            state.entity[key] = value;
         };
         this.setClearEntity = (state) => {
             let entity = state.entity;

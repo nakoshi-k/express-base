@@ -6,7 +6,7 @@ class service extends apps_service_1.service {
         super(name);
         this.name = "users";
         this.get_entity = (id, includes = {}) => {
-            return this.parent.get_entity(id, ["groups"]);
+            return this.parent.get_entity(id, ["groups", "user_profiles"]);
         };
         this.pagination = (req, res = { locals: {} }) => {
             return this.parent.pagination(req, res);

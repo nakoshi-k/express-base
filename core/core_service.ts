@@ -54,6 +54,28 @@ export abstract class core_service{
         return new Promise(pagination);
     }
 
+
+    public get_entities = (where , includes) => {
+        const eintities = (resolve,reject) => {
+            let conditions : FindOptions<{}> = {
+                where : where 
+            }
+            if(includes){
+                conditions.include = this.create_association(includes)
+            }
+            this.model.findAll( conditions ).then((result) => {
+                if(!result){
+                    reject( new missing_entity("no result") )
+                    return
+                }
+                resolve(result)
+            }).catch((err) => {
+                reject(err)
+            })  
+        }
+        return new Promise(eintities)
+    }
+
     public create_association = (includes:object) => {
         let association = []
         for(let k in includes){
@@ -78,7 +100,6 @@ export abstract class core_service{
                 }
                 resolve(result)
             }).catch((err) => {
-                console.log(err)
                 reject(err)
             })  
         }
@@ -89,15 +110,60 @@ export abstract class core_service{
     public new_entity : (data) => Instance<InstanceSetOptions>  = (data) => {
         return this.model.build(data)
     }
+    
+    public tranAsync = async ( ps : () => Promise<any>[] ) =>{
+        let main = [];        
+        for(let i = 0 ; i < ps.length ;i++ ){
+            if(i === 0 ){
+                main = await ps[i]
+                continue
+            }
+            await ps[i]( main )
+        }
+        return main;
+    }
 
-    public save_entity : (newData:{[prop:string] : string }) => Promise<any> = (newData) => {
+    public tran = (ps : any) => {
+       const tran = this.models.sequelize['transaction']().then(transaction => {
+           return this.tranAsync( ps ).then(r => {
+               console.log(r)
+                transaction.commit()
+           }).catch(e => {
+               console.log(e)
+                transaction.rollback()
+           })
+       })
+       return tran;
+    }
+    public save_asso = (type , model) => {
+ 
+        return (main) => { 
+            const save = (resolve,reject) => {
+                main[]
+                resolve()
+            }
+            return new Promise(save);
+        };   
+    }
+    public save_entity : (newData:{[prop:string] : any } , includes?:object ) => Promise<any> = (newData ,include) => {
         const save_entity = (resolve,reject) => {
             let entity = this.new_entity(newData)
+          
+            this.tran([entity.save() , this.save_asso() ]).then(r => {
+                //console.log(r)
+            }).catch(e => {
+                console.log(e)
+            })
+
+            /*
             entity.save().then( (result) => {
+                
                 resolve(result)
+
             }).catch((err) => {
                 reject(err)
             })
+            */
         }
         return new Promise(save_entity);
     }

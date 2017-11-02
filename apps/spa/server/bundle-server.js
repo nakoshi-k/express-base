@@ -3681,15 +3681,36 @@ if (true)
 class form_validation_class extends __WEBPACK_IMPORTED_MODULE_0__utility__["a" /* utility */] {
     constructor() {
         super(...arguments);
-        this.validationClass = (errors, name) => {
-            if (name === "submit") {
-                if ((Object.keys(errors).length > 0)) {
-                    return "warning";
+        this.validationSubmit = (errors) => {
+            if (Object.keys(errors).length > 0) {
+                let clss = "";
+                for (let k in errors) {
+                    if (typeof errors[k] === "string") {
+                        clss = "warning";
+                        break;
+                    }
+                    return this.validationSubmit(errors[k]);
                 }
+                return clss;
+            }
+            else {
+                return "";
+            }
+        };
+        this.validationClass = (errors, name, sub = []) => {
+            if (name === "submit") {
+                return this.validationSubmit(errors);
             }
             if (errors[name]) {
                 return "warning";
             }
+            let clss = "";
+            sub.forEach((v) => {
+                if (errors[v]) {
+                    clss = "warning";
+                }
+            });
+            return clss;
         };
     }
 }
@@ -3761,6 +3782,12 @@ class mutations {
             }
             return map;
         };
+    }
+    isServer() {
+        if (typeof window === "undefined") {
+            return true;
+        }
+        return false;
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = mutations;
@@ -6851,13 +6878,21 @@ let edit = class edit extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
             kv["value"] = e.target.value;
             this.updateEntity(kv);
         };
-        this.errors = {};
+        this.errors = {
+            "user_profile": {}
+        };
     }
     asyncData({ store, route }) {
         return store.dispatch('users/fetchEntity', route);
     }
     resolveAsyncData() {
-        this.groups.push({ text: this.entity.group.name, value: this.entity.group_id });
+        this.set_options_default({
+            options: this.groups,
+            text: this.entity.group.name,
+            value: this.entity.group_id,
+            emptyText: "please select one",
+            allowNull: true
+        });
     }
     get action() {
         return `${this.mount}/${this.entity.id}`;
@@ -6873,9 +6908,12 @@ let edit = class edit extends __WEBPACK_IMPORTED_MODULE_0_vue___default.a {
     save() {
         this.loading();
         this.saveEntity(this.token).then(r => {
-            this.errors = {};
+            let e = {};
+            e["user_profile"] = {};
+            this.errors = e;
             this.endLoading("success");
         }).catch(e => {
+            e["user_profile"] = {};
             this.errors = e;
             this.endLoading("warning");
         });
@@ -6889,9 +6927,10 @@ edit = __decorate([
             'domain', 'token'
         ]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["e" /* mapState */])("users", {
             entity: ({ entity }) => entity,
+            association: ({ association }) => association,
             mount: ({ mount }) => mount
         })),
-        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])("users", ["fetchEntity", "saveEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("users", ["updateEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("loading", ["loading", "endLoading"]), __WEBPACK_IMPORTED_MODULE_5__utilities_validation__["a" /* default */].map(["validationClass"]), __WEBPACK_IMPORTED_MODULE_6__utilities_options_lazy_load__["a" /* default */].map(["options_load"]))
+        methods: Object.assign({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["b" /* mapActions */])("users", ["fetchEntity", "saveEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("users", ["updateEntity"]), Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["d" /* mapMutations */])("loading", ["loading", "endLoading"]), __WEBPACK_IMPORTED_MODULE_5__utilities_validation__["a" /* default */].map(["validationClass"]), __WEBPACK_IMPORTED_MODULE_6__utilities_options_lazy_load__["a" /* default */].map(["options_load", "set_options_default"]))
     })
 ], edit);
 /* harmony default export */ __webpack_exports__["a"] = (edit);
@@ -6935,13 +6974,14 @@ var render = function() {
             "</div>"
           )
         }) +
-        '</div> <div class="form-item"><label for="group_id">Group</label> <div class="form-select"><select' +
+        '</div> <div class="form-item"><label for="group_id">Group</label> <div class="form-select"><select name="group_id"' +
         _vm._ssrAttr("value", _vm.entity.group_id) +
         _vm._ssrClass(null, _vm.validationClass(_vm.errors, "group_id")) +
         ">" +
         _vm._ssrList(_vm.groups, function(group) {
           return (
             "<option" +
+            _vm._ssrAttr("disabled", group.disabled) +
             _vm._ssrAttr("value", group.value) +
             ">" +
             _vm._ssrEscape(_vm._s(group.text)) +
@@ -6958,7 +6998,10 @@ var render = function() {
         }) +
         '</div> <div class="form-item"><label for="new_password">New password</label> <input type="password" name="new_password" placeholder="new_password"' +
         _vm._ssrAttr("value", _vm.entity.new_password) +
-        _vm._ssrClass(null, _vm.validationClass(_vm.errors, "new_password")) +
+        _vm._ssrClass(
+          null,
+          _vm.validationClass(_vm.errors, "new_password", ["isEvenPassword"])
+        ) +
         "> " +
         _vm._ssrList(_vm.errors.new_password, function(e) {
           return (
@@ -6979,7 +7022,9 @@ var render = function() {
         _vm._ssrAttr("value", _vm.entity.confirm_password) +
         _vm._ssrClass(
           null,
-          _vm.validationClass(_vm.errors, "confirm_password")
+          _vm.validationClass(_vm.errors, "confirm_password", [
+            "isEvenPassword"
+          ])
         ) +
         "> " +
         _vm._ssrList(_vm.errors.confirm_password, function(e) {
@@ -6991,6 +7036,14 @@ var render = function() {
         }) +
         " " +
         _vm._ssrList(_vm.errors.isEvenPassword, function(e) {
+          return (
+            '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
+            _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
+            "</div>"
+          )
+        }) +
+        '</div> <div class="form-item"><label for="last_name">Last name</label> <input type="text" name="user_profile.last_name" s:value="entity.user_profile.last_name" placeholder="last_name"> ' +
+        _vm._ssrList(_vm.errors.user_profile.last_name, function(e) {
           return (
             '<div class="errors"><span class="typcn typcn-warning-outline"></span>' +
             _vm._ssrEscape(" " + _vm._s(e.message) + " ") +
@@ -8760,10 +8813,32 @@ class mutations extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_mutations__
             state.page = paginate.page;
         };
         this.setEntity = (state, entity) => {
-            state.entity = entity;
+            if (this.isServer()) {
+                entity = JSON.parse(JSON.stringify(entity));
+            }
+            for (let k in entity) {
+                if (typeof entity[k] === "string") {
+                    state.entity[k] = entity[k];
+                    continue;
+                }
+                if (typeof entity[k] === "object" && typeof state.entity[k] === "object") {
+                    state.entity[k] = Object.assign(state.entity[k], entity[k]);
+                }
+            }
         };
         this.updateEntity = (state, kv) => {
-            state.entity[kv.key] = kv.value;
+            let key = kv.key;
+            let value = kv.value;
+            if (key.indexOf(".") > -1) {
+                let sp = key.split(".");
+                key = sp.shift();
+                for (let i = 0; i < sp.length; i++) {
+                    let ne = {};
+                    ne[sp[i]] = value;
+                    value = ne;
+                }
+            }
+            state.entity[key] = value;
         };
         this.setClearEntity = (state) => {
             let entity = state.entity;
@@ -8865,9 +8940,16 @@ class state extends __WEBPACK_IMPORTED_MODULE_0__core_spa_stores_state__["a" /* 
     constructor(options) {
         super();
         this.mount = "";
+        this.association = {
+            hasMany: ["user_profiles"],
+            belongsTo: ["groups"]
+        };
         this.entities = [];
         this.entity = {
             group: {
+                id: null
+            },
+            user_profile: {
                 id: null
             }
         };
@@ -9381,16 +9463,24 @@ class utility {
 
 let cf = new __WEBPACK_IMPORTED_MODULE_1__resources_client_fetch__["a" /* client_fetch */]();
 class options_lazy_load extends __WEBPACK_IMPORTED_MODULE_0__utility__["a" /* utility */] {
-    options_load(options, url) {
-        let def = options[0].value;
+    options_load(value, options, url, e) {
+        e.target.classList.toggle('loading');
         cf.fetch(url, {}).then((res) => {
             res.forEach((v) => {
-                if (v.value === def) {
+                if (v.value === value) {
                     return;
                 }
                 options.push(v);
             });
+            e.target.classList.toggle('loading');
         });
+    }
+    set_options_default(config) {
+        config.options.push({ text: "please select one", value: "", disabled: true });
+        config.options.push({ text: config.text, value: config.value });
+        if (config.allowNull) {
+            config.options.push({ text: "none", value: "" });
+        }
     }
 }
 /* harmony default export */ __webpack_exports__["a"] = (new options_lazy_load());

@@ -1920,9 +1920,60 @@ select {
   -moz-appearance: none;
   appearance: none;
 }
+select.loading {
+  animation-name: loading_select;
+  pointer-events: none;
+  animation-duration: 1s;
+  animation-timing-function: ease;
+  animation-iteration-count: infinite;
+}
 select:-moz-focusring {
   color: transparent;
   text-shadow: 0 0 0 #db553e;
+}
+@-moz-keyframes loading_select {
+  0% {
+    border-color: #e9eded;
+  }
+  50% {
+    border-color: #6cbcd7;
+  }
+  100% {
+    border-color: #e9eded;
+  }
+}
+@-webkit-keyframes loading_select {
+  0% {
+    border-color: #e9eded;
+  }
+  50% {
+    border-color: #6cbcd7;
+  }
+  100% {
+    border-color: #e9eded;
+  }
+}
+@-o-keyframes loading_select {
+  0% {
+    border-color: #e9eded;
+  }
+  50% {
+    border-color: #6cbcd7;
+  }
+  100% {
+    border-color: #e9eded;
+  }
+}
+@keyframes loading_select {
+  0% {
+    border-color: #e9eded;
+  }
+  50% {
+    border-color: #6cbcd7;
+  }
+  100% {
+    border-color: #e9eded;
+  }
 }
 /*grid*/
 /*

@@ -1,4 +1,12 @@
 export class mutations{
+   
+    isServer(){
+        if(typeof window === "undefined"){
+            return true
+        }
+        return false
+    }
+
    map = ( call : any ) => {
         if(call === "all" ){
             call = Object.keys(this);

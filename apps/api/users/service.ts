@@ -10,7 +10,7 @@ export class service extends apps_service{
     }
 
     public get_entity = (id : string,includes = {}) => {
-        return this.parent.get_entity(id,["groups"])
+        return this.parent.get_entity(id,["groups","user_profiles"])
     }        
 
     public pagination  = ( req, res = {locals:{}} ) => {

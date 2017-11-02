@@ -29,5 +29,11 @@ class mutations {
             return map;
         };
     }
+    isServer() {
+        if (typeof window === "undefined") {
+            return true;
+        }
+        return false;
+    }
 }
 exports.mutations = mutations;

@@ -1,0 +1,19 @@
+'use strict';
+module.exports = function(sequelize, DataTypes) {
+  var user_profiles = sequelize.define('user_profiles', {
+    user_id: DataTypes.STRING,
+    first_name: DataTypes.STRING,
+    last_name: DataTypes.STRING,
+    first_name_kana: DataTypes.STRING,
+    last_name_kana: DataTypes.STRING,
+    birthday: DataTypes.DATE
+  }, {
+    underscored: true,
+    classMethods: {
+      associate: function(models) {
+        // associations can be defined here
+      }
+    }
+  });
+  return user_profiles;
+};

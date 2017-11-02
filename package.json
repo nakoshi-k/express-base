@@ -21,7 +21,7 @@
     "bake": "node ../ts-curd-generator/dist/cli.js",
     "db:migrate": "sequelize db:migrate --config config/database.json",
     "db:migrate:undo": "sequelize db:migrate:undo --config config/database.json",
-    "db:create:model": "sequelize model:create  --config config/database.json --underscored"
+    "db:model:create": "sequelize model:create  --config config/database.json --underscored"
   },
   "dependencies": {
     "@types/deep-assign": "^0.1.0",
