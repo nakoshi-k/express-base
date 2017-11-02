@@ -126,7 +126,7 @@ export default class add extends Vue {
     this.clearEntity()
     let query = this.$store.state.route.query
     if(query["copy"]){
-      this.copyEntity({ id : query["copy"] , mount : this.mount })
+      this.copyEntity({ id : query["copy"] , mount : `/${this.mount}` })
     }
   }
 

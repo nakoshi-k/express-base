@@ -74,7 +74,7 @@ export default class edit extends Vue {
   }
  
   get action(){
-    return `${this.mount}/${this.entity.id}`
+    return `/${this.mount}/${this.entity.id}`
 
   }
   updateEntity:(kv) => {}
