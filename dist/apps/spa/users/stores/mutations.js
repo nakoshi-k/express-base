@@ -8,8 +8,8 @@ class mutations extends mutations_1.mutations {
             state.entities = paginate[this._resource];
             state.page = paginate.page;
         };
-        this.setEntity = (state, response) => {
-            state.entity = response;
+        this.setEntity = (state, entity) => {
+            state.entity = entity;
         };
         this.updateEntity = (state, kv) => {
             state.entity[kv.key] = kv.value;

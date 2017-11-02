@@ -1,16 +1,16 @@
 exports.ids = [0];
 exports.modules = {
 
-/***/ 134:
+/***/ 131:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_indicator_vue__ = __webpack_require__(160);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7b90319e_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_indicator_vue__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ts_loader_node_modules_vue_loader_lib_selector_type_script_index_0_indicator_vue__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7b90319e_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_indicator_vue__ = __webpack_require__(158);
 function injectStyle (ssrContext) {
 var i
-;(i=__webpack_require__(158),i.__inject__&&i.__inject__(ssrContext),i)
+;(i=__webpack_require__(155),i.__inject__&&i.__inject__(ssrContext),i)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
@@ -39,7 +39,7 @@ if (Component.options.functional) {console.error("[vue-loader] indicator.vue: fu
 
 /***/ }),
 
-/***/ 135:
+/***/ 132:
 /***/ (function(module, exports) {
 
 /*
@@ -122,10 +122,10 @@ function toComment(sourceMap) {
 
 /***/ }),
 
-/***/ 136:
+/***/ 133:
 /***/ (function(module, exports, __webpack_require__) {
 
-var listToStyles = __webpack_require__(137)
+var listToStyles = __webpack_require__(134)
 
 module.exports = function (parentId, list, isProduction, context) {
   if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
@@ -209,7 +209,7 @@ function renderStyles (styles) {
 
 /***/ }),
 
-/***/ 137:
+/***/ 134:
 /***/ (function(module, exports) {
 
 /**
@@ -243,27 +243,27 @@ module.exports = function listToStyles (parentId, list) {
 
 /***/ }),
 
-/***/ 158:
+/***/ 155:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(159);
+var content = __webpack_require__(156);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add CSS to SSR context
-var add = __webpack_require__(136)
+var add = __webpack_require__(133)
 module.exports.__inject__ = function (context) {
   add("54bc1cb2", content, false, context)
 };
 
 /***/ }),
 
-/***/ 159:
+/***/ 156:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(135)(undefined);
+exports = module.exports = __webpack_require__(132)(undefined);
 // imports
 
 
@@ -275,7 +275,7 @@ exports.push([module.i, "", ""]);
 
 /***/ }),
 
-/***/ 160:
+/***/ 157:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -353,7 +353,7 @@ indicator = __decorate([
 
 /***/ }),
 
-/***/ 161:
+/***/ 158:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

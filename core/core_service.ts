@@ -152,7 +152,7 @@ export abstract class core_service{
             .then((result : Instance<{id:string}>[]) => {
                 let list = [];
                 result.forEach((v ,idx) => {
-                   list.push( { value : v.getDataValue( value_field ) , key : v.getDataValue( key_field ) } )
+                   list.push( { text : v.getDataValue( key_field ) , value : v.getDataValue( value_field ) } )
                 })
                 resolve(list)
             }).catch(e => {

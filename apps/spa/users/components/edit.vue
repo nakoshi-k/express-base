@@ -19,7 +19,11 @@
 
       <div class="form-item">
         <label for="group_id">Group</label>
-        <form-select name="group_id" :select="{ key : entity.group.name ,value : entity.group_id }" :errors="errors" @change="change"></form-select>
+        <div class="form-select">
+          <select :value="entity.group_id" @focus.once="options_load(groups,'/api/groups/list')" :class="validationClass(errors,'group_id')" @change="change">
+              <option v-for="group in groups" :value="group.value">{{group.text}}</option>
+          </select>
+        </div>
         <div class="errors" v-for="e in errors.group_id"> <span class="typcn typcn-warning-outline"></span> {{e.message}} </div>
       </div>
 
@@ -49,7 +53,7 @@ import {mapGetters,mapState,mapActions,mapMutations} from 'vuex'
 import * as flatpickr from "flatpickr"
 import * as confirmDatePlugin from "../../../../node_modules/flatpickr/src/plugins/confirmDate/confirmDate.js"
 import form_validation from "../../../utilities/validation"
-import select from "../../form/components/select"
+import oll from "../../../utilities/options_lazy_load"
 
 
 
@@ -67,7 +71,6 @@ Component.registerHooks([
 @Component({
   name : "edit",
   components : {
-    "form-select" : select
   },
   computed : {
     ...mapGetters([
@@ -75,7 +78,7 @@ Component.registerHooks([
     ]),
     ...mapState("users" , {
         entity : ({entity}) =>  entity,
-        mount : ({mount}) => mount 
+        mount : ({mount}) => mount
     }),
   },
   methods : {
@@ -88,29 +91,44 @@ Component.registerHooks([
     ...mapMutations( "loading" , 
       ["loading","endLoading"]
     ),
-    ...form_validation.map(["validationClass"])
+    ...form_validation.map(["validationClass"]),
+    ...oll.map(["options_load"])
   }
 
 })
 
 export default class edit extends Vue {
+  
   mount:string
   entity:{
     id : string,
     title : string,
     priod : string,
+    group_id : string,
+    group : {
+      name : string
+    }
   }
-  asyncData ({ store, route }) {
-    return store.dispatch('users/fetchEntity' , route )
-  }
-  
 
+  asyncData ({store,route}){
+    return store.dispatch('users/fetchEntity' , route );
+  }
+
+  groups = [
+
+  ]
+
+  resolveAsyncData(){
+    this.groups.push({ text : this.entity.group.name , value : this.entity.group_id })
+  }
 
   get action(){
     return `${this.mount}/${this.entity.id}`
 
   }
+
   updateEntity:(kv) => {}
+
   change = (e) => {
     let kv = {}
     kv["key"] = e.target.name
@@ -118,6 +136,7 @@ export default class edit extends Vue {
     this.updateEntity(kv)
   }
 
+  
   mounted(){
     if(window){
       flatpickr(".calendar" , {
@@ -125,12 +144,14 @@ export default class edit extends Vue {
         "plugins": [confirmDatePlugin({})]
       })
     }
+
   }
   token : string
   saveEntity:(token : string) => Promise<string>
   loading : () => {}
   endLoading: (status) => {}
   errors = {}
+
   save(){
     this.loading()
     this.saveEntity(this.token).then(r => {

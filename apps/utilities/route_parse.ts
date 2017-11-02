@@ -1,4 +1,5 @@
-class route_parse{
+import {utility} from "./utility";
+class route_parse extends utility{
     public parse(route){
         let params = route.params;
         let paramsStr = "";

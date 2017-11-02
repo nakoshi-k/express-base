@@ -13,6 +13,7 @@ export class state extends core_state{
             id : null
         }
     }
+
     page = {
         totalPage: 1,
         currentPage: 1,
