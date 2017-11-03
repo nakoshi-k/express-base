@@ -13,6 +13,7 @@ const pagination_1 = require("./lib/pagination");
 const validation_1 = require("./lib/validation");
 const models = require("../models");
 const errors_1 = require("./errors/errors");
+const inflection = require("inflection");
 class core_service {
     constructor(name) {
         this.parent = {};
@@ -74,6 +75,7 @@ class core_service {
                 if (includes) {
                     conditions.include = this.create_association(includes);
                 }
+                console.log(conditions);
                 this.model.findOne(conditions).then((result) => {
                     if (!result) {
                         reject(new errors_1.missing_entity("no result"));
@@ -86,28 +88,29 @@ class core_service {
             };
             return new Promise(entity);
         };
-        this.new_entity = (data) => {
-            return this.model.build(data);
+        this.new_entity = (data, includes) => {
+            return this.model.build(data, { include: this.create_association(includes) });
         };
-        this.tranAsync = (ps) => __awaiter(this, void 0, void 0, function* () {
-            let entity = yield ps[0];
-            let prev = entity;
-            for (let i = 1; i < ps.length; i++) {
-                prev = yield ps[i](prev, entity);
+        this.tranAsync = (process) => __awaiter(this, void 0, void 0, function* () {
+            let result = [];
+            for (let i = 0; i < process.length; i++) {
+                result[i] = yield process[i];
             }
-            return prev;
+            return result;
         });
-        this.tran = (ps) => {
-            const tran = this.models.sequelize['transaction']().then(transaction => {
-                return this.tranAsync(ps).then(r => {
-                    transaction.commit();
-                    return r;
-                }).catch(e => {
-                    transaction.rollback();
-                    return e;
+        this.transaction = (process) => {
+            const transaction = (resolve, reject) => {
+                this.models.sequelize['transaction']().then(transaction => {
+                    this.tranAsync(process).then(r => {
+                        transaction.commit();
+                        resolve(r);
+                    }).catch(e => {
+                        transaction.rollback();
+                        reject(e);
+                    });
                 });
-            });
-            return tran;
+            };
+            return new Promise(transaction);
         };
         this.save_entity = (newData, includes) => {
             const save_entity = (resolve, reject) => {
@@ -119,13 +122,71 @@ class core_service {
             };
             return new Promise(save_entity);
         };
+        this.includes_filter = (includes, entity) => {
+            let check = entity.toJSON();
+            let asso = Object.keys(check).filter((v, index) => {
+                if (!check[v]) {
+                    return false;
+                }
+                if (typeof check[v] === "string") {
+                    return false;
+                }
+                return Object.keys(check[v]).length > 0;
+            });
+            let exist_includes = asso.filter((v, index) => {
+                let k = inflection.pluralize(inflection.underscore(v));
+                if (includes.indexOf(k) - 1) {
+                    return true;
+                }
+            });
+            return exist_includes;
+        };
+        this.entity_merge = (entity, newData) => {
+            for (let k in newData) {
+                if (typeof newData[k] === "string") {
+                    entity[k] = newData[k];
+                    continue;
+                }
+                //for hasOne
+                this.entity_merge(entity[k], newData[k]);
+                //for hasMany
+            }
+            return entity;
+        };
+        this.save_association = (entity, name) => {
+            const sa = (resolve, reject) => {
+                entity[name].save(r => {
+                    resolve(r);
+                }).catch(e => {
+                    for (let i = 0; i < e.errors.length; i++) {
+                        e.errors[i].path = `${name}.${e.errors[i].path}`;
+                    }
+                    reject(e);
+                });
+            };
+            return new Promise(sa);
+        };
         this.update_entity = (id, newData, includes) => {
-            let p = [];
-            p.push(this.get_entity(id, includes));
-            p.push((prev, entity) => Promise.resolve(prev.set(newData)));
-            p.push((prev, entity) => entity.user_profile.save());
-            p.push((prev, entity) => entity.save());
-            return this.tran(p);
+            const update = (resolve, reject) => {
+                this.get_entity(id, includes).then(entity => {
+                    this.entity_merge(entity, newData);
+                    console.log("189");
+                    let process = [];
+                    let associations = this.includes_filter(includes, entity);
+                    process.push(entity.save());
+                    associations.forEach((v) => {
+                        process.push(this.save_association(entity, v));
+                    });
+                    this.transaction(process).then(r => {
+                        resolve(r);
+                    }).catch(e => {
+                        reject(e);
+                    });
+                }).catch(e => {
+                    reject(e);
+                });
+            };
+            return new Promise(update);
         };
         this.delete_entity = (id) => __awaiter(this, void 0, void 0, function* () {
             const entity = yield this.get_entity(id);
@@ -134,7 +195,7 @@ class core_service {
         this.validationError = (error) => {
             return new validation_1.validation_error(error);
         };
-        this.get_list = (list_option = {}) => {
+        this.key_value_select = (list_option) => {
             let key_field = "";
             let value_field = "id";
             if (list_option.value_field) {
@@ -153,8 +214,12 @@ class core_service {
                     }
                 });
             }
+            return { key_field: key_field, value_field: value_field };
+        };
+        this.get_list = (list_option = {}) => {
+            let kv = this.key_value_select(list_option);
             let options = {
-                attributes: [value_field, key_field]
+                attributes: [kv.value_field, kv.key_field]
             };
             if (list_option.where) {
                 options["where"] = list_option.where;
@@ -164,7 +229,10 @@ class core_service {
                     .then((result) => {
                     let list = [];
                     result.forEach((v, idx) => {
-                        list.push({ text: v.getDataValue(key_field), value: v.getDataValue(value_field) });
+                        list.push({
+                            text: v.getDataValue(kv.key_field),
+                            value: v.getDataValue(kv.value_field)
+                        });
                     });
                     resolve(list);
                 }).catch(e => {

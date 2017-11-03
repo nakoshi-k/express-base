@@ -4,6 +4,7 @@ import {validation_error} from "./lib/validation";
 import {ModelsHashInterface,Model,WhereLogic,ValidationError,Instance,InstanceSetOptions,FindOptions} from "sequelize";
 import  * as models from "../models";
 import {missing_entity} from "./errors/errors"
+import * as inflection from "inflection";
 
 interface list_option{
     key_field? : string,
@@ -92,7 +93,7 @@ export abstract class core_service{
             if(includes){
                 conditions.include = this.create_association(includes)
             }
-
+            console.log(conditions)
             this.model.findOne( conditions ).then((result) => {
                 if(!result){
                     reject( new missing_entity("no result") )
@@ -107,31 +108,33 @@ export abstract class core_service{
     }
 
 
-    public new_entity : (data) => Instance<InstanceSetOptions>  = (data) => {
-        return this.model.build(data)
+    public new_entity : (data , includes? : object) => Instance<InstanceSetOptions>  = (data,includes?) => {
+        return this.model.build(data ,{include:this.create_association(includes)})
     }
     
-    public tranAsync = async ( ps : () => Promise<any>[] ) =>{
-        let entity = await ps[0];
-        let prev = entity
-        for(let i = 1 ; i < ps.length  ;i++){
-            prev = await ps[i](prev,entity)
+    public tranAsync = async ( process : () => Promise<any>[] ) =>{
+        let result = [];
+        for(let i = 0 ; i < process.length  ;i++){
+            result[i] = await process[i]
         }
-        return prev;
+        return result;
     }
 
-    public tran = (ps : any) => {
-       const tran = this.models.sequelize['transaction']().then(transaction => {
-                return this.tranAsync( ps ).then(r => {
-                    transaction.commit()
-                    return r
-                }
-                ).catch(e => {
-                    transaction.rollback()
-                    return e
-                })
+    public transaction = (process: any) => {
+
+       const transaction = (resolve,reject) => {
+         this.models.sequelize['transaction']().then(transaction => {
+            this.tranAsync( process ).then(r => {
+                transaction.commit()
+                resolve(r)
+            }
+            ).catch(e => {
+                transaction.rollback()
+                reject(e)
             })
-       return tran;
+          })
+        }
+       return new Promise(transaction);
     }
 
     public save_entity : (newData:{[prop:string] : any } , includes?:object ) => Promise<any> = (newData ,includes) => {
@@ -145,14 +148,74 @@ export abstract class core_service{
         return new Promise(save_entity);
     }
 
-    public update_entity : (id:string,newData :{}, includes?:object ) => Promise<any> = (id , newData , includes )=>{
-        let p = []
-        p.push(this.get_entity(id , includes) )
-        p.push((prev,entity) => Promise.resolve( prev.set(newData) )  )
-        p.push((prev,entity) => entity.user_profile.save())
-        p.push((prev,entity) => entity.save())
+    public includes_filter = (includes,entity :  Instance<InstanceSetOptions> ) => {
+        let check = entity.toJSON();
+        let asso = Object.keys(check).filter((v,index) => {
+            if( !check[v] ){
+                return false
+            }
+            if(typeof check[v] === "string"){
+                return false
+            }
+            return Object.keys(check[v]).length > 0
+        })
+        let exist_includes = asso.filter((v,index) => {
+            let k = inflection.pluralize( inflection.underscore(v) )
+            if(includes.indexOf(k) - 1){
+                return true
+            }
+        })
+        return exist_includes; 
+    }
 
-        return this.tran(p)
+    public entity_merge = (entity,newData) => {
+        for ( let k in newData ){
+            if(typeof newData[k] === "string"){
+                entity[k] = newData[k];
+                continue
+            }
+            //for hasOne
+            this.entity_merge(entity[k],newData[k])
+            //for hasMany
+        }
+        return entity;
+    }
+    public save_association = (entity,name) => {
+        const sa = (resolve,reject) => {
+            entity[name].save(r => {
+                resolve(r)
+            }).catch( e => {
+                for( let i = 0; i < e.errors.length ; i++ ){
+                    e.errors[i].path = `${name}.${e.errors[i].path}`
+                }
+                reject(e)
+            } )
+        }
+        return new Promise(sa);
+    }
+    public update_entity : (id:string,newData :{}, includes?:object ) => Promise<any> = (id , newData , includes )=>{
+        
+        const update = (resolve,reject) => {
+            this.get_entity(id,includes).then(entity => {
+                this.entity_merge(entity,newData)
+                console.log("189")
+                let process = []
+                let associations = this.includes_filter(includes,entity);
+                process.push(entity.save())
+                associations.forEach( (v) => {
+                    process.push( this.save_association(entity , v) )
+                })
+                this.transaction(process).then(r => {
+                    resolve(r)
+                }).catch(e => {
+                    reject(e)
+                })
+            }).catch(e => {
+                reject(e)
+            })
+        }
+       
+        return new Promise(update)
     }
 
     public delete_entity : (id:string) => Promise<any> = async (id) => {
@@ -165,15 +228,12 @@ export abstract class core_service{
     }
 
 
-    public get_list : (list_option?:list_option) => Promise<{[prop:string] : string}> = (list_option = {} ) => {
-        
+    public key_value_select = ( list_option?:list_option ) => {
         let key_field = ""
         let value_field = "id"
-
         if(list_option.value_field){
             value_field = list_option.value_field
         }
-        
         if(list_option.key_field){
            key_field = list_option.key_field
         }
@@ -187,8 +247,14 @@ export abstract class core_service{
                 }
             })
         }
+        return {key_field : key_field , value_field : value_field}
+    }
+
+    public get_list : (list_option?:list_option) => Promise<{[prop:string] : string}> = (list_option = {} ) => {
+        
+        let kv = this.key_value_select(list_option)
         let options = {
-            attributes : [ value_field , key_field ]
+            attributes : [ kv.value_field , kv.key_field ]
         }
 
         if(list_option.where){
@@ -200,7 +266,10 @@ export abstract class core_service{
             .then((result : Instance<{id:string}>[]) => {
                 let list = [];
                 result.forEach((v ,idx) => {
-                   list.push( { text : v.getDataValue( key_field ) , value : v.getDataValue( value_field ) } )
+                   list.push( {
+                       text : v.getDataValue( kv.key_field ) ,
+                       value : v.getDataValue( kv.value_field )
+                    } )
                 })
                 resolve(list)
             }).catch(e => {
