@@ -154,8 +154,8 @@ class core_service {
             return entity;
         };
         this.save_association = (entity, name) => {
-            const sa = (resolve, reject) => {
-                entity[name].save(r => {
+            const save_association = (resolve, reject) => {
+                entity[name].save().then(r => {
                     resolve(r);
                 }).catch(e => {
                     for (let i = 0; i < e.errors.length; i++) {
@@ -164,13 +164,12 @@ class core_service {
                     reject(e);
                 });
             };
-            return new Promise(sa);
+            return new Promise(save_association);
         };
         this.update_entity = (id, newData, includes) => {
             const update = (resolve, reject) => {
                 this.get_entity(id, includes).then(entity => {
                     this.entity_merge(entity, newData);
-                    console.log("189");
                     let process = [];
                     let associations = this.includes_filter(includes, entity);
                     process.push(entity.save());

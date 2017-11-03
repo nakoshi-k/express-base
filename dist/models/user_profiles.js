@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     first_name: {
       type : DataTypes.STRING,
       validate :{
-        len: { args : [2,10], msg : "error" },
+        //len: { args : [2,10], msg : "error" },
       }
     },
     last_name: DataTypes.STRING,

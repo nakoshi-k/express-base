@@ -121,7 +121,6 @@ export abstract class core_service{
     }
 
     public transaction = (process: any) => {
-
        const transaction = (resolve,reject) => {
          this.models.sequelize['transaction']().then(transaction => {
             this.tranAsync( process ).then(r => {
@@ -180,9 +179,11 @@ export abstract class core_service{
         }
         return entity;
     }
+
+
     public save_association = (entity,name) => {
-        const sa = (resolve,reject) => {
-            entity[name].save(r => {
+        const save_association = (resolve,reject) => {
+            entity[name].save().then(r => {
                 resolve(r)
             }).catch( e => {
                 for( let i = 0; i < e.errors.length ; i++ ){
@@ -191,14 +192,15 @@ export abstract class core_service{
                 reject(e)
             } )
         }
-        return new Promise(sa);
+        return new Promise(save_association);
     }
+
+
     public update_entity : (id:string,newData :{}, includes?:object ) => Promise<any> = (id , newData , includes )=>{
         
         const update = (resolve,reject) => {
             this.get_entity(id,includes).then(entity => {
                 this.entity_merge(entity,newData)
-                console.log("189")
                 let process = []
                 let associations = this.includes_filter(includes,entity);
                 process.push(entity.save())
