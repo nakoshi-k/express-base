@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     first_name: {
       type : DataTypes.STRING,
       validate :{
-        len: { args : [8,9], msg : "パスワードは8文字から64文字までで入力してください。" },
+        //len: { args : [2,3], msg : "error" },
       }
     },
     last_name: DataTypes.STRING,

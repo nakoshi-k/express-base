@@ -22,8 +22,10 @@ export class service extends core_service_class{
 
 }
 describe('test_core_service', () =>  {
+    
     const core_service = new service("users");
     let insert_id = ""
+
     it("save" , (done) => {
         let mock = { name : "save-test" ,
             user_profile : {
@@ -80,5 +82,19 @@ describe('test_core_service', () =>  {
         })
     })
 
+    it("delete" ,(done) =>{
+        let mock = { name : "update-test" ,
+            user_profile : {
+                first_name : "first_name-update",
+                last_name : "first_name-update"
+            }    
+        }
+        core_service.delete_entity(insert_id,["user_profiles"]).then(r => {
+            done()
+        }).catch(e => {
+            console.log(e)
+            done(e)
+        })
+    })
 
 });

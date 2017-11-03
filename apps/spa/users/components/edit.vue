@@ -175,8 +175,9 @@ export default class edit extends Vue {
   save(){
     this.loading()
     this.saveEntity(this.token).then(r => {
-      let e = {}
-      e["user_profile"] = {}
+      let e = {
+        user_profile : {}
+     }
       this.errors = e
       this.endLoading("success")
     }).catch(e => {

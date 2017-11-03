@@ -76,4 +76,18 @@ describe('test_core_service', () => {
             done(e);
         });
     });
+    it("delete", (done) => {
+        let mock = { name: "update-test",
+            user_profile: {
+                first_name: "first_name-update",
+                last_name: "first_name-update"
+            }
+        };
+        core_service.delete_entity(insert_id, ["user_profiles"]).then(r => {
+            done();
+        }).catch(e => {
+            console.log(e);
+            done(e);
+        });
+    });
 });

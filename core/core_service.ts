@@ -93,7 +93,6 @@ export abstract class core_service{
             if(includes){
                 conditions.include = this.create_association(includes)
             }
-            console.log(conditions)
             this.model.findOne( conditions ).then((result) => {
                 if(!result){
                     reject( new missing_entity("no result") )
@@ -138,7 +137,8 @@ export abstract class core_service{
 
     public save_entity : (newData:{[prop:string] : any } , includes?:object ) => Promise<any> = (newData ,includes) => {
         const save_entity = (resolve,reject) => {
-            this.model.create(newData , { include : this.create_association(includes) }).then(r => {
+            let entity = this.model.build(newData , { include : this.create_association(includes) })
+            entity.save().then(r => {
                 resolve(r)
             }).catch(e => {
                 reject(e)
@@ -149,7 +149,7 @@ export abstract class core_service{
 
     public includes_filter = (includes,entity :  Instance<InstanceSetOptions> ) => {
         let check = entity.toJSON();
-        let asso = Object.keys(check).filter((v,index) => {
+        let associations = Object.keys(check).filter((v,index) => {
             if( !check[v] ){
                 return false
             }
@@ -158,7 +158,8 @@ export abstract class core_service{
             }
             return Object.keys(check[v]).length > 0
         })
-        let exist_includes = asso.filter((v,index) => {
+
+        let exist_includes = associations.filter((v,index) => {
             let k = inflection.pluralize( inflection.underscore(v) )
             if(includes.indexOf(k) - 1){
                 return true
@@ -220,9 +221,24 @@ export abstract class core_service{
         return new Promise(update)
     }
 
-    public delete_entity : (id:string) => Promise<any> = async (id) => {
-        const entity = await this.get_entity(id);
-        return await entity.destroy()
+    public delete_entity : (id:string ,includes? :object) => Promise<any> = (id ,includes) => {
+        let delete_entity = (resolve,reject) => {
+            this.get_entity(id,includes).then(entity => {
+                let process = [];
+                let associations = this.includes_filter(includes,entity)
+                associations.forEach((v) => {
+                    process.push( entity[v].destroy() )
+                })
+                process.push(entity.destroy())
+
+                this.transaction(process).then(r => {
+                    resolve(r)
+                }).catch(e => {
+                    reject(e)
+                })
+            })
+        }
+       return  new Promise(delete_entity)
     }
 
     public validationError = (error:ValidationError) =>{

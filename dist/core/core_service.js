@@ -75,7 +75,6 @@ class core_service {
                 if (includes) {
                     conditions.include = this.create_association(includes);
                 }
-                console.log(conditions);
                 this.model.findOne(conditions).then((result) => {
                     if (!result) {
                         reject(new errors_1.missing_entity("no result"));
@@ -114,7 +113,8 @@ class core_service {
         };
         this.save_entity = (newData, includes) => {
             const save_entity = (resolve, reject) => {
-                this.model.create(newData, { include: this.create_association(includes) }).then(r => {
+                let entity = this.model.build(newData, { include: this.create_association(includes) });
+                entity.save().then(r => {
                     resolve(r);
                 }).catch(e => {
                     reject(e);
@@ -124,7 +124,7 @@ class core_service {
         };
         this.includes_filter = (includes, entity) => {
             let check = entity.toJSON();
-            let asso = Object.keys(check).filter((v, index) => {
+            let associations = Object.keys(check).filter((v, index) => {
                 if (!check[v]) {
                     return false;
                 }
@@ -133,7 +133,7 @@ class core_service {
                 }
                 return Object.keys(check[v]).length > 0;
             });
-            let exist_includes = asso.filter((v, index) => {
+            let exist_includes = associations.filter((v, index) => {
                 let k = inflection.pluralize(inflection.underscore(v));
                 if (includes.indexOf(k) - 1) {
                     return true;
@@ -187,10 +187,24 @@ class core_service {
             };
             return new Promise(update);
         };
-        this.delete_entity = (id) => __awaiter(this, void 0, void 0, function* () {
-            const entity = yield this.get_entity(id);
-            return yield entity.destroy();
-        });
+        this.delete_entity = (id, includes) => {
+            let delete_entity = (resolve, reject) => {
+                this.get_entity(id, includes).then(entity => {
+                    let process = [];
+                    let associations = this.includes_filter(includes, entity);
+                    associations.forEach((v) => {
+                        process.push(entity[v].destroy());
+                    });
+                    process.push(entity.destroy());
+                    this.transaction(process).then(r => {
+                        resolve(r);
+                    }).catch(e => {
+                        reject(e);
+                    });
+                });
+            };
+            return new Promise(delete_entity);
+        };
         this.validationError = (error) => {
             return new validation_1.validation_error(error);
         };
